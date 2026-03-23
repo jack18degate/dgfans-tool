@@ -37,7 +37,9 @@ function formatNumber(value: number): string {
 export default function CompoundInterestPage() {
   const { t } = useI18n();
   const [capital, setCapital] = useState(1000);
+  const [capitalDisplay, setCapitalDisplay] = useState('1000');
   const [annualRate, setAnnualRate] = useState(10);
+  const [annualRateDisplay, setAnnualRateDisplay] = useState('10');
   const [frequency, setFrequency] = useState<Frequency>('monthly');
 
   const [years, setYears] = useState(5);
@@ -109,14 +111,18 @@ export default function CompoundInterestPage() {
   const applyPoolApr = useCallback((pool: PoolData) => {
     setSelectedPool(pool);
     const scaledApr = getScaledApr(pool, priceRange, aprTimeframe);
-    setAnnualRate(Math.round(scaledApr * 100) / 100);
+    const newRate = Math.round(scaledApr * 100) / 100;
+    setAnnualRate(newRate);
+    setAnnualRateDisplay(String(newRate));
     setFrequency('daily');
   }, [priceRange, aprTimeframe, getScaledApr]);
 
   useEffect(() => {
     if (selectedPool) {
       const scaledApr = getScaledApr(selectedPool, priceRange, aprTimeframe);
-      setAnnualRate(Math.round(scaledApr * 100) / 100);
+      const newRate = Math.round(scaledApr * 100) / 100;
+      setAnnualRate(newRate);
+      setAnnualRateDisplay(String(newRate));
     }
   }, [priceRange, aprTimeframe, selectedPool, getScaledApr]);
 
@@ -426,16 +432,24 @@ export default function CompoundInterestPage() {
               <input
                 type="number"
                 className={styles.input}
-                value={capital}
-                onChange={(e) => setCapital(Number(e.target.value) || 0)}
-                onBlur={() => setCapital(c => Math.max(100, Math.min(50000, c)))}
+                value={capitalDisplay}
+                onChange={(e) => {
+                  setCapitalDisplay(e.target.value);
+                  const num = Number(e.target.value);
+                  if (!isNaN(num) && e.target.value !== '') setCapital(num);
+                }}
+                onBlur={() => {
+                  const clamped = Math.max(100, Math.min(50000, capital));
+                  setCapital(clamped);
+                  setCapitalDisplay(String(clamped));
+                }}
                 min={100}
                 max={50000}
                 step={100}
               />
             </div>
             <div className={styles.sliderRow}>
-              <button className={styles.sliderArrow} onClick={() => setCapital(c => Math.max(100, c - 100))}><Minus size={14} /></button>
+              <button className={styles.sliderArrow} onClick={() => { setCapital(c => { const v = Math.max(100, c - 100); setCapitalDisplay(String(v)); return v; }); }}><Minus size={14} /></button>
               <input
                 type="range"
                 className={styles.slider}
@@ -443,9 +457,9 @@ export default function CompoundInterestPage() {
                 max={50000}
                 step={100}
                 value={capital}
-                onChange={(e) => setCapital(Number(e.target.value))}
+                onChange={(e) => { const v = Number(e.target.value); setCapital(v); setCapitalDisplay(String(v)); }}
               />
-              <button className={styles.sliderArrow} onClick={() => setCapital(c => Math.min(50000, c + 100))}><Plus size={14} /></button>
+              <button className={styles.sliderArrow} onClick={() => { setCapital(c => { const v = Math.min(50000, c + 100); setCapitalDisplay(String(v)); return v; }); }}><Plus size={14} /></button>
             </div>
             <div className={styles.sliderLabels}>
               <span>$100</span>
@@ -463,9 +477,17 @@ export default function CompoundInterestPage() {
               <input
                 type="number"
                 className={styles.input}
-                value={annualRate}
-                onChange={(e) => setAnnualRate(Number(e.target.value) || 0)}
-                onBlur={() => setAnnualRate(r => Math.max(5, Math.min(300, r)))}
+                value={annualRateDisplay}
+                onChange={(e) => {
+                  setAnnualRateDisplay(e.target.value);
+                  const num = Number(e.target.value);
+                  if (!isNaN(num) && e.target.value !== '') setAnnualRate(num);
+                }}
+                onBlur={() => {
+                  const clamped = Math.max(5, Math.min(300, annualRate));
+                  setAnnualRate(clamped);
+                  setAnnualRateDisplay(String(clamped));
+                }}
                 min={5}
                 max={300}
                 step={0.1}
@@ -473,7 +495,7 @@ export default function CompoundInterestPage() {
               <span className={styles.inputSuffix}>%</span>
             </div>
             <div className={styles.sliderRow}>
-              <button className={styles.sliderArrow} onClick={() => setAnnualRate(r => Math.max(5, +(r - 0.5).toFixed(1)))}><Minus size={14} /></button>
+              <button className={styles.sliderArrow} onClick={() => { setAnnualRate(r => { const v = Math.max(5, +(r - 0.5).toFixed(1)); setAnnualRateDisplay(String(v)); return v; }); }}><Minus size={14} /></button>
               <input
                 type="range"
                 className={styles.slider}
@@ -481,9 +503,9 @@ export default function CompoundInterestPage() {
                 max={300}
                 step={0.5}
                 value={annualRate}
-                onChange={(e) => setAnnualRate(Number(e.target.value))}
+                onChange={(e) => { const v = Number(e.target.value); setAnnualRate(v); setAnnualRateDisplay(String(v)); }}
               />
-              <button className={styles.sliderArrow} onClick={() => setAnnualRate(r => Math.min(300, +(r + 0.5).toFixed(1)))}><Plus size={14} /></button>
+              <button className={styles.sliderArrow} onClick={() => { setAnnualRate(r => { const v = Math.min(300, +(r + 0.5).toFixed(1)); setAnnualRateDisplay(String(v)); return v; }); }}><Plus size={14} /></button>
             </div>
             <div className={styles.sliderLabels}>
               <span>5%</span>
