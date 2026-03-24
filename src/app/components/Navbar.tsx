@@ -15,7 +15,7 @@ export default function Navbar() {
   const { locale, setLocale, t } = useI18n();
 
   const NAV_ITEMS = [
-    { href: '/tool', label: t.nav.compoundInterest, icon: TrendingUp, emoji: '📈' },
+    { href: '/tools', label: t.nav.compoundInterest, icon: TrendingUp, emoji: '📈' },
   ];
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Navbar() {
       {/* Sidebar */}
       <nav className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ''}`}>
         {/* Logo */}
-        <Link href="/tool" className={styles.logo} onClick={() => setMobileOpen(false)}>
+        <Link href="/tools" className={styles.logo} onClick={() => setMobileOpen(false)}>
           <div className={styles.logoIcon}>⚡</div>
           <div className={styles.logoText}>
             <span className={styles.logoTitle}>DeGate</span>
