@@ -582,7 +582,7 @@ export default function CompoundInterestPage() {
 
           {/* Turbo Range Tip */}
           <a
-            href="https://app.degate.com/?utm_source=walletanalyzer?s=jack18"
+            href="https://app.degate.com/?utm_source=calculator?s=jack18"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.turboTip}
@@ -706,7 +706,7 @@ export default function CompoundInterestPage() {
                 </p>
               </div>
               <a
-                href="https://app.degate.com/?utm_source=walletanalyzer?s=jack18"
+                href="https://app.degate.com/?utm_source=calculator?s=jack18"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.degateBtn}
