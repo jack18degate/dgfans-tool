@@ -99,7 +99,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
   });
 
   return (
-    <div className="bg-surface rounded-xl border border-border overflow-hidden flex flex-col h-[600px] lg:h-full">
+    <div className="bg-surface rounded-xl border border-border overflow-hidden flex flex-col h-full max-h-[70vh] lg:max-h-full">
       <div className="p-4 border-b border-border flex justify-between items-center bg-[#0B0B0F]/50">
         <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-green-300 bg-clip-text text-transparent flex items-center gap-2">
           <Zap className="w-5 h-5 text-purple-400" />

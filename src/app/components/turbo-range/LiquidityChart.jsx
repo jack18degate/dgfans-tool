@@ -402,7 +402,7 @@ const LiquidityChart = ({ pool }) => {
   );
 
   return (
-    <div className="bg-surface rounded-xl border border-border p-6 flex flex-col h-full">
+    <div className="bg-surface rounded-xl border border-border p-4 md:p-6 flex flex-col">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h2 className="text-xl font-bold flex items-center gap-2">
@@ -424,7 +424,7 @@ const LiquidityChart = ({ pool }) => {
         </div>
       </div>
 
-      <div className="flex-1 relative min-h-[300px]">
+      <div className="relative" style={{ height: '400px' }}>
         {loading && (
            <div className="absolute inset-0 bg-surface/80 flex flex-col items-center justify-center z-10 gap-3">
              <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -455,7 +455,7 @@ const LiquidityChart = ({ pool }) => {
              Attraverso l'identificazione di deviazioni standard e zone di "Saturazione" o "Decompressione", fornisce metriche quantitative su dove posizionare le fasce di fornitura (LP) per minimizzare l'Impermanent Loss sistemico o sovra-estrarre Yield percentualmente maggiore su direzionalità attesa, aggirando le "Traction Walls" competitive.
            </div>
            
-           <div className="grid grid-cols-2 gap-4 mt-2">
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
               <div className="bg-surface border border-border p-3 rounded-md">
                  <div className="text-xs text-textMuted uppercase font-semibold">Resistenza Passiva al Ribasso (-10%)</div>
                  <div className="text-lg font-bold mt-1 text-red-400">
@@ -481,7 +481,7 @@ const LiquidityChart = ({ pool }) => {
                 : "Equilibrio Gaussiano V3 sul pricing locale. Nessuna deviazione vantaggiosa rilevata in questo range asimmetrico. Per un Alpha superiore, posizionare Bande Strette simmetriche a tolleranza ristretta (ad altissimo rischio di out-of-range) o effettuare il cross-reference su fee tiers ad alto rendimento isolato."}
            </div>
 
-           <div className="mt-1 grid grid-cols-3 gap-3">
+           <div className="mt-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div 
                  onClick={() => handleRangeClick('degen')}
                  className={`bg-[#1a1b23] border ${activeRangeId === 'degen' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-red-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
