@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/degate-api/:path*',
-        destination: 'https://v1-nd-api.degate.com/:path*'
+        destination: 'https://v1-mainnet-backend.degate.com/:path*'
       }
     ]
   }

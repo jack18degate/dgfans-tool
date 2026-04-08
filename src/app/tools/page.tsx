@@ -277,39 +277,40 @@ export default function CompoundInterestPage() {
 
   return (
     <main className={styles.container}>
+      {/* Header Shared */}
+      <div className={styles.header}>
+        <img src="/degate-logo.png" alt="DeGate" className={styles.headerLogo} />
+        <h1 className={styles.title}>
+          <span className={styles.titleGradient}>{t.compound.title}</span>
+        </h1>
+        <p className={styles.subtitle}>
+          {t.compound.subtitle}
+        </p>
+      </div>
+
       {/* ── App Switcher Tabs ── */}
-      <div className="flex gap-4 items-center justify-center mb-8 border-b border-white/10 pb-4 w-full" style={{zIndex: 50}}>
+      <div className="flex gap-4 items-center justify-start mb-8 border-b border-white/10 pb-4 w-full" style={{zIndex: 50}}>
          <button 
             onClick={() => setActiveAppTab('compound')} 
-            className={`px-6 py-2 rounded-xl transition-all ${activeAppTab === 'compound' ? 'bg-[#06d6a0]/20 text-[#06d6a0] border border-[#06d6a0]/50 font-bold shadow-[0_0_15px_rgba(6,214,160,0.3)]' : 'bg-[#0c0e1a] border border-white/10 text-white/70 hover:bg-white/5'}`}
+            className={`px-4 py-2 text-sm rounded-xl transition-all ${activeAppTab === 'compound' ? 'bg-[#06d6a0]/20 text-[#06d6a0] border border-[#06d6a0]/50 font-bold shadow-[0_0_15px_rgba(6,214,160,0.3)]' : 'bg-[#0c0e1a] border border-white/10 text-white/70 hover:bg-white/5'}`}
          >
             Compound Interest
          </button>
          <button 
             onClick={() => setActiveAppTab('turbo')} 
-            className={`px-6 py-2 rounded-xl transition-all flex items-center gap-2 ${activeAppTab === 'turbo' ? 'bg-[#06d6a0]/20 text-[#06d6a0] border border-[#06d6a0]/50 font-bold shadow-[0_0_15px_rgba(6,214,160,0.3)]' : 'bg-[#0c0e1a] border border-white/10 text-white/70 hover:bg-white/5'}`}
+            className={`px-4 py-2 text-sm rounded-xl transition-all flex items-center gap-2 ${activeAppTab === 'turbo' ? 'bg-[#06d6a0]/20 text-[#06d6a0] border border-[#06d6a0]/50 font-bold shadow-[0_0_15px_rgba(6,214,160,0.3)]' : 'bg-[#0c0e1a] border border-white/10 text-white/70 hover:bg-white/5'}`}
          >
             <Zap className="w-4 h-4" /> Turbo Range
          </button>
       </div>
 
-      {/* Turbo Range Tab rendered using display: none to keep component lifecycle intact */}
+      {/* Turbo Range Tab */}
       <div className={activeAppTab === 'turbo' ? 'block w-full' : 'hidden'}>
          <TurboRangeApp />
       </div>
 
+      {/* Compound Interest Tab */}
       <div className={activeAppTab === 'compound' ? 'block w-full' : 'hidden'}>
-        {/* Header */}
-        <div className={styles.header}>
-          <img src="/degate-logo.png" alt="DeGate" className={styles.headerLogo} />
-          <h1 className={styles.title}>
-            <span className={styles.titleGradient}>{t.compound.title}</span>
-          </h1>
-          <p className={styles.subtitle}>
-            {t.compound.subtitle}
-          </p>
-        </div>
-
       <div className={styles.layout}>
         {/* ── Pool Suggestions ── */}
         <div className={styles.poolSection} style={{ gridColumn: '1 / -1' }}>
