@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ═══════════════════════════════════════════════════════════
    DGFANS TOOL — Global Design System
    Premium Dark Theme with Neon Accents
