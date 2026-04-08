@@ -403,7 +403,7 @@ const LiquidityChart = ({ pool }) => {
   );
 
   return (
-    <div className="bg-surface rounded-xl border border-border p-4 md:p-6 flex flex-col">
+    <div style={{ background: 'rgba(12, 14, 26, 0.72)', backdropFilter: 'blur(24px) saturate(160%)', WebkitBackdropFilter: 'blur(24px) saturate(160%)', border: '1px solid rgba(255, 255, 255, 0.06)', borderTop: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: 'var(--radius-lg)', padding: '1.5rem' }} className="flex flex-col">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h2 className="text-xl font-bold flex items-center gap-2">
@@ -447,7 +447,7 @@ const LiquidityChart = ({ pool }) => {
       </div>
 
       {chartData && chartData.insight && !loading && !error && (
-        <div className="mt-6 bg-[#0B0B0F] border border-border rounded-lg p-4 flex flex-col gap-3">
+        <div style={{ background: 'rgba(12, 14, 26, 0.85)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-md)', padding: '1rem' }} className="mt-6 flex flex-col gap-3">
            <h3 className="text-sm font-bold text-primary flex items-center gap-2">
              💡 Analisi Avanzata Ottimizzazione (Hot Zone ±10%)
            </h3>

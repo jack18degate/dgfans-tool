@@ -9,32 +9,66 @@ export default function TurboRangeApp() {
 
   const handleSelectPool = (pool) => {
     setSelectedPool(pool);
-    setMobileShowChart(true); // Su mobile, mostra il chart quando si seleziona una pool
+    setMobileShowChart(true);
   };
 
   return (
-    <div className="w-full">
-      {/* Desktop: side-by-side layout */}
-      <div className="hidden lg:flex flex-row w-full rounded-2xl border border-border overflow-hidden bg-background" style={{ minHeight: '600px' }}>
-        {/* Sidebar Explorer - fixed height, scrolls internally */}
-        <div className="w-1/3 xl:w-1/4 border-r border-border bg-surface" style={{ maxHeight: '85vh' }}>
+    <>
+      {/* Desktop: side-by-side, flush with the page */}
+      <div className="hidden lg:grid gap-6 w-full" style={{ gridTemplateColumns: '320px 1fr' }}>
+        {/* Sidebar Explorer — glassmorphic card */}
+        <div style={{
+          background: 'rgba(12, 14, 26, 0.72)',
+          backdropFilter: 'blur(24px) saturate(160%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+          border: '1px solid rgba(255, 255, 255, 0.06)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+          borderRadius: 'var(--radius-lg)',
+          overflow: 'hidden',
+          maxHeight: '82vh',
+          position: 'sticky',
+          top: '1.5rem',
+          alignSelf: 'start',
+        }}>
           <PoolExplorer 
             onSelectPool={handleSelectPool} 
             selectedPoolId={selectedPool?.id} 
           />
         </div>
         
-        {/* Main Content - scrolls freely */}
-        <div className="w-2/3 xl:w-3/4 bg-[#05060f] overflow-y-auto" style={{ maxHeight: '85vh' }}>
+        {/* Main Content — flows naturally */}
+        <div style={{ minWidth: 0 }}>
           {selectedPool ? (
             <LiquidityChart pool={selectedPool} />
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-textMuted p-8 min-h-[400px]">
-              <div className="w-16 h-16 rounded-full bg-surface border border-border flex items-center justify-center mb-4">
-                <span className="text-2xl text-primary">⚡</span>
+            <div style={{
+              background: 'rgba(12, 14, 26, 0.72)',
+              backdropFilter: 'blur(24px) saturate(160%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 'var(--radius-lg)',
+              padding: '4rem 2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '400px',
+              textAlign: 'center',
+            }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: '50%',
+                background: 'linear-gradient(135deg, rgba(6,214,160,0.1), rgba(59,130,246,0.08))',
+                border: '1px solid rgba(6,214,160,0.15)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                marginBottom: '1rem',
+              }}>
+                <span style={{ fontSize: '1.5rem' }}>⚡</span>
               </div>
-              <h2 className="text-xl font-bold text-text mb-2 tracking-tight">Turbo Range Analysis</h2>
-              <p className="text-center text-sm max-w-sm">
+              <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
+                Turbo Range Analysis
+              </h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.5rem', maxWidth: 400, lineHeight: 1.5 }}>
                 Seleziona una pool dalla barra laterale per avviare la scansione radar della liquidità e simulare l'Hyper-Yield.
               </p>
             </div>
@@ -42,29 +76,55 @@ export default function TurboRangeApp() {
         </div>
       </div>
 
-      {/* Mobile: stacked layout with view toggle */}
-      <div className="lg:hidden flex flex-col w-full rounded-2xl border border-border overflow-hidden bg-background">
+      {/* Mobile: stacked with toggle */}
+      <div className="lg:hidden" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {/* Mobile navigation toggle */}
         {selectedPool && (
-          <div className="flex border-b border-border bg-[#0B0B0F]">
+          <div style={{
+            display: 'flex',
+            background: 'rgba(12, 14, 26, 0.72)',
+            backdropFilter: 'blur(24px)',
+            border: '1px solid rgba(255, 255, 255, 0.06)',
+            borderRadius: 'var(--radius-md)',
+            overflow: 'hidden',
+          }}>
             <button
               onClick={() => setMobileShowChart(false)}
-              className={`flex-1 py-3 text-sm font-semibold transition-colors ${!mobileShowChart ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-textMuted'}`}
+              style={{
+                flex: 1, padding: '0.75rem', fontSize: '0.85rem', fontWeight: 700,
+                background: !mobileShowChart ? 'rgba(6,214,160,0.08)' : 'transparent',
+                color: !mobileShowChart ? '#06d6a0' : 'var(--text-secondary)',
+                border: 'none', borderBottom: !mobileShowChart ? '2px solid #06d6a0' : '2px solid transparent',
+                cursor: 'pointer', fontFamily: 'var(--font-sans)',
+              }}
             >
               📋 Pool List
             </button>
             <button
               onClick={() => setMobileShowChart(true)}
-              className={`flex-1 py-3 text-sm font-semibold transition-colors ${mobileShowChart ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-textMuted'}`}
+              style={{
+                flex: 1, padding: '0.75rem', fontSize: '0.85rem', fontWeight: 700,
+                background: mobileShowChart ? 'rgba(6,214,160,0.08)' : 'transparent',
+                color: mobileShowChart ? '#06d6a0' : 'var(--text-secondary)',
+                border: 'none', borderBottom: mobileShowChart ? '2px solid #06d6a0' : '2px solid transparent',
+                cursor: 'pointer', fontFamily: 'var(--font-sans)',
+              }}
             >
               📊 Analysis
             </button>
           </div>
         )}
 
-        {/* Pool list (shown by default on mobile, or when toggled) */}
-        <div className={selectedPool && mobileShowChart ? 'hidden' : 'block'}>
-          <div className="bg-surface" style={{ maxHeight: '70vh', overflow: 'hidden' }}>
+        {/* Pool list */}
+        <div style={{ display: selectedPool && mobileShowChart ? 'none' : 'block' }}>
+          <div style={{
+            background: 'rgba(12, 14, 26, 0.72)',
+            backdropFilter: 'blur(24px)',
+            border: '1px solid rgba(255, 255, 255, 0.06)',
+            borderRadius: 'var(--radius-lg)',
+            overflow: 'hidden',
+            maxHeight: '70vh',
+          }}>
             <PoolExplorer 
               onSelectPool={handleSelectPool} 
               selectedPoolId={selectedPool?.id} 
@@ -72,13 +132,11 @@ export default function TurboRangeApp() {
           </div>
         </div>
 
-        {/* Chart & analysis (shown when a pool is selected and toggled) */}
-        <div className={!selectedPool || !mobileShowChart ? 'hidden' : 'block'}>
-          <div className="bg-[#05060f]">
-            {selectedPool && <LiquidityChart pool={selectedPool} />}
-          </div>
+        {/* Chart & analysis */}
+        <div style={{ display: !selectedPool || !mobileShowChart ? 'none' : 'block' }}>
+          {selectedPool && <LiquidityChart pool={selectedPool} />}
         </div>
       </div>
-    </div>
+    </>
   );
 }

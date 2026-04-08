@@ -7,11 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function TurboPage() {
-  return (
-    <main className="min-h-screen p-4 md:p-8 bg-[#05060f]">
-      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <TurboRangeApp />
-      </div>
-    </main>
-  );
+  return <TurboRangeApp />;
 }

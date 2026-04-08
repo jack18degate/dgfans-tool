@@ -99,8 +99,8 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
   });
 
   return (
-    <div className="bg-surface rounded-xl border border-border overflow-hidden flex flex-col h-full max-h-[70vh] lg:max-h-full">
-      <div className="p-4 border-b border-border flex justify-between items-center bg-[#0B0B0F]/50">
+    <div className="flex flex-col h-full overflow-hidden">
+      <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-green-300 bg-clip-text text-transparent flex items-center gap-2">
           <Zap className="w-5 h-5 text-purple-400" />
           Degate Pools
