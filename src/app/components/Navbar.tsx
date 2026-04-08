@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { TrendingUp, Menu, X, Rocket, ExternalLink, Globe, ChevronDown } from 'lucide-react';
+import { TrendingUp, Menu, X, Rocket, ExternalLink, Globe, ChevronDown, Zap } from 'lucide-react';
 import { useI18n, LOCALES } from '../i18n';
 import styles from './Navbar.module.css';
 
@@ -15,7 +15,8 @@ export default function Navbar() {
   const { locale, setLocale, t } = useI18n();
 
   const NAV_ITEMS = [
-    { href: '/tools', label: t.nav.compoundInterest, icon: TrendingUp, emoji: '📈' },
+    { href: '/tools', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
+    { href: '/turbo', label: 'Turbo Range', icon: Zap, emoji: '⚡' },
   ];
 
   useEffect(() => {

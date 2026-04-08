@@ -5,7 +5,6 @@ import { TrendingUp, DollarSign, Percent, RefreshCw, Calculator, Info, ChevronDo
 import ReactECharts from 'echarts-for-react';
 import { useI18n } from '../i18n';
 import styles from './page.module.css';
-import TurboRangeApp from '../components/turbo-range/TurboRangeApp';
 
 type Frequency = 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly';
 
@@ -37,8 +36,6 @@ function formatNumber(value: number): string {
 
 export default function CompoundInterestPage() {
   const { t } = useI18n();
-  const [activeAppTab, setActiveAppTab] = useState<'compound' | 'turbo'>('compound');
-  
   const [capital, setCapital] = useState(1000);
   const [capitalDisplay, setCapitalDisplay] = useState('1000');
   const [annualRate, setAnnualRate] = useState(10);
@@ -277,7 +274,7 @@ export default function CompoundInterestPage() {
 
   return (
     <main className={styles.container}>
-      {/* Header Shared */}
+      {/* Header */}
       <div className={styles.header}>
         <img src="/degate-logo.png" alt="DeGate" className={styles.headerLogo} />
         <h1 className={styles.title}>
@@ -288,29 +285,6 @@ export default function CompoundInterestPage() {
         </p>
       </div>
 
-      {/* ── App Switcher Tabs ── */}
-      <div className="flex gap-4 items-center justify-start mb-8 border-b border-white/10 pb-4 w-full" style={{zIndex: 50}}>
-         <button 
-            onClick={() => setActiveAppTab('compound')} 
-            className={`px-4 py-2 text-sm rounded-xl transition-all ${activeAppTab === 'compound' ? 'bg-[#06d6a0]/20 text-[#06d6a0] border border-[#06d6a0]/50 font-bold shadow-[0_0_15px_rgba(6,214,160,0.3)]' : 'bg-[#0c0e1a] border border-white/10 text-white/70 hover:bg-white/5'}`}
-         >
-            Compound Interest
-         </button>
-         <button 
-            onClick={() => setActiveAppTab('turbo')} 
-            className={`px-4 py-2 text-sm rounded-xl transition-all flex items-center gap-2 ${activeAppTab === 'turbo' ? 'bg-[#06d6a0]/20 text-[#06d6a0] border border-[#06d6a0]/50 font-bold shadow-[0_0_15px_rgba(6,214,160,0.3)]' : 'bg-[#0c0e1a] border border-white/10 text-white/70 hover:bg-white/5'}`}
-         >
-            <Zap className="w-4 h-4" /> Turbo Range
-         </button>
-      </div>
-
-      {/* Turbo Range Tab */}
-      <div className={activeAppTab === 'turbo' ? 'block w-full' : 'hidden'}>
-         <TurboRangeApp />
-      </div>
-
-      {/* Compound Interest Tab */}
-      <div className={activeAppTab === 'compound' ? 'block w-full' : 'hidden'}>
       <div className={styles.layout}>
         {/* ── Pool Suggestions ── */}
         <div className={styles.poolSection} style={{ gridColumn: '1 / -1' }}>
@@ -745,7 +719,6 @@ export default function CompoundInterestPage() {
           </div>
         </div>
         </div>
-      </div>
       </div>
     </main>
   );
