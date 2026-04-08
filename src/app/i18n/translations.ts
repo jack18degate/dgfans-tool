@@ -77,6 +77,42 @@ export interface Translations {
     chooseAssetDesc: string;
     selectAssetOverlay: string;
   };
+  turbo: {
+    degatePools: string;
+    refresh: string;
+    updating: string;
+    noPoolFound: string;
+    selectPoolPrompt: string;
+    selectPoolDesc: string;
+    liquidityMap: string;
+    currentPrice: string;
+    zoom: string;
+    loadingLiquidity: string;
+    analysisTitle: string;
+    analysisDesc: string;
+    resistanceDown: string;
+    resistanceUp: string;
+    highSaturation: string;
+    optimalDecompression: string;
+    balancedRange: string;
+    volumeCoeff: string;
+    suggestedStrategy: string;
+    biasDown: string;
+    biasUp: string;
+    biasNeutral: string;
+    maxYield: string;
+    maxYieldDesc: string;
+    balanced: string;
+    balancedDesc: string;
+    relaxZone: string;
+    relaxDesc: string;
+    simulator: string;
+    whaleTracker: string;
+    whaleTitle: string;
+    whaleScanPassive: string;
+    poolList: string;
+    analysis: string;
+  };
 }
 
 const en: Translations = {
@@ -148,6 +184,42 @@ const en: Translations = {
     chooseAssetSubtitle: 'Pick your asset and see your future growth 🚀',
     chooseAssetDesc: 'Select a pool above to start calculating compound interest.',
     selectAssetOverlay: '👆 Select an asset above to unlock the calculator',
+  },
+  turbo: {
+    degatePools: 'Degate Pools',
+    refresh: 'Refresh',
+    updating: 'Updating...',
+    noPoolFound: 'No pools found.',
+    selectPoolPrompt: 'Turbo Range Analysis',
+    selectPoolDesc: 'Select a pool from the sidebar to start scanning liquidity distribution and simulate Hyper-Yield.',
+    liquidityMap: 'Liquidity Map',
+    currentPrice: 'Current Price',
+    zoom: 'Zoom',
+    loadingLiquidity: 'Calculating liquidity distribution...',
+    analysisTitle: '💡 Advanced Optimization Analysis (Hot Zone ±10%)',
+    analysisDesc: 'The Analytical Module analyzes the distribution of active ticks and calculates the relative weight of concentrated liquidity. Through the identification of standard deviations and "Saturation" or "Decompression" zones, it provides quantitative metrics on where to place LP ranges to minimize systemic Impermanent Loss or over-extract higher Yield on expected directionality.',
+    resistanceDown: 'Passive Resistance Downside (-10%)',
+    resistanceUp: 'Passive Resistance Upside (+10%)',
+    highSaturation: '🔴 High Saturation',
+    optimalDecompression: '🟢 Optimal Decompression',
+    balancedRange: '🟡 Balanced Range',
+    volumeCoeff: 'Volume Coefficient',
+    suggestedStrategy: 'Suggested Strategy (Delta Allocation):',
+    biasDown: 'Excessive Lower Asymmetry. The liquid concentration near the downside is structurally saturated, reducing APYs. An asymmetric JIT supply (skewed upward) will isolate upside volume with a drastically favorable share split.',
+    biasUp: 'Liquidity Wall Inversion upward. Very strong limit-seller Market Maker competition during pumps. Delta-Neutral action or discounted LP placement (biased < Current Price) is optimal: during sudden drawdowns, trading fee acquisition will operate at 100% capital efficiency across wide price deltas.',
+    biasNeutral: 'Gaussian V3 Equilibrium on local pricing. No advantageous deviation detected in this asymmetric range. For superior Alpha, place Tight Symmetric Bands at restricted tolerance (very high out-of-range risk) or cross-reference high-yield isolated fee tiers.',
+    maxYield: '🔥 Max Yield',
+    maxYieldDesc: 'Ultra-concentrated. Very high fees, very high out-of-range risk.',
+    balanced: '⚖️ Balanced',
+    balancedDesc: 'Balanced channel to absorb standard volatility over multiple days.',
+    relaxZone: '☕ Relax Zone',
+    relaxDesc: 'Wide band for passive LPs. Lower APR but zero-stress management.',
+    simulator: 'DIL & APR Simulator',
+    whaleTracker: 'Whale Tracker',
+    whaleTitle: '🐋 Whale Tracker',
+    whaleScanPassive: 'Passive 4h scan (Public Network). Refresh disabled.',
+    poolList: '📋 Pool List',
+    analysis: '📊 Analysis',
   },
 };
 
@@ -221,6 +293,42 @@ const it: Translations = {
     chooseAssetDesc: 'Seleziona una pool qui sopra per iniziare a calcolare l\'interesse composto.',
     selectAssetOverlay: '👆 Seleziona un asset qui sopra per sbloccare il calcolatore',
   },
+  turbo: {
+    degatePools: 'Pool Degate',
+    refresh: 'Aggiorna',
+    updating: 'Aggiornamento...',
+    noPoolFound: 'Nessuna pool trovata.',
+    selectPoolPrompt: 'Turbo Range Analysis',
+    selectPoolDesc: 'Seleziona una pool dalla barra laterale per avviare la scansione radar della liquidità e simulare l\'Hyper-Yield.',
+    liquidityMap: 'Mappa Liquidità',
+    currentPrice: 'Prezzo Attuale',
+    zoom: 'Zoom',
+    loadingLiquidity: 'Calcolo distribuzione liquidità in corso...',
+    analysisTitle: '💡 Analisi Avanzata Ottimizzazione (Hot Zone ±10%)',
+    analysisDesc: 'Il Modulo Analitico analizza la distribuzione di tick attivi e calcola il peso relativo della liquidità concentrata. Attraverso l\'identificazione di deviazioni standard e zone di "Saturazione" o "Decompressione", fornisce metriche quantitative su dove posizionare le fasce di fornitura (LP) per minimizzare l\'Impermanent Loss sistemico o sovra-estrarre Yield percentualmente maggiore su direzionalità attesa.',
+    resistanceDown: 'Resistenza Passiva al Ribasso (-10%)',
+    resistanceUp: 'Resistenza Passiva al Rialzo (+10%)',
+    highSaturation: '🔴 Alta Saturazione',
+    optimalDecompression: '🟢 Decompressione Ottimale',
+    balancedRange: '🟡 Range Bilanciato',
+    volumeCoeff: 'Coefficiente Volumetrico',
+    suggestedStrategy: 'Strategia Suggerita (Delta Allocation):',
+    biasDown: 'Asimmetria Eccessiva Inferiore. La concentrazione liquida a ridosso del downside è strutturalmente satura, riducendo le APY. Una fornitura JIT asimmetrica (sbilanciata al rialzo) isolerà il volume in salita con un frazionamento della share drasticamente a tuo favore.',
+    biasUp: 'Inversione del Muro di Liquidità verso l\'alto. Fortissima competizione di Market Maker limit-seller in fase di pump. Ottima l\'azione Delta-Neutra o il piazzamento di LP a sconto (sbilanciato < Current Price): in fase di drawdown improvviso l\'acquisizione delle trading fee opererà col 100% dell\'efficienza capitale su ampi delta price.',
+    biasNeutral: 'Equilibrio Gaussiano V3 sul pricing locale. Nessuna deviazione vantaggiosa rilevata in questo range asimmetrico. Per un Alpha superiore, posizionare Bande Strette simmetriche a tolleranza ristretta (ad altissimo rischio di out-of-range) o effettuare il cross-reference su fee tiers ad alto rendimento isolato.',
+    maxYield: '🔥 Massima Resa',
+    maxYieldDesc: 'Ultra-concentrato. Altissime Fee, altissimo rischio Out-of-Range.',
+    balanced: '⚖️ Media (Balanced)',
+    balancedDesc: 'Canale bilanciato per assorbire volatilità standard in più giorni.',
+    relaxZone: '☕ Relax Zone',
+    relaxDesc: 'Banda larga per LP passivi. APR contenuto ma gestione zero-stress.',
+    simulator: 'DIL & APR Simulatore',
+    whaleTracker: 'Whale Tracker',
+    whaleTitle: '🐋 Whale Tracker',
+    whaleScanPassive: 'Scansione passiva 4h (Rete Pubblica). Refresh disabilitato.',
+    poolList: '📋 Lista Pool',
+    analysis: '📊 Analisi',
+  },
 };
 
 const es: Translations = {
@@ -293,6 +401,42 @@ const es: Translations = {
     chooseAssetDesc: 'Selecciona un pool arriba para comenzar a calcular el interés compuesto.',
     selectAssetOverlay: '👆 Selecciona un activo arriba para desbloquear la calculadora',
   },
+  turbo: {
+    degatePools: 'Pools Degate',
+    refresh: 'Actualizar',
+    updating: 'Actualizando...',
+    noPoolFound: 'No se encontraron pools.',
+    selectPoolPrompt: 'Turbo Range Analysis',
+    selectPoolDesc: 'Selecciona un pool de la barra lateral para iniciar el escaneo de distribución de liquidez y simular el Hyper-Yield.',
+    liquidityMap: 'Mapa de Liquidez',
+    currentPrice: 'Precio Actual',
+    zoom: 'Zoom',
+    loadingLiquidity: 'Calculando distribución de liquidez...',
+    analysisTitle: '💡 Análisis Avanzado de Optimización (Hot Zone ±10%)',
+    analysisDesc: 'El Módulo Analítico analiza la distribución de ticks activos y calcula el peso relativo de la liquidez concentrada, proporcionando métricas cuantitativas sobre dónde posicionar los rangos LP.',
+    resistanceDown: 'Resistencia Pasiva a la Baja (-10%)',
+    resistanceUp: 'Resistencia Pasiva al Alza (+10%)',
+    highSaturation: '🔴 Alta Saturación',
+    optimalDecompression: '🟢 Descompresión Óptima',
+    balancedRange: '🟡 Rango Equilibrado',
+    volumeCoeff: 'Coeficiente Volumétrico',
+    suggestedStrategy: 'Estrategia Sugerida (Delta Allocation):',
+    biasDown: 'Asimetría Excesiva Inferior. La concentración líquida cerca del downside está estructuralmente saturada, reduciendo los APY.',
+    biasUp: 'Inversión del Muro de Liquidez hacia arriba. Fuerte competencia de Market Makers. Acción Delta-Neutra o colocación de LP con descuento es óptima.',
+    biasNeutral: 'Equilibrio Gaussiano V3 en el pricing local. Ninguna desviación ventajosa detectada.',
+    maxYield: '🔥 Máximo Rendimiento',
+    maxYieldDesc: 'Ultra-concentrado. Muy altas fees, muy alto riesgo de out-of-range.',
+    balanced: '⚖️ Equilibrado',
+    balancedDesc: 'Canal equilibrado para absorber volatilidad estándar en varios días.',
+    relaxZone: '☕ Zona Relax',
+    relaxDesc: 'Banda amplia para LPs pasivos. APR contenido pero gestión sin estrés.',
+    simulator: 'Simulador DIL y APR',
+    whaleTracker: 'Whale Tracker',
+    whaleTitle: '🐋 Whale Tracker',
+    whaleScanPassive: 'Escaneo pasivo 4h (Red Pública). Actualización deshabilitada.',
+    poolList: '📋 Lista de Pools',
+    analysis: '📊 Análisis',
+  },
 };
 
 const zh: Translations = {
@@ -364,6 +508,42 @@ const zh: Translations = {
     chooseAssetSubtitle: '选择你的资产，预见你的未来增长 🚀',
     chooseAssetDesc: '选择上方的池开始计算复利。',
     selectAssetOverlay: '👆 选择上方的资产以解锁计算器',
+  },
+  turbo: {
+    degatePools: 'Degate 池',
+    refresh: '刷新',
+    updating: '更新中...',
+    noPoolFound: '未找到池。',
+    selectPoolPrompt: 'Turbo Range 分析',
+    selectPoolDesc: '从侧边栏选择一个池，开始扫描流动性分布并模拟超级收益。',
+    liquidityMap: '流动性图谱',
+    currentPrice: '当前价格',
+    zoom: '缩放',
+    loadingLiquidity: '正在计算流动性分布...',
+    analysisTitle: '💡 高级优化分析 (热区 ±10%)',
+    analysisDesc: '分析模块分析活跃刻度的分布，计算集中流动性的相对权重，提供量化指标以优化LP范围配置。',
+    resistanceDown: '下行被动阻力 (-10%)',
+    resistanceUp: '上行被动阻力 (+10%)',
+    highSaturation: '🔴 高饱和',
+    optimalDecompression: '🟢 最佳减压',
+    balancedRange: '🟡 平衡范围',
+    volumeCoeff: '成交量系数',
+    suggestedStrategy: '建议策略 (Delta 配置):',
+    biasDown: '过度下行不对称。下行附近的流动性集中结构性饱和，降低了APY。',
+    biasUp: '流动性壁垒向上反转。做市商在上涨期间竞争激烈。Delta中性操作或折扣LP配置是最优的。',
+    biasNeutral: '本地定价的高斯V3均衡。未检测到有利偏差。',
+    maxYield: '🔥 最高收益',
+    maxYieldDesc: '超集中。极高费用，极高出范围风险。',
+    balanced: '⚖️ 均衡',
+    balancedDesc: '均衡通道，可在多天内吸收标准波动。',
+    relaxZone: '☕ 轻松区',
+    relaxDesc: '被动LP宽带。APR较低但零压力管理。',
+    simulator: 'DIL和APR模拟器',
+    whaleTracker: '巨鲸追踪器',
+    whaleTitle: '🐋 巨鲸追踪器',
+    whaleScanPassive: '被动4小时扫描（公共网络）。刷新已禁用。',
+    poolList: '📋 池列表',
+    analysis: '📊 分析',
   },
 };
 

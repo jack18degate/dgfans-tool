@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Search, Loader2, Filter, SlidersHorizontal, ArrowRight, Zap } from 'lucide-react';
+import { useI18n } from '../../i18n';
 
 const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
   const [pools, setPools] = useState([]);
@@ -9,6 +10,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t } = useI18n();
   // Base queries fissate per performance
   const timeframe = '24h';
   const sortMetric = 'liquidity';
@@ -103,7 +105,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
       <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-green-300 bg-clip-text text-transparent flex items-center gap-2">
           <Zap className="w-5 h-5 text-purple-400" />
-          Degate Pools
+          {t.turbo.degatePools}
         </h2>
         <button 
           onClick={fetchPools}
@@ -111,7 +113,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
           className="p-2 border border-border rounded-lg bg-surface hover:bg-[#1a1b23] hover:text-white transition-all text-textMuted disabled:opacity-50"
           title="Aggiorna Dati Liquidità"
         >
-           {loading ? '...' : 'Refresh'}
+           {loading ? t.turbo.updating?.substring(0,3) || '...' : t.turbo.refresh}
         </button>
       </div>
 
@@ -119,14 +121,14 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
         {loading && (
           <div className="absolute inset-0 z-10 bg-surface/50 backdrop-blur-sm flex items-center justify-center p-8 gap-2 text-primary">
             <Loader2 className="w-6 h-6 animate-spin" />
-            <span className="text-sm font-semibold">Aggiornamento...</span>
+            <span className="text-sm font-semibold">{t.turbo.updating}</span>
           </div>
         )}
 
         {error ? (
           <div className="p-8 text-center text-red-400 text-sm">{error}</div>
         ) : filteredPools.length === 0 && !loading ? (
-          <div className="p-8 text-center text-textMuted text-sm">Nessuna pool trovata.</div>
+          <div className="p-8 text-center text-textMuted text-sm">{t.turbo.noPoolFound}</div>
         ) : (
           <div className="divide-y divide-border">
             {filteredPools.map(pool => {

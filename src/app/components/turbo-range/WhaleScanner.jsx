@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Loader2, RefreshCw, Eye, ExternalLink } from 'lucide-react';
+import { useI18n } from '../../i18n';
 
 const RPC_PUBLIC = 'https://solana-rpc.publicnode.com';
 const FALLBACK_CHAIN = [RPC_PUBLIC];
@@ -47,6 +48,7 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
   const [error, setError] = useState(null);
   const [lastScan, setLastScan] = useState(null);
   const [activeSpy, setActiveSpy] = useState(null);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (!pool || !pool.id) return;

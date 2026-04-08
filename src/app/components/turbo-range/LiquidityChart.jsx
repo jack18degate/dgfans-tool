@@ -16,6 +16,7 @@ import { Line } from 'react-chartjs-2';
 import { Loader2, Activity, ShieldAlert, BarChart3, Binary } from 'lucide-react';
 import WhaleScanner from './WhaleScanner';
 import LpSimulator from './LpSimulator';
+import { useI18n } from '../../i18n';
 
 ChartJS.register(
   CategoryScale,
@@ -32,6 +33,7 @@ const LiquidityChart = ({ pool }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { t } = useI18n();
   
   // Per focalizzare il grafico, mostriamo una percentuale dei tick attorno al prezzo attuale. Impostato a 100 di base per visione globale.
   const [zoomLevel, setZoomLevel] = useState(100);
@@ -408,13 +410,13 @@ const LiquidityChart = ({ pool }) => {
         <div>
           <h2 className="text-xl font-bold flex items-center gap-2">
             <span className="text-primary">{pool.mintA?.symbol}/{pool.mintB?.symbol}</span>
-            <span className="text-text">Liquidity Map</span>
+            <span className="text-text">{t.turbo.liquidityMap}</span>
           </h2>
-          <p className="text-sm text-textMuted mt-1">Current Price: ${pool.price?.toFixed(4)}</p>
+          <p className="text-sm text-textMuted mt-1">{t.turbo.currentPrice}: ${pool.price?.toFixed(4)}</p>
         </div>
         
         <div className="flex items-center gap-3">
-          <label className="text-sm text-textMuted whitespace-nowrap">Zoom:</label>
+          <label className="text-sm text-textMuted whitespace-nowrap">{t.turbo.zoom}:</label>
           <input 
             type="range" 
             min="2" max="100" 
@@ -429,7 +431,7 @@ const LiquidityChart = ({ pool }) => {
         {loading && (
            <div className="absolute inset-0 bg-surface/80 flex flex-col items-center justify-center z-10 gap-3">
              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-             <p className="text-textMuted">Calcolo distribuzione liquidità in corso...</p>
+             <p className="text-textMuted">{t.turbo.loadingLiquidity}</p>
            </div>
         )}
         
@@ -449,37 +451,32 @@ const LiquidityChart = ({ pool }) => {
       {chartData && chartData.insight && !loading && !error && (
         <div style={{ background: 'rgba(12, 14, 26, 0.85)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-md)', padding: '1rem' }} className="mt-6 flex flex-col gap-3">
            <h3 className="text-sm font-bold text-primary flex items-center gap-2">
-             💡 Analisi Avanzata Ottimizzazione (Hot Zone ±10%)
+             {t.turbo.analysisTitle}
            </h3>
            <div className="text-xs text-textMuted leading-relaxed text-justify">
-             Il Modulo Analitico analizza la distribuzione di tick attivi e calcola il peso relativo della liquidità concentrata. 
-             Attraverso l'identificazione di deviazioni standard e zone di "Saturazione" o "Decompressione", fornisce metriche quantitative su dove posizionare le fasce di fornitura (LP) per minimizzare l'Impermanent Loss sistemico o sovra-estrarre Yield percentualmente maggiore su direzionalità attesa, aggirando le "Traction Walls" competitive.
+             {t.turbo.analysisDesc}
            </div>
            
            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
               <div className="bg-surface border border-border p-3 rounded-md">
-                 <div className="text-xs text-textMuted uppercase font-semibold">Resistenza Passiva al Ribasso (-10%)</div>
+                 <div className="text-xs text-textMuted uppercase font-semibold">{t.turbo.resistanceDown}</div>
                  <div className="text-lg font-bold mt-1 text-red-400">
-                    {chartData.insight.downLiq > chartData.insight.upLiq * 1.5 ? '🔴 Alta Saturazione' : chartData.insight.downLiq < chartData.insight.upLiq * 0.6 ? '🟢 Decompressione Ottimale' : '🟡 Range Bilanciato'}
+                    {chartData.insight.downLiq > chartData.insight.upLiq * 1.5 ? t.turbo.highSaturation : chartData.insight.downLiq < chartData.insight.upLiq * 0.6 ? t.turbo.optimalDecompression : t.turbo.balancedRange}
                  </div>
-                 <div className="text-xs mt-1 opacity-70">Coefficiente Volumetrico: {chartData.insight.downLiq.toLocaleString('en-US', {maximumFractionDigits:0})}</div>
+                 <div className="text-xs mt-1 opacity-70">{t.turbo.volumeCoeff}: {chartData.insight.downLiq.toLocaleString('en-US', {maximumFractionDigits:0})}</div>
               </div>
               <div className="bg-surface border border-border p-3 rounded-md">
-                 <div className="text-xs text-textMuted uppercase font-semibold">Resistenza Passiva al Rialzo (+10%)</div>
+                 <div className="text-xs text-textMuted uppercase font-semibold">{t.turbo.resistanceUp}</div>
                  <div className="text-lg font-bold mt-1 text-green-400">
-                    {chartData.insight.upLiq > chartData.insight.downLiq * 1.5 ? '🔴 Alta Saturazione' : chartData.insight.upLiq < chartData.insight.downLiq * 0.6 ? '🟢 Decompressione Ottimale' : '🟡 Range Bilanciato'}
+                    {chartData.insight.upLiq > chartData.insight.downLiq * 1.5 ? t.turbo.highSaturation : chartData.insight.upLiq < chartData.insight.downLiq * 0.6 ? t.turbo.optimalDecompression : t.turbo.balancedRange}
                  </div>
-                 <div className="text-xs mt-1 opacity-70">Coefficiente Volumetrico: {chartData.insight.upLiq.toLocaleString('en-US', {maximumFractionDigits:0})}</div>
+                 <div className="text-xs mt-1 opacity-70">{t.turbo.volumeCoeff}: {chartData.insight.upLiq.toLocaleString('en-US', {maximumFractionDigits:0})}</div>
               </div>
            </div>
 
            <div className="mt-2 text-xs font-medium px-3 py-2 bg-[#1a1b23] text-text border border-border rounded">
-             <span className="font-bold text-primary">Strategia Suggerita (Delta Allocation): </span> 
-             {chartData.insight.bias === 1
-                ? "Asimmetria Eccessiva Inferiore. La concentrazione liquida a ridosso del downside è strutturalmente satura, riducendo le APY. Una fornitura JIT asimmetrica (sbilanciata al rialzo) isolerà il volume in salita con un frazionamento della share drasticamente a tuo favore." 
-                : chartData.insight.bias === -1
-                ? "Inversione del Muro di Liquidità verso l'alto. Fortissima competizione di Market Maker limit-seller in fase di pump. Ottima l'azione Delta-Neutra o il piazzamento di LP a sconto (sbilanciato < Current Price): in fase di drawdown improvviso l'acquisizione delle trading fee opererà col 100% dell'efficienza capitale su ampi delta price."
-                : "Equilibrio Gaussiano V3 sul pricing locale. Nessuna deviazione vantaggiosa rilevata in questo range asimmetrico. Per un Alpha superiore, posizionare Bande Strette simmetriche a tolleranza ristretta (ad altissimo rischio di out-of-range) o effettuare il cross-reference su fee tiers ad alto rendimento isolato."}
+             <span className="font-bold text-primary">{t.turbo.suggestedStrategy} </span>
+              {chartData.insight.bias === 1 ? t.turbo.biasDown : chartData.insight.bias === -1 ? t.turbo.biasUp : t.turbo.biasNeutral}
            </div>
 
            <div className="mt-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -487,8 +484,8 @@ const LiquidityChart = ({ pool }) => {
                  onClick={() => handleRangeClick('degen')}
                  className={`bg-[#1a1b23] border ${activeRangeId === 'degen' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-red-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
               >
-                 <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'degen' ? 'text-primary' : 'text-red-400 group-hover:text-primary'}`}>🔥 Massima Resa</div>
-                 <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">Ultra-concentrato. Altissime Fee, altissimo rischio Out-of-Range.</div>
+                 <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'degen' ? 'text-primary' : 'text-red-400 group-hover:text-primary'}`}>{t.turbo.maxYield}</div>
+                 <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">{t.turbo.maxYieldDesc}</div>
                  <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'degen' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-[#0B0B0F] text-text'}`}>
                     {chartData.insight.ranges.degen.min} - {chartData.insight.ranges.degen.max}
                  </div>
@@ -498,8 +495,8 @@ const LiquidityChart = ({ pool }) => {
                  onClick={() => handleRangeClick('balanced')}
                  className={`bg-[#1a1b23] border ${activeRangeId === 'balanced' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-yellow-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
               >
-                 <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'balanced' ? 'text-primary' : 'text-yellow-400 group-hover:text-primary'}`}>⚖️ Media (Balanced)</div>
-                 <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">Canale bilanciato per assorbire volatilità standard in più giorni.</div>
+                 <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'balanced' ? 'text-primary' : 'text-yellow-400 group-hover:text-primary'}`}>{t.turbo.balanced}</div>
+                 <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">{t.turbo.balancedDesc}</div>
                  <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'balanced' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-[#0B0B0F] text-text'}`}>
                     {chartData.insight.ranges.balanced.min} - {chartData.insight.ranges.balanced.max}
                  </div>
@@ -509,8 +506,8 @@ const LiquidityChart = ({ pool }) => {
                  onClick={() => handleRangeClick('relax')}
                  className={`bg-[#1a1b23] border ${activeRangeId === 'relax' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-blue-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
               >
-                 <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'relax' ? 'text-primary' : 'text-blue-400 group-hover:text-primary'}`}>☕ Relax Zone</div>
-                 <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">Banda larga per LP passivi. APR contenuto ma gestione zero-stress.</div>
+                 <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'relax' ? 'text-primary' : 'text-blue-400 group-hover:text-primary'}`}>{t.turbo.relaxZone}</div>
+                 <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">{t.turbo.relaxDesc}</div>
                  <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'relax' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-[#0B0B0F] text-text'}`}>
                     {chartData.insight.ranges.relax.min} - {chartData.insight.ranges.relax.max}
                  </div>
@@ -527,7 +524,7 @@ const LiquidityChart = ({ pool }) => {
                   onClick={() => setActiveFeatureTab('simulator')}
                   className={`pb-2.5 px-3 flex items-center gap-1.5 text-sm font-semibold border-b-2 transition-colors ${activeFeatureTab === 'simulator' ? 'border-primary text-primary' : 'border-transparent text-textMuted hover:text-white'}`}
                >
-                  <Activity className="w-4 h-4" /> DIL & APR Simulator
+                  <Activity className="w-4 h-4" /> {t.turbo.simulator}
                </button>
                <button
                   onClick={() => setActiveFeatureTab('whale')}
