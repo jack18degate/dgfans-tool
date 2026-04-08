@@ -168,8 +168,9 @@ const LiquidityChart = ({ pool }) => {
   }, [activeRangeId]);
 
   const handleRangeClick = (id) => {
-     setActiveRangeId(id === activeRangeId ? null : id);
-     // Forza un repaint del Canvas manualmente all'update del target
+     const newId = id === activeRangeId ? null : id;
+     setActiveRangeId(newId);
+     activeRangeIdRef.current = newId; // Sync immediato prima del repaint
      setTimeout(() => {
         if (chartRef.current) chartRef.current.update();
      }, 0);
