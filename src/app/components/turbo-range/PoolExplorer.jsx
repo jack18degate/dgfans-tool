@@ -44,8 +44,8 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
     // 2. Fetch Degate Pairs
     const fetchDegate = async () => {
       try {
-        // Usiamo un proxy /degate-api (configurato in vite.config.js) per bypassare le restrizioni CORS
-        const res = await axios.get('/degate-api/order-book-api/turbo-range/products?limit=100&offset=0');
+        // Usiamo la nostra API Route server-side (/api/degate-pairs) per bypassare CORS
+        const res = await axios.get('/api/degate-pairs');
         if (res.data?.data?.items) {
           const rawItems = res.data.data.items;
           const mapPairs = rawItems.map(p => ({
