@@ -10,6 +10,7 @@ const CLMM_PROGRAM = new PublicKey('CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK
 
 // Storage persistente sicura per gestire i BigInt
 const loadCache = () => {
+   if (typeof window === 'undefined') return {}; // Evita lo schianto SSD di Vercel (Next.js)
    try {
       const saved = localStorage.getItem('whaleScanCacheV1');
       if (saved) {
@@ -27,6 +28,7 @@ const loadCache = () => {
 };
 
 const saveCache = (cache) => {
+   if (typeof window === 'undefined') return;
    try {
       localStorage.setItem('whaleScanCacheV1', JSON.stringify(cache, (k, v) => 
          typeof v === 'bigint' ? v.toString() + 'n' : v

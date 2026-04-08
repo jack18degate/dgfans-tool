@@ -1,7 +1,7 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/app/tools/turbo/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/components/turbo-range/**/*.{js,ts,jsx,tsx}",
+    "./src/app/tools/page.tsx"
   ],
   theme: {
     extend: {
