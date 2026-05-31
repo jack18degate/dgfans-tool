@@ -13,6 +13,8 @@ export interface Translations {
     compoundInterest: string;
     turboRange: string;
     copyright: string;
+    themeLight: string;
+    themeDark: string;
   };
   compound: {
     title: string;
@@ -121,6 +123,8 @@ const en: Translations = {
     compoundInterest: 'Interest Calculator',
     turboRange: 'Turbo Range',
     copyright: '© 2026 DeGate Tools',
+    themeLight: 'Light Theme',
+    themeDark: 'Dark Theme',
   },
   compound: {
     title: 'Compound Interest Calculator',
@@ -229,6 +233,8 @@ const it: Translations = {
     compoundInterest: 'Calcolatore Interesse',
     turboRange: 'Turbo Range',
     copyright: '© 2026 DeGate Tools',
+    themeLight: 'Tema Chiaro',
+    themeDark: 'Tema Scuro',
   },
   compound: {
     title: 'Calcolatore di Interesse Composto',
@@ -337,6 +343,8 @@ const es: Translations = {
     compoundInterest: 'Calculadora Interés',
     turboRange: 'Turbo Range',
     copyright: '© 2026 DeGate Tools',
+    themeLight: 'Tema Claro',
+    themeDark: 'Tema Oscuro',
   },
   compound: {
     title: 'Calculadora de Interés Compuesto',
@@ -445,6 +453,8 @@ const zh: Translations = {
     compoundInterest: '复利计算器',
     turboRange: 'Turbo Range',
     copyright: '© 2026 DeGate Tools',
+    themeLight: '浅色模式',
+    themeDark: '深色模式',
   },
   compound: {
     title: '复利计算器',

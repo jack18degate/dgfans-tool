@@ -82,7 +82,7 @@ const LpSimulator = ({ pool, activeRange }) => {
   if (!pool) return null;
 
   return (
-    <div className="bg-[#0B0B0F] border border-border rounded-lg p-4 mt-6">
+    <div className="bg-background border border-border rounded-lg p-4 mt-6">
       <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
         <div>
            <h3 className="text-[15px] font-bold text-primary flex items-center gap-2">
@@ -111,22 +111,22 @@ const LpSimulator = ({ pool, activeRange }) => {
                        type="number"
                        value={capital}
                        onChange={(e) => setCapital(Number(e.target.value) || 0)}
-                       className="bg-[#1a1b23] border border-border text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-9 p-2.5 font-mono"
+                       className="bg-background border border-border text-text text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-9 p-2.5 font-mono"
                     />
                  </div>
               </div>
 
-              <div className="bg-[#15161c] rounded-lg p-3 border border-border/50">
+              <div className="bg-surface rounded-lg p-3 border border-border">
                  <div className="flex justify-between items-center mb-1">
                     <span className="text-xs text-textMuted">Multiplier (Efficienza Leva)</span>
-                    <span className="text-xs font-bold text-white">{stats.amplifier.toFixed(2)}x</span>
+                    <span className="text-xs font-bold text-text">{stats.amplifier.toFixed(2)}x</span>
                  </div>
                  <div className="flex justify-between items-center mb-1">
                     <span className="text-xs text-textMuted">Stima APR Range</span>
                     <span className="text-xs font-bold text-primary">{stats.concentratedApr.toFixed(1)}%</span>
                  </div>
-                 <div className="flex justify-between items-center pt-2 mt-2 border-t border-border/50">
-                    <span className="text-sm font-semibold text-white">Daily Fees (Stima)</span>
+                 <div className="flex justify-between items-center pt-2 mt-2 border-t border-border">
+                    <span className="text-sm font-semibold text-text">Daily Fees (Stima)</span>
                     <span className="text-sm font-bold text-green-400">+${stats.dailyFeeUsd.toFixed(2)}</span>
                  </div>
               </div>
@@ -138,9 +138,9 @@ const LpSimulator = ({ pool, activeRange }) => {
                  <AlertTriangle className="w-3.5 h-3.5 text-yellow-500" /> Profilo di Rischio Impermanent Loss (Matrice)
               </h4>
               <div className="overflow-x-auto">
-                 <table className="w-full text-left text-xs bg-[#15161c] rounded-lg overflow-hidden border border-border/50">
+                 <table className="w-full text-left text-xs bg-surface rounded-lg overflow-hidden border border-border">
                     <thead>
-                       <tr className="bg-[#1a1b23] border-b border-border text-textMuted">
+                       <tr className="bg-background border-b border-border text-textMuted">
                           <th className="p-2.5">Shift Prezzo</th>
                           <th className="p-2.5">Riserva (Asset + IL)</th>
                           <th className="p-2.5 text-right"><span className="hidden sm:inline">PnL </span>(7gg)</th>
@@ -154,12 +154,12 @@ const LpSimulator = ({ pool, activeRange }) => {
                           const l30 = scen.pnl30 < 0;
                           const l90 = scen.pnl90 < 0;
                           return (
-                             <tr key={i} className="border-b border-[#1a1b23] last:border-0 hover:bg-[#1a1b23]/50">
+                             <tr key={i} className="border-b border-border last:border-0 hover:bg-surface-hover">
                                 <td className={`p-2.5 font-bold ${scen.shift < 0 ? 'text-red-400' : 'text-green-400'}`}>
                                    {scen.shift > 0 ? '+' : ''}{scen.shift}%
                                    <div className="text-[10px] text-textMuted font-mono font-normal">@ ${scen.newPrice.toFixed(4)}</div>
                                 </td>
-                                <td className="p-2.5 text-white">
+                                <td className="p-2.5 text-text">
                                    <div className="flex flex-col gap-0.5">
                                       <span className="font-mono text-xs">${scen.value.toFixed(1)}</span>
                                       <span className={`text-[9px] w-fit px-1.5 py-0.5 rounded ${scen.ilPercent < -2 ? 'bg-red-500/20 text-red-400' : 'bg-gray-500/20 text-gray-400'}`}>

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { TrendingUp, Menu, X, Rocket, ExternalLink, Globe, ChevronDown, Zap } from 'lucide-react';
+import { TrendingUp, Menu, X, Rocket, ExternalLink, Globe, ChevronDown, Zap, Sun, Moon } from 'lucide-react';
 import { useI18n, LOCALES } from '../i18n';
 import styles from './Navbar.module.css';
 
@@ -13,11 +13,35 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const { locale, setLocale, t } = useI18n();
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   const NAV_ITEMS = [
     { href: '/tools', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
     { href: '/turbo', label: 'Turbo Range', icon: Zap, emoji: '⚡' },
   ];
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('degate-tools-theme') as 'dark' | 'light' | null;
+      if (saved === 'light' || saved === 'dark') {
+        setTheme(saved);
+        document.documentElement.setAttribute('data-theme', saved);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch { /* SSR or no localStorage */ }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    try {
+      localStorage.setItem('degate-tools-theme', nextTheme);
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      // Trigger dynamic update on all custom Canvas / ECharts components
+      window.dispatchEvent(new Event('themechange'));
+    } catch { /* ignore */ }
+  };
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -80,6 +104,16 @@ export default function Navbar() {
 
         {/* Sidebar Footer */}
         <div className={styles.sidebarFooter}>
+          {/* Theme Switcher */}
+          <button
+            className={styles.themeBtn}
+            onClick={toggleTheme}
+            aria-label="Toggle Theme"
+          >
+            {theme === 'dark' ? <Sun size={14} className={styles.themeIcon} /> : <Moon size={14} className={styles.themeIcon} />}
+            <span>{theme === 'dark' ? t.nav.themeLight : t.nav.themeDark}</span>
+          </button>
+
           {/* Language Switcher */}
           <div className={styles.langWrapper} ref={langRef}>
             <button

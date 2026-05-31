@@ -9,10 +9,10 @@
   left: 0;
   width: 240px;
   height: 100vh;
-  background: rgba(8, 10, 20, 0.85);
+  background: var(--surface-glass);
   backdrop-filter: blur(30px) saturate(150%);
   -webkit-backdrop-filter: blur(30px) saturate(150%);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1rem;
@@ -153,7 +153,37 @@
   flex-direction: column;
   gap: 0.75rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--border);
+}
+
+/* ── Theme Switcher ── */
+.themeBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.themeBtn:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.themeIcon {
+  flex-shrink: 0;
+  color: var(--neon-cyan);
 }
 
 /* ── Language Switcher ── */
@@ -168,8 +198,8 @@
   width: 100%;
   padding: 0.55rem 0.75rem;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
   color: var(--text-secondary);
   font-size: 0.78rem;
   font-weight: 600;
@@ -179,8 +209,8 @@
 }
 
 .langBtn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: var(--surface-hover);
+  border-color: var(--border-light);
   color: var(--text-primary);
 }
 
@@ -189,10 +219,10 @@
   bottom: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: rgba(12, 14, 26, 0.96);
+  background: var(--surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
   z-index: 60;
@@ -233,7 +263,7 @@
 
 .langItemActive {
   background: rgba(20, 241, 149, 0.08) !important;
-  color: #14F195 !important;
+  color: var(--brand-solana) !important;
 }
 
 .ctaBtn {
@@ -245,7 +275,7 @@
   border-radius: 10px;
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(99, 102, 241, 0.1));
   border: 1px solid rgba(168, 85, 247, 0.25);
-  color: #c084fc;
+  color: var(--brand-solana-accent);
   font-weight: 700;
   font-size: 0.8rem;
   text-decoration: none;

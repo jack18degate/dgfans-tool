@@ -44,7 +44,7 @@
 }
 
 .titleGradient {
-  background: linear-gradient(135deg, #FFFFFF, #93C5FD);
+  background: var(--title-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -747,7 +747,7 @@
   font-size: 0.95rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, #FFFFFF, #93C5FD);
+  background: var(--title-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -960,7 +960,7 @@
 
 .poolTabActive {
   background: rgba(59, 130, 246, 0.12) !important;
-  color: #FFFFFF !important;
+  color: var(--text-primary) !important;
 }
 
 /* Horizontal scrollable pool track */

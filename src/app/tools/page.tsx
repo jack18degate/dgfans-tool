@@ -36,6 +36,19 @@ function formatNumber(value: number): string {
 
 export default function CompoundInterestPage() {
   const { t } = useI18n();
+  const [activeTheme, setActiveTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const currentTheme = (document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null) || 'dark';
+      setActiveTheme(currentTheme);
+    };
+
+    checkTheme();
+
+    window.addEventListener('themechange', checkTheme);
+    return () => window.removeEventListener('themechange', checkTheme);
+  }, []);
   const [capital, setCapital] = useState(1000);
   const [capitalDisplay, setCapitalDisplay] = useState('1000');
   const [annualRate, setAnnualRate] = useState(10);
@@ -188,9 +201,9 @@ export default function CompoundInterestPage() {
   const chartOption = useMemo(() => ({
     tooltip: {
       trigger: 'axis',
-      backgroundColor: 'rgba(12, 14, 26, 0.9)',
-      borderColor: 'rgba(255,255,255,0.1)',
-      textStyle: { color: '#edf0f7', fontFamily: 'Outfit', fontSize: 13 },
+      backgroundColor: activeTheme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(12, 14, 26, 0.9)',
+      borderColor: activeTheme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)',
+      textStyle: { color: activeTheme === 'light' ? '#0f172a' : '#edf0f7', fontFamily: 'Outfit', fontSize: 13 },
       formatter: (params: any) => {
         const year = params[0].name;
         let html = `<div style="font-weight:700;margin-bottom:6px">${t.compound.yearLabel} ${year}</div>`;
@@ -206,7 +219,7 @@ export default function CompoundInterestPage() {
     legend: {
       data: [t.compound.compoundInterestLabel, t.compound.simpleInterestLabel, t.compound.initialCapitalLabel],
       bottom: 0,
-      textStyle: { color: '#6b7a99', fontFamily: 'Outfit', fontSize: 12 },
+      textStyle: { color: activeTheme === 'light' ? '#475569' : '#6b7a99', fontFamily: 'Outfit', fontSize: 12 },
       icon: 'roundRect',
       itemWidth: 14,
       itemHeight: 8,
@@ -216,19 +229,19 @@ export default function CompoundInterestPage() {
     xAxis: {
       type: 'category',
       data: yearlyData.map(d => d.year.toString()),
-      axisLabel: { color: '#6b7a99', fontFamily: 'Outfit', fontSize: 11 },
-      axisLine: { lineStyle: { color: 'rgba(255,255,255,0.06)' } },
+      axisLabel: { color: activeTheme === 'light' ? '#475569' : '#6b7a99', fontFamily: 'Outfit', fontSize: 11 },
+      axisLine: { lineStyle: { color: activeTheme === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)' } },
       axisTick: { show: false },
     },
     yAxis: {
       type: 'value',
       axisLabel: {
-        color: '#6b7a99',
+        color: activeTheme === 'light' ? '#475569' : '#6b7a99',
         fontFamily: 'Outfit',
         fontSize: 11,
         formatter: (v: number) => formatCurrency(v),
       },
-      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.04)' } },
+      splitLine: { lineStyle: { color: activeTheme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.04)' } },
       axisLine: { show: false },
       axisTick: { show: false },
     },
@@ -265,12 +278,12 @@ export default function CompoundInterestPage() {
         name: t.compound.initialCapitalLabel,
         type: 'line',
         data: yearlyData.map(() => capital),
-        lineStyle: { width: 1, color: 'rgba(255,255,255,0.15)', type: 'dotted' },
-        itemStyle: { color: 'rgba(255,255,255,0.15)' },
+        lineStyle: { width: 1, color: activeTheme === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)', type: 'dotted' },
+        itemStyle: { color: activeTheme === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)' },
         symbol: 'none',
       },
     ],
-  }), [yearlyData, capital, annualRate, t]);
+  }), [yearlyData, capital, annualRate, t, activeTheme]);
 
   return (
     <main className={styles.container}>
@@ -439,12 +452,12 @@ export default function CompoundInterestPage() {
                   if (!isNaN(num) && e.target.value !== '') setCapital(num);
                 }}
                 onBlur={() => {
-                  const clamped = Math.max(100, Math.min(50000, capital));
+                  const clamped = Math.max(100, Math.min(20000, capital));
                   setCapital(clamped);
                   setCapitalDisplay(String(clamped));
                 }}
                 min={100}
-                max={50000}
+                max={20000}
                 step={100}
               />
             </div>
@@ -454,16 +467,16 @@ export default function CompoundInterestPage() {
                 type="range"
                 className={styles.slider}
                 min={100}
-                max={50000}
+                max={20000}
                 step={100}
                 value={capital}
                 onChange={(e) => { const v = Number(e.target.value); setCapital(v); setCapitalDisplay(String(v)); }}
               />
-              <button className={styles.sliderArrow} onClick={() => { setCapital(c => { const v = Math.min(50000, c + 100); setCapitalDisplay(String(v)); return v; }); }}><Plus size={14} /></button>
+              <button className={styles.sliderArrow} onClick={() => { setCapital(c => { const v = Math.min(20000, c + 100); setCapitalDisplay(String(v)); return v; }); }}><Plus size={14} /></button>
             </div>
             <div className={styles.sliderLabels}>
               <span>$100</span>
-              <span>$50K</span>
+              <span>$20K</span>
             </div>
           </div>
 
@@ -567,16 +580,16 @@ export default function CompoundInterestPage() {
                 type="range"
                 className={styles.slider}
                 min={1}
-                max={20}
+                max={10}
                 step={1}
                 value={years}
                 onChange={(e) => setYears(Number(e.target.value))}
               />
-              <button className={styles.sliderArrow} onClick={() => setYears(y => Math.min(20, y + 1))}><Plus size={14} /></button>
+              <button className={styles.sliderArrow} onClick={() => setYears(y => Math.min(10, y + 1))}><Plus size={14} /></button>
             </div>
             <div className={styles.sliderLabels}>
               <span>1 {t.compound.year}</span>
-              <span>20 {t.compound.years}</span>
+              <span>10 {t.compound.years}</span>
             </div>
           </div>
 

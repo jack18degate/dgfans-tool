@@ -4,8 +4,24 @@ import { Connection, PublicKey } from '@solana/web3.js';
 import { Loader2, RefreshCw, Eye, ExternalLink } from 'lucide-react';
 import { useI18n } from '../../i18n';
 
-const RPC_PUBLIC = 'https://solana-rpc.publicnode.com';
-const FALLBACK_CHAIN = [RPC_PUBLIC];
+const FALLBACK_CHAIN = [
+  'https://solana-rpc.publicnode.com',
+  'https://api.mainnet-beta.solana.com',
+  'https://solana.api.anvil.gg',
+  'https://solana.rpc.blazepay.info'
+];
+
+function readInt32LE(data, offset) {
+  return data[offset] | (data[offset + 1] << 8) | (data[offset + 2] << 16) | (data[offset + 3] << 24);
+}
+
+function readBigUInt64LE(data, offset) {
+  let val = 0n;
+  for (let i = 0; i < 8; i++) {
+    val += BigInt(data[offset + i]) << BigInt(i * 8);
+  }
+  return val;
+}
 
 const CLMM_PROGRAM = new PublicKey('CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK');
 
@@ -142,12 +158,12 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
       let parsed = accs.map(a => {
         const data = a.account.data;
         const nftMint = new PublicKey(data.subarray(9, 41)).toBase58();
-        const tickLower = data.readInt32LE(73);
-        const tickUpper = data.readInt32LE(77);
+        const tickLower = readInt32LE(data, 73);
+        const tickUpper = readInt32LE(data, 77);
         
         // Read 128-bit unsigned integer (Liquidity)
-        const lower64 = BigInt(data.readBigUInt64LE(81));
-        const upper64 = BigInt(data.readBigUInt64LE(89));
+        const lower64 = readBigUInt64LE(data, 81);
+        const upper64 = readBigUInt64LE(data, 89);
         const liquidity = (upper64 << 64n) + lower64;
         
         return {
@@ -174,7 +190,7 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
 
       // Nessuna DAS API attiva (RPC Pubblico)
       // Disabilitato resolveOwners per proteggere le chiavi.
-      topPositions.forEach(p => p.owner = "Modalità Passiva Pubblica");
+      topPositions.forEach(p => p.owner = null);
 
       // Formattazione finale per UI
       const finalData = topPositions.map((p, i) => {
@@ -217,7 +233,7 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
   if (!pool || pool.isExternal) return null;
 
   return (
-    <div className="bg-[#0B0B0F] border border-border rounded-lg p-4 flex flex-col mt-6">
+    <div className="bg-background border border-border rounded-lg p-4 flex flex-col mt-6">
       <div className="flex flex-col mb-4 border-b border-border pb-3">
          <h3 className="text-[15px] font-bold text-primary flex items-center gap-2">
             🐋 Whale Tracker <span className="text-xs font-normal text-textMuted">(Top LPs On-Chain)</span>
@@ -250,24 +266,27 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
                </thead>
                <tbody>
                   {positions.map((p) => (
-                     <tr key={p.pubkey} className="border-b border-[#1a1b23] hover:bg-[#15161c] transition-colors group">
+                     <tr key={p.pubkey} className="border-b border-border hover:bg-surface-hover transition-colors group">
                         <td className="py-3 pl-2 font-bold text-text">#{p.rank}</td>
                         <td className="py-3">
-                           <a href={`https://solscan.io/account/${p.owner || p.nftMint}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary transition-colors text-text/90 font-mono">
-                              {p.owner ? formatAddress(p.owner) : <span className="italic opacity-50">Risoluzione...</span>}
+                           <a href={`https://solscan.io/account/${p.nftMint}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary transition-colors text-text/90 font-mono font-medium">
+                              {formatAddress(p.nftMint)}
                               <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100" />
                            </a>
-                           <div className="text-[9px] opacity-40 font-mono mt-0.5">NFT: {formatAddress(p.nftMint)}</div>
+                           <div className="text-[9px] opacity-60 mt-0.5 flex items-center gap-1 flex-wrap">
+                              <span className="text-textMuted">Position NFT</span>
+                              <span className="bg-purple-500/10 text-purple-500 border border-purple-500/20 px-1 py-0.2 rounded text-[8px] font-semibold scale-90 origin-left shrink-0">Passive Scan</span>
+                           </div>
                         </td>
-                        <td className="py-3 text-white font-mono">
+                        <td className="py-3 text-text font-mono">
                            ${p.priceLower.toFixed(4)} <span className="text-textMuted mx-1">→</span> ${p.priceUpper.toFixed(4)}
                         </td>
                         <td className="py-3 text-right">
-                           <div className="font-bold text-white tracking-tight">
+                           <div className="font-bold text-text tracking-tight">
                              ${p.estimatedUsd.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                            </div>
                            <div className="font-mono text-[9px] text-primary">{p.sharePercent}% del fondo</div>
-                           <div className="w-full bg-[#1a1b23] rounded-full h-1 mt-1 overflow-hidden flex justify-end">
+                           <div className="w-full bg-surface rounded-full h-1 mt-1 overflow-hidden flex justify-end border border-border">
                               <div className="bg-primary h-1 rounded-full" style={{ width: `${Math.min(100, Math.max(1, p.sharePercent))}%` }}></div>
                            </div>
                         </td>
@@ -292,7 +311,7 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
       )}
       
       {!loading && !error && positions.length === 0 && (
-          <div className="py-6 text-center text-sm text-textMuted/50 border border-dashed border-border/50 rounded-lg">
+          <div className="py-6 text-center text-sm text-textMuted/50 border border-dashed border-border rounded-lg">
              Pronto alla scansione topologica. Clicca su "Avvia Scansione" per interrogare il nodo RPC.
           </div>
       )}

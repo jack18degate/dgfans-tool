@@ -15,11 +15,11 @@ export default function TurboRangeApp() {
   };
 
   const glassCard = {
-    background: 'rgba(12, 14, 26, 0.72)',
+    background: 'var(--surface-glass)',
     backdropFilter: 'blur(24px) saturate(160%)',
     WebkitBackdropFilter: 'blur(24px) saturate(160%)',
-    border: '1px solid rgba(255, 255, 255, 0.06)',
-    borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+    border: '1px solid var(--border)',
+    borderTop: '1px solid var(--border-light)',
     borderRadius: 'var(--radius-lg)',
   };
 
@@ -81,8 +81,8 @@ export default function TurboRangeApp() {
       {/* ═══ Mobile Layout ═══ */}
       {selectedPool && (
         <div className="turbo-mobile-toggle" style={{
-          background: 'rgba(12, 14, 26, 0.72)', backdropFilter: 'blur(24px)',
-          border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-md)',
+          background: 'var(--surface-glass)', backdropFilter: 'blur(24px)',
+          border: '1px solid var(--border)', borderRadius: 'var(--radius-md)',
           overflow: 'hidden', marginBottom: '1rem',
         }}>
           <button onClick={() => setMobileShowChart(false)} style={{

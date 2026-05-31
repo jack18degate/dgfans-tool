@@ -102,7 +102,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ padding: '1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-green-300 bg-clip-text text-transparent flex items-center gap-2">
           <Zap className="w-5 h-5 text-purple-400" />
           {t.turbo.degatePools}
@@ -110,7 +110,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
         <button 
           onClick={fetchPools}
           disabled={loading}
-          className="p-2 border border-border rounded-lg bg-surface hover:bg-[#1a1b23] hover:text-white transition-all text-textMuted disabled:opacity-50"
+          className="p-2 border border-border rounded-lg bg-surface hover:bg-surface-hover hover:text-text transition-all text-textMuted disabled:opacity-50"
           title="Aggiorna Dati Liquidità"
         >
            {loading ? t.turbo.updating?.substring(0,3) || '...' : t.turbo.refresh}
@@ -140,7 +140,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
                 <div 
                   key={pool.id} 
                   onClick={() => onSelectPool(pool)}
-                  className={`p-4 hover:bg-[#20222b] cursor-pointer transition-colors flex items-center justify-between group flex-wrap gap-y-2 ${selectedPoolId === pool.id ? 'bg-[#1a1b23] border-l-2 border-primary' : ''}`}
+                  className={`p-4 hover:bg-surface-hover cursor-pointer transition-colors flex items-center justify-between group flex-wrap gap-y-2 ${selectedPoolId === pool.id ? 'bg-surface-hover border-l-2 border-primary' : ''}`}
                 >
                   <div className="flex items-center gap-3 w-3/5 overflow-hidden">
                     <div className="flex -space-x-2 flex-shrink-0">
@@ -150,7 +150,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
                     <div className="min-w-0">
                       <div className="font-semibold text-sm truncate flex items-center gap-1.5 flex-wrap">
                         {pool.mintA?.symbol}/{pool.mintB?.symbol}
-                        <span className="text-[10px] bg-[#0B0B0F] text-textMuted px-1.5 py-0.5 rounded font-mono border border-border shrink-0">{feeFormatted}%</span>
+                        <span className="text-[10px] bg-background text-textMuted px-1.5 py-0.5 rounded font-mono border border-border shrink-0">{feeFormatted}%</span>
                         {isDegate && (
                           <span className="text-[10px] bg-purple-500/20 text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded font-medium flex items-center gap-1 shrink-0">
                              <Zap className="w-3 h-3" /> Degate

@@ -34,6 +34,19 @@ const LiquidityChart = ({ pool }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useI18n();
+  const [activeTheme, setActiveTheme] = useState('dark');
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      setActiveTheme(currentTheme);
+    };
+
+    checkTheme();
+
+    window.addEventListener('themechange', checkTheme);
+    return () => window.removeEventListener('themechange', checkTheme);
+  }, []);
   
   // Per focalizzare il grafico, mostriamo una percentuale dei tick attorno al prezzo attuale. Impostato a 100 di base per visione globale.
   const [zoomLevel, setZoomLevel] = useState(100);
@@ -353,10 +366,10 @@ const LiquidityChart = ({ pool }) => {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#181920',
+        backgroundColor: activeTheme === 'light' ? '#ffffff' : '#181920',
         titleColor: '#34D399',
-        bodyColor: '#E2E8F0',
-        borderColor: '#282A36',
+        bodyColor: activeTheme === 'light' ? '#0f172a' : '#E2E8F0',
+        borderColor: activeTheme === 'light' ? '#cbd5e1' : '#282A36',
         borderWidth: 1,
         callbacks: {
           title: (items) => `Price: ${items[0].raw.x}`,
@@ -370,11 +383,11 @@ const LiquidityChart = ({ pool }) => {
         min: chartData ? chartData.minPrice : undefined,
         max: chartData ? chartData.maxPrice : undefined,
         grid: {
-          color: '#282A36',
+          color: activeTheme === 'light' ? '#e2e8f0' : '#282A36',
           drawBorder: false,
         },
         ticks: { 
-          color: '#94A3B8', 
+          color: activeTheme === 'light' ? '#64748b' : '#94A3B8', 
           maxTicksLimit: 10,
           callback: function(value) {
             return value < 0.001 ? value.toExponential(2) : value.toFixed(4);
@@ -383,11 +396,11 @@ const LiquidityChart = ({ pool }) => {
       },
       y: {
         grid: {
-          color: '#282A36',
+          color: activeTheme === 'light' ? '#e2e8f0' : '#282A36',
           drawBorder: false,
         },
         ticks: { 
-          color: '#94A3B8',
+          color: activeTheme === 'light' ? '#64748b' : '#94A3B8',
           callback: (value) => 
             value >= 1e9 ? (value / 1e9).toFixed(2) + 'B' : 
             value >= 1e6 ? (value / 1e6).toFixed(2) + 'M' : 
@@ -405,7 +418,7 @@ const LiquidityChart = ({ pool }) => {
   );
 
   return (
-    <div style={{ background: 'rgba(12, 14, 26, 0.72)', backdropFilter: 'blur(24px) saturate(160%)', WebkitBackdropFilter: 'blur(24px) saturate(160%)', border: '1px solid rgba(255, 255, 255, 0.06)', borderTop: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: 'var(--radius-lg)', padding: '1.5rem' }} className="flex flex-col">
+    <div style={{ background: 'var(--surface-glass)', backdropFilter: 'blur(24px) saturate(160%)', WebkitBackdropFilter: 'blur(24px) saturate(160%)', border: '1px solid var(--border)', borderTop: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg)', padding: '1.5rem' }} className="flex flex-col">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h2 className="text-xl font-bold flex items-center gap-2">
@@ -449,7 +462,7 @@ const LiquidityChart = ({ pool }) => {
       </div>
 
       {chartData && chartData.insight && !loading && !error && (
-        <div style={{ background: 'rgba(12, 14, 26, 0.85)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-md)', padding: '1rem' }} className="mt-6 flex flex-col gap-3">
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1rem' }} className="mt-6 flex flex-col gap-3">
            <h3 className="text-sm font-bold text-primary flex items-center gap-2">
              {t.turbo.analysisTitle}
            </h3>
@@ -474,7 +487,7 @@ const LiquidityChart = ({ pool }) => {
               </div>
            </div>
 
-           <div className="mt-2 text-xs font-medium px-3 py-2 bg-[#1a1b23] text-text border border-border rounded">
+           <div className="mt-2 text-xs font-medium px-3 py-2 bg-surface-hover text-text border border-border rounded">
              <span className="font-bold text-primary">{t.turbo.suggestedStrategy} </span>
               {chartData.insight.bias === 1 ? t.turbo.biasDown : chartData.insight.bias === -1 ? t.turbo.biasUp : t.turbo.biasNeutral}
            </div>
@@ -482,33 +495,33 @@ const LiquidityChart = ({ pool }) => {
            <div className="mt-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div 
                  onClick={() => handleRangeClick('degen')}
-                 className={`bg-[#1a1b23] border ${activeRangeId === 'degen' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-red-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
+                 className={`bg-surface-hover border ${activeRangeId === 'degen' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-red-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
               >
                  <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'degen' ? 'text-primary' : 'text-red-400 group-hover:text-primary'}`}>{t.turbo.maxYield}</div>
                  <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">{t.turbo.maxYieldDesc}</div>
-                 <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'degen' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-[#0B0B0F] text-text'}`}>
+                 <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'degen' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-background text-text'}`}>
                     {chartData.insight.ranges.degen.min} - {chartData.insight.ranges.degen.max}
                  </div>
               </div>
 
               <div 
                  onClick={() => handleRangeClick('balanced')}
-                 className={`bg-[#1a1b23] border ${activeRangeId === 'balanced' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-yellow-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
+                 className={`bg-surface-hover border ${activeRangeId === 'balanced' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-yellow-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
               >
                  <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'balanced' ? 'text-primary' : 'text-yellow-400 group-hover:text-primary'}`}>{t.turbo.balanced}</div>
                  <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">{t.turbo.balancedDesc}</div>
-                 <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'balanced' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-[#0B0B0F] text-text'}`}>
+                 <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'balanced' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-background text-text'}`}>
                     {chartData.insight.ranges.balanced.min} - {chartData.insight.ranges.balanced.max}
                  </div>
               </div>
 
               <div 
                  onClick={() => handleRangeClick('relax')}
-                 className={`bg-[#1a1b23] border ${activeRangeId === 'relax' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-blue-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
+                 className={`bg-surface-hover border ${activeRangeId === 'relax' ? 'border-primary ring-1 ring-primary/50 shadow-[0_0_15px_rgba(52,211,153,0.15)] bg-primary/5' : 'border-blue-500/30 hover:border-primary/80'} p-2.5 rounded-md flex flex-col items-center text-center cursor-pointer transition-all duration-200 group`}
               >
                  <div className={`text-[10px] uppercase font-bold tracking-wider mb-1 transition-colors ${activeRangeId === 'relax' ? 'text-primary' : 'text-blue-400 group-hover:text-primary'}`}>{t.turbo.relaxZone}</div>
                  <div className="text-[10px] text-textMuted leading-tight mb-2 pointer-events-none">{t.turbo.relaxDesc}</div>
-                 <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'relax' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-[#0B0B0F] text-text'}`}>
+                 <div className={`text-xs font-mono px-2 py-1 rounded w-full border border-border pointer-events-none transition-colors ${activeRangeId === 'relax' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-background text-text'}`}>
                     {chartData.insight.ranges.relax.min} - {chartData.insight.ranges.relax.max}
                  </div>
               </div>

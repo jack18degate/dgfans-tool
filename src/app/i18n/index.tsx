@@ -10,15 +10,15 @@ interface I18nContextType {
 }
 
 const I18nContext = createContext<I18nContextType>({
-  locale: 'en',
+  locale: 'it',
   setLocale: () => {},
-  t: translations.en,
+  t: translations.it,
 });
 
 const STORAGE_KEY = 'degate-tools-lang';
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+  const [locale, setLocaleState] = useState<Locale>('it');
 
   useEffect(() => {
     try {
