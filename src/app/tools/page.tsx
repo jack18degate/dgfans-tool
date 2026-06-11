@@ -7,11 +7,26 @@ import styles from './page.module.css';
 export default function ToolsLandingPage() {
   const { locale } = useI18n();
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [iframeHeight, setIframeHeight] = useState(2000);
+  const [iframeHeight, setIframeHeight] = useState(3000);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const isItalian = locale === 'it';
   const src = isItalian ? '/landing/turborangeita.html' : '/landing/turborangeeng.html';
+
+  // Get current theme from <html data-theme>
+  const getTheme = useCallback(() => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+    return 'dark';
+  }, []);
+
+  // Send theme to iframe
+  const sendThemeToIframe = useCallback((theme: string) => {
+    const iframe = iframeRef.current;
+    if (!iframe?.contentWindow) return;
+    iframe.contentWindow.postMessage({ type: 'theme-change', theme }, '*');
+  }, []);
 
   // Resize iframe to fit content
   const resizeIframe = useCallback(() => {
@@ -20,61 +35,65 @@ export default function ToolsLandingPage() {
     try {
       const doc = iframe.contentDocument || iframe.contentWindow?.document;
       if (doc?.body) {
-        const h = doc.documentElement.scrollHeight || doc.body.scrollHeight;
-        if (h > 100) {
-          setIframeHeight(h);
-        }
+        const h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+        if (h > 200) setIframeHeight(h + 40);
       }
-    } catch {
-      // cross-origin fallback — shouldn't happen for same-origin
-    }
+    } catch { /* cross-origin guard */ }
   }, []);
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
-    // Resize immediately and then again after a short delay for images/fonts
-    resizeIframe();
-    const t1 = setTimeout(resizeIframe, 300);
-    const t2 = setTimeout(resizeIframe, 1000);
-    const t3 = setTimeout(resizeIframe, 3000);
 
-    // Also listen for resize events inside iframe
-    const iframe = iframeRef.current;
-    try {
-      const iframeWindow = iframe?.contentWindow;
-      if (iframeWindow) {
-        iframeWindow.addEventListener('resize', resizeIframe);
-        // Observe mutations for dynamic content
-        const doc = iframe?.contentDocument || iframeWindow.document;
-        if (doc?.body) {
-          const observer = new MutationObserver(resizeIframe);
-          observer.observe(doc.body, { childList: true, subtree: true, attributes: true });
-        }
-      }
-    } catch { /* ignore */ }
+    // Send current theme
+    sendThemeToIframe(getTheme());
+
+    // Resize after content loads (images, fonts, etc.)
+    resizeIframe();
+    const t1 = setTimeout(resizeIframe, 200);
+    const t2 = setTimeout(resizeIframe, 800);
+    const t3 = setTimeout(resizeIframe, 2000);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [resizeIframe, sendThemeToIframe, getTheme]);
+
+  // Watch for theme changes on <html> data-theme attribute
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    const observer = new MutationObserver(() => {
+      sendThemeToIframe(getTheme());
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    // Also listen to custom themechange event
+    const handleThemeChange = () => sendThemeToIframe(getTheme());
+    window.addEventListener('themechange', handleThemeChange);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
+      observer.disconnect();
+      window.removeEventListener('themechange', handleThemeChange);
     };
-  }, [resizeIframe]);
+  }, [sendThemeToIframe, getTheme]);
 
-  // Reset loaded state when locale changes
+  // Reset state on locale change
   useEffect(() => {
     setIsLoaded(false);
   }, [isItalian]);
 
   return (
     <main className={styles.landingContainer}>
-      {/* Loading state */}
+      {/* Loader */}
       {!isLoaded && (
         <div className={styles.landingLoader}>
           <div className={styles.landingSpinner} />
         </div>
       )}
 
-      {/* Iframe with landing page */}
+      {/* Landing page iframe */}
       <iframe
         ref={iframeRef}
         key={src}
@@ -90,7 +109,16 @@ export default function ToolsLandingPage() {
       {isLoaded && (
         <div className={styles.landingCta}>
           <a href="/compound" className={styles.landingBtn}>
-            <span className={styles.landingBtnIcon}>📊</span>
+            <div className={styles.landingBtnIconBox}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="16" height="20" x="4" y="2" rx="2"/>
+                <line x1="8" x2="16" y1="6" y2="6"/>
+                <line x1="16" x2="16" y1="14" y2="18"/>
+                <path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/>
+                <path d="M12 14h.01"/><path d="M8 14h.01"/>
+                <path d="M12 18h.01"/><path d="M8 18h.01"/>
+              </svg>
+            </div>
             <span className={styles.landingBtnText}>
               <span className={styles.landingBtnTitle}>
                 {isItalian ? 'Calcolatore di Interesse Composto' : 'Compound Interest Calculator'}
@@ -101,13 +129,21 @@ export default function ToolsLandingPage() {
                   : 'Simulate capital growth with real rates from Turbo Range pools'}
               </span>
             </span>
-            <span className={styles.landingBtnArrow}>→</span>
+            <span className={styles.landingBtnArrow}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+              </svg>
+            </span>
           </a>
           <a
             href="https://dgfans.io/turbo"
             className={`${styles.landingBtn} ${styles.landingBtnSecondary}`}
           >
-            <span className={styles.landingBtnIcon}>⚡</span>
+            <div className={`${styles.landingBtnIconBox} ${styles.landingBtnIconBoxGreen}`}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
             <span className={styles.landingBtnText}>
               <span className={styles.landingBtnTitle}>Turbo Range Analysis</span>
               <span className={styles.landingBtnDesc}>
@@ -116,7 +152,11 @@ export default function ToolsLandingPage() {
                   : 'Advanced liquidity analysis and yield simulation'}
               </span>
             </span>
-            <span className={styles.landingBtnArrow}>→</span>
+            <span className={`${styles.landingBtnArrow} ${styles.landingBtnArrowGreen}`}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+              </svg>
+            </span>
           </a>
         </div>
       )}

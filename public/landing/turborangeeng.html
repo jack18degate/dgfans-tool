@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turbo Range Guide â€” DeGate Informational Document</title>
+    <title>Turbo Range Guide — DeGate Informational Document</title>
     <meta name="description" content="Informational document on DeGate Turbo Range: why on-chain stocks represent an innovation and how Turbo Range generates yield.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,6 +160,28 @@
             .tool-card { flex-direction: column; align-items: flex-start; }
             .tool-arrow { margin-left: 0; }
         }
+    
+        /* LIGHT THEME */
+        body.light-theme {
+            background: #f8fafc; color: #334155;
+        }
+        body.light-theme { --text-h: #0f172a; --text-p: #475569; --text-muted: #94a3b8;
+            --border: rgba(15,23,42,0.08); --card-bg: rgba(15,23,42,0.025);
+            --blue-soft: rgba(0,128,255,0.08); --blue-border: rgba(0,128,255,0.15);
+        }
+        body.light-theme .doc-badge { background: rgba(0,128,255,0.06); }
+        body.light-theme .callout { background: linear-gradient(135deg, rgba(0,128,255,0.04) 0%, rgba(0,128,255,0.01) 100%); }
+        body.light-theme .callout p { color: #475569; }
+        body.light-theme .video-caption, body.light-theme .screenshot-caption { background: rgba(0,0,0,0.05); color: #64748b; }
+        body.light-theme .position-bar-container { background: rgba(15,23,42,0.06); }
+        body.light-theme .tool-card { background: linear-gradient(135deg, rgba(0,128,255,0.04) 0%, rgba(0,193,255,0.02) 100%); }
+        body.light-theme .tool-card:hover { background: linear-gradient(135deg, rgba(0,128,255,0.08) 0%, rgba(0,193,255,0.04) 100%); }
+        body.light-theme a { color: #0060cc; }
+        body.light-theme .key { color: #0060cc; }
+        body.light-theme strong { color: #0f172a; }
+        body.light-theme .check { color: #059669; }
+        body.light-theme .cross { color: #dc2626; }
+
     </style>
 </head>
 <body>
@@ -176,7 +198,7 @@
         <h1 class="doc-title">Turbo Range: earn fees on your stocks</h1>
         <p class="doc-lead">
             A guide to understanding why holding stocks on blockchain opens up new yield 
-            opportunities â€” and how Turbo Range makes them accessible to everyone.
+            opportunities — and how Turbo Range makes them accessible to everyone.
         </p>
     </header>
 
@@ -207,10 +229,10 @@
         </p>
 
         <p>
-            <strong>"On-chain"</strong> stocks are tokenized versions of real securities (Tesla, Nvidia, Appleâ€¦) 
+            <strong>"On-chain"</strong> stocks are tokenized versions of real securities (Tesla, Nvidia, Apple…) 
             recorded on blockchain, pegged 1:1 to the price of the underlying stock. 
             The difference? The blockchain is a <strong>market active 24/7</strong>: every trade 
-            generates a <span class="key">fee</span> â€” and in the blockchain world, 
+            generates a <span class="key">fee</span> — and in the blockchain world, 
             <strong>anyone can collect it</strong>.
         </p>
 
@@ -220,14 +242,14 @@
                 Imagine a currency exchange booth at the airport. When a traveler exchanges euros for dollars, 
                 the exchange operator earns a fee. <strong>Turbo Range turns you into the 
                 exchange operator</strong>: your capital facilitates trades, and for 
-                every transaction you collect a fee â€” automatically, 24/7, without having to do anything.
+                every transaction you collect a fee — automatically, 24/7, without having to do anything.
             </p>
         </div>
 
         <p>
             This activity is called <em>liquidity providing</em>: your assets are used as 
             counterparty for other users' trades. <strong>The more the price fluctuates, the more trades occur, 
-            the more fees you earn</strong> â€” volatility becomes your ally.
+            the more fees you earn</strong> — volatility becomes your ally.
         </p>
     </section>
 
@@ -242,7 +264,7 @@
         </p>
 
         <p>
-            A liquidity pool is a shared deposit of two assets â€” for example Nvidia and USDC â€” 
+            A liquidity pool is a shared deposit of two assets — for example Nvidia and USDC — 
             managed entirely by an <strong>automated program</strong> (called a <em>smart contract</em>) 
             that lives on the blockchain. There is no human intermediary: everything is governed by code.
         </p>
@@ -257,7 +279,7 @@
         </p>
 
         <p>
-            <strong>Anyone can provide liquidity to a pool</strong> â€” you don't need to be an institution or 
+            <strong>Anyone can provide liquidity to a pool</strong> — you don't need to be an institution or 
             have special permissions. Simply deposit your assets and start earning a share of the 
             fees generated by trades.
         </p>
@@ -265,13 +287,13 @@
         <div class="highlight-box">
             <p>
                 <strong>In summary:</strong> a liquidity pool is a decentralized and automated market where 
-                anyone can participate as a "counterparty" to trades â€” and earn from fees. 
+                anyone can participate as a "counterparty" to trades — and earn from fees. 
                 The smart contract ensures that everything works transparently, without anyone 
                 being able to manipulate the process.
             </p>
         </div>
 
-        <h3>How fees are generated â€” Video</h3>
+        <h3>How fees are generated — Video</h3>
         <p>A short video illustrating the mechanism of earning fees from trades.</p>
         <div class="video-container">
             <video controls preload="metadata">
@@ -298,7 +320,7 @@
         <ol class="num-list">
             <li>
                 <strong>Choose the asset</strong>
-                Select which market you want to operate in: US stocks (Tesla, Nvidia, Appleâ€¦), 
+                Select which market you want to operate in: US stocks (Tesla, Nvidia, Apple…), 
                 gold, or Bitcoin.
             </li>
             <li>
@@ -330,7 +352,7 @@
         </div>
 
         <div class="screenshot">
-            <img src="/turborange-screenshot.png" alt="Turbo Range interface â€” list of available assets with yields">
+            <img src="/turborange-screenshot.png" alt="Turbo Range interface — list of available assets with yields">
             <div class="screenshot-caption">The DeGate Turbo Range interface: in a single screen, available assets with updated annualized yield.</div>
         </div>
     </section>
@@ -348,7 +370,7 @@
         </p>
 
         <div class="position-anim" id="positionAnim">
-            <div class="position-anim-title">Position composition â€” Nvidia / USDC</div>
+            <div class="position-anim-title">Position composition — Nvidia / USDC</div>
 
             <div class="position-bar-container">
                 <div class="position-bar-token" id="barToken" style="width: 50%;">NVDA 50%</div>
@@ -372,7 +394,7 @@
                 </div>
             </div>
 
-            <div class="position-status" id="priceStatus">ðŸ“Š In range â€” you are earning fees</div>
+            <div class="position-status" id="priceStatus"><span style="opacity:0.6">▥ </span>In range — you are earning fees</div>
 
             <div class="position-legend">
                 <span><span class="dot-token"></span> Token (NVDA)</span>
@@ -384,14 +406,14 @@
 
         <div class="scenarios">
             <div class="scenario-card">
-                <span class="scenario-emoji">âž¡ï¸</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue-soft);border:1px solid var(--blue-border);font-size:0.85rem;color:var(--blue)">→</span></span>
                 <div>
                     <h4>The price stays within the range</h4>
                     <p><strong>Generates fees constantly</strong>, 24/7, from every trade within the range.</p>
                 </div>
             </div>
             <div class="scenario-card" style="border-left: 3px solid var(--green);">
-                <span class="scenario-emoji">ðŸ“ˆ</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(80,228,162,0.1);border:1px solid rgba(80,228,162,0.2);font-size:0.85rem;color:var(--green)">↑</span></span>
                 <div>
                     <h4>The price rises above the upper bound</h4>
                     <p>The position becomes <strong>100% USDC</strong>. You exit in profit: you gradually sold 
@@ -399,7 +421,7 @@
                 </div>
             </div>
             <div class="scenario-card" style="border-left: 3px solid var(--red);">
-                <span class="scenario-emoji">ðŸ“‰</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(222,77,119,0.1);border:1px solid rgba(222,77,119,0.2);font-size:0.85rem;color:var(--red)">↓</span></span>
                 <div>
                     <h4>The price drops below the lower bound</h4>
                     <p>The position becomes <strong>100% token</strong>. The dollar value decreases, 
@@ -426,27 +448,27 @@
 
         <p>
             You can <strong>position the range strategically</strong> based on your market 
-            outlook. The choice of range is itself a strategy â€” here are the three main ones:
+            outlook. The choice of range is itself a strategy — here are the three main ones:
         </p>
 
-        <h3>ðŸŸ¢ Take Profit â€” "You're bullish"</h3>
+        <h3><span style="color:var(--green)">● </span>Take Profit — "You're bullish"</h3>
 
         <div class="scenario-card" style="border-left: 3px solid var(--green); margin: 20px 0;">
-            <span class="scenario-emoji">ðŸ“ˆ</span>
+            <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(80,228,162,0.1);border:1px solid rgba(80,228,162,0.2);font-size:0.85rem;color:var(--green)">↑</span></span>
             <div>
                 <h4>Range above the current price</h4>
                 <p>If the price rises and enters the range, the position <strong>gradually sells the token 
                 for USDC</strong>, earning fees on every trade. If it exceeds the upper bound, 
-                you end up with <strong>100% USDC</strong> â€” an automatic <em>take profit</em> + fees.</p>
+                you end up with <strong>100% USDC</strong> — an automatic <em>take profit</em> + fees.</p>
                 <p style="margin-top: 8px;"><strong>Ideal when:</strong> you believe the asset will rise 
                 and want to cash out gradually, without risking selling too early or waiting too long.</p>
             </div>
         </div>
 
-        <h3>ðŸ”´ Buy the Dip â€” "You want to accumulate at a discount"</h3>
+        <h3><span style="color:var(--red)">● </span>Buy the Dip — "You want to accumulate at a discount"</h3>
 
         <div class="scenario-card" style="border-left: 3px solid var(--red); margin: 20px 0;">
-            <span class="scenario-emoji">ðŸ“‰</span>
+            <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(222,77,119,0.1);border:1px solid rgba(222,77,119,0.2);font-size:0.85rem;color:var(--red)">↓</span></span>
             <div>
                 <h4>Range below the current price</h4>
                 <p>If the price drops and enters the range, the position <strong>gradually buys 
@@ -457,10 +479,10 @@
             </div>
         </div>
 
-        <h3>âš–ï¸ Neutral â€” "Maximize fees"</h3>
+        <h3><span style="color:var(--gold)">⇌ </span>Neutral — "Maximize fees"</h3>
 
         <div class="scenario-card" style="border-left: 3px solid var(--blue); margin: 20px 0;">
-            <span class="scenario-emoji">ðŸ“Š</span>
+            <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue-soft);border:1px solid var(--blue-border);font-size:0.85rem;color:var(--blue)">≡</span></span>
             <div>
                 <h4>Tight range centered on the current price</h4>
                 <p>The tighter the range, the higher the fee density per dollar invested. 
@@ -485,19 +507,19 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>ðŸ“ˆ It will rise</td>
+                    <td><span style="color:var(--green);font-weight:600">↑ </span>It will rise</td>
                     <td><strong>Take Profit</strong></td>
                     <td>Above the price</td>
                     <td>Sell on the way up + fees</td>
                 </tr>
                 <tr>
-                    <td>ðŸ“‰ It will drop</td>
+                    <td><span style="color:var(--red);font-weight:600">↓ </span>It will drop</td>
                     <td><strong>Buy the Dip</strong></td>
                     <td>Below the price</td>
                     <td>Accumulate at a discount + fees</td>
                 </tr>
                 <tr>
-                    <td>âž¡ï¸ Sideways</td>
+                    <td><span style="color:var(--blue);font-weight:600">→ </span>Sideways</td>
                     <td><strong>Neutral</strong></td>
                     <td>Tight, centered</td>
                     <td>Maximum fees</td>
@@ -508,7 +530,7 @@
         <div class="highlight-box green">
             <p>
                 <strong>The key point:</strong> unlike simple "buy and hold," 
-                Turbo Range allows you to <strong>express your market outlook</strong> â€” 
+                Turbo Range allows you to <strong>express your market outlook</strong> — 
                 and earn fees in any case, as long as the price stays within the range.
             </p>
         </div>
@@ -536,22 +558,22 @@
             <tbody>
                 <tr>
                     <td>Profit if price rises</td>
-                    <td><span class="check">âœ“</span> Yes</td>
-                    <td><span class="check">âœ“</span> Yes + fees</td>
+                    <td><span class="check">✓</span> Yes</td>
+                    <td><span class="check">✓</span> Yes + fees</td>
                 </tr>
                 <tr>
                     <td>Profit if price is stable</td>
-                    <td><span class="cross">âœ—</span> No</td>
-                    <td><span class="check">âœ“</span> Yes, from fees</td>
+                    <td><span class="cross">✗</span> No</td>
+                    <td><span class="check">✓</span> Yes, from fees</td>
                 </tr>
                 <tr>
                     <td>Indicative annualized yield</td>
                     <td>Price appreciation only</td>
-                    <td>40%â€“100%+ from fees</td>
+                    <td>40%–100%+ from fees</td>
                 </tr>
                 <tr>
                     <td>Market operating hours</td>
-                    <td>Monâ€“Fri, exchange hours</td>
+                    <td>Mon–Fri, exchange hours</td>
                     <td>24/7, including weekends</td>
                 </tr>
                 <tr>
@@ -620,7 +642,7 @@
 
         <div class="scenarios">
             <div class="scenario-card">
-                <span class="scenario-emoji">âš–ï¸</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);font-size:0.85rem;color:var(--gold)">⇌</span></span>
                 <div>
                     <h4>Price risk</h4>
                     <p>If the asset's price drops below the range, the position converts entirely into the token 
@@ -629,7 +651,7 @@
                 </div>
             </div>
             <div class="scenario-card">
-                <span class="scenario-emoji">ðŸ”„</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue-soft);border:1px solid var(--blue-border);font-size:0.85rem;color:var(--blue)">↻</span></span>
                 <div>
                     <h4>Optional active management</h4>
                     <p>If the price moves out of the range, the position stops generating fees. 
@@ -638,7 +660,7 @@
                 </div>
             </div>
             <div class="scenario-card">
-                <span class="scenario-emoji">ðŸŒ</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(0,193,255,0.1);border:1px solid rgba(0,193,255,0.2);font-size:0.85rem;color:var(--cyan)">◉</span></span>
                 <div>
                     <h4>Blockchain context</h4>
                     <p>Stock tokens live on blockchain (Solana/Ethereum). Interaction is done through 
@@ -647,7 +669,7 @@
                 </div>
             </div>
             <div class="scenario-card">
-                <span class="scenario-emoji">ðŸ“‰</span>
+                <span class="scenario-emoji"><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(222,77,119,0.1);border:1px solid rgba(222,77,119,0.2);font-size:0.85rem;color:var(--red)">↓</span></span>
                 <div>
                     <h4>Variable returns</h4>
                     <p>The indicated returns (40-100%+) are based on historical data and may vary. 
@@ -668,7 +690,7 @@
             <p>
                 <strong>On-chain stocks are not just securities: they are productive instruments.</strong> 
                 With Turbo Range, you make your capital available for trades 
-                and collect a fee on every transaction â€” like a digital currency exchange. 
+                and collect a fee on every transaction — like a digital currency exchange. 
                 The result is additional yield beyond mere price appreciation, 
                 active even in sideways markets, 24 hours a day, without intermediaries, 
                 with your funds always in your wallet.
@@ -680,11 +702,11 @@
         </p>
 
         <ul style="margin: 16px 0 0 24px; color: var(--text-p);">
-            <li>ðŸ“§ <a href="mailto:partnership@dgfans.io">partnership@dgfans.io</a></li>
-            <li>ðŸ“Š <a href="https://dgfans.io/tools" target="_blank" rel="noopener">Yield calculator</a></li>
-            <li>ðŸš€ <a href="https://app.degate.com/turbo-range/?utm_source=landing_adv" target="_blank" rel="noopener">Try Turbo Range</a></li>
-            <li>ðŸ“± <a href="https://app.degate.com/en/download?utm_source=landing_adv" target="_blank" rel="noopener">Download the DeGate app</a></li>
-            <li>ðŸŒ <a href="https://degate.com?utm_source=landing_adv" target="_blank" rel="noopener">DeGate official website</a></li>
+            <li><span style="opacity:0.6">✉ </span><a href="mailto:partnership@dgfans.io">partnership@dgfans.io</a></li>
+            <li><span style="opacity:0.6">▥ </span><a href="https://dgfans.io/tools" target="_blank" rel="noopener">Yield calculator</a></li>
+            <li><span style="color:var(--blue)">⬆ </span><a href="https://app.degate.com/turbo-range/?utm_source=landing_adv" target="_blank" rel="noopener">Try Turbo Range</a></li>
+            <li><span style="opacity:0.6">▪ </span><a href="https://app.degate.com/en/download?utm_source=landing_adv" target="_blank" rel="noopener">Download the DeGate app</a></li>
+            <li><span style="opacity:0.6">◎ </span><a href="https://degate.com?utm_source=landing_adv" target="_blank" rel="noopener">DeGate official website</a></li>
         </ul>
     </section>
 
@@ -709,7 +731,7 @@
             including the possible loss of invested capital. It is advisable to carefully assess your own 
             financial situation before making investment decisions.
         </p>
-        <p class="copyright">Â© 2025 DeGate. All rights reserved.</p>
+        <p class="copyright">© 2025 DeGate. All rights reserved.</p>
     </footer>
 
 </article>
@@ -732,15 +754,15 @@
             tokenPct = 100;
             usdcPct = 0;
             label = 'Below the range';
-            status = 'ðŸ”´ Out of range â€” no fees generated. Position: 100% token';
+            status = '<span style="color:var(--red)">● </span>Out of range — no fees generated. Position: 100% token';
         } else if (val >= 90) {
             // Above range
             tokenPct = 0;
             usdcPct = 100;
             label = 'Above the range';
-            status = 'ðŸŸ¢ Out of range â€” no fees generated. Position: 100% USDC';
+            status = '<span style="color:var(--green)">● </span>Out of range — no fees generated. Position: 100% USDC';
         } else {
-            // Inside range â€” linear interpolation
+            // Inside range — linear interpolation
             const normalized = (val - 10) / 80; // 0 to 1
             tokenPct = Math.round(100 - normalized * 100);
             usdcPct = 100 - tokenPct;
@@ -749,7 +771,7 @@
             else if (val > 70) label = 'Upper part of the range';
             else label = 'At the center of the range';
 
-            status = 'ðŸ“Š In range â€” you are earning fees';
+            status = '<span style="opacity:0.6">▥ </span>In range — you are earning fees';
         }
 
         barToken.style.width = Math.max(tokenPct, 0) + '%';
@@ -777,6 +799,28 @@
     });
 </script>
 
+<script>
+    // Listen for theme changes from parent
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+        } else {
+            document.body.classList.remove('light-theme');
+        }
+    }
+
+    // Listen for messages from parent window
+    window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'theme-change') {
+            applyTheme(e.data.theme);
+        }
+    });
+
+    // Check parent's theme on load
+    try {
+        var parentTheme = window.parent.document.documentElement.getAttribute('data-theme') || 'dark';
+        applyTheme(parentTheme);
+    } catch(e) {}
+</script>
 </body>
 </html>
-
