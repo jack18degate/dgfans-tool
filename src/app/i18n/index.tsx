@@ -18,15 +18,30 @@ const I18nContext = createContext<I18nContextType>({
 const STORAGE_KEY = 'degate-tools-lang';
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('it');
+  const [locale, setLocaleState] = useState<Locale>('en');
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (saved && LOCALES.some(l => l.code === saved)) {
         setLocaleState(saved);
+        return;
       }
     } catch { /* SSR or no localStorage */ }
+
+    // Auto-detect from browser language
+    try {
+      const browserLang = navigator.language || (navigator as any).userLanguage || '';
+      const langCode = browserLang.split('-')[0].toLowerCase();
+      const matchedLocale = LOCALES.find(l => l.code === langCode);
+      if (matchedLocale) {
+        setLocaleState(matchedLocale.code);
+      } else {
+        setLocaleState('en');
+      }
+    } catch {
+      setLocaleState('en');
+    }
   }, []);
 
   const setLocale = (newLocale: Locale) => {

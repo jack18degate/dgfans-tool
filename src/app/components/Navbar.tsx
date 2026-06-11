@@ -16,8 +16,9 @@ export default function Navbar() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   const NAV_ITEMS = [
-    { href: '/tools', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
-    { href: '/turbo', label: 'Turbo Range', icon: Zap, emoji: '⚡' },
+    { href: '/tools', label: t.nav.turboRangeGuide || 'Turbo Range Guide', icon: Rocket, emoji: '🚀' },
+    { href: '/compound', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
+    { href: '/turbo', label: 'Turbo Range Analysis', icon: Zap, emoji: '⚡' },
   ];
 
   useEffect(() => {

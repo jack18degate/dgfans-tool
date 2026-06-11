@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Turbo Range — Documento Informativo DeGate</title>
+    <meta name="description" content="Documento informativo su DeGate Turbo Range: perché le azioni on-chain rappresentano un'innovazione e come il Turbo Range genera rendimento.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #06080f; color: #c8cdd5; line-height: 1.85;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --blue: #0080FF; --blue-soft: rgba(0,128,255,0.1); --blue-border: rgba(0,128,255,0.2);
+            --cyan: #00C1FF; --green: #50E4A2; --gold: #FFD700; --red: #DE4D77;
+            --text-h: #ffffff; --text-p: #b0b8c4; --text-muted: rgba(255,255,255,0.4);
+            --border: rgba(255,255,255,0.07); --card-bg: rgba(255,255,255,0.025); --max-w: 740px;
+        }
+
+        .document { max-width: var(--max-w); margin: 0 auto; padding: 60px 32px 80px; }
+
+        /* HEADER */
+        .doc-header { padding-bottom: 48px; margin-bottom: 48px; border-bottom: 1px solid var(--border); }
+        .doc-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
+        .doc-brand img { width: 36px; height: 36px; border-radius: 50%; }
+        .doc-brand span { font-size: 1.1rem; font-weight: 700; color: var(--text-h); letter-spacing: -0.01em; }
+        .doc-badge { display: inline-block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2.5px; color: var(--blue); background: var(--blue-soft); border: 1px solid var(--blue-border); padding: 6px 16px; border-radius: 50px; margin-bottom: 24px; }
+        .doc-title { font-size: clamp(2rem,4.5vw,2.8rem); font-weight: 800; color: var(--text-h); line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 16px; }
+        .doc-lead { font-size: 1.15rem; color: var(--text-p); line-height: 1.8; max-width: 600px; }
+
+        /* SECTIONS */
+        .section { margin-bottom: 56px; }
+        h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-h); margin-bottom: 20px; letter-spacing: -0.02em; line-height: 1.3; padding-top: 8px; }
+        h3 { font-size: 1.15rem; font-weight: 600; color: var(--text-h); margin-top: 32px; margin-bottom: 12px; }
+        p { color: var(--text-p); margin-bottom: 16px; font-size: 1rem; }
+        strong { color: var(--text-h); font-weight: 600; }
+
+        /* HIGHLIGHT BOX */
+        .highlight-box { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 0 12px 12px 0; padding: 24px 28px; margin: 28px 0; }
+        .highlight-box p { margin-bottom: 0; font-size: 0.95rem; }
+        .highlight-box.green { border-left-color: var(--green); }
+        .highlight-box.gold { border-left-color: var(--gold); }
+        .highlight-box.red { border-left-color: var(--red); }
+
+        /* CALLOUT */
+        .callout { background: linear-gradient(135deg, rgba(0,128,255,0.06) 0%, rgba(0,128,255,0.02) 100%); border: 1px solid var(--blue-border); border-radius: 14px; padding: 28px 32px; margin: 32px 0; }
+        .callout-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blue); margin-bottom: 12px; }
+        .callout p { font-size: 1.05rem; color: #d0d6de; margin-bottom: 0; }
+
+        /* COMPARISON TABLE */
+        .comparison { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 0.92rem; }
+        .comparison th { text-align: left; font-weight: 600; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        .comparison td { padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--text-p); vertical-align: top; }
+        .comparison tr:last-child td { border-bottom: none; }
+        .comparison td:first-child { color: var(--text-h); font-weight: 500; }
+        .check { color: var(--green); }
+        .cross { color: var(--red); opacity: 0.7; }
+
+        /* NUMBERED LIST */
+        .num-list { counter-reset: step; list-style: none; margin: 24px 0; }
+        .num-list li { counter-increment: step; position: relative; padding-left: 48px; margin-bottom: 24px; color: var(--text-p); }
+        .num-list li::before { content: counter(step); position: absolute; left: 0; top: 1px; width: 32px; height: 32px; border-radius: 50%; background: var(--blue-soft); border: 1px solid var(--blue-border); color: var(--blue); font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 32px; }
+        .num-list li strong { display: block; color: var(--text-h); margin-bottom: 4px; }
+
+        /* SCENARIO CARDS */
+        .scenarios { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 24px 0; }
+        .scenario-card { display: flex; gap: 16px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+        .scenario-emoji { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+        .scenario-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-h); margin-bottom: 4px; }
+        .scenario-card p { font-size: 0.9rem; margin-bottom: 0; line-height: 1.7; }
+
+        /* DIVIDER */
+        .divider { width: 100%; height: 1px; background: var(--border); margin: 48px 0; }
+
+        /* TOOL CTA */
+        .tool-card { display: flex; align-items: center; gap: 20px; background: linear-gradient(135deg, rgba(0,128,255,0.08) 0%, rgba(0,193,255,0.04) 100%); border: 1px solid var(--blue-border); border-radius: 14px; padding: 24px 28px; margin: 32px 0; text-decoration: none; transition: all 0.3s ease; }
+        .tool-card:hover { border-color: rgba(0,128,255,0.4); background: linear-gradient(135deg, rgba(0,128,255,0.12) 0%, rgba(0,193,255,0.06) 100%); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,128,255,0.1); }
+        .tool-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .tool-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .tool-text h4 { font-size: 1rem; font-weight: 700; color: var(--text-h); margin-bottom: 4px; }
+        .tool-text p { font-size: 0.88rem; color: var(--text-p); margin-bottom: 0; }
+        .tool-arrow { margin-left: auto; color: var(--blue); flex-shrink: 0; }
+
+        /* VIDEO */
+        .video-container { margin: 32px 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+        .video-container video { width: 100%; display: block; }
+        .video-caption { padding: 12px 16px; background: rgba(0,0,0,0.3); font-size: 0.82rem; color: var(--text-muted); text-align: center; }
+
+        /* SCREENSHOT */
+        .screenshot { margin: 28px 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+        .screenshot img { width: 100%; display: block; }
+        .screenshot-caption { padding: 12px 16px; background: rgba(0,0,0,0.3); font-size: 0.82rem; color: var(--text-muted); text-align: center; font-style: italic; }
+
+        /* FOOTER */
+        .doc-footer { padding-top: 40px; border-top: 1px solid var(--border); margin-top: 56px; }
+        .doc-footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .doc-footer-brand img { width: 28px; height: 28px; border-radius: 50%; }
+        .doc-footer-brand span { font-weight: 700; color: var(--text-h); font-size: 1rem; }
+        .doc-footer-links { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+        .doc-footer-links a { color: var(--blue); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: opacity 0.2s; }
+        .doc-footer-links a:hover { opacity: 0.8; }
+        .disclaimer { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; max-width: 600px; }
+        .copyright { font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+
+        a { color: var(--blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .key { color: var(--blue); font-weight: 600; }
+        .note { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+
+        /* TOC */
+        .toc { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin-bottom: 48px; }
+        .toc-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 16px; }
+        .toc ol { list-style: none; counter-reset: toc; }
+        .toc ol li { counter-increment: toc; margin-bottom: 8px; }
+        .toc ol li a { color: var(--text-p); font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .toc ol li a::before { content: counter(toc) ". "; color: var(--blue); font-weight: 700; margin-right: 4px; }
+        .toc ol li a:hover { color: var(--text-h); }
+
+        /* POSITION ANIMATION */
+        .position-anim { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; margin: 32px 0; overflow: hidden; }
+        .position-anim-title { font-size: 0.85rem; font-weight: 600; color: var(--text-h); margin-bottom: 20px; text-align: center; }
+        .position-bar-container { position: relative; height: 44px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.04); margin-bottom: 12px; }
+        .position-bar-token { position: absolute; left: 0; top: 0; height: 100%; background: linear-gradient(90deg, #76b900, #50E4A2); border-radius: 10px 0 0 10px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; color: #000; min-width: 60px; }
+        .position-bar-usdc { position: absolute; right: 0; top: 0; height: 100%; background: linear-gradient(90deg, #2775ca, #0080FF); border-radius: 0 10px 10px 0; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; color: #fff; min-width: 60px; }
+        .position-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+        .position-price { text-align: center; }
+        .position-price-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .position-price-value { font-size: 1.1rem; font-weight: 700; color: var(--text-h); }
+        .position-slider { width: 100%; margin: 20px 0 8px; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--red), var(--blue), var(--green)); outline: none; cursor: pointer; }
+        .position-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid var(--blue); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .position-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid var(--blue); cursor: pointer; }
+        .position-status { text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; min-height: 20px; }
+        .position-legend { display: flex; justify-content: center; gap: 24px; margin-top: 12px; font-size: 0.78rem; }
+        .position-legend span { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+        .position-legend .dot-token { width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+        .position-legend .dot-usdc { width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+
+        /* PRINT */
+        @media print {
+            body { background: #fff; color: #222; }
+            .doc-title, h2, h3, strong { color: #000; }
+            p, li, td { color: #333; }
+            .highlight-box, .callout, .scenario-card, .tool-card { border-color: #ddd; background: #f8f8f8; }
+            .position-anim { page-break-inside: avoid; }
+        }
+
+        @media (max-width: 600px) {
+            .document { padding: 32px 18px 56px; }
+            .doc-title { font-size: 1.7rem; }
+            h2 { font-size: 1.3rem; }
+            .comparison th, .comparison td { padding: 10px 10px; font-size: 0.85rem; }
+            .tool-card { flex-direction: column; align-items: flex-start; }
+            .tool-arrow { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<article class="document">
+
+    <!-- HEADER -->
+    <header class="doc-header">
+        <div class="doc-brand">
+            <img src="DEGATE LOGO.png" alt="DeGate">
+            <span>DeGate</span>
+        </div>
+        <div class="doc-badge">Documento Informativo</div>
+        <h1 class="doc-title">Turbo Range: guadagnare commissioni sulle proprie azioni</h1>
+        <p class="doc-lead">
+            Una guida per comprendere perché detenere azioni su blockchain apre nuove opportunità 
+            di rendimento — e come Turbo Range le rende accessibili a chiunque.
+        </p>
+    </header>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav class="toc">
+        <div class="toc-title">Indice</div>
+        <ol>
+            <li><a href="#onchain">Cosa cambia con le azioni on-chain</a></li>
+            <li><a href="#liquiditypool">Cos'è una liquidity pool</a></li>
+            <li><a href="#turborange">Come funziona Turbo Range</a></li>
+            <li><a href="#posizione">Come cambia la posizione al variare del prezzo</a></li>
+            <li><a href="#strategie">Strategie di posizionamento</a></li>
+            <li><a href="#confronto">Confronto: detenere vs. Turbo Range</a></li>
+            <li><a href="#calcolatore">Calcola i potenziali rendimenti</a></li>
+            <li><a href="#rischi">Cosa considerare</a></li>
+            <li><a href="#riepilogo">Riepilogo</a></li>
+        </ol>
+    </nav>
+
+    <!-- SECTION 1: COSA CAMBIA -->
+    <section class="section" id="onchain">
+        <h2>1. Cosa cambia con le azioni on-chain</h2>
+
+        <p>
+            Con un broker tradizionale, le azioni restano ferme nel conto titoli: <strong>l'unico modo 
+            per guadagnare è vendere a un prezzo più alto</strong>. Se il mercato è laterale, il capitale 
+            non produce nulla.
+        </p>
+
+        <p>
+            Le azioni <strong>"on-chain"</strong> sono versioni tokenizzate di titoli reali (Tesla, Nvidia, Apple…) 
+            registrate su blockchain, ancorate 1:1 al prezzo dell'azione sottostante. 
+            La differenza? La blockchain è un <strong>mercato attivo 24/7</strong>: ogni scambio 
+            genera una <span class="key">commissione</span> — e nel mondo blockchain, 
+            <strong>chiunque può incassarla</strong>.
+        </p>
+
+        <div class="callout">
+            <div class="callout-label">L'analogia del cambiavalute</div>
+            <p>
+                Immagina un ufficio di cambio in aeroporto. Quando un viaggiatore cambia euro in dollari, 
+                il cambiavalute guadagna una commissione. <strong>Turbo Range ti trasforma nel 
+                cambiavalute</strong>: il tuo capitale facilita gli scambi, e per 
+                ogni operazione incassi una fee — automaticamente, 24/7, senza dover fare nulla.
+            </p>
+        </div>
+
+        <p>
+            Questa attività si chiama <em>liquidity providing</em>: i tuoi asset vengono utilizzati come 
+            controparte per gli scambi di altri utenti. <strong>Più il prezzo oscilla, più scambi avvengono, 
+            più commissioni guadagni</strong> — la volatilità diventa tua alleata.
+        </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 2: LIQUIDITY POOL -->
+    <section class="section" id="liquiditypool">
+        <h2>2. Cos'è una liquidity pool</h2>
+
+        <p>
+            Prima di capire Turbo Range, è utile comprendere il meccanismo alla base: la <strong>liquidity pool</strong> (pool di liquidità).
+        </p>
+
+        <p>
+            Una liquidity pool è un deposito condiviso di due asset — ad esempio Nvidia e USDC — 
+            gestito interamente da un <strong>programma automatico</strong> (chiamato <em>smart contract</em>) 
+            che vive sulla blockchain. Non c'è un intermediario umano: tutto è governato dal codice.
+        </p>
+
+        <h3>Come funziona</h3>
+
+        <p>
+            Il prezzo all'interno della pool non è deciso da un operatore centrale, ma viene determinato 
+            da una <strong>formula matematica</strong> che regola automaticamente il rapporto tra i due asset. 
+            Quando qualcuno compra Nvidia dalla pool, la quantità di Nvidia diminuisce e il suo prezzo 
+            sale; quando qualcuno vende, accade il contrario. Il meccanismo si auto-bilancia costantemente.
+        </p>
+
+        <p>
+            <strong>Chiunque può fornire liquidità a una pool</strong> — non serve essere un'istituzione o 
+            avere permessi speciali. Basta depositare i propri asset e iniziare a guadagnare una quota delle 
+            commissioni generate dagli scambi.
+        </p>
+
+        <div class="highlight-box">
+            <p>
+                <strong>In sintesi:</strong> una liquidity pool è un mercato decentralizzato e automatizzato dove 
+                chiunque può partecipare come "controparte" degli scambi — e guadagnare dalle commissioni. 
+                Lo smart contract garantisce che tutto funzioni in modo trasparente, senza che nessuno 
+                possa manipolare il processo.
+            </p>
+        </div>
+
+        <h3>Come si generano le commissioni — Video</h3>
+        <p>Un breve video che illustra il meccanismo di guadagno dalle commissioni di scambio.</p>
+        <div class="video-container">
+            <video controls preload="metadata">
+                <source src="liquidity_provider_fee_story.mp4" type="video/mp4">
+                Il tuo browser non supporta la riproduzione video.
+            </video>
+            <div class="video-caption">Come un liquidity provider guadagna commissioni dagli scambi</div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 3: COME FUNZIONA -->
+    <section class="section" id="turborange">
+        <h2>3. Come funziona Turbo Range</h2>
+
+        <p>
+            Turbo Range è lo strumento di DeGate che rende il liquidity providing <strong>semplice, 
+            automatico e accessibile</strong> anche a chi non ha esperienza con le criptovalute.
+        </p>
+
+        <p>Il funzionamento si riassume in tre passaggi:</p>
+
+        <ol class="num-list">
+            <li>
+                <strong>Scegli l'asset</strong>
+                Seleziona su quale mercato vuoi operare: azioni USA (Tesla, Nvidia, Apple…), 
+                oro o Bitcoin.
+            </li>
+            <li>
+                <strong>Imposta un intervallo di prezzo</strong>
+                Definisci una fascia di prezzo entro cui vuoi fornire liquidità. Il sistema propone 
+                automaticamente un range ottimale. Finché il prezzo resta in quell'intervallo, 
+                le commissioni si accumulano.
+            </li>
+            <li>
+                <strong>Deposita e parti</strong>
+                Puoi investire con <strong>un solo token</strong> (ad esempio solo USDC) <strong>oppure con entrambi i token</strong> 
+                della coppia (ad esempio Nvidia + USDC). Il sistema gestisce automaticamente la conversione 
+                e l'allocazione all'interno della pool. Con uno o due click la posizione è attiva.
+            </li>
+        </ol>
+
+        <p>
+            Una volta aperta la posizione, il sistema converte e distribuisce il capitale tra i due 
+            asset della coppia in base al prezzo corrente e all'intervallo scelto. Da quel momento, 
+            ogni scambio che avviene nel range genera commissioni a tuo favore.
+        </p>
+
+        <div class="highlight-box green">
+            <p>
+                <strong>I fondi restano sempre nel tuo portafoglio.</strong> DeGate non ha 
+                accesso, non custodisce e non può movimentare il capitale. Solo tu puoi aprire, 
+                modificare o chiudere la posizione. È un modello chiamato "self-custody".
+            </p>
+        </div>
+
+        <div class="screenshot">
+            <img src="Screenshot_2025-10-28_at_10.50.19.png" alt="Interfaccia Turbo Range — lista degli asset disponibili con rendimenti">
+            <div class="screenshot-caption">L'interfaccia Turbo Range di DeGate: in un'unica schermata, gli asset disponibili con il rendimento annualizzato aggiornato.</div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 4: POSIZIONE E SCENARI -->
+    <section class="section" id="posizione">
+        <h2>4. Come cambia la posizione al variare del prezzo</h2>
+
+        <p>
+            La tua posizione è composta da <strong>due asset</strong> (es. Nvidia + USDC). 
+            Il rapporto cambia automaticamente in base al prezzo. 
+            Usa il cursore per simularlo:
+        </p>
+
+        <div class="position-anim" id="positionAnim">
+            <div class="position-anim-title">Composizione della posizione — Nvidia / USDC</div>
+
+            <div class="position-bar-container">
+                <div class="position-bar-token" id="barToken" style="width: 50%;">NVDA 50%</div>
+                <div class="position-bar-usdc" id="barUsdc" style="width: 50%;">USDC 50%</div>
+            </div>
+
+            <input type="range" class="position-slider" id="priceSlider" min="0" max="100" value="50">
+
+            <div class="position-price-row">
+                <div class="position-price">
+                    <div class="position-price-label">Limite inferiore</div>
+                    <div class="position-price-value" style="color: var(--red);">&#9660;</div>
+                </div>
+                <div class="position-price">
+                    <div class="position-price-label">Prezzo attuale</div>
+                    <div class="position-price-value" id="priceLabel">Al centro del range</div>
+                </div>
+                <div class="position-price">
+                    <div class="position-price-label">Limite superiore</div>
+                    <div class="position-price-value" style="color: var(--green);">&#9650;</div>
+                </div>
+            </div>
+
+            <div class="position-status" id="priceStatus">📊 Nel range — stai guadagnando commissioni</div>
+
+            <div class="position-legend">
+                <span><span class="dot-token"></span> Token (NVDA)</span>
+                <span><span class="dot-usdc"></span> Stablecoin (USDC)</span>
+            </div>
+        </div>
+
+        <h3>I tre scenari possibili</h3>
+
+        <div class="scenarios">
+            <div class="scenario-card">
+                <span class="scenario-emoji">➡️</span>
+                <div>
+                    <h4>Il prezzo resta nel range</h4>
+                    <p><strong>Genera commissioni costantemente</strong>, 24/7, da ogni scambio nel range.</p>
+                </div>
+            </div>
+            <div class="scenario-card" style="border-left: 3px solid var(--green);">
+                <span class="scenario-emoji">📈</span>
+                <div>
+                    <h4>Il prezzo sale oltre il limite superiore</h4>
+                    <p>La posizione diventa <strong>100% USDC</strong>. Esci in profitto: hai venduto 
+                    progressivamente in salita + incassato tutte le commissioni.</p>
+                </div>
+            </div>
+            <div class="scenario-card" style="border-left: 3px solid var(--red);">
+                <span class="scenario-emoji">📉</span>
+                <div>
+                    <h4>Il prezzo scende sotto il limite inferiore</h4>
+                    <p>La posizione diventa <strong>100% token</strong>. Il valore in dollari cala, 
+                    ma le commissioni accumulate attenuano la perdita. Puoi mantenere, 
+                    riallineare il range o chiudere.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box gold">
+            <p>
+                <strong>Punto chiave:</strong> le commissioni guadagnate nel range sono tue e non vengono mai
+                restituite. Nello scenario positivo amplificano il guadagno; in quello negativo riducono
+                la perdita effettiva.
+            </p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 5: STRATEGIE -->
+    <section class="section" id="strategie">
+        <h2>5. Strategie di posizionamento</h2>
+
+        <p>
+            Puoi <strong>posizionare il range in modo strategico</strong> in base alla tua visione 
+            di mercato. La scelta dell'intervallo è essa stessa una strategia — ecco le tre principali:
+        </p>
+
+        <h3>🟢 Take Profit — "Sei rialzista"</h3>
+
+        <div class="scenario-card" style="border-left: 3px solid var(--green); margin: 20px 0;">
+            <span class="scenario-emoji">📈</span>
+            <div>
+                <h4>Range sopra il prezzo attuale</h4>
+                <p>Se il prezzo sale ed entra nel range, la posizione <strong>vende progressivamente il token 
+                per USDC</strong>, incassando commissioni ad ogni scambio. Se supera il limite superiore, 
+                ti ritrovi con <strong>100% USDC</strong> — un <em>take profit</em> automatico + fee.</p>
+                <p style="margin-top: 8px;"><strong>Ideale quando:</strong> credi che l'asset salirà 
+                e vuoi incassare gradualmente, senza rischiare di vendere troppo presto o aspettare troppo.</p>
+            </div>
+        </div>
+
+        <h3>🔴 Buy the Dip — "Vuoi accumulare a sconto"</h3>
+
+        <div class="scenario-card" style="border-left: 3px solid var(--red); margin: 20px 0;">
+            <span class="scenario-emoji">📉</span>
+            <div>
+                <h4>Range sotto il prezzo attuale</h4>
+                <p>Se il prezzo scende ed entra nel range, la posizione <strong>compra progressivamente 
+                il token con i tuoi USDC</strong>, a prezzi sempre più bassi, guadagnando commissioni. 
+                Se scende oltre, hai <strong>100% token</strong> accumulato a sconto.</p>
+                <p style="margin-top: 8px;"><strong>Ideale quando:</strong> pensi che l'asset possa scendere 
+                nel breve ma credi nel suo valore a lungo termine. Il range accumula per te, senza monitorare.</p>
+            </div>
+        </div>
+
+        <h3>⚖️ Neutrale — "Massimizza le commissioni"</h3>
+
+        <div class="scenario-card" style="border-left: 3px solid var(--blue); margin: 20px 0;">
+            <span class="scenario-emoji">📊</span>
+            <div>
+                <h4>Range stretto e centrato sul prezzo attuale</h4>
+                <p>Più il range è concentrato, più alta è la densità di commissioni per dollaro investito. 
+                Ogni oscillazione genera scambi e <strong>fee a tuo favore</strong>. È la strategia ideale 
+                per mercati laterali o asset con alta volatilità intraday senza trend chiaro.</p>
+                <p style="margin-top: 8px;"><strong>Ideale quando:</strong> il mercato consolida e vuoi 
+                massimizzare il rendimento. Richiede un monitoraggio più frequente perché un range stretto 
+                può essere "rotto" da un movimento brusco.</p>
+            </div>
+        </div>
+
+        <h3>Guida rapida</h3>
+
+        <table class="comparison">
+            <thead>
+                <tr>
+                    <th>La tua visione</th>
+                    <th>Strategia</th>
+                    <th>Range</th>
+                    <th>Risultato</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>📈 Salirà</td>
+                    <td><strong>Take Profit</strong></td>
+                    <td>Sopra il prezzo</td>
+                    <td>Vendi in salita + fee</td>
+                </tr>
+                <tr>
+                    <td>📉 Scenderà</td>
+                    <td><strong>Buy the Dip</strong></td>
+                    <td>Sotto il prezzo</td>
+                    <td>Accumuli a sconto + fee</td>
+                </tr>
+                <tr>
+                    <td>➡️ Laterale</td>
+                    <td><strong>Neutrale</strong></td>
+                    <td>Stretto, centrato</td>
+                    <td>Massime commissioni</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box green">
+            <p>
+                <strong>Il punto chiave:</strong> a differenza del semplice "compra e tieni", 
+                Turbo Range ti permette di <strong>esprimere la tua visione di mercato</strong> — 
+                e di guadagnare commissioni in ogni caso, finché il prezzo resta nel range.
+            </p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 6: CONFRONTO -->
+    <section class="section" id="confronto">
+        <h2>6. Confronto: semplice detenzione vs. Turbo Range</h2>
+
+        <p>
+            Per capire il valore aggiunto di Turbo Range, confrontiamo il classico "compra e tieni" 
+            con una posizione Turbo Range attiva.
+        </p>
+
+        <table class="comparison">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Detenzione classica</th>
+                    <th>Turbo Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Guadagno se il prezzo sale</td>
+                    <td><span class="check">✓</span> Sì</td>
+                    <td><span class="check">✓</span> Sì + commissioni</td>
+                </tr>
+                <tr>
+                    <td>Guadagno se il prezzo è stabile</td>
+                    <td><span class="cross">✗</span> No</td>
+                    <td><span class="check">✓</span> Sì, dalle commissioni</td>
+                </tr>
+                <tr>
+                    <td>Rendimento annualizzato indicativo</td>
+                    <td>Solo rivalutazione</td>
+                    <td>40%–100%+ da commissioni</td>
+                </tr>
+                <tr>
+                    <td>Operatività del mercato</td>
+                    <td>Lun–Ven, orari borsa</td>
+                    <td>24/7, inclusi weekend</td>
+                </tr>
+                <tr>
+                    <td>Custodia del capitale</td>
+                    <td>Presso il broker</td>
+                    <td>Nel tuo portafoglio</td>
+                </tr>
+                <tr>
+                    <td>Intermediari richiesti</td>
+                    <td>Broker, banca, depositario</td>
+                    <td>Nessuno (self-custody)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="note">
+            La detenzione classica e Turbo Range non si escludono a vicenda. È possibile 
+            destinare una parte del portafoglio al Turbo Range per generare rendimento aggiuntivo, 
+            mantenendo il resto in modalità tradizionale.
+        </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 7: CALCOLATORE -->
+    <section class="section" id="calcolatore">
+        <h2>7. Calcola i potenziali rendimenti</h2>
+
+        <p>
+            Per visualizzare la crescita del capitale nel tempo, è disponibile un 
+            <strong>calcolatore di interesse composto</strong> con tassi aggiornati in tempo reale 
+            dai pool di Turbo Range.
+        </p>
+
+        <p>
+            Lo strumento permette di impostare capitale iniziale, tasso di rendimento e orizzonte 
+            temporale, mostrando sia il saldo finale che il dettaglio anno per anno.
+        </p>
+
+        <a href="https://dgfans.io/tools" target="_blank" rel="noopener" class="tool-card">
+            <div class="tool-icon">
+                <svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            </div>
+            <div class="tool-text">
+                <h4>Calcolatore di Interesse Composto</h4>
+                <p>Simula la crescita del capitale con i tassi reali dei pool Turbo Range. Include grafico e dettaglio annuale.</p>
+            </div>
+            <span class="tool-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </span>
+        </a>
+
+        <p>
+            Il calcolatore è utile per rendere tangibile il potenziale del reinvestimento 
+            delle commissioni su orizzonti di 1, 3 o 5 anni.
+        </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 8: RISCHI -->
+    <section class="section" id="rischi">
+        <h2>8. Cosa considerare</h2>
+
+        <p>Turbo Range offre opportunità interessanti, ma è importante essere consapevoli di alcuni aspetti:</p>
+
+        <div class="scenarios">
+            <div class="scenario-card">
+                <span class="scenario-emoji">⚖️</span>
+                <div>
+                    <h4>Rischio di prezzo</h4>
+                    <p>Se il prezzo dell'asset scende sotto il range, la posizione si converte interamente nel token 
+                    e il valore in dollari sarà inferiore all'investimento iniziale. Per questo è consigliabile usare 
+                    Turbo Range solo su asset che sei disposto a detenere anche in caso di calo.</p>
+                </div>
+            </div>
+            <div class="scenario-card">
+                <span class="scenario-emoji">🔄</span>
+                <div>
+                    <h4>Gestione attiva opzionale</h4>
+                    <p>Se il prezzo esce dal range, la posizione smette di generare commissioni. 
+                    Puoi scegliere di aspettare, riallineare l'intervallo o chiudere la posizione. 
+                    Non c'è obbligo di intervento, ma un monitoraggio periodico è consigliato.</p>
+                </div>
+            </div>
+            <div class="scenario-card">
+                <span class="scenario-emoji">🌐</span>
+                <div>
+                    <h4>Contesto blockchain</h4>
+                    <p>I token azionari vivono su blockchain (Solana/Ethereum). Si interagisce tramite 
+                    un portafoglio digitale. L'app DeGate semplifica l'esperienza, ma resta un contesto 
+                    diverso dal conto titoli tradizionale.</p>
+                </div>
+            </div>
+            <div class="scenario-card">
+                <span class="scenario-emoji">📉</span>
+                <div>
+                    <h4>Rendimenti variabili</h4>
+                    <p>I rendimenti indicati (40-100%+) sono basati su dati storici e possono variare. 
+                    Periodi di bassa volatilità o basso volume di scambi producono commissioni inferiori.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- RIEPILOGO -->
+    <section class="section" id="riepilogo">
+        <h2>9. Riepilogo</h2>
+
+        <div class="callout">
+            <div class="callout-label">Il concetto in 30 secondi</div>
+            <p>
+                <strong>Le azioni on-chain non sono solo titoli: sono strumenti produttivi.</strong> 
+                Con Turbo Range, metti il tuo capitale a disposizione degli scambi 
+                e incassi una commissione su ogni operazione — come un cambiavalute digitale. 
+                Il risultato è un rendimento aggiuntivo rispetto alla sola rivalutazione del prezzo, 
+                attivo anche in mercati laterali, 24 ore su 24, senza intermediari, 
+                con i fondi sempre nel tuo portafoglio.
+            </p>
+        </div>
+
+        <p>
+            Per approfondimenti, simulazioni o contatti:
+        </p>
+
+        <ul style="margin: 16px 0 0 24px; color: var(--text-p);">
+            <li>📧 <a href="mailto:partnership@dgfans.io">partnership@dgfans.io</a></li>
+            <li>📊 <a href="https://dgfans.io/tools" target="_blank" rel="noopener">Calcolatore rendimenti</a></li>
+            <li>🚀 <a href="https://app.degate.com/turbo-range/?utm_source=landing_adv" target="_blank" rel="noopener">Prova Turbo Range</a></li>
+            <li>📱 <a href="https://app.degate.com/en/download?utm_source=landing_adv" target="_blank" rel="noopener">Scarica l'app DeGate</a></li>
+            <li>🌐 <a href="https://degate.com?utm_source=landing_adv" target="_blank" rel="noopener">Sito ufficiale DeGate</a></li>
+        </ul>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="doc-footer">
+        <div class="doc-footer-brand">
+            <img src="DEGATE LOGO.png" alt="DeGate">
+            <span>DeGate</span>
+        </div>
+        <div class="doc-footer-links">
+            <a href="https://degate.com?utm_source=landing_adv" target="_blank" rel="noopener">degate.com</a>
+            <a href="https://app.degate.com/turbo-range/?utm_source=landing_adv" target="_blank" rel="noopener">Turbo Range</a>
+            <a href="https://app.degate.com/en/download?utm_source=landing_adv" target="_blank" rel="noopener">Scarica App</a>
+            <a href="https://dgfans.io/tools" target="_blank" rel="noopener">Calcolatore</a>
+            <a href="https://x.com/DeGateWallet" target="_blank" rel="noopener">Twitter / X</a>
+            <a href="mailto:partnership@dgfans.io">partnership@dgfans.io</a>
+        </div>
+        <p class="disclaimer">
+            Questo documento ha scopo esclusivamente informativo e non costituisce consulenza finanziaria, 
+            raccomandazione d'investimento né sollecitazione all'acquisto di prodotti finanziari. I rendimenti 
+            passati non sono indicativi di risultati futuri. Gli investimenti in asset digitali comportano rischi, 
+            inclusa la possibile perdita del capitale investito. Si consiglia di valutare attentamente la propria 
+            situazione finanziaria prima di prendere decisioni d'investimento.
+        </p>
+        <p class="copyright">© 2025 DeGate. Tutti i diritti riservati.</p>
+    </footer>
+
+</article>
+
+<!-- POSITION ANIMATION SCRIPT -->
+<script>
+    const slider = document.getElementById('priceSlider');
+    const barToken = document.getElementById('barToken');
+    const barUsdc = document.getElementById('barUsdc');
+    const priceLabel = document.getElementById('priceLabel');
+    const priceStatus = document.getElementById('priceStatus');
+
+    slider.addEventListener('input', function() {
+        const val = parseInt(this.value);
+
+        let tokenPct, usdcPct, label, status;
+
+        if (val <= 10) {
+            // Below range
+            tokenPct = 100;
+            usdcPct = 0;
+            label = 'Sotto il range';
+            status = '🔴 Fuori range — nessuna commissione generata. Posizione: 100% token';
+        } else if (val >= 90) {
+            // Above range
+            tokenPct = 0;
+            usdcPct = 100;
+            label = 'Sopra il range';
+            status = '🟢 Fuori range — nessuna commissione generata. Posizione: 100% USDC';
+        } else {
+            // Inside range — linear interpolation
+            const normalized = (val - 10) / 80; // 0 to 1
+            tokenPct = Math.round(100 - normalized * 100);
+            usdcPct = 100 - tokenPct;
+
+            if (val < 30) label = 'Parte bassa del range';
+            else if (val > 70) label = 'Parte alta del range';
+            else label = 'Al centro del range';
+
+            status = '📊 Nel range — stai guadagnando commissioni';
+        }
+
+        barToken.style.width = Math.max(tokenPct, 0) + '%';
+        barUsdc.style.width = Math.max(usdcPct, 0) + '%';
+
+        barToken.textContent = tokenPct > 8 ? 'NVDA ' + tokenPct + '%' : '';
+        barUsdc.textContent = usdcPct > 8 ? 'USDC ' + usdcPct + '%' : '';
+
+        if (tokenPct === 0) {
+            barToken.style.width = '0%';
+            barToken.style.minWidth = '0';
+        } else {
+            barToken.style.minWidth = '60px';
+        }
+
+        if (usdcPct === 0) {
+            barUsdc.style.width = '0%';
+            barUsdc.style.minWidth = '0';
+        } else {
+            barUsdc.style.minWidth = '60px';
+        }
+
+        priceLabel.textContent = label;
+        priceStatus.textContent = status;
+    });
+</script>
+
+</body>
+</html>

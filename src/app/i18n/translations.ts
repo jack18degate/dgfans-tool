@@ -12,6 +12,7 @@ export interface Translations {
     tools: string;
     compoundInterest: string;
     turboRange: string;
+    turboRangeGuide: string;
     copyright: string;
     themeLight: string;
     themeDark: string;
@@ -122,6 +123,7 @@ const en: Translations = {
     tools: 'Tools',
     compoundInterest: 'Interest Calculator',
     turboRange: 'Turbo Range',
+    turboRangeGuide: 'Turbo Range Guide',
     copyright: '© 2026 DeGate Tools',
     themeLight: 'Light Theme',
     themeDark: 'Dark Theme',
@@ -232,6 +234,7 @@ const it: Translations = {
     tools: 'Strumenti',
     compoundInterest: 'Calcolatore Interesse',
     turboRange: 'Turbo Range',
+    turboRangeGuide: 'Guida Turbo Range',
     copyright: '© 2026 DeGate Tools',
     themeLight: 'Tema Chiaro',
     themeDark: 'Tema Scuro',
@@ -342,6 +345,7 @@ const es: Translations = {
     tools: 'Herramientas',
     compoundInterest: 'Calculadora Interés',
     turboRange: 'Turbo Range',
+    turboRangeGuide: 'Guía Turbo Range',
     copyright: '© 2026 DeGate Tools',
     themeLight: 'Tema Claro',
     themeDark: 'Tema Oscuro',
@@ -452,6 +456,7 @@ const zh: Translations = {
     tools: '工具',
     compoundInterest: '复利计算器',
     turboRange: 'Turbo Range',
+    turboRangeGuide: 'Turbo Range 指南',
     copyright: '© 2026 DeGate Tools',
     themeLight: '浅色模式',
     themeDark: '深色模式',
