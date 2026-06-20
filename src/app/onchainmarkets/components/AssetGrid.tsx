@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import FilterBar from './FilterBar';
 import AssetCard, { Asset } from './AssetCard';
 import AssetModal from './AssetModal';
@@ -18,6 +18,44 @@ export default function AssetGrid({ assets, metadata }: AssetGridProps) {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const { t } = useI18n();
   const ocm = (t as any).onchainmarkets || {};
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (!hash) return;
+
+      if (hash === '#etfs' || hash === '#etfall') {
+        setTypeFilter('ETFs');
+        setPlatformFilter('All');
+      } else if (hash === '#etfs-both') {
+        setTypeFilter('ETFs');
+        setPlatformFilter('Both');
+      } else if (hash === '#etfs-ondo') {
+        setTypeFilter('ETFs');
+        setPlatformFilter('Ondo');
+      } else if (hash === '#etfs-xstocks') {
+        setTypeFilter('ETFs');
+        setPlatformFilter('xStocks');
+      } else if (hash === '#stocks') {
+        setTypeFilter('Stocks');
+        setPlatformFilter('All');
+      } else if (hash === '#ondo') {
+        setTypeFilter('All');
+        setPlatformFilter('Ondo');
+      } else if (hash === '#xstocks') {
+        setTypeFilter('All');
+        setPlatformFilter('xStocks');
+      } else if (hash === '#both') {
+        setTypeFilter('All');
+        setPlatformFilter('Both');
+      }
+    };
+
+    handleHashChange();
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const filtered = useMemo(() => {
     let result = assets;
