@@ -19,6 +19,7 @@ export default function Navbar() {
     { href: '/tools', label: t.nav.turboRangeGuide || 'Turbo Range Guide', icon: Rocket, emoji: '🚀' },
     { href: '/compound', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
     { href: '/turbo', label: 'Turbo Range Analysis', icon: Zap, emoji: '⚡' },
+    { href: '/onchainmarkets', label: t.nav.onchainMarkets || 'On-Chain RWA Markets', icon: Globe, emoji: '🌐' },
   ];
 
   useEffect(() => {

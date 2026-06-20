@@ -16,6 +16,7 @@ export interface Translations {
     copyright: string;
     themeLight: string;
     themeDark: string;
+    onchainMarkets: string;
   };
   compound: {
     title: string;
@@ -116,6 +117,36 @@ export interface Translations {
     poolList: string;
     analysis: string;
   };
+  onchainmarkets: {
+    title: string;
+    subtitle: string;
+    loadingAssets: string;
+    searchPlaceholder: string;
+    all: string;
+    stocks: string;
+    etfs: string;
+    both: string;
+    showingAssets: string;
+    noAssetsFound: string;
+    details: string;
+    description: string;
+    swapCheckTitle: string;
+    buyOnDegate: string;
+    contractAddresses: string;
+    buyOnEthereum: string;
+    buyOnSolana: string;
+    checkingSwap: string;
+    swappable: string;
+    marketClosed: string;
+    noLiquidity: string;
+    notTradable: string;
+    noRoute: string;
+    checkFailed: string;
+    totalAssetsBadge: string;
+    stocksBadge: string;
+    etfsBadge: string;
+    crossPlatformBadge: string;
+  };
 }
 
 const en: Translations = {
@@ -127,6 +158,7 @@ const en: Translations = {
     copyright: '© 2026 DeGate Tools',
     themeLight: 'Light Theme',
     themeDark: 'Dark Theme',
+    onchainMarkets: 'On-Chain RWA Markets',
   },
   compound: {
     title: 'Compound Interest Calculator',
@@ -227,6 +259,36 @@ const en: Translations = {
     poolList: '📋 Pool List',
     analysis: '📊 Analysis',
   },
+  onchainmarkets: {
+    title: 'RWA Token Explorer',
+    subtitle: 'Explore tokenized real-world assets across Ondo Markets & xStocks',
+    loadingAssets: 'Loading assets...',
+    searchPlaceholder: 'Search by ticker, name, or ISIN...',
+    all: 'All',
+    stocks: 'Stocks',
+    etfs: 'ETFs',
+    both: 'Both',
+    showingAssets: 'Showing {count} of {total} assets',
+    noAssetsFound: 'No assets match your filters',
+    details: 'Details',
+    description: 'Description',
+    swapCheckTitle: 'Swap Check ($100 USDC)',
+    buyOnDegate: 'Buy on DeGate',
+    contractAddresses: 'Contract Addresses',
+    buyOnEthereum: '⟠ Buy {ticker} on Ethereum',
+    buyOnSolana: '◎ Buy {ticker} on Solana',
+    checkingSwap: 'Checking swap...',
+    swappable: 'Swappable',
+    marketClosed: 'Market Closed',
+    noLiquidity: 'No Liquidity',
+    notTradable: 'Not Tradable',
+    noRoute: 'No Route',
+    checkFailed: 'Check Failed',
+    totalAssetsBadge: '{count} Total Assets',
+    stocksBadge: '{count} Stocks',
+    etfsBadge: '{count} ETFs',
+    crossPlatformBadge: '{count} Cross-Platform',
+  },
 };
 
 const it: Translations = {
@@ -238,6 +300,7 @@ const it: Translations = {
     copyright: '© 2026 DeGate Tools',
     themeLight: 'Tema Chiaro',
     themeDark: 'Tema Scuro',
+    onchainMarkets: 'Mercati RWA On-Chain',
   },
   compound: {
     title: 'Calcolatore di Interesse Composto',
@@ -338,6 +401,36 @@ const it: Translations = {
     poolList: '📋 Lista Pool',
     analysis: '📊 Analisi',
   },
+  onchainmarkets: {
+    title: 'Esploratore RWA Token',
+    subtitle: 'Esplora gli asset reali tokenizzati su Ondo Markets e xStocks',
+    loadingAssets: 'Caricamento asset...',
+    searchPlaceholder: 'Cerca per ticker, nome, o ISIN...',
+    all: 'Tutti',
+    stocks: 'Azioni',
+    etfs: 'ETF',
+    both: 'Entrambi',
+    showingAssets: 'Mostrando {count} di {total} asset',
+    noAssetsFound: 'Nessun asset corrisponde ai filtri',
+    details: 'Dettagli',
+    description: 'Descrizione',
+    swapCheckTitle: 'Verifica Swap ($100 USDC)',
+    buyOnDegate: 'Acquista su DeGate',
+    contractAddresses: 'Indirizzi Smart Contract',
+    buyOnEthereum: '⟠ Acquista {ticker} su Ethereum',
+    buyOnSolana: '◎ Acquista {ticker} su Solana',
+    checkingSwap: 'Verifica swap...',
+    swappable: 'Scambiabile',
+    marketClosed: 'Mercato Chiuso',
+    noLiquidity: 'Nessuna Liquidità',
+    notTradable: 'Non Scambiabile',
+    noRoute: 'Nessuna Rotta',
+    checkFailed: 'Verifica Fallita',
+    totalAssetsBadge: '{count} Asset Totali',
+    stocksBadge: '{count} Azioni',
+    etfsBadge: '{count} ETF',
+    crossPlatformBadge: '{count} Cross-Platform',
+  },
 };
 
 const es: Translations = {
@@ -349,6 +442,7 @@ const es: Translations = {
     copyright: '© 2026 DeGate Tools',
     themeLight: 'Tema Claro',
     themeDark: 'Tema Oscuro',
+    onchainMarkets: 'Mercados RWA On-Chain',
   },
   compound: {
     title: 'Calculadora de Interés Compuesto',
@@ -449,6 +543,36 @@ const es: Translations = {
     poolList: '📋 Lista de Pools',
     analysis: '📊 Análisis',
   },
+  onchainmarkets: {
+    title: 'Explorador RWA Token',
+    subtitle: 'Explore activos tokenizados del mundo real en Ondo Markets y xStocks',
+    loadingAssets: 'Cargando activos...',
+    searchPlaceholder: 'Buscar por ticker, nombre o ISIN...',
+    all: 'Todos',
+    stocks: 'Acciones',
+    etfs: 'ETFs',
+    both: 'Ambos',
+    showingAssets: 'Mostrando {count} de {total} activos',
+    noAssetsFound: 'Ningún activo coincide con los filtros',
+    details: 'Detalles',
+    description: 'Descripción',
+    swapCheckTitle: 'Verificar Swap ($100 USDC)',
+    buyOnDegate: 'Comprar en DeGate',
+    contractAddresses: 'Direcciones de Contrato',
+    buyOnEthereum: '⟠ Comprar {ticker} en Ethereum',
+    buyOnSolana: '◎ Comprar {ticker} en Solana',
+    checkingSwap: 'Comprobando swap...',
+    swappable: 'Intercambiable',
+    marketClosed: 'Mercado Cerrado',
+    noLiquidity: 'Sin Liquidez',
+    notTradable: 'No Comercializable',
+    noRoute: 'Sin Ruta',
+    checkFailed: 'Comprobación Fallida',
+    totalAssetsBadge: '{count} Activos Totales',
+    stocksBadge: '{count} Acciones',
+    etfsBadge: '{count} ETFs',
+    crossPlatformBadge: '{count} Cross-Platform',
+  },
 };
 
 const zh: Translations = {
@@ -460,6 +584,7 @@ const zh: Translations = {
     copyright: '© 2026 DeGate Tools',
     themeLight: '浅色模式',
     themeDark: '深色模式',
+    onchainMarkets: '链上 RWA 市场',
   },
   compound: {
     title: '复利计算器',
@@ -559,6 +684,36 @@ const zh: Translations = {
     whaleScanPassive: '被动4小时扫描（公共网络）。刷新已禁用。',
     poolList: '📋 池列表',
     analysis: '📊 分析',
+  },
+  onchainmarkets: {
+    title: '链上 RWA 代币浏览器',
+    subtitle: '探索 Ondo Markets 和 xStocks 上的链上真实世界资产 (RWA)',
+    loadingAssets: '正在加载资产...',
+    searchPlaceholder: '按代币简称、名称或 ISIN 搜索...',
+    all: '全部',
+    stocks: '股票',
+    etfs: 'ETFs',
+    both: '双平台',
+    showingAssets: '显示 {count} / {total} 个资产',
+    noAssetsFound: '没有资产匹配您的筛选条件',
+    details: '代币详情',
+    description: '资产描述',
+    swapCheckTitle: '兑换检测 ($100 USDC)',
+    buyOnDegate: '在 DeGate 交易',
+    contractAddresses: '合约地址',
+    buyOnEthereum: '⟠ 在 Ethereum 购买 {ticker}',
+    buyOnSolana: '◎ 在 Solana 购买 {ticker}',
+    checkingSwap: '正在检测兑换路径...',
+    swappable: '可兑换',
+    marketClosed: '休市 (仅限交易时段)',
+    noLiquidity: '暂无流动性',
+    notTradable: '不可交易',
+    noRoute: '无兑换路径',
+    checkFailed: '检测失败',
+    totalAssetsBadge: '{count} 个总资产',
+    stocksBadge: '{count} 个股票',
+    etfsBadge: '{count} 个 ETFs',
+    crossPlatformBadge: '{count} 个双平台支持',
   },
 };
 

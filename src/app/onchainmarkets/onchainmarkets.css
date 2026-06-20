@@ -1,0 +1,574 @@
+/* Scoped Styles for RWA Explorer under .rwa-explorer */
+
+.rwa-explorer {
+  --bg-deepest: #0a0b0f;
+  --bg-surface: #12141a;
+  --bg-card: #1a1d26;
+  --bg-card-hover: #1f2330;
+  --accent: #4f8fff;
+  --accent-glow: rgba(79, 143, 255, 0.15);
+  --success: #00d68f;
+  --warning: #ffaa00;
+  --error: #ff4757;
+  --text-primary: #e8eaed;
+  --text-secondary: #8b8fa3;
+  --text-muted: #5a5e72;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --ondo-color: #4f8fff;
+  --ondo-bg: rgba(79, 143, 255, 0.12);
+  --xstocks-color: #00d68f;
+  --xstocks-bg: rgba(0, 214, 143, 0.12);
+  --stock-color: #a78bfa;
+  --stock-bg: rgba(167, 139, 250, 0.12);
+  --etf-color: #fb923c;
+  --etf-bg: rgba(251, 146, 60, 0.12);
+  --radius: 16px;
+  --radius-sm: 8px;
+  --radius-pill: 100px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding-bottom: 50px;
+}
+
+/* Light Theme overrides mapping to main theme variables */
+html[data-theme="light"] .rwa-explorer {
+  --bg-deepest: var(--background);
+  --bg-surface: var(--surface);
+  --bg-card: rgba(15, 23, 42, 0.035);
+  --bg-card-hover: rgba(15, 23, 42, 0.07);
+  --accent: #2563eb;
+  --accent-glow: rgba(37, 99, 235, 0.1);
+  --text-primary: var(--text-primary);
+  --text-secondary: var(--text-secondary);
+  --text-muted: var(--text-muted);
+  --border: var(--border);
+  --border-hover: var(--border-light);
+  --ondo-color: #2563eb;
+  --ondo-bg: rgba(37, 99, 235, 0.08);
+}
+
+/* ─── Container ─── */
+.rwa-explorer .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Header ─── */
+.rwa-explorer .header {
+  padding: 40px 0 24px;
+  text-align: center;
+}
+.rwa-explorer .header-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #a855f7, var(--success));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.rwa-explorer .header-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+.rwa-explorer .stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rwa-explorer .stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.rwa-explorer .stat-badge strong {
+  color: var(--text-primary);
+}
+
+/* ─── Filter Bar ─── */
+.rwa-explorer .filter-bar {
+  padding: 20px 0 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.rwa-explorer .search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+.rwa-explorer .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+.rwa-explorer .search-input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.rwa-explorer .search-input::placeholder {
+  color: var(--text-muted);
+}
+.rwa-explorer .search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.rwa-explorer .filter-group {
+  display: flex;
+  gap: 4px;
+}
+.rwa-explorer .filter-pill {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+.rwa-explorer .filter-pill:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+.rwa-explorer .filter-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.rwa-explorer .filter-pill.active-ondo {
+  background: var(--ondo-bg);
+  border-color: var(--ondo-color);
+  color: var(--ondo-color);
+}
+.rwa-explorer .filter-pill.active-xstocks {
+  background: var(--xstocks-bg);
+  border-color: var(--xstocks-color);
+  color: var(--xstocks-color);
+}
+.rwa-explorer .results-count {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-left: auto;
+}
+
+/* ─── Asset Grid ─── */
+.rwa-explorer .asset-grid {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 48px;
+  grid-template-columns: repeat(1, 1fr);
+}
+@media (min-width: 540px)  { .rwa-explorer .asset-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px)  { .rwa-explorer .asset-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1200px) { .rwa-explorer .asset-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* ─── Asset Card ─── */
+.rwa-explorer .asset-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.rwa-explorer .asset-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(79, 143, 255, 0.03), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.rwa-explorer .asset-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--border-hover);
+}
+.rwa-explorer .asset-card:hover::before {
+  opacity: 1;
+}
+.rwa-explorer .card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.rwa-explorer .card-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+}
+.rwa-explorer .card-logo-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+}
+.rwa-explorer .card-ticker {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.rwa-explorer .card-name {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 1;
+}
+.rwa-explorer .card-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Badges ─── */
+.rwa-explorer .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.rwa-explorer .badge-stock { background: var(--stock-bg); color: var(--stock-color); }
+.rwa-explorer .badge-etf { background: var(--etf-bg); color: var(--etf-color); }
+.rwa-explorer .badge-ondo { background: var(--ondo-bg); color: var(--ondo-color); }
+.rwa-explorer .badge-xstocks { background: var(--xstocks-bg); color: var(--xstocks-color); }
+
+/* ─── Modal ─── */
+.rwa-explorer .modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: rwaFadeIn 0.2s ease;
+}
+.rwa-explorer .modal-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 28px;
+  animation: rwaSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.rwa-explorer .modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+.rwa-explorer .modal-close:hover {
+  background: var(--error);
+  color: #fff;
+  border-color: var(--error);
+}
+.rwa-explorer .modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-right: 40px;
+}
+.rwa-explorer .modal-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+.rwa-explorer .modal-logo-fallback {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+}
+.rwa-explorer .modal-title-group h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: var(--text-primary);
+}
+.rwa-explorer .modal-title-group .modal-ticker {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.rwa-explorer .modal-section {
+  margin-bottom: 20px;
+}
+.rwa-explorer .modal-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.rwa-explorer .modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.rwa-explorer .modal-info-item {
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.rwa-explorer .modal-info-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.rwa-explorer .modal-info-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+.rwa-explorer .modal-description {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ─── Swap Status ─── */
+.rwa-explorer .swap-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.rwa-explorer .swap-check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.rwa-explorer .swap-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.rwa-explorer .swap-status.loading {
+  color: var(--text-muted);
+}
+.rwa-explorer .swap-status.swappable {
+  background: rgba(0, 214, 143, 0.12);
+  color: var(--success);
+}
+.rwa-explorer .swap-status.market-closed {
+  background: rgba(255, 170, 0, 0.12);
+  color: var(--warning);
+}
+.rwa-explorer .swap-status.no-liquidity,
+.rwa-explorer .swap-status.not-tradable {
+  background: rgba(255, 71, 87, 0.12);
+  color: var(--error);
+}
+.rwa-explorer .swap-status.error {
+  background: rgba(138, 143, 163, 0.12);
+  color: var(--text-muted);
+}
+.rwa-explorer .swap-price {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* ─── Spinner ─── */
+.rwa-explorer .spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: rwaSpin 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* ─── Buy Buttons ─── */
+.rwa-explorer .buy-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rwa-explorer .buy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+.rwa-explorer .buy-btn-eth {
+  background: linear-gradient(135deg, #4f8fff, #6366f1);
+  color: #fff;
+}
+.rwa-explorer .buy-btn-eth:hover {
+  box-shadow: 0 4px 20px rgba(79, 143, 255, 0.35);
+  transform: translateY(-1px);
+}
+.rwa-explorer .buy-btn-sol {
+  background: linear-gradient(135deg, #00d68f, #14b8a6);
+  color: #fff;
+}
+.rwa-explorer .buy-btn-sol:hover {
+  box-shadow: 0 4px 20px rgba(0, 214, 143, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ─── Loading State ─── */
+.rwa-explorer .loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  gap: 16px;
+}
+.rwa-explorer .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: rwaSpin 1s linear infinite;
+}
+.rwa-explorer .loading-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ─── Empty State ─── */
+.rwa-explorer .empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.rwa-explorer .empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.rwa-explorer .empty-state-text {
+  font-size: 1rem;
+}
+
+/* ─── Keyframes ─── */
+@keyframes rwaFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rwaSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes rwaSpin { to { transform: rotate(360deg); } }
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .rwa-explorer .header-title { font-size: 1.8rem; }
+  .rwa-explorer .header-subtitle { font-size: 0.9rem; }
+  .rwa-explorer .filter-bar { flex-direction: column; align-items: stretch; }
+  .rwa-explorer .search-wrapper { min-width: 100%; }
+  .rwa-explorer .filter-group { justify-content: center; }
+  .rwa-explorer .modal-content { padding: 20px; }
+  .rwa-explorer .modal-info-grid { grid-template-columns: 1fr; }
+}
