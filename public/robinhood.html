@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Robinhood Stock Tokens — Azioni on-chain in self-custody | DGfans</title>
+  <meta name="description" content="Guida completa ai Robinhood Stock Tokens: azioni on-chain in self-custody su Robinhood Chain. Struttura legale, come comprare, asset disponibili e sicurezza.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #5f6b7a;
+      --line: #d8dee8;
+      --paper: #ffffff;
+      --wash: #f4f7fb;
+      --blue: #245cff;
+      --blue-2: #6d8cff;
+      --mint: #d9ff63;
+      --green: #126b4d;
+      --violet: #7357ff;
+      --orange: #ff9f43;
+      --rh-green: #00c805;
+      --rh-dark: #1a1e23;
+      --rh-lime: #beee3c;
+      --shadow: 0 20px 55px rgba(31, 51, 91, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 4%, rgba(190, 238, 60, .14), transparent 30rem),
+        radial-gradient(circle at 15% 60%, rgba(109, 140, 255, .08), transparent 36rem),
+        linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .site { min-height: 100vh; overflow: hidden; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    /* ─── Nav ─── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1a1e23, #3c475b);
+      box-shadow: 0 10px 24px rgba(26, 30, 35, .25);
+    }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .nav-links { display: flex; gap: 24px; color: #445066; font-size: 14px; font-weight: 700; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .nav-cta, .button-primary {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
+    }
+    .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
+    .button-lime { color: #162718; background: var(--rh-lime); box-shadow: 0 12px 30px rgba(190,238,60,.25); }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
+
+    /* ─── Hero ─── */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr);
+      gap: 52px;
+      align-items: center;
+      padding: 70px 0 78px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 7px 11px;
+      color: #2d4a1d;
+      border: 1px solid #c5e89a;
+      border-radius: 999px;
+      background: #f0ffe0;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rh-green); box-shadow: 0 0 0 4px rgba(0,200,5,.13); }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -.065em;
+    }
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(92deg, #18331d, #78b320);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-copy {
+      max-width: 690px;
+      margin: 26px 0 0;
+      color: #526071;
+      font-size: 18px;
+    }
+    .hero-copy strong { color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .micro-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 28px;
+      color: #465267;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .micro-proof span { display: inline-flex; align-items: center; gap: 7px; }
+    .check { display: grid; width: 19px; height: 19px; place-items: center; color: #fff; border-radius: 50%; background: #1b9d73; font-size: 12px; }
+
+    /* ─── Hero Art ─── */
+    .hero-art {
+      position: relative;
+      min-height: 470px;
+      border: 1px solid rgba(187, 199, 220, .8);
+      border-radius: 34px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.96), rgba(240,255,230,.92)),
+        repeating-linear-gradient(90deg, transparent 0 29px, rgba(190,238,60,.06) 30px),
+        repeating-linear-gradient(0deg, transparent 0 29px, rgba(190,238,60,.06) 30px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -90px;
+      bottom: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(190,238,60,.55), rgba(190,238,60,0) 70%);
+    }
+    .wallet-card {
+      position: absolute;
+      inset: 82px 54px auto;
+      z-index: 2;
+      padding: 26px;
+      border: 1px solid #cfd8ea;
+      border-radius: 24px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 24px 50px rgba(40, 58, 95, .14);
+      backdrop-filter: blur(12px);
+    }
+    .wallet-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .wallet-label { color: #6a7484; font-size: 12px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .wallet-status { display: inline-flex; gap: 6px; align-items: center; color: #176a50; font-size: 12px; font-weight: 800; }
+    .wallet-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--rh-green); }
+    .wallet-value { margin-top: 11px; font-size: 36px; font-weight: 900; letter-spacing: -.05em; }
+    .token-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+    .token-mini { padding: 12px; border: 1px solid #dbe1ec; border-radius: 14px; background: #fafbfe; }
+    .token-mini strong, .token-mini span { display: block; }
+    .token-mini strong { font-size: 13px; }
+    .token-mini span { margin-top: 2px; color: #778193; font-size: 11px; }
+    .asset-orb {
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      width: 82px;
+      height: 82px;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 24px;
+      box-shadow: 0 18px 34px rgba(41,57,96,.19);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+    .orb-a { top: 27px; right: 42px; color: #fff; background: linear-gradient(145deg, #1a1e23, #3c475b); transform: rotate(6deg); }
+    .orb-b { right: 20px; bottom: 42px; color: #162718; background: linear-gradient(145deg, #beee3c, #78b320); transform: rotate(-6deg); }
+    .orb-c { left: 24px; bottom: 35px; color: #fff; background: linear-gradient(145deg, #111827, #334155); transform: rotate(4deg); }
+    .orbit {
+      position: absolute;
+      width: 290px;
+      height: 290px;
+      top: 60px;
+      left: 70px;
+      border: 1px dashed #bfc9dd;
+      border-radius: 50%;
+    }
+
+    /* ─── Sections ─── */
+    .section { padding: 72px 0; }
+    .section-tight { padding: 50px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+    .kicker { margin: 0 0 8px; color: var(--green); font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(31px, 4vw, 46px); line-height: 1.06; letter-spacing: -.05em; }
+    h3 { margin: 0; font-size: 22px; letter-spacing: -.035em; }
+    .section-lede { max-width: 620px; margin: 10px 0 0; color: var(--muted); }
+    .section-note { max-width: 360px; color: #6a7484; font-size: 13px; text-align: right; }
+
+    /* ─── What card ─── */
+    .what-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .what-card {
+      padding: 30px;
+      border: 1px solid #d1d9e6;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 14px 40px rgba(32,49,81,.08);
+    }
+    .what-card.highlight {
+      color: #fff;
+      border-color: #1a2435;
+      background: #111827;
+      box-shadow: 0 22px 52px rgba(16,24,40,.2);
+    }
+    .what-card.highlight p { color: #c4cbd6; }
+    .what-card.highlight .kicker { color: var(--rh-lime); }
+    .what-card p { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .what-icon {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      font-size: 24px;
+    }
+    .what-icon.green { color: #162718; background: #efffc2; }
+    .what-icon.dark { color: var(--rh-lime); background: #1e2632; }
+
+    /* ─── Legal structure ─── */
+    .legal-panel {
+      padding: 30px;
+      border: 1px solid #cbd4e2;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 96% 8%, rgba(190,238,60,.28), transparent 16rem),
+        linear-gradient(145deg, #ffffff, #f4f7ff);
+      box-shadow: 0 14px 40px rgba(32,49,81,.08);
+    }
+    .legal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .legal-card {
+      padding: 22px;
+      border: 1px solid #d4dbe7;
+      border-radius: 18px;
+      background: rgba(255,255,255,.85);
+    }
+    .legal-icon {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      margin-bottom: 14px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .03em;
+    }
+    .legal-icon.iss { color: #fff; background: #1a1e23; }
+    .legal-icon.cust { color: #fff; background: var(--green); }
+    .legal-icon.safe { color: #162718; background: var(--rh-lime); }
+    .legal-card label { display: block; margin-bottom: 4px; color: #778296; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .legal-card strong { display: block; color: #202a3c; font-size: 14px; line-height: 1.45; }
+    .legal-card span { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .trust-badge { display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-size: 13px; font-weight: 850; }
+    .shield {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      color: #fff;
+      border-radius: 9px;
+      background: var(--green);
+    }
+
+    /* ─── Comparison note ─── */
+    .comparison-note {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid #d4dbe7;
+      border-radius: 15px;
+      color: #526074;
+      background: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+    .comparison-note i {
+      display: grid;
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--green);
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    /* ─── Assets strip ─── */
+    .asset-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .asset-strip-6 { grid-template-columns: repeat(6, 1fr); }
+    .asset-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px;
+      border: 1px solid #d7dde7;
+      border-radius: 16px;
+      background: rgba(255,255,255,.78);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .asset-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(38,55,89,.1); }
+    .asset-icon {
+      display: grid;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      color: #fff;
+      border-radius: 13px;
+      background: #111827;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .asset-icon.green { color: #162718; background: linear-gradient(135deg, #beee3c, #78b320); }
+    .asset-icon.dark { background: linear-gradient(135deg, #1a1e23, #3c475b); }
+    .asset-icon.blue { background: linear-gradient(135deg, #245cff, #6d8cff); }
+    .asset-card strong, .asset-card span { display: block; }
+    .asset-card span { color: #778193; font-size: 12px; }
+
+    /* ─── How-to grid ─── */
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .flow-card {
+      padding: 28px;
+      border: 1px solid #d4dae5;
+      border-radius: 22px;
+      background: #fff;
+    }
+    .flow-card.featured {
+      color: #fff;
+      border-color: #1a2435;
+      background: #111827;
+      box-shadow: 0 22px 52px rgba(16,24,40,.2);
+    }
+    .flow-card.featured p, .flow-card.featured .step-copy { color: #c4cbd6; }
+    .flow-card.featured .step { border-color: #334155; }
+    .flow-card.featured .step-num { color: #162718; background: var(--rh-lime); }
+    .flow-card > p { margin: 9px 0 22px; color: var(--muted); font-size: 14px; }
+    .steps { display: grid; }
+    .step { display: grid; grid-template-columns: 34px 1fr; gap: 13px; padding: 15px 0; border-top: 1px solid #e2e6ed; }
+    .step-num { display: grid; width: 28px; height: 28px; place-items: center; color: #fff; border-radius: 9px; background: var(--green); font-size: 12px; font-weight: 900; }
+    .step-title { font-weight: 850; }
+    .step-copy { margin-top: 2px; color: #697587; font-size: 12px; }
+    .network-box {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid #364359;
+      border-radius: 13px;
+      background: #182235;
+      color: #d8e1ef;
+      font: 12px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    /* ─── Dividends table ─── */
+    .rights-panel {
+      padding: 30px;
+      border: 1px solid #cbd4e2;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 96% 8%, rgba(190,238,60,.28), transparent 16rem),
+        linear-gradient(145deg, #ffffff, #f4f7ff);
+      box-shadow: 0 14px 40px rgba(32,49,81,.08);
+    }
+    .rights-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    .rights-answer {
+      flex: 0 0 230px;
+      padding: 14px 16px;
+      border: 1px solid #cfe1d7;
+      border-radius: 14px;
+      background: rgba(255,255,255,.82);
+      color: #30513f;
+      font-size: 12px;
+    }
+    .rights-answer strong { display: block; color: #126b4d; font-size: 15px; }
+    .answer-yes, .answer-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .answer-yes { color: #126b4d; background: #d9f7ea; }
+    .answer-no { color: #8b3442; background: #ffe7eb; }
+    .table-scroll-hint { display: none; }
+
+    .table-wrap { width: 100%; overflow-x: auto; border-radius: 14px; }
+    table {
+      width: 100%;
+      min-width: 700px;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    th, td {
+      padding: 14px 13px;
+      border: 1px solid #cfd6e2;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+    th {
+      color: #34405a;
+      background: #eef2f8;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+    tbody tr:nth-child(even) td { background: #fafbfe; }
+    td strong { color: #172033; }
+    .table-link { color: #1d52dc; font-weight: 800; text-decoration: none; }
+    .table-link:hover { text-decoration: underline; }
+    .rights-footnote {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 14px 0 0;
+      color: #596679;
+      font-size: 12px;
+    }
+    .rights-footnote i {
+      display: grid;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      color: #fff;
+      border-radius: 7px;
+      background: var(--green);
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    /* ─── Timeline ─── */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid #cfd6e2;
+      border-radius: 18px;
+      background: #cfd6e2;
+    }
+    .time-card { min-height: 182px; padding: 22px; background: #fff; }
+    .time-card.best { background: linear-gradient(145deg, #f2ffe5, #f9fffc); }
+    .time-label { display: inline-flex; padding: 5px 8px; border-radius: 999px; color: #536075; background: #eef2f7; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .time-card.best .time-label { color: #126b4d; background: #d9f7ea; }
+    .time-card h3 { margin-top: 14px; }
+    .time-card p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+
+    /* ─── Safety ─── */
+    .safety {
+      display: grid;
+      grid-template-columns: .78fr 1.22fr;
+      gap: 28px;
+      align-items: start;
+      padding: 35px;
+      color: #fff;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 5% 10%, rgba(190,238,60,.25), transparent 24rem),
+        #101827;
+      box-shadow: 0 25px 60px rgba(16,24,40,.2);
+    }
+    .safety p { color: #c5cedb; }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .check-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+      font-size: 12px;
+    }
+    .check-item i { display: grid; width: 24px; height: 24px; place-items: center; color: #18321d; border-radius: 8px; background: var(--rh-lime); font-style: normal; font-weight: 900; }
+
+    /* ─── Links ─── */
+    .links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .link-card {
+      min-height: 104px;
+      padding: 17px;
+      border: 1px solid #d5dbe6;
+      border-radius: 16px;
+      background: #fff;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .link-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(38,55,89,.1); }
+    .link-card span { display: block; margin-bottom: 9px; color: #778193; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .link-card strong { font-size: 14px; }
+
+    /* ─── Footer ─── */
+    .footer { padding: 26px 0 42px; color: #748094; border-top: 1px solid #d8dee8; font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; }
+    .footer a { color: var(--green); font-weight: 700; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ─── Stats strip ─── */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 32px;
+      overflow: hidden;
+      border: 1px solid #cfd6e2;
+      border-radius: 18px;
+      background: #cfd6e2;
+    }
+    .stat-cell {
+      padding: 22px;
+      background: #fff;
+      text-align: center;
+    }
+    .stat-cell .stat-value {
+      display: block;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: var(--ink);
+    }
+    .stat-cell .stat-label {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 45px; }
+      .hero-art { min-height: 410px; }
+      .what-panel, .how-grid, .safety { grid-template-columns: 1fr; }
+      .legal-grid, .timeline { grid-template-columns: 1fr; }
+      .links { grid-template-columns: 1fr 1fr; }
+      .asset-strip { grid-template-columns: 1fr 1fr; }
+      .asset-strip-6 { grid-template-columns: 1fr 1fr; }
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .rights-head { align-items: flex-start; flex-direction: column; }
+      .rights-answer { flex-basis: auto; width: 100%; }
+      .section-note { text-align: left; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .nav-cta { display: none; }
+      .hero { padding: 34px 0 56px; }
+      h1 { font-size: 43px; }
+      .hero-copy { font-size: 16px; }
+      .hero-art { min-height: 360px; border-radius: 24px; }
+      .wallet-card { inset: 70px 20px auto; padding: 18px; }
+      .wallet-value { font-size: 28px; }
+      .token-row { gap: 6px; }
+      .token-mini { padding: 9px; }
+      .asset-orb { width: 62px; height: 62px; border-radius: 18px; font-size: 12px; }
+      .orb-a { right: 14px; }
+      .orb-b { right: 10px; bottom: 24px; }
+      .orb-c { left: 10px; bottom: 20px; }
+      .orbit { left: 20px; }
+      .section { padding: 54px 0; }
+      .legal-panel, .rights-panel, .flow-card, .safety { padding: 20px; }
+      .what-card { padding: 21px; }
+      .asset-strip, .asset-strip-6, .check-grid, .links { grid-template-columns: 1fr; }
+      .stat-strip { grid-template-columns: 1fr; }
+      .table-scroll-hint {
+        display: block;
+        margin: 0 0 8px;
+        color: #687489;
+        font-size: 11px;
+        font-weight: 800;
+        text-align: right;
+      }
+      .footer-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="shell">
+      <nav class="nav" aria-label="Navigazione principale">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M11 29c2-11 8-17 18-19-5 4-7 9-7 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" transform="translate(-6,-8) scale(.8)"/><path d="M14 31c3-7 8-11 15-12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" transform="translate(-6,-8) scale(.8)"/></svg>
+          </span>
+          DGfans
+        </a>
+        <div class="nav-links">
+          <a href="#cos-e">Cos'è</a>
+          <a href="#struttura">Struttura legale</a>
+          <a href="#asset">Asset</a>
+          <a href="#come-comprare">Come comprare</a>
+          <a href="#sicurezza">Sicurezza</a>
+        </div>
+        <a class="nav-cta" href="https://robinhood.com/rhj/stocktokens/">Scopri di più ↗</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- ═══ HERO ═══ -->
+      <section class="shell hero">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Robinhood Stock Tokens · 2026</div>
+          <h1>Azioni on-chain.<br><span class="gradient-text">Self-custody.</span><br>Per tutti.</h1>
+          <p class="hero-copy">
+            Robinhood porta le azioni di Wall Street on-chain. Con gli <strong>Stock Tokens</strong> puoi comprare, vendere e
+            conservare azioni tokenizzate <strong>nel tuo wallet</strong>, senza intermediari, senza conto titoli.
+            Chiunque, ovunque nel mondo, può accedere ai mercati americani.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://robinhood.com/rhj/stocktokens/">Esplora gli asset</a>
+            <a class="button button-secondary" href="#come-comprare">Come comprare →</a>
+          </div>
+          <div class="micro-proof">
+            <span><i class="check">✓</i> Self-custody wallet</span>
+            <span><i class="check">✓</i> Copertura 1:1</span>
+            <span><i class="check">✓</i> 2000+ titoli</span>
+            <span><i class="check">✓</i> Trading 24/7</span>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Illustrazione di un wallet con Robinhood Stock Tokens">
+          <div class="orbit"></div>
+          <div class="wallet-card">
+            <div class="wallet-top">
+              <span class="wallet-label">Self-custody portfolio</span>
+              <span class="wallet-status">On-chain</span>
+            </div>
+            <div class="wallet-value">$ 8,240.35</div>
+            <div class="token-row">
+              <div class="token-mini"><strong>AAPL</strong><span>Robinhood</span></div>
+              <div class="token-mini"><strong>NVDA</strong><span>Robinhood</span></div>
+              <div class="token-mini"><strong>SPY</strong><span>Robinhood</span></div>
+            </div>
+          </div>
+          <div class="asset-orb orb-a">AAPL</div>
+          <div class="asset-orb orb-b">NVDA</div>
+          <div class="asset-orb orb-c">TSLA</div>
+        </div>
+      </section>
+
+      <!-- ═══ COS'È ═══ -->
+      <section class="shell section-tight" id="cos-e">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Cosa sono</p>
+            <h2>Azioni tokenizzate su blockchain</h2>
+            <p class="section-lede">I Robinhood Stock Tokens sono titoli di debito tokenizzati (ERC-20) emessi da una società dedicata a Jersey. Ogni token è coperto 1:1 da azioni reali custodite da un broker regolamentato negli Stati Uniti.</p>
+          </div>
+        </div>
+
+        <div class="what-panel">
+          <article class="what-card">
+            <div class="what-icon green">🔓</div>
+            <h3>Self-custody reale</h3>
+            <p>A differenza dei "classic stock tokens" sulla app Robinhood EU, i nuovi token sono standard ERC-20 su <strong>Robinhood Chain</strong> (L2 Arbitrum). Puoi trasferirli, tenerli nel tuo wallet o spostarli su altre chain. Le chiavi private restano tue.</p>
+          </article>
+          <article class="what-card highlight">
+            <div class="what-icon dark">🌍</div>
+            <p class="kicker">Accessibilità globale</p>
+            <h3>Chiunque può comprare</h3>
+            <p>Non serve un conto titoli. Non serve essere residenti in un paese specifico. Basta un wallet EVM e USDC (o USDG) per accedere ad <strong>oltre 2.000 azioni ed ETF americani</strong>. Il mercato è aperto 24/7.</p>
+          </article>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat-cell">
+            <span class="stat-value">2000+</span>
+            <span class="stat-label">Azioni ed ETF</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-value">1:1</span>
+            <span class="stat-label">Copertura sottostante</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-value">24/7</span>
+            <span class="stat-label">Trading on-chain</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-value">ERC-20</span>
+            <span class="stat-label">Standard token</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ STRUTTURA LEGALE ═══ -->
+      <section class="shell section" id="struttura">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Struttura e fiducia</p>
+            <h2>Come funziona legalmente</h2>
+            <p class="section-lede">I Robinhood Stock Tokens sono emessi come titoli di debito da un'entità dedicata registrata a Jersey (Channel Islands), con azioni reali in custodia presso un broker regolamentato negli USA.</p>
+          </div>
+          <div class="trust-badge"><span class="shield">✓</span> Copertura 1:1 verificabile</div>
+        </div>
+
+        <div class="legal-panel">
+          <h3>Come è strutturato il prodotto</h3>
+          <p style="margin: 10px 0 0; color: var(--muted); font-size: 14px;">Ogni layer della struttura separa il rischio e protegge l'investitore.</p>
+
+          <div class="legal-grid">
+            <article class="legal-card">
+              <div class="legal-icon iss">ISS</div>
+              <label>Emittente</label>
+              <strong>Robinhood Assets (Jersey) Limited</strong>
+              <span>Società dedicata (SPV) registrata a Jersey. Emette i titoli di debito tokenizzati che seguono il valore delle azioni sottostanti.</span>
+            </article>
+            <article class="legal-card">
+              <div class="legal-icon cust">CUST</div>
+              <label>Custode / Broker</label>
+              <strong>Alpaca Securities LLC</strong>
+              <span>Broker-dealer registrato negli USA. Detiene le azioni reali che fanno da sottostante ai token, in conti segregati.</span>
+            </article>
+            <article class="legal-card">
+              <div class="legal-icon safe">SAFE</div>
+              <label>Agente di sicurezza</label>
+              <strong>Security Agent Services AG</strong>
+              <span>Soggetto terzo indipendente che funge da garanzia per i detentori dei token in caso di insolvenza dell'emittente.</span>
+            </article>
+          </div>
+
+          <div class="comparison-note" style="margin-top: 22px;">
+            <i>i</i>
+            <span>Il token offre <strong>esposizione economica</strong> al titolo sottostante, ma non rende l'utente azionista diretto della società quotata. Non si acquisiscono diritti di voto. I dividendi vengono reinvestiti automaticamente — il multiplier del token aumenta.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ ASSET DISPONIBILI ═══ -->
+      <section class="shell section-tight" id="asset">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Asset disponibili</p>
+            <h2>Oltre 2.000 azioni ed ETF</h2>
+            <p class="section-lede">Da Apple a Tesla, da SPY a MSFT. La gamma più ampia di azioni tokenizzate on-chain, tutte negoziabili dalla stessa interfaccia.</p>
+          </div>
+        </div>
+
+        <div class="asset-strip asset-strip-6">
+          <div class="asset-card">
+            <div class="asset-icon dark">AAPL</div>
+            <div><strong>Apple</strong><span>AAPL</span></div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-icon green">NVDA</div>
+            <div><strong>NVIDIA</strong><span>NVDA</span></div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-icon dark">MSFT</div>
+            <div><strong>Microsoft</strong><span>MSFT</span></div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-icon blue">TSLA</div>
+            <div><strong>Tesla</strong><span>TSLA</span></div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-icon green">SPY</div>
+            <div><strong>S&P 500 ETF</strong><span>SPY</span></div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-icon dark">AMZN</div>
+            <div><strong>Amazon</strong><span>AMZN</span></div>
+          </div>
+        </div>
+        <div class="comparison-note" style="margin-top: 16px;">
+          <i>+</i>
+          <span>E molti altri: GOOGL, META, AMD, COIN, QQQ e oltre 2.000 titoli. Consulta la <a href="https://robinhood.com/rhj/stocktokens/" class="table-link">lista completa su Robinhood</a>.</span>
+        </div>
+      </section>
+
+      <!-- ═══ DIVIDENDI ═══ -->
+      <section class="shell section-tight" id="dividendi">
+        <div class="rights-panel">
+          <div class="rights-head">
+            <div>
+              <p class="kicker">Dividendi e diritti</p>
+              <h2>Il dividendo viene reinvestito.<br>Il voto non passa al token.</h2>
+              <p class="section-lede">Se il titolo sottostante paga un dividendo, il beneficio economico viene trasferito al token. Non arriva un pagamento cash separato nel wallet.</p>
+            </div>
+            <div class="rights-answer"><strong>Cash nel wallet? No.</strong>Il dividendo viene reinvestito per comprare altre azioni, aumentando il multiplier del token.</div>
+          </div>
+          <p class="table-scroll-hint">Scorri la tabella verso destra →</p>
+          <div class="table-wrap">
+            <table aria-label="Dividendi e diritti di voto dei Robinhood Stock Tokens">
+              <colgroup>
+                <col style="width:18%">
+                <col style="width:14%">
+                <col style="width:30%">
+                <col style="width:24%">
+                <col style="width:14%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Aspetto</th>
+                  <th>Presente?</th>
+                  <th>Come funziona</th>
+                  <th>Effetto nel wallet</th>
+                  <th>Diritto di voto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Dividendo</strong></td>
+                  <td><span class="answer-yes">Sì*</span></td>
+                  <td>Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni del titolo sottostante.</td>
+                  <td>Aumenta il <strong>multiplier</strong>, quindi ogni token rappresenta progressivamente più azioni sottostanti.</td>
+                  <td><span class="answer-no">No</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Stock split</strong></td>
+                  <td><span class="answer-yes">Sì</span></td>
+                  <td>Il rapporto di split viene riflesso aggiornando il multiplier del token.</td>
+                  <td>Il numero di azioni rappresentate per token cambia di conseguenza.</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><strong>Corporate actions</strong></td>
+                  <td><span class="answer-yes">Sì</span></td>
+                  <td>Fusioni, acquisizioni e altre azioni corporate vengono gestite dall'emittente secondo i Final Terms.</td>
+                  <td>Il token si adatta alla nuova struttura del sottostante.</td>
+                  <td><span class="answer-no">No</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="rights-footnote"><i>i</i><span>* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l'importo reinvestito. Fonte: <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood Stock Tokens</a>.</span></p>
+        </div>
+      </section>
+
+      <!-- ═══ COME COMPRARE ═══ -->
+      <section class="shell section" id="come-comprare">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Istruzioni pratiche</p>
+            <h2>Dal wallet al primo acquisto</h2>
+            <p class="section-lede">Due percorsi: la DEX su Robinhood Chain oppure le DEX/aggregatori su chain principali.</p>
+          </div>
+        </div>
+
+        <div class="how-grid">
+          <article class="flow-card featured">
+            <h3>Percorso diretto: Robinhood Chain</h3>
+            <p>Compra direttamente su Robinhood Chain usando un wallet EVM e un bridge.</p>
+            <div class="network-box">
+              Chain ID: 4663<br>
+              RPC: https://rpc.mainnet.chain.robinhood.com/<br>
+              Gas: ETH<br>
+              Explorer: robinhoodchain.blockscout.com
+            </div>
+            <div class="steps">
+              <div class="step"><span class="step-num">1</span><div><div class="step-title">Wallet EVM</div><div class="step-copy">Usa Rabby, MetaMask, Trust Wallet o Robinhood Wallet. Aggiungi Robinhood Chain come rete personalizzata.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title">Bridge su Robinhood Chain</div><div class="step-copy">Usa il Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper per portare fondi sulla chain.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title">Porta ETH + USDG</div><div class="step-copy">ETH per il gas; USDG (o la valuta accettata dalla pool) per comprare i token.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title">Compra su Uniswap o 1inch</div><div class="step-copy">Confronta il contratto con la lista ufficiale di Robinhood prima di firmare la transazione.</div></div></div>
+            </div>
+          </article>
+
+          <article class="flow-card">
+            <h3>Percorso alternativo: aggregatori</h3>
+            <p>Se i token sono disponibili anche su chain come Ethereum o Arbitrum, puoi usare aggregatori.</p>
+            <div class="steps">
+              <div class="step"><span class="step-num">1</span><div><div class="step-title">Prepara il wallet</div><div class="step-copy">Qualsiasi wallet EVM con USDC, USDG o ETH.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title">Cerca il token</div><div class="step-copy">Usa il contratto ufficiale dalla documentazione Robinhood. Non fidarti solo del ticker.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title">Controlla la liquidità</div><div class="step-copy">Verifica spread, price impact e volume. Preferisci gli orari di borsa USA aperta.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title">Ordine di prova</div><div class="step-copy">Inizia sempre con una piccola cifra per verificare che tutto funzioni correttamente.</div></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ═══ ORARI ═══ -->
+      <section class="shell section-tight">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Orari</p>
+            <h2>Quando conviene comprare</h2>
+          </div>
+        </div>
+        <div class="timeline">
+          <article class="time-card best">
+            <span class="time-label">Consigliato</span>
+            <h3>15:30–22:00</h3>
+            <p>Borsa USA aperta: spread più stretti e prezzo più vicino al titolo sottostante.</p>
+          </article>
+          <article class="time-card">
+            <span class="time-label">Più prudenza</span>
+            <h3>Pre / after-market</h3>
+            <p>Meno market maker attivi. Spread più ampi, riduci la dimensione dell'ordine.</p>
+          </article>
+          <article class="time-card">
+            <span class="time-label">Rischio elevato</span>
+            <h3>Weekend</h3>
+            <p>Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura del venerdì.</p>
+          </article>
+        </div>
+        <p class="section-lede">Italia e Stati Uniti cambiano l'ora legale in date diverse: per alcune settimane l'apertura USA può spostarsi di un'ora.</p>
+      </section>
+
+      <!-- ═══ SICUREZZA ═══ -->
+      <section class="shell section" id="sicurezza">
+        <div class="safety">
+          <div>
+            <p class="kicker" style="color: var(--rh-lime);">Checklist</p>
+            <h2>Riduci il rischio prima di firmare</h2>
+            <p>Il rischio principale è comprare il token sbagliato o pagare troppo quando la liquidità è bassa. Segui questa checklist.</p>
+          </div>
+          <div class="check-grid">
+            <div class="check-item"><i>1</i><span><strong>Contratto ufficiale.</strong><br>Confronta sempre con la lista pubblicata su Robinhood.</span></div>
+            <div class="check-item"><i>2</i><span><strong>Orario USA.</strong><br>Preferisci 15:30–22:00 per spread competitivi.</span></div>
+            <div class="check-item"><i>3</i><span><strong>Spread e price impact.</strong><br>Riduci l'ordine se sono elevati.</span></div>
+            <div class="check-item"><i>4</i><span><strong>Bridge supportato.</strong><br>Usa solo bridge verificati: Relay, Across, Stargate, LI.FI.</span></div>
+            <div class="check-item"><i>5</i><span><strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.</span></div>
+            <div class="check-item"><i>6</i><span><strong>Gas separato.</strong><br>Conserva ETH per le transazioni su Robinhood Chain.</span></div>
+            <div class="check-item"><i>7</i><span><strong>Non è proprietà diretta.</strong><br>Hai esposizione economica, non diritti di azionista.</span></div>
+            <div class="check-item"><i>8</i><span><strong>Weekend.</strong><br>24/7 non significa liquidità garantita.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ LINK UFFICIALI ═══ -->
+      <section class="shell section-tight">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Link ufficiali</p>
+            <h2>Verifica prima di comprare</h2>
+          </div>
+        </div>
+        <div class="links">
+          <a class="link-card" href="https://robinhood.com/rhj/stocktokens/"><span>Robinhood</span><strong>Stock Tokens</strong></a>
+          <a class="link-card" href="https://docs.robinhood.com/chain/contracts/"><span>Contratti</span><strong>Token contracts</strong></a>
+          <a class="link-card" href="https://robinhoodchain.blockscout.com/"><span>Explorer</span><strong>Blockscout</strong></a>
+          <a class="link-card" href="/"><span>DGfans</span><strong>← Torna alla home</strong></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <div class="footer-row">
+        <span>Guida informativa aggiornata al 14 luglio 2026. · <a href="/">DGfans.io</a></span>
+        <span>Non costituisce consulenza finanziaria, legale o fiscale.</span>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
