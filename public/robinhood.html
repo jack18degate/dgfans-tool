@@ -123,6 +123,27 @@
       transform: translateY(-2px);
     }
 
+    /* ─── Lang Toggle ─── */
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      font-family: inherit;
+    }
+    .lang-toggle:hover {
+      border-color: var(--neon);
+      background: var(--neon-dim);
+    }
+
     /* ─── Brand Intro ─── */
     .brand-intro {
       position: relative;
@@ -1049,13 +1070,16 @@
           DGfans
         </a>
         <div class="nav-links">
-          <a href="#cos-e">Cos'è</a>
-          <a href="#struttura">Struttura legale</a>
-          <a href="#asset">Asset</a>
-          <a href="#come-comprare">Come comprare</a>
-          <a href="#sicurezza">Sicurezza</a>
+          <a href="#cos-e" data-i18n="navCose">Cos'è</a>
+          <a href="#struttura" data-i18n="navStruttura">Struttura legale</a>
+          <a href="#asset" data-i18n="navAsset">Asset</a>
+          <a href="#come-comprare" data-i18n="navCome">Come comprare</a>
+          <a href="#sicurezza" data-i18n="navSicurezza">Sicurezza</a>
         </div>
-        <a class="nav-cta" href="https://robinhood.com/rhj/stocktokens/">Scopri di più ↗</a>
+        <button class="lang-toggle" onclick="setLang(currentLang==='it'?'en':'it')" aria-label="Cambia lingua">
+          <span class="lang-flag" data-lang-label></span>
+        </button>
+        <a class="nav-cta" href="https://robinhood.com/rhj/stocktokens/" data-i18n="navCta">Scopri di più ↗</a>
       </nav>
     </header>
 
@@ -1066,27 +1090,27 @@
           <img src="/robinhood-logo.png" alt="Robinhood" style="width:100px;height:100px;border-radius:22px;box-shadow:0 8px 32px rgba(0,200,5,.2);">
         </div>
         <div class="brand-intro-content">
-          <div class="brand-intro-kicker">Chi è Robinhood</div>
-          <h2>La fintech che ha <span>democratizzato la finanza</span></h2>
-          <p>
+          <div class="brand-intro-kicker" data-i18n="brandKicker">Chi è Robinhood</div>
+          <h2 data-i18n="brandH2">La fintech che ha <span>democratizzato la finanza</span></h2>
+          <p data-i18n="brandParagraph">
             Fondata nel <strong>2013</strong> da <strong>Vlad Tenev</strong> e <strong>Baiju Bhatt</strong>, Robinhood è nata con una missione chiara: rendere i mercati finanziari accessibili a tutti. Ha rivoluzionato il settore introducendo il <strong>trading senza commissioni</strong> sulle azioni, aprendo la strada a una nuova generazione di investitori. Oggi Robinhood è una delle più grandi <strong>fintech al mondo</strong>, quotata al <strong>NASDAQ (HOOD)</strong>, con oltre <strong>24 milioni di utenti</strong>. La piattaforma si è espansa in <strong>crypto, opzioni, conti pensionistici</strong> e ora entra nell'era on-chain con gli <strong>Stock Tokens</strong> — azioni tokenizzate in self-custody.
           </p>
           <div class="brand-stats">
             <div class="brand-stat">
               <span class="brand-stat-value">2013</span>
-              <span class="brand-stat-label">Fondata</span>
+              <span class="brand-stat-label" data-i18n="brandStatFondata">Fondata</span>
             </div>
             <div class="brand-stat">
               <span class="brand-stat-value">HOOD</span>
-              <span class="brand-stat-label">Nasdaq</span>
+              <span class="brand-stat-label" data-i18n="brandStatNasdaq">Nasdaq</span>
             </div>
             <div class="brand-stat">
               <span class="brand-stat-value">24M+</span>
-              <span class="brand-stat-label">Utenti</span>
+              <span class="brand-stat-label" data-i18n="brandStatUtenti">Utenti</span>
             </div>
             <div class="brand-stat">
               <span class="brand-stat-value">$0</span>
-              <span class="brand-stat-label">Commissioni</span>
+              <span class="brand-stat-label" data-i18n="brandStatCommissioni">Commissioni</span>
             </div>
           </div>
         </div>
@@ -1097,22 +1121,22 @@
       <!-- ═══ HERO ═══ -->
       <section class="shell hero">
         <div>
-          <div class="eyebrow"><span class="eyebrow-dot"></span> Robinhood Stock Tokens · 2026</div>
-          <h1>Azioni on-chain.<br><span class="gradient-text">Self-custody.</span><br>Per tutti.</h1>
-          <p class="hero-copy">
+          <div class="eyebrow" data-i18n="heroEyebrow"><span class="eyebrow-dot"></span> Robinhood Stock Tokens · 2026</div>
+          <h1 data-i18n="heroH1">Azioni on-chain.<br><span class="gradient-text">Self-custody.</span><br>Per tutti.</h1>
+          <p class="hero-copy" data-i18n="heroCopy">
             Robinhood porta le azioni di Wall Street on-chain. Con gli <strong>Stock Tokens</strong> puoi comprare, vendere e
             conservare azioni tokenizzate <strong>nel tuo wallet</strong>, senza intermediari, senza conto titoli.
             Chiunque, ovunque nel mondo, può accedere ai mercati americani.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#come-comprare">Come comprare →</a>
-            <a class="button button-secondary" href="https://robinhood.com/rhj/stocktokens/" target="_blank" rel="noopener">Sito ufficiale ↗</a>
+            <a class="button button-primary" href="#come-comprare" data-i18n="heroBtnBuy">Come comprare →</a>
+            <a class="button button-secondary" href="https://robinhood.com/rhj/stocktokens/" target="_blank" rel="noopener" data-i18n="heroBtnSite">Sito ufficiale ↗</a>
           </div>
           <div class="micro-proof">
-            <span><i class="check">✓</i> Self-custody wallet</span>
-            <span><i class="check">✓</i> Copertura 1:1</span>
-            <span><i class="check">✓</i> 2000+ titoli</span>
-            <span><i class="check">✓</i> Trading 24/7</span>
+            <span data-i18n="microSelfCustody"><i class="check">✓</i> Self-custody wallet</span>
+            <span data-i18n="microCopertura"><i class="check">✓</i> Copertura 1:1</span>
+            <span data-i18n="microTitoli"><i class="check">✓</i> 2000+ titoli</span>
+            <span data-i18n="microTrading"><i class="check">✓</i> Trading 24/7</span>
           </div>
         </div>
 
@@ -1142,42 +1166,42 @@
       <section class="shell section-tight" id="cos-e">
         <div class="section-head">
           <div>
-            <p class="kicker">Cosa sono</p>
-            <h2>Azioni tokenizzate su blockchain</h2>
-            <p class="section-lede">I Robinhood Stock Tokens sono titoli di debito tokenizzati (ERC-20) emessi da una società dedicata a Jersey. Ogni token è coperto 1:1 da azioni reali custodite da un broker regolamentato negli Stati Uniti.</p>
+            <p class="kicker" data-i18n="coseKicker">Cosa sono</p>
+            <h2 data-i18n="coseH2">Azioni tokenizzate su blockchain</h2>
+            <p class="section-lede" data-i18n="coseLede">I Robinhood Stock Tokens sono titoli di debito tokenizzati (ERC-20) emessi da una società dedicata a Jersey. Ogni token è coperto 1:1 da azioni reali custodite da un broker regolamentato negli Stati Uniti.</p>
           </div>
         </div>
 
         <div class="what-panel">
           <article class="what-card">
             <div class="what-icon green">🔓</div>
-            <h3>Self-custody reale</h3>
-            <p>A differenza dei "classic stock tokens" sulla app Robinhood EU, i nuovi token sono standard ERC-20 su <strong>Robinhood Chain</strong> (L2 Arbitrum). Puoi trasferirli, tenerli nel tuo wallet o spostarli su altre chain. Le chiavi private restano tue.</p>
+            <h3 data-i18n="whatCard1H3">Self-custody reale</h3>
+            <p data-i18n="whatCard1P">A differenza dei "classic stock tokens" sulla app Robinhood EU, i nuovi token sono standard ERC-20 su <strong>Robinhood Chain</strong> (L2 Arbitrum). Puoi trasferirli, tenerli nel tuo wallet o spostarli su altre chain. Le chiavi private restano tue.</p>
           </article>
           <article class="what-card highlight">
             <div class="what-icon dark">🌍</div>
-            <p class="kicker">Accessibilità globale</p>
-            <h3>Chiunque può comprare</h3>
-            <p>Non serve un conto titoli. Non serve essere residenti in un paese specifico. Basta un wallet EVM e USDC (o USDG) per accedere ad <strong>oltre 2.000 azioni ed ETF americani</strong>. Il mercato è aperto 24/7.</p>
+            <p class="kicker" data-i18n="whatCard2Kicker">Accessibilità globale</p>
+            <h3 data-i18n="whatCard2H3">Chiunque può comprare</h3>
+            <p data-i18n="whatCard2P">Non serve un conto titoli. Non serve essere residenti in un paese specifico. Basta un wallet EVM e USDC (o USDG) per accedere ad <strong>oltre 2.000 azioni ed ETF americani</strong>. Il mercato è aperto 24/7.</p>
           </article>
         </div>
 
         <div class="stat-strip">
           <div class="stat-cell">
             <span class="stat-value">2000+</span>
-            <span class="stat-label">Azioni ed ETF</span>
+            <span class="stat-label" data-i18n="statAzioni">Azioni ed ETF</span>
           </div>
           <div class="stat-cell">
             <span class="stat-value">1:1</span>
-            <span class="stat-label">Copertura sottostante</span>
+            <span class="stat-label" data-i18n="statCopertura">Copertura sottostante</span>
           </div>
           <div class="stat-cell">
             <span class="stat-value">24/7</span>
-            <span class="stat-label">Trading on-chain</span>
+            <span class="stat-label" data-i18n="statTrading">Trading on-chain</span>
           </div>
           <div class="stat-cell">
             <span class="stat-value">ERC-20</span>
-            <span class="stat-label">Standard token</span>
+            <span class="stat-label" data-i18n="statToken">Standard token</span>
           </div>
         </div>
       </section>
@@ -1188,41 +1212,41 @@
       <section class="shell section" id="struttura">
         <div class="section-head">
           <div>
-            <p class="kicker">Struttura e fiducia</p>
-            <h2>Come funziona legalmente</h2>
-            <p class="section-lede">I Robinhood Stock Tokens sono emessi come titoli di debito da un'entità dedicata registrata a Jersey (Channel Islands), con azioni reali in custodia presso un broker regolamentato negli USA.</p>
+            <p class="kicker" data-i18n="legalKicker">Struttura e fiducia</p>
+            <h2 data-i18n="legalH2">Come funziona legalmente</h2>
+            <p class="section-lede" data-i18n="legalLede">I Robinhood Stock Tokens sono emessi come titoli di debito da un'entità dedicata registrata a Jersey (Channel Islands), con azioni reali in custodia presso un broker regolamentato negli USA.</p>
           </div>
-          <div class="trust-badge"><span class="shield">✓</span> Copertura 1:1 verificabile</div>
+          <div class="trust-badge" data-i18n="trustBadge"><span class="shield">✓</span> Copertura 1:1 verificabile</div>
         </div>
 
         <div class="legal-panel">
-          <h3>Come è strutturato il prodotto</h3>
-          <p style="margin: 10px 0 0; color: var(--text-secondary); font-size: 14px;">Ogni layer della struttura separa il rischio e protegge l'investitore.</p>
+          <h3 data-i18n="legalPanelH3">Come è strutturato il prodotto</h3>
+          <p style="margin: 10px 0 0; color: var(--text-secondary); font-size: 14px;" data-i18n="legalPanelSub">Ogni layer della struttura separa il rischio e protegge l'investitore.</p>
 
           <div class="legal-grid">
             <article class="legal-card">
               <div class="legal-icon iss">ISS</div>
-              <label>Emittente</label>
+              <label data-i18n="legalLabelEmittente">Emittente</label>
               <strong>Robinhood Assets (Jersey) Limited</strong>
-              <span>Società dedicata (SPV) registrata a Jersey. Emette i titoli di debito tokenizzati che seguono il valore delle azioni sottostanti.</span>
+              <span data-i18n="legalDescEmittente">Società dedicata (SPV) registrata a Jersey. Emette i titoli di debito tokenizzati che seguono il valore delle azioni sottostanti.</span>
             </article>
             <article class="legal-card">
               <div class="legal-icon cust">CUST</div>
-              <label>Custode / Broker</label>
+              <label data-i18n="legalLabelCustode">Custode / Broker</label>
               <strong>Alpaca Securities LLC</strong>
-              <span>Broker-dealer registrato negli USA. Detiene le azioni reali che fanno da sottostante ai token, in conti segregati.</span>
+              <span data-i18n="legalDescCustode">Broker-dealer registrato negli USA. Detiene le azioni reali che fanno da sottostante ai token, in conti segregati.</span>
             </article>
             <article class="legal-card">
               <div class="legal-icon safe">SAFE</div>
-              <label>Agente di sicurezza</label>
+              <label data-i18n="legalLabelAgente">Agente di sicurezza</label>
               <strong>Security Agent Services AG</strong>
-              <span>Soggetto terzo indipendente che funge da garanzia per i detentori dei token in caso di insolvenza dell'emittente.</span>
+              <span data-i18n="legalDescAgente">Soggetto terzo indipendente che funge da garanzia per i detentori dei token in caso di insolvenza dell'emittente.</span>
             </article>
           </div>
 
           <div class="comparison-note" style="margin-top: 22px;">
             <i>i</i>
-            <span>Il token offre <strong>esposizione economica</strong> al titolo sottostante, ma non rende l'utente azionista diretto della società quotata. Non si acquisiscono diritti di voto. I dividendi vengono reinvestiti automaticamente — il multiplier del token aumenta.</span>
+            <span data-i18n="legalNote">Il token offre <strong>esposizione economica</strong> al titolo sottostante, ma non rende l'utente azionista diretto della società quotata. Non si acquisiscono diritti di voto. I dividendi vengono reinvestiti automaticamente — il multiplier del token aumenta.</span>
           </div>
         </div>
       </section>
@@ -1233,9 +1257,9 @@
       <section class="shell section-tight" id="asset">
         <div class="section-head">
           <div>
-            <p class="kicker">Asset disponibili</p>
-            <h2>Oltre 2.000 azioni ed ETF</h2>
-            <p class="section-lede">Da Apple a Tesla, da SPY a MSFT. La gamma più ampia di azioni tokenizzate on-chain, tutte negoziabili dalla stessa interfaccia.</p>
+            <p class="kicker" data-i18n="assetKicker">Asset disponibili</p>
+            <h2 data-i18n="assetH2">Oltre 2.000 azioni ed ETF</h2>
+            <p class="section-lede" data-i18n="assetLede">Da Apple a Tesla, da SPY a MSFT. La gamma più ampia di azioni tokenizzate on-chain, tutte negoziabili dalla stessa interfaccia.</p>
           </div>
         </div>
 
@@ -1267,7 +1291,7 @@
         </div>
         <div class="comparison-note" style="margin-top: 16px;">
           <i>+</i>
-          <span>E molti altri: GOOGL, META, AMD, COIN, QQQ e oltre 2.000 titoli. Consulta la <a href="https://robinhood.com/rhj/stocktokens/" class="table-link">lista completa su Robinhood</a>.</span>
+          <span data-i18n="assetMore">E molti altri: GOOGL, META, AMD, COIN, QQQ e oltre 2.000 titoli. Consulta la <a href="https://robinhood.com/rhj/stocktokens/" class="table-link">lista completa su Robinhood</a>.</span>
         </div>
       </section>
 
@@ -1278,13 +1302,13 @@
         <div class="rights-panel">
           <div class="rights-head">
             <div>
-              <p class="kicker">Dividendi e diritti</p>
-              <h2>Il dividendo viene reinvestito.<br>Il voto non passa al token.</h2>
-              <p class="section-lede">Se il titolo sottostante paga un dividendo, il beneficio economico viene trasferito al token. Non arriva un pagamento cash separato nel wallet.</p>
+              <p class="kicker" data-i18n="divKicker">Dividendi e diritti</p>
+              <h2 data-i18n="divH2">Il dividendo viene reinvestito.<br>Il voto non passa al token.</h2>
+              <p class="section-lede" data-i18n="divLede">Se il titolo sottostante paga un dividendo, il beneficio economico viene trasferito al token. Non arriva un pagamento cash separato nel wallet.</p>
             </div>
-            <div class="rights-answer"><strong>Cash nel wallet? No.</strong>Il dividendo viene reinvestito per comprare altre azioni, aumentando il multiplier del token.</div>
+            <div class="rights-answer" data-i18n="divAnswer"><strong>Cash nel wallet? No.</strong>Il dividendo viene reinvestito per comprare altre azioni, aumentando il multiplier del token.</div>
           </div>
-          <p class="table-scroll-hint">Scorri la tabella verso destra →</p>
+          <p class="table-scroll-hint" data-i18n="tableScrollHint">Scorri la tabella verso destra →</p>
           <div class="table-wrap">
             <table aria-label="Dividendi e diritti di voto dei Robinhood Stock Tokens">
               <colgroup>
@@ -1296,39 +1320,39 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th>Aspetto</th>
-                  <th>Presente?</th>
-                  <th>Come funziona</th>
-                  <th>Effetto nel wallet</th>
-                  <th>Diritto di voto</th>
+                  <th data-i18n="thAspetto">Aspetto</th>
+                  <th data-i18n="thPresente">Presente?</th>
+                  <th data-i18n="thCome">Come funziona</th>
+                  <th data-i18n="thEffetto">Effetto nel wallet</th>
+                  <th data-i18n="thVoto">Diritto di voto</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Dividendo</strong></td>
-                  <td><span class="answer-yes">Sì*</span></td>
-                  <td>Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni del titolo sottostante.</td>
-                  <td>Aumenta il <strong>multiplier</strong>, quindi ogni token rappresenta progressivamente più azioni sottostanti.</td>
-                  <td><span class="answer-no">No</span></td>
+                  <td><strong data-i18n="tdDividendo">Dividendo</strong></td>
+                  <td><span class="answer-yes" data-i18n="tdDivPresente">Sì*</span></td>
+                  <td data-i18n="tdDivCome">Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni del titolo sottostante.</td>
+                  <td data-i18n="tdDivEffetto">Aumenta il <strong>multiplier</strong>, quindi ogni token rappresenta progressivamente più azioni sottostanti.</td>
+                  <td><span class="answer-no" data-i18n="tdDivVoto">No</span></td>
                 </tr>
                 <tr>
                   <td><strong>Stock split</strong></td>
-                  <td><span class="answer-yes">Sì</span></td>
-                  <td>Il rapporto di split viene riflesso aggiornando il multiplier del token.</td>
-                  <td>Il numero di azioni rappresentate per token cambia di conseguenza.</td>
+                  <td><span class="answer-yes" data-i18n="tdSplitPresente">Sì</span></td>
+                  <td data-i18n="tdSplitCome">Il rapporto di split viene riflesso aggiornando il multiplier del token.</td>
+                  <td data-i18n="tdSplitEffetto">Il numero di azioni rappresentate per token cambia di conseguenza.</td>
                   <td>—</td>
                 </tr>
                 <tr>
                   <td><strong>Corporate actions</strong></td>
-                  <td><span class="answer-yes">Sì</span></td>
-                  <td>Fusioni, acquisizioni e altre azioni corporate vengono gestite dall'emittente secondo i Final Terms.</td>
-                  <td>Il token si adatta alla nuova struttura del sottostante.</td>
-                  <td><span class="answer-no">No</span></td>
+                  <td><span class="answer-yes" data-i18n="tdCorpPresente">Sì</span></td>
+                  <td data-i18n="tdCorpCome">Fusioni, acquisizioni e altre azioni corporate vengono gestite dall'emittente secondo i Final Terms.</td>
+                  <td data-i18n="tdCorpEffetto">Il token si adatta alla nuova struttura del sottostante.</td>
+                  <td><span class="answer-no" data-i18n="tdCorpVoto">No</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="rights-footnote"><i>i</i><span>* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l'importo reinvestito. Fonte: <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood Stock Tokens</a>.</span></p>
+          <p class="rights-footnote"><i>i</i><span data-i18n="divFootnote">* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l'importo reinvestito. Fonte: <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood Stock Tokens</a>.</span></p>
         </div>
       </section>
 
@@ -1338,16 +1362,16 @@
       <section class="shell section" id="come-comprare">
         <div class="section-head">
           <div>
-            <p class="kicker">Istruzioni pratiche</p>
-            <h2>Dal wallet al primo acquisto</h2>
-            <p class="section-lede">Due percorsi: la DEX su Robinhood Chain oppure le DEX/aggregatori su chain principali.</p>
+            <p class="kicker" data-i18n="comeKicker">Istruzioni pratiche</p>
+            <h2 data-i18n="comeH2">Dal wallet al primo acquisto</h2>
+            <p class="section-lede" data-i18n="comeLede">Due percorsi: la DEX su Robinhood Chain oppure le DEX/aggregatori su chain principali.</p>
           </div>
         </div>
 
         <div class="how-grid">
           <article class="flow-card featured">
-            <h3>Percorso diretto: Robinhood Chain</h3>
-            <p>Compra direttamente su Robinhood Chain usando un wallet EVM e un bridge.</p>
+            <h3 data-i18n="flow1H3">Percorso diretto: Robinhood Chain</h3>
+            <p data-i18n="flow1P">Compra direttamente su Robinhood Chain usando un wallet EVM e un bridge.</p>
             <div class="network-box">
               Chain ID: 4663<br>
               RPC: https://rpc.mainnet.chain.robinhood.com/<br>
@@ -1355,21 +1379,21 @@
               Explorer: robinhoodchain.blockscout.com
             </div>
             <div class="steps">
-              <div class="step"><span class="step-num">1</span><div><div class="step-title">Wallet EVM</div><div class="step-copy">Usa Rabby, MetaMask, Trust Wallet o Robinhood Wallet. Aggiungi Robinhood Chain come rete personalizzata.</div></div></div>
-              <div class="step"><span class="step-num">2</span><div><div class="step-title">Bridge su Robinhood Chain</div><div class="step-copy">Usa il Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper per portare fondi sulla chain.</div></div></div>
-              <div class="step"><span class="step-num">3</span><div><div class="step-title">Porta ETH + USDG</div><div class="step-copy">ETH per il gas; USDG (o la valuta accettata dalla pool) per comprare i token.</div></div></div>
-              <div class="step"><span class="step-num">4</span><div><div class="step-title">Compra su Uniswap o 1inch</div><div class="step-copy">Confronta il contratto con la lista ufficiale di Robinhood prima di firmare la transazione.</div></div></div>
+              <div class="step"><span class="step-num">1</span><div><div class="step-title" data-i18n="flow1Step1Title">Wallet EVM</div><div class="step-copy" data-i18n="flow1Step1Copy">Usa Rabby, MetaMask, Trust Wallet o Robinhood Wallet. Aggiungi Robinhood Chain come rete personalizzata.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title" data-i18n="flow1Step2Title">Bridge su Robinhood Chain</div><div class="step-copy" data-i18n="flow1Step2Copy">Usa il Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper per portare fondi sulla chain.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title" data-i18n="flow1Step3Title">Porta ETH + USDG</div><div class="step-copy" data-i18n="flow1Step3Copy">ETH per il gas; USDG (o la valuta accettata dalla pool) per comprare i token.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title" data-i18n="flow1Step4Title">Compra su Uniswap o 1inch</div><div class="step-copy" data-i18n="flow1Step4Copy">Confronta il contratto con la lista ufficiale di Robinhood prima di firmare la transazione.</div></div></div>
             </div>
           </article>
 
           <article class="flow-card">
-            <h3>Percorso alternativo: aggregatori</h3>
-            <p>Se i token sono disponibili anche su chain come Ethereum o Arbitrum, puoi usare aggregatori.</p>
+            <h3 data-i18n="flow2H3">Percorso alternativo: aggregatori</h3>
+            <p data-i18n="flow2P">Se i token sono disponibili anche su chain come Ethereum o Arbitrum, puoi usare aggregatori.</p>
             <div class="steps">
-              <div class="step"><span class="step-num">1</span><div><div class="step-title">Prepara il wallet</div><div class="step-copy">Qualsiasi wallet EVM con USDC, USDG o ETH.</div></div></div>
-              <div class="step"><span class="step-num">2</span><div><div class="step-title">Cerca il token</div><div class="step-copy">Usa il contratto ufficiale dalla documentazione Robinhood. Non fidarti solo del ticker.</div></div></div>
-              <div class="step"><span class="step-num">3</span><div><div class="step-title">Controlla la liquidità</div><div class="step-copy">Verifica spread, price impact e volume. Preferisci gli orari di borsa USA aperta.</div></div></div>
-              <div class="step"><span class="step-num">4</span><div><div class="step-title">Ordine di prova</div><div class="step-copy">Inizia sempre con una piccola cifra per verificare che tutto funzioni correttamente.</div></div></div>
+              <div class="step"><span class="step-num">1</span><div><div class="step-title" data-i18n="flow2Step1Title">Prepara il wallet</div><div class="step-copy" data-i18n="flow2Step1Copy">Qualsiasi wallet EVM con USDC, USDG o ETH.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title" data-i18n="flow2Step2Title">Cerca il token</div><div class="step-copy" data-i18n="flow2Step2Copy">Usa il contratto ufficiale dalla documentazione Robinhood. Non fidarti solo del ticker.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title" data-i18n="flow2Step3Title">Controlla la liquidità</div><div class="step-copy" data-i18n="flow2Step3Copy">Verifica spread, price impact e volume. Preferisci gli orari di borsa USA aperta.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title" data-i18n="flow2Step4Title">Ordine di prova</div><div class="step-copy" data-i18n="flow2Step4Copy">Inizia sempre con una piccola cifra per verificare che tutto funzioni correttamente.</div></div></div>
             </div>
           </article>
         </div>
@@ -1381,28 +1405,28 @@
       <section class="shell section-tight">
         <div class="section-head">
           <div>
-            <p class="kicker">Orari</p>
-            <h2>Quando conviene comprare</h2>
+            <p class="kicker" data-i18n="orariKicker">Orari</p>
+            <h2 data-i18n="orariH2">Quando conviene comprare</h2>
           </div>
         </div>
         <div class="timeline">
           <article class="time-card best">
-            <span class="time-label">Consigliato</span>
+            <span class="time-label" data-i18n="timeLabelBest">Consigliato</span>
             <h3>15:30–22:00</h3>
-            <p>Borsa USA aperta: spread più stretti e prezzo più vicino al titolo sottostante.</p>
+            <p data-i18n="timeBestP">Borsa USA aperta: spread più stretti e prezzo più vicino al titolo sottostante.</p>
           </article>
           <article class="time-card">
-            <span class="time-label">Più prudenza</span>
-            <h3>Pre / after-market</h3>
-            <p>Meno market maker attivi. Spread più ampi, riduci la dimensione dell'ordine.</p>
+            <span class="time-label" data-i18n="timeLabelCaution">Più prudenza</span>
+            <h3 data-i18n="timeCautionH3">Pre / after-market</h3>
+            <p data-i18n="timeCautionP">Meno market maker attivi. Spread più ampi, riduci la dimensione dell'ordine.</p>
           </article>
           <article class="time-card">
-            <span class="time-label">Rischio elevato</span>
+            <span class="time-label" data-i18n="timeLabelRisk">Rischio elevato</span>
             <h3>Weekend</h3>
-            <p>Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura del venerdì.</p>
+            <p data-i18n="timeRiskP">Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura del venerdì.</p>
           </article>
         </div>
-        <p class="section-lede">Italia e Stati Uniti cambiano l'ora legale in date diverse: per alcune settimane l'apertura USA può spostarsi di un'ora.</p>
+        <p class="section-lede" data-i18n="orariNote">Italia e Stati Uniti cambiano l'ora legale in date diverse: per alcune settimane l'apertura USA può spostarsi di un'ora.</p>
       </section>
 
       <hr class="section-divider">
@@ -1411,19 +1435,19 @@
       <section class="shell section" id="sicurezza">
         <div class="safety">
           <div>
-            <p class="kicker">Checklist</p>
-            <h2>Riduci il rischio prima di firmare</h2>
-            <p>Il rischio principale è comprare il token sbagliato o pagare troppo quando la liquidità è bassa. Segui questa checklist.</p>
+            <p class="kicker" data-i18n="safetyKicker">Checklist</p>
+            <h2 data-i18n="safetyH2">Riduci il rischio prima di firmare</h2>
+            <p data-i18n="safetyP">Il rischio principale è comprare il token sbagliato o pagare troppo quando la liquidità è bassa. Segui questa checklist.</p>
           </div>
           <div class="check-grid">
-            <div class="check-item"><i>1</i><span><strong>Contratto ufficiale.</strong><br>Confronta sempre con la lista pubblicata su Robinhood.</span></div>
-            <div class="check-item"><i>2</i><span><strong>Orario USA.</strong><br>Preferisci 15:30–22:00 per spread competitivi.</span></div>
-            <div class="check-item"><i>3</i><span><strong>Spread e price impact.</strong><br>Riduci l'ordine se sono elevati.</span></div>
-            <div class="check-item"><i>4</i><span><strong>Bridge supportato.</strong><br>Usa solo bridge verificati: Relay, Across, Stargate, LI.FI.</span></div>
-            <div class="check-item"><i>5</i><span><strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.</span></div>
-            <div class="check-item"><i>6</i><span><strong>Gas separato.</strong><br>Conserva ETH per le transazioni su Robinhood Chain.</span></div>
-            <div class="check-item"><i>7</i><span><strong>Non è proprietà diretta.</strong><br>Hai esposizione economica, non diritti di azionista.</span></div>
-            <div class="check-item"><i>8</i><span><strong>Weekend.</strong><br>24/7 non significa liquidità garantita.</span></div>
+            <div class="check-item"><i>1</i><span data-i18n="check1"><strong>Contratto ufficiale.</strong><br>Confronta sempre con la lista pubblicata su Robinhood.</span></div>
+            <div class="check-item"><i>2</i><span data-i18n="check2"><strong>Orario USA.</strong><br>Preferisci 15:30–22:00 per spread competitivi.</span></div>
+            <div class="check-item"><i>3</i><span data-i18n="check3"><strong>Spread e price impact.</strong><br>Riduci l'ordine se sono elevati.</span></div>
+            <div class="check-item"><i>4</i><span data-i18n="check4"><strong>Bridge supportato.</strong><br>Usa solo bridge verificati: Relay, Across, Stargate, LI.FI.</span></div>
+            <div class="check-item"><i>5</i><span data-i18n="check5"><strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.</span></div>
+            <div class="check-item"><i>6</i><span data-i18n="check6"><strong>Gas separato.</strong><br>Conserva ETH per le transazioni su Robinhood Chain.</span></div>
+            <div class="check-item"><i>7</i><span data-i18n="check7"><strong>Non è proprietà diretta.</strong><br>Hai esposizione economica, non diritti di azionista.</span></div>
+            <div class="check-item"><i>8</i><span data-i18n="check8"><strong>Weekend.</strong><br>24/7 non significa liquidità garantita.</span></div>
           </div>
         </div>
       </section>
@@ -1434,26 +1458,379 @@
       <section class="shell section-tight">
         <div class="section-head">
           <div>
-            <p class="kicker">Link ufficiali</p>
-            <h2>Verifica prima di comprare</h2>
+            <p class="kicker" data-i18n="linksKicker">Link ufficiali</p>
+            <h2 data-i18n="linksH2">Verifica prima di comprare</h2>
           </div>
         </div>
         <div class="links">
           <a class="link-card" href="https://robinhood.com/rhj/stocktokens/"><span>Robinhood</span><strong>Stock Tokens</strong></a>
-          <a class="link-card" href="https://docs.robinhood.com/chain/contracts/"><span>Contratti</span><strong>Token contracts</strong></a>
+          <a class="link-card" href="https://docs.robinhood.com/chain/contracts/"><span data-i18n="linkContratti">Contratti</span><strong>Token contracts</strong></a>
           <a class="link-card" href="https://robinhoodchain.blockscout.com/"><span>Explorer</span><strong>Blockscout</strong></a>
-          <a class="link-card" href="/"><span>DGfans</span><strong>← Torna alla home</strong></a>
+          <a class="link-card" href="/"><span>DGfans</span><strong data-i18n="linkHome">← Torna alla home</strong></a>
         </div>
       </section>
     </main>
 
     <footer class="shell footer">
       <div class="footer-row">
-        <span>Guida informativa aggiornata al 14 luglio 2026. · <a href="/">DGfans.io</a></span>
-        <span>Non costituisce consulenza finanziaria, legale o fiscale.</span>
+        <span data-i18n="footerLeft">Guida informativa aggiornata al 14 luglio 2026. · <a href="/">DGfans.io</a></span>
+        <span data-i18n="footerRight">Non costituisce consulenza finanziaria, legale o fiscale.</span>
       </div>
     </footer>
   </div>
+
+<script>
+(function() {
+  var T = {
+    it: {
+      pageTitle: 'Robinhood Stock Tokens — Azioni on-chain in self-custody | DGfans',
+      pageMeta: 'Guida completa ai Robinhood Stock Tokens: azioni on-chain in self-custody su Robinhood Chain. Struttura legale, come comprare, asset disponibili e sicurezza.',
+
+      // Nav
+      navCose: "Cos'è",
+      navStruttura: 'Struttura legale',
+      navAsset: 'Asset',
+      navCome: 'Come comprare',
+      navSicurezza: 'Sicurezza',
+      navCta: 'Scopri di più ↗',
+
+      // Brand Intro
+      brandKicker: 'Chi è Robinhood',
+      brandH2: 'La fintech che ha <span>democratizzato la finanza</span>',
+      brandParagraph: 'Fondata nel <strong>2013</strong> da <strong>Vlad Tenev</strong> e <strong>Baiju Bhatt</strong>, Robinhood è nata con una missione chiara: rendere i mercati finanziari accessibili a tutti. Ha rivoluzionato il settore introducendo il <strong>trading senza commissioni</strong> sulle azioni, aprendo la strada a una nuova generazione di investitori. Oggi Robinhood è una delle più grandi <strong>fintech al mondo</strong>, quotata al <strong>NASDAQ (HOOD)</strong>, con oltre <strong>24 milioni di utenti</strong>. La piattaforma si è espansa in <strong>crypto, opzioni, conti pensionistici</strong> e ora entra nell\'era on-chain con gli <strong>Stock Tokens</strong> — azioni tokenizzate in self-custody.',
+      brandStatFondata: 'Fondata',
+      brandStatNasdaq: 'Nasdaq',
+      brandStatUtenti: 'Utenti',
+      brandStatCommissioni: 'Commissioni',
+
+      // Hero
+      heroEyebrow: '<span class="eyebrow-dot"></span> Robinhood Stock Tokens · 2026',
+      heroH1: 'Azioni on-chain.<br><span class="gradient-text">Self-custody.</span><br>Per tutti.',
+      heroCopy: 'Robinhood porta le azioni di Wall Street on-chain. Con gli <strong>Stock Tokens</strong> puoi comprare, vendere e conservare azioni tokenizzate <strong>nel tuo wallet</strong>, senza intermediari, senza conto titoli. Chiunque, ovunque nel mondo, può accedere ai mercati americani.',
+      heroBtnBuy: 'Come comprare →',
+      heroBtnSite: 'Sito ufficiale ↗',
+      microSelfCustody: '<i class="check">✓</i> Self-custody wallet',
+      microCopertura: '<i class="check">✓</i> Copertura 1:1',
+      microTitoli: '<i class="check">✓</i> 2000+ titoli',
+      microTrading: '<i class="check">✓</i> Trading 24/7',
+
+      // Cos'è
+      coseKicker: 'Cosa sono',
+      coseH2: 'Azioni tokenizzate su blockchain',
+      coseLede: 'I Robinhood Stock Tokens sono titoli di debito tokenizzati (ERC-20) emessi da una società dedicata a Jersey. Ogni token è coperto 1:1 da azioni reali custodite da un broker regolamentato negli Stati Uniti.',
+      whatCard1H3: 'Self-custody reale',
+      whatCard1P: 'A differenza dei "classic stock tokens" sulla app Robinhood EU, i nuovi token sono standard ERC-20 su <strong>Robinhood Chain</strong> (L2 Arbitrum). Puoi trasferirli, tenerli nel tuo wallet o spostarli su altre chain. Le chiavi private restano tue.',
+      whatCard2Kicker: 'Accessibilità globale',
+      whatCard2H3: 'Chiunque può comprare',
+      whatCard2P: 'Non serve un conto titoli. Non serve essere residenti in un paese specifico. Basta un wallet EVM e USDC (o USDG) per accedere ad <strong>oltre 2.000 azioni ed ETF americani</strong>. Il mercato è aperto 24/7.',
+      statAzioni: 'Azioni ed ETF',
+      statCopertura: 'Copertura sottostante',
+      statTrading: 'Trading on-chain',
+      statToken: 'Standard token',
+
+      // Struttura legale
+      legalKicker: 'Struttura e fiducia',
+      legalH2: 'Come funziona legalmente',
+      legalLede: 'I Robinhood Stock Tokens sono emessi come titoli di debito da un\'entità dedicata registrata a Jersey (Channel Islands), con azioni reali in custodia presso un broker regolamentato negli USA.',
+      trustBadge: '<span class="shield">✓</span> Copertura 1:1 verificabile',
+      legalPanelH3: 'Come è strutturato il prodotto',
+      legalPanelSub: 'Ogni layer della struttura separa il rischio e protegge l\'investitore.',
+      legalLabelEmittente: 'Emittente',
+      legalDescEmittente: 'Società dedicata (SPV) registrata a Jersey. Emette i titoli di debito tokenizzati che seguono il valore delle azioni sottostanti.',
+      legalLabelCustode: 'Custode / Broker',
+      legalDescCustode: 'Broker-dealer registrato negli USA. Detiene le azioni reali che fanno da sottostante ai token, in conti segregati.',
+      legalLabelAgente: 'Agente di sicurezza',
+      legalDescAgente: 'Soggetto terzo indipendente che funge da garanzia per i detentori dei token in caso di insolvenza dell\'emittente.',
+      legalNote: 'Il token offre <strong>esposizione economica</strong> al titolo sottostante, ma non rende l\'utente azionista diretto della società quotata. Non si acquisiscono diritti di voto. I dividendi vengono reinvestiti automaticamente — il multiplier del token aumenta.',
+
+      // Asset
+      assetKicker: 'Asset disponibili',
+      assetH2: 'Oltre 2.000 azioni ed ETF',
+      assetLede: 'Da Apple a Tesla, da SPY a MSFT. La gamma più ampia di azioni tokenizzate on-chain, tutte negoziabili dalla stessa interfaccia.',
+      assetMore: 'E molti altri: GOOGL, META, AMD, COIN, QQQ e oltre 2.000 titoli. Consulta la <a href="https://robinhood.com/rhj/stocktokens/" class="table-link">lista completa su Robinhood</a>.',
+
+      // Dividendi
+      divKicker: 'Dividendi e diritti',
+      divH2: 'Il dividendo viene reinvestito.<br>Il voto non passa al token.',
+      divLede: 'Se il titolo sottostante paga un dividendo, il beneficio economico viene trasferito al token. Non arriva un pagamento cash separato nel wallet.',
+      divAnswer: '<strong>Cash nel wallet? No.</strong>Il dividendo viene reinvestito per comprare altre azioni, aumentando il multiplier del token.',
+      tableScrollHint: 'Scorri la tabella verso destra →',
+      thAspetto: 'Aspetto',
+      thPresente: 'Presente?',
+      thCome: 'Come funziona',
+      thEffetto: 'Effetto nel wallet',
+      thVoto: 'Diritto di voto',
+      tdDividendo: 'Dividendo',
+      tdDivPresente: 'Sì*',
+      tdDivCome: 'Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni del titolo sottostante.',
+      tdDivEffetto: 'Aumenta il <strong>multiplier</strong>, quindi ogni token rappresenta progressivamente più azioni sottostanti.',
+      tdDivVoto: 'No',
+      tdSplitPresente: 'Sì',
+      tdSplitCome: 'Il rapporto di split viene riflesso aggiornando il multiplier del token.',
+      tdSplitEffetto: 'Il numero di azioni rappresentate per token cambia di conseguenza.',
+      tdCorpPresente: 'Sì',
+      tdCorpCome: 'Fusioni, acquisizioni e altre azioni corporate vengono gestite dall\'emittente secondo i Final Terms.',
+      tdCorpEffetto: 'Il token si adatta alla nuova struttura del sottostante.',
+      tdCorpVoto: 'No',
+      divFootnote: '* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l\'importo reinvestito. Fonte: <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood Stock Tokens</a>.',
+
+      // Come comprare
+      comeKicker: 'Istruzioni pratiche',
+      comeH2: 'Dal wallet al primo acquisto',
+      comeLede: 'Due percorsi: la DEX su Robinhood Chain oppure le DEX/aggregatori su chain principali.',
+      flow1H3: 'Percorso diretto: Robinhood Chain',
+      flow1P: 'Compra direttamente su Robinhood Chain usando un wallet EVM e un bridge.',
+      flow1Step1Title: 'Wallet EVM',
+      flow1Step1Copy: 'Usa Rabby, MetaMask, Trust Wallet o Robinhood Wallet. Aggiungi Robinhood Chain come rete personalizzata.',
+      flow1Step2Title: 'Bridge su Robinhood Chain',
+      flow1Step2Copy: 'Usa il Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper per portare fondi sulla chain.',
+      flow1Step3Title: 'Porta ETH + USDG',
+      flow1Step3Copy: 'ETH per il gas; USDG (o la valuta accettata dalla pool) per comprare i token.',
+      flow1Step4Title: 'Compra su Uniswap o 1inch',
+      flow1Step4Copy: 'Confronta il contratto con la lista ufficiale di Robinhood prima di firmare la transazione.',
+      flow2H3: 'Percorso alternativo: aggregatori',
+      flow2P: 'Se i token sono disponibili anche su chain come Ethereum o Arbitrum, puoi usare aggregatori.',
+      flow2Step1Title: 'Prepara il wallet',
+      flow2Step1Copy: 'Qualsiasi wallet EVM con USDC, USDG o ETH.',
+      flow2Step2Title: 'Cerca il token',
+      flow2Step2Copy: 'Usa il contratto ufficiale dalla documentazione Robinhood. Non fidarti solo del ticker.',
+      flow2Step3Title: 'Controlla la liquidità',
+      flow2Step3Copy: 'Verifica spread, price impact e volume. Preferisci gli orari di borsa USA aperta.',
+      flow2Step4Title: 'Ordine di prova',
+      flow2Step4Copy: 'Inizia sempre con una piccola cifra per verificare che tutto funzioni correttamente.',
+
+      // Orari
+      orariKicker: 'Orari',
+      orariH2: 'Quando conviene comprare',
+      timeLabelBest: 'Consigliato',
+      timeBestP: 'Borsa USA aperta: spread più stretti e prezzo più vicino al titolo sottostante.',
+      timeLabelCaution: 'Più prudenza',
+      timeCautionH3: 'Pre / after-market',
+      timeCautionP: 'Meno market maker attivi. Spread più ampi, riduci la dimensione dell\'ordine.',
+      timeLabelRisk: 'Rischio elevato',
+      timeRiskP: 'Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura del venerdì.',
+      orariNote: 'Italia e Stati Uniti cambiano l\'ora legale in date diverse: per alcune settimane l\'apertura USA può spostarsi di un\'ora.',
+
+      // Sicurezza
+      safetyKicker: 'Checklist',
+      safetyH2: 'Riduci il rischio prima di firmare',
+      safetyP: 'Il rischio principale è comprare il token sbagliato o pagare troppo quando la liquidità è bassa. Segui questa checklist.',
+      check1: '<strong>Contratto ufficiale.</strong><br>Confronta sempre con la lista pubblicata su Robinhood.',
+      check2: '<strong>Orario USA.</strong><br>Preferisci 15:30–22:00 per spread competitivi.',
+      check3: '<strong>Spread e price impact.</strong><br>Riduci l\'ordine se sono elevati.',
+      check4: '<strong>Bridge supportato.</strong><br>Usa solo bridge verificati: Relay, Across, Stargate, LI.FI.',
+      check5: '<strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.',
+      check6: '<strong>Gas separato.</strong><br>Conserva ETH per le transazioni su Robinhood Chain.',
+      check7: '<strong>Non è proprietà diretta.</strong><br>Hai esposizione economica, non diritti di azionista.',
+      check8: '<strong>Weekend.</strong><br>24/7 non significa liquidità garantita.',
+
+      // Link ufficiali
+      linksKicker: 'Link ufficiali',
+      linksH2: 'Verifica prima di comprare',
+      linkContratti: 'Contratti',
+      linkHome: '← Torna alla home',
+
+      // Footer
+      footerLeft: 'Guida informativa aggiornata al 14 luglio 2026. · <a href="/">DGfans.io</a>',
+      footerRight: 'Non costituisce consulenza finanziaria, legale o fiscale.'
+    },
+
+    en: {
+      pageTitle: 'Robinhood Stock Tokens — On-chain stocks in self-custody | DGfans',
+      pageMeta: 'Complete guide to Robinhood Stock Tokens: on-chain stocks in self-custody on Robinhood Chain. Legal structure, how to buy, available assets, and security.',
+
+      // Nav
+      navCose: 'What is it',
+      navStruttura: 'Legal structure',
+      navAsset: 'Assets',
+      navCome: 'How to buy',
+      navSicurezza: 'Security',
+      navCta: 'Learn more ↗',
+
+      // Brand Intro
+      brandKicker: 'Who is Robinhood',
+      brandH2: 'The fintech that <span>democratized finance</span>',
+      brandParagraph: 'Founded in <strong>2013</strong> by <strong>Vlad Tenev</strong> and <strong>Baiju Bhatt</strong>, Robinhood was born with a clear mission: making financial markets accessible to everyone. It revolutionized the industry by introducing <strong>commission-free trading</strong> on stocks, paving the way for a new generation of investors. Today Robinhood is one of the largest <strong>fintechs in the world</strong>, listed on the <strong>NASDAQ (HOOD)</strong>, with over <strong>24 million users</strong>. The platform has expanded into <strong>crypto, options, retirement accounts</strong> and now enters the on-chain era with <strong>Stock Tokens</strong> — tokenized stocks in self-custody.',
+      brandStatFondata: 'Founded',
+      brandStatNasdaq: 'Nasdaq',
+      brandStatUtenti: 'Users',
+      brandStatCommissioni: 'Commissions',
+
+      // Hero
+      heroEyebrow: '<span class="eyebrow-dot"></span> Robinhood Stock Tokens · 2026',
+      heroH1: 'Stocks on-chain.<br><span class="gradient-text">Self-custody.</span><br>For everyone.',
+      heroCopy: 'Robinhood brings Wall Street stocks on-chain. With <strong>Stock Tokens</strong> you can buy, sell, and hold tokenized stocks <strong>in your own wallet</strong>, without intermediaries, without a brokerage account. Anyone, anywhere in the world, can access U.S. markets.',
+      heroBtnBuy: 'How to buy →',
+      heroBtnSite: 'Official website ↗',
+      microSelfCustody: '<i class="check">✓</i> Self-custody wallet',
+      microCopertura: '<i class="check">✓</i> 1:1 backed',
+      microTitoli: '<i class="check">✓</i> 2000+ stocks',
+      microTrading: '<i class="check">✓</i> Trading 24/7',
+
+      // Cos'è
+      coseKicker: 'What are they',
+      coseH2: 'Tokenized stocks on blockchain',
+      coseLede: 'Robinhood Stock Tokens are tokenized debt securities (ERC-20) issued by a dedicated entity in Jersey. Each token is backed 1:1 by real shares held by a regulated broker in the United States.',
+      whatCard1H3: 'True self-custody',
+      whatCard1P: 'Unlike the "classic stock tokens" on the Robinhood EU app, the new tokens are standard ERC-20 on <strong>Robinhood Chain</strong> (L2 Arbitrum). You can transfer them, hold them in your wallet, or bridge them to other chains. Your private keys remain yours.',
+      whatCard2Kicker: 'Global accessibility',
+      whatCard2H3: 'Anyone can buy',
+      whatCard2P: 'No brokerage account needed. No residency requirement. All you need is an EVM wallet and USDC (or USDG) to access <strong>over 2,000 U.S. stocks and ETFs</strong>. The market is open 24/7.',
+      statAzioni: 'Stocks & ETFs',
+      statCopertura: 'Underlying coverage',
+      statTrading: 'On-chain trading',
+      statToken: 'Token standard',
+
+      // Struttura legale
+      legalKicker: 'Structure & trust',
+      legalH2: 'How it works legally',
+      legalLede: 'Robinhood Stock Tokens are issued as debt securities by a dedicated entity registered in Jersey (Channel Islands), with real shares held in custody by a regulated U.S. broker.',
+      trustBadge: '<span class="shield">✓</span> Verifiable 1:1 backing',
+      legalPanelH3: 'How the product is structured',
+      legalPanelSub: 'Each layer of the structure separates risk and protects the investor.',
+      legalLabelEmittente: 'Issuer',
+      legalDescEmittente: 'Dedicated special purpose vehicle (SPV) registered in Jersey. Issues the tokenized debt securities that track the value of the underlying shares.',
+      legalLabelCustode: 'Custodian / Broker',
+      legalDescCustode: 'U.S.-registered broker-dealer. Holds the real shares that serve as the underlying for the tokens, in segregated accounts.',
+      legalLabelAgente: 'Security agent',
+      legalDescAgente: 'Independent third party that acts as a safeguard for token holders in the event of the issuer\'s insolvency.',
+      legalNote: 'The token provides <strong>economic exposure</strong> to the underlying stock, but does not make the user a direct shareholder of the listed company. No voting rights are acquired. Dividends are automatically reinvested — the token multiplier increases.',
+
+      // Asset
+      assetKicker: 'Available assets',
+      assetH2: 'Over 2,000 stocks & ETFs',
+      assetLede: 'From Apple to Tesla, from SPY to MSFT. The broadest range of tokenized stocks on-chain, all tradable from the same interface.',
+      assetMore: 'And many more: GOOGL, META, AMD, COIN, QQQ and over 2,000 securities. See the <a href="https://robinhood.com/rhj/stocktokens/" class="table-link">full list on Robinhood</a>.',
+
+      // Dividendi
+      divKicker: 'Dividends & rights',
+      divH2: 'Dividends are reinvested.<br>Voting rights do not pass to the token.',
+      divLede: 'If the underlying stock pays a dividend, the economic benefit is passed through to the token. No separate cash payment arrives in your wallet.',
+      divAnswer: '<strong>Cash in your wallet? No.</strong>The dividend is reinvested to purchase more shares, increasing the token multiplier.',
+      tableScrollHint: 'Scroll the table to the right →',
+      thAspetto: 'Aspect',
+      thPresente: 'Present?',
+      thCome: 'How it works',
+      thEffetto: 'Effect in wallet',
+      thVoto: 'Voting rights',
+      tdDividendo: 'Dividend',
+      tdDivPresente: 'Yes*',
+      tdDivCome: 'The dividend is not paid in cash: it is automatically reinvested to buy more shares of the underlying stock.',
+      tdDivEffetto: 'Increases the <strong>multiplier</strong>, so each token progressively represents more underlying shares.',
+      tdDivVoto: 'No',
+      tdSplitPresente: 'Yes',
+      tdSplitCome: 'The split ratio is reflected by updating the token multiplier.',
+      tdSplitEffetto: 'The number of shares represented per token changes accordingly.',
+      tdCorpPresente: 'Yes',
+      tdCorpCome: 'Mergers, acquisitions, and other corporate actions are handled by the issuer according to the Final Terms.',
+      tdCorpEffetto: 'The token adapts to the new structure of the underlying.',
+      tdCorpVoto: 'No',
+      divFootnote: '* Only if the underlying stock or ETF distributes a dividend. Withholdings, taxes, and costs specified in the documentation may reduce the reinvested amount. Source: <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood Stock Tokens</a>.',
+
+      // Come comprare
+      comeKicker: 'Step-by-step guide',
+      comeH2: 'From wallet to first purchase',
+      comeLede: 'Two paths: the DEX on Robinhood Chain or DEXs/aggregators on major chains.',
+      flow1H3: 'Direct path: Robinhood Chain',
+      flow1P: 'Buy directly on Robinhood Chain using an EVM wallet and a bridge.',
+      flow1Step1Title: 'EVM Wallet',
+      flow1Step1Copy: 'Use Rabby, MetaMask, Trust Wallet, or Robinhood Wallet. Add Robinhood Chain as a custom network.',
+      flow1Step2Title: 'Bridge to Robinhood Chain',
+      flow1Step2Copy: 'Use the Canonical Bridge, Relay, Across, Stargate, or LI.FI/Jumper to bring funds to the chain.',
+      flow1Step3Title: 'Bring ETH + USDG',
+      flow1Step3Copy: 'ETH for gas; USDG (or the currency accepted by the pool) to buy the tokens.',
+      flow1Step4Title: 'Buy on Uniswap or 1inch',
+      flow1Step4Copy: 'Verify the contract against the official Robinhood list before signing the transaction.',
+      flow2H3: 'Alternative path: aggregators',
+      flow2P: 'If the tokens are also available on chains like Ethereum or Arbitrum, you can use aggregators.',
+      flow2Step1Title: 'Set up your wallet',
+      flow2Step1Copy: 'Any EVM wallet with USDC, USDG, or ETH.',
+      flow2Step2Title: 'Find the token',
+      flow2Step2Copy: 'Use the official contract from the Robinhood documentation. Don\'t trust the ticker alone.',
+      flow2Step3Title: 'Check liquidity',
+      flow2Step3Copy: 'Check spread, price impact, and volume. Prefer U.S. market open hours.',
+      flow2Step4Title: 'Test order',
+      flow2Step4Copy: 'Always start with a small amount to verify everything works correctly.',
+
+      // Orari
+      orariKicker: 'Trading hours',
+      orariH2: 'When to buy',
+      timeLabelBest: 'Recommended',
+      timeBestP: 'U.S. market open: tighter spreads and price closer to the underlying stock.',
+      timeLabelCaution: 'Use caution',
+      timeCautionH3: 'Pre / after-market',
+      timeCautionP: 'Fewer active market makers. Wider spreads — reduce your order size.',
+      timeLabelRisk: 'High risk',
+      timeRiskP: 'Wall Street is closed. The pool may be open, but the price can deviate from Friday\'s close.',
+      orariNote: 'Italy and the U.S. switch to daylight saving time on different dates: for a few weeks, the U.S. market open may shift by one hour.',
+
+      // Sicurezza
+      safetyKicker: 'Checklist',
+      safetyH2: 'Reduce risk before you sign',
+      safetyP: 'The main risk is buying the wrong token or overpaying when liquidity is low. Follow this checklist.',
+      check1: '<strong>Official contract.</strong><br>Always verify against the list published by Robinhood.',
+      check2: '<strong>U.S. market hours.</strong><br>Prefer 15:30–22:00 CET for competitive spreads.',
+      check3: '<strong>Spread & price impact.</strong><br>Reduce your order if they are high.',
+      check4: '<strong>Verified bridge.</strong><br>Only use verified bridges: Relay, Across, Stargate, LI.FI.',
+      check5: '<strong>Test order.</strong><br>Always start with a small amount.',
+      check6: '<strong>Separate gas.</strong><br>Keep ETH for transactions on Robinhood Chain.',
+      check7: '<strong>Not direct ownership.</strong><br>You have economic exposure, not shareholder rights.',
+      check8: '<strong>Weekends.</strong><br>24/7 does not mean guaranteed liquidity.',
+
+      // Link ufficiali
+      linksKicker: 'Official links',
+      linksH2: 'Verify before you buy',
+      linkContratti: 'Contracts',
+      linkHome: '← Back to home',
+
+      // Footer
+      footerLeft: 'Informational guide updated July 14, 2026. · <a href="/">DGfans.io</a>',
+      footerRight: 'This does not constitute financial, legal, or tax advice.'
+    }
+  };
+
+  var currentLang = localStorage.getItem('rh-lang') ||
+    (navigator.language && navigator.language.startsWith('it') ? 'it' : 'en');
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('rh-lang', lang);
+    document.documentElement.lang = lang;
+
+    // Update title and meta
+    document.title = T[lang].pageTitle;
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.content = T[lang].pageMeta;
+
+    // Update all data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (T[lang][key] !== undefined) {
+        el.innerHTML = T[lang][key];
+      }
+    });
+
+    // Update lang toggle button
+    var btn = document.querySelector('[data-lang-label]');
+    if (btn) btn.textContent = lang === 'it' ? '🇬🇧 EN' : '🇮🇹 IT';
+  }
+
+  // Expose globally
+  window.setLang = setLang;
+  Object.defineProperty(window, 'currentLang', {
+    get: function() { return currentLang; },
+    set: function(v) { currentLang = v; },
+    configurable: true
+  });
+
+  // Init on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setLang(currentLang); });
+  } else {
+    setLang(currentLang);
+  }
+})();
+</script>
 
 </body>
 </html>
