@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         source: '/robinhood',
         destination: '/robinhood.html',
       },
+      {
+        source: '/onchainstocks',
+        destination: '/onchainstocks.html',
+      },
     ];
   },
 };

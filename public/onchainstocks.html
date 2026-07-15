@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Azioni on-chain — in self-custody</title>
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #5f6b7a;
+      --line: #d8dee8;
+      --paper: #ffffff;
+      --wash: #f4f7fb;
+      --blue: #245cff;
+      --blue-2: #6d8cff;
+      --mint: #d9ff63;
+      --green: #126b4d;
+      --violet: #7357ff;
+      --orange: #ff9f43;
+      --shadow: 0 20px 55px rgba(31, 51, 91, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 2%, rgba(109, 140, 255, .18), transparent 28rem),
+        linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .site { min-height: 100vh; overflow: hidden; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1749e8, #7b60ff);
+      box-shadow: 0 10px 24px rgba(36, 92, 255, .25);
+    }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .nav-links { display: flex; gap: 24px; color: #445066; font-size: 14px; font-weight: 700; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .nav-cta, .button-primary {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
+    }
+    .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr);
+      gap: 52px;
+      align-items: center;
+      padding: 70px 0 78px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 7px 11px;
+      color: #264083;
+      border: 1px solid #cbd7ff;
+      border-radius: 999px;
+      background: #eef3ff;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #20b486; box-shadow: 0 0 0 4px rgba(32,180,134,.13); }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -.065em;
+    }
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(92deg, var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-copy {
+      max-width: 690px;
+      margin: 26px 0 0;
+      color: #526071;
+      font-size: 18px;
+    }
+    .hero-copy strong { color: var(--ink); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .micro-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 28px;
+      color: #465267;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .micro-proof span { display: inline-flex; align-items: center; gap: 7px; }
+    .check { display: grid; width: 19px; height: 19px; place-items: center; color: #fff; border-radius: 50%; background: #1b9d73; font-size: 12px; }
+
+    .hero-art {
+      position: relative;
+      min-height: 470px;
+      border: 1px solid rgba(187, 199, 220, .8);
+      border-radius: 34px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.96), rgba(240,244,255,.92)),
+        repeating-linear-gradient(90deg, transparent 0 29px, rgba(36,92,255,.04) 30px),
+        repeating-linear-gradient(0deg, transparent 0 29px, rgba(36,92,255,.04) 30px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -90px;
+      bottom: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,255,99,.55), rgba(217,255,99,0) 70%);
+    }
+    .wallet-card {
+      position: absolute;
+      inset: 82px 54px auto;
+      z-index: 2;
+      padding: 26px;
+      border: 1px solid #cfd8ea;
+      border-radius: 24px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 24px 50px rgba(40, 58, 95, .14);
+      backdrop-filter: blur(12px);
+    }
+    .wallet-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .wallet-label { color: #6a7484; font-size: 12px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .wallet-status { display: inline-flex; gap: 6px; align-items: center; color: #176a50; font-size: 12px; font-weight: 800; }
+    .wallet-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #20b486; }
+    .wallet-value { margin-top: 11px; font-size: 36px; font-weight: 900; letter-spacing: -.05em; }
+    .token-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+    .token-mini { padding: 12px; border: 1px solid #dbe1ec; border-radius: 14px; background: #fafbfe; }
+    .token-mini strong, .token-mini span { display: block; }
+    .token-mini strong { font-size: 13px; }
+    .token-mini span { margin-top: 2px; color: #778193; font-size: 11px; }
+    .asset-orb {
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      width: 82px;
+      height: 82px;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 24px;
+      box-shadow: 0 18px 34px rgba(41,57,96,.19);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+    .orb-a { top: 27px; right: 42px; color: #fff; background: linear-gradient(145deg, #111827, #3c475b); transform: rotate(6deg); }
+    .orb-b { right: 20px; bottom: 42px; color: #fff; background: linear-gradient(145deg, #426cff, #6f57ff); transform: rotate(-6deg); }
+    .orb-c { left: 24px; bottom: 35px; color: #143724; background: linear-gradient(145deg, #ebffae, #b7ed42); transform: rotate(4deg); }
+    .orbit {
+      position: absolute;
+      width: 290px;
+      height: 290px;
+      top: 60px;
+      left: 70px;
+      border: 1px dashed #bfc9dd;
+      border-radius: 50%;
+    }
+
+    .section { padding: 72px 0; }
+    .section-tight { padding: 50px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+    .kicker { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(31px, 4vw, 46px); line-height: 1.06; letter-spacing: -.05em; }
+    h3 { margin: 0; font-size: 22px; letter-spacing: -.035em; }
+    .section-lede { max-width: 620px; margin: 10px 0 0; color: var(--muted); }
+    .section-note { max-width: 360px; color: #6a7484; font-size: 13px; text-align: right; }
+
+    .trust-panel {
+      padding: 28px;
+      border: 1px solid #cbd4e2;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 14px 40px rgba(32,49,81,.08);
+    }
+    .trust-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+    .trust-badge { display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-size: 13px; font-weight: 850; }
+    .shield {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      color: #fff;
+      border-radius: 9px;
+      background: var(--green);
+    }
+
+    .rights-panel {
+      padding: 30px;
+      border: 1px solid #cbd4e2;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 96% 8%, rgba(217,255,99,.38), transparent 16rem),
+        linear-gradient(145deg, #ffffff, #f4f7ff);
+      box-shadow: 0 14px 40px rgba(32,49,81,.08);
+    }
+    .rights-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    .rights-answer {
+      flex: 0 0 230px;
+      padding: 14px 16px;
+      border: 1px solid #cfe1d7;
+      border-radius: 14px;
+      background: rgba(255,255,255,.82);
+      color: #30513f;
+      font-size: 12px;
+    }
+    .rights-answer strong { display: block; color: #126b4d; font-size: 15px; }
+    .answer-yes, .answer-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .answer-yes { color: #126b4d; background: #d9f7ea; }
+    .answer-no { color: #8b3442; background: #ffe7eb; }
+    .rights-footnote {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 14px 0 0;
+      color: #596679;
+      font-size: 12px;
+    }
+    .rights-footnote i {
+      display: grid;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      color: #fff;
+      border-radius: 7px;
+      background: var(--blue);
+      font-style: normal;
+      font-weight: 900;
+    }
+    .table-scroll-hint { display: none; }
+
+    .table-wrap { width: 100%; overflow-x: auto; border-radius: 14px; }
+    table {
+      width: 100%;
+      min-width: 840px;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    th, td {
+      padding: 14px 13px;
+      border: 1px solid #cfd6e2;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+    th {
+      color: #34405a;
+      background: #eef2f8;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+    tbody tr:nth-child(even) td { background: #fafbfe; }
+    td strong { color: #172033; }
+    .table-link { color: #1d52dc; font-weight: 800; text-decoration: none; }
+    .table-link:hover { text-decoration: underline; }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .compare-card {
+      position: relative;
+      display: flex;
+      min-height: 100%;
+      padding: 25px;
+      border: 1px solid #d1d9e6;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 15px 35px rgba(38,55,89,.07);
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .compare-card::before {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      top: -82px;
+      right: -68px;
+      border-radius: 50%;
+      background: var(--glow);
+    }
+    .compare-logo {
+      position: relative;
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      margin-bottom: 22px;
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 18px;
+      color: var(--logo-color);
+      background: var(--logo-bg);
+    }
+    .compare-logo svg { width: 34px; height: 34px; }
+    .compare-card h3 { position: relative; }
+    .compare-summary { min-height: 43px; margin: 9px 0 16px; color: var(--muted); font-size: 13px; }
+    .compare-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+    .compare-tag {
+      padding: 5px 8px;
+      border: 1px solid #d8dee8;
+      border-radius: 999px;
+      color: #4c586c;
+      background: #f8f9fc;
+      font-size: 10px;
+      font-weight: 850;
+    }
+    .route {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 54px;
+      margin: 0 0 20px;
+      padding: 12px;
+      border: 1px solid #dce2ec;
+      border-radius: 14px;
+      background: #f8faff;
+      overflow-x: auto;
+    }
+    .route-node {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 8px;
+      color: #243149;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px #d8deea;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .route-arrow { flex: 0 0 auto; color: var(--blue); font-weight: 900; }
+    .fact-list { display: grid; gap: 0; border-top: 1px solid #e0e5ee; }
+    .fact-row {
+      display: grid;
+      grid-template-columns: 35px minmax(0, 1fr);
+      gap: 11px;
+      align-items: start;
+      padding: 13px 0;
+      border-bottom: 1px solid #e5e9f0;
+    }
+    .fact-mark {
+      display: grid;
+      min-width: 29px;
+      height: 29px;
+      place-items: center;
+      padding: 0 5px;
+      border-radius: 9px;
+      color: var(--logo-color);
+      background: var(--logo-bg);
+      font-size: 8px;
+      font-weight: 950;
+      letter-spacing: .03em;
+    }
+    .fact-label, .fact-value { display: block; }
+    .fact-label { margin-bottom: 3px; color: #778296; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .fact-value { color: #202a3c; font-size: 12px; line-height: 1.45; }
+    .compare-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 19px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+    .compare-link:hover { text-decoration: underline; }
+    .comparison-note {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid #d4dbe7;
+      border-radius: 15px;
+      color: #526074;
+      background: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+    .comparison-note i {
+      display: grid;
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--blue);
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .product-card {
+      position: relative;
+      min-height: 360px;
+      padding: 25px;
+      border: 1px solid #d6dce7;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 15px 35px rgba(38,55,89,.08);
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      top: -90px;
+      right: -70px;
+      border-radius: 50%;
+      background: var(--glow);
+    }
+    .product-logo {
+      position: relative;
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      margin-bottom: 22px;
+      border-radius: 18px;
+      background: var(--logo-bg);
+      color: var(--logo-color);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+    }
+    .product-logo svg { width: 34px; height: 34px; }
+    .product-card p { margin: 10px 0 20px; color: var(--muted); font-size: 14px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+    .pill { padding: 5px 8px; color: #465267; border: 1px solid #d8dee8; border-radius: 999px; background: #f8f9fc; font-size: 11px; font-weight: 800; }
+    .product-meta { display: grid; gap: 10px; padding-top: 17px; border-top: 1px solid #e1e6ee; font-size: 13px; }
+    .meta-line { display: flex; justify-content: space-between; gap: 12px; }
+    .meta-line span { color: #707b8e; }
+    .meta-line strong { text-align: right; }
+    .product-link { display: inline-flex; margin-top: 22px; color: var(--blue); font-size: 13px; font-weight: 850; text-decoration: none; }
+
+    .asset-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .asset-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px;
+      border: 1px solid #d7dde7;
+      border-radius: 16px;
+      background: rgba(255,255,255,.78);
+    }
+    .asset-icon {
+      display: grid;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      color: #fff;
+      border-radius: 13px;
+      background: #111827;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .asset-card:nth-child(2) .asset-icon { background: linear-gradient(135deg, #24a66f, #0c6848); }
+    .asset-card:nth-child(3) .asset-icon { color: #162718; background: linear-gradient(135deg, #d9ff63, #a9dc38); }
+    .asset-card strong, .asset-card span { display: block; }
+    .asset-card span { color: #778193; font-size: 12px; }
+
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .flow-card {
+      padding: 28px;
+      border: 1px solid #d4dae5;
+      border-radius: 22px;
+      background: #fff;
+    }
+    .flow-card.featured {
+      color: #fff;
+      border-color: #1a2435;
+      background: #111827;
+      box-shadow: 0 22px 52px rgba(16,24,40,.2);
+    }
+    .flow-card.featured p, .flow-card.featured .step-copy { color: #c4cbd6; }
+    .flow-card.featured .step { border-color: #334155; }
+    .flow-card.featured .step-num { color: #162718; background: var(--mint); }
+    .flow-card > p { margin: 9px 0 22px; color: var(--muted); font-size: 14px; }
+    .steps { display: grid; }
+    .step { display: grid; grid-template-columns: 34px 1fr; gap: 13px; padding: 15px 0; border-top: 1px solid #e2e6ed; }
+    .step-num { display: grid; width: 28px; height: 28px; place-items: center; color: #fff; border-radius: 9px; background: var(--blue); font-size: 12px; font-weight: 900; }
+    .step-title { font-weight: 850; }
+    .step-copy { margin-top: 2px; color: #697587; font-size: 12px; }
+    .network-box {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid #364359;
+      border-radius: 13px;
+      background: #182235;
+      color: #d8e1ef;
+      font: 12px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid #cfd6e2;
+      border-radius: 18px;
+      background: #cfd6e2;
+    }
+    .time-card { min-height: 182px; padding: 22px; background: #fff; }
+    .time-card.best { background: linear-gradient(145deg, #effff7, #f9fffc); }
+    .time-label { display: inline-flex; padding: 5px 8px; border-radius: 999px; color: #536075; background: #eef2f7; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .time-card.best .time-label { color: #126b4d; background: #d9f7ea; }
+    .time-card h3 { margin-top: 14px; }
+    .time-card p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+
+    .safety {
+      display: grid;
+      grid-template-columns: .78fr 1.22fr;
+      gap: 28px;
+      align-items: start;
+      padding: 35px;
+      color: #fff;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 5% 10%, rgba(36,92,255,.45), transparent 24rem),
+        #101827;
+      box-shadow: 0 25px 60px rgba(16,24,40,.2);
+    }
+    .safety p { color: #c5cedb; }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .check-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+      font-size: 12px;
+    }
+    .check-item i { display: grid; width: 24px; height: 24px; place-items: center; color: #18321d; border-radius: 8px; background: var(--mint); font-style: normal; font-weight: 900; }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .link-card {
+      min-height: 104px;
+      padding: 17px;
+      border: 1px solid #d5dbe6;
+      border-radius: 16px;
+      background: #fff;
+      text-decoration: none;
+    }
+    .link-card span { display: block; margin-bottom: 9px; color: #778193; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .link-card strong { font-size: 14px; }
+    .footer { padding: 26px 0 42px; color: #748094; border-top: 1px solid #d8dee8; font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 45px; }
+      .hero-art { min-height: 410px; }
+      .products, .compare-grid, .timeline { grid-template-columns: 1fr; }
+      .how-grid, .safety { grid-template-columns: 1fr; }
+      .links { grid-template-columns: 1fr 1fr; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .rights-head { align-items: flex-start; flex-direction: column; }
+      .rights-answer { flex-basis: auto; width: 100%; }
+      .section-note { text-align: left; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .nav-cta { display: none; }
+      .hero { padding: 34px 0 56px; }
+      h1 { font-size: 43px; }
+      .hero-copy { font-size: 16px; }
+      .hero-art { min-height: 360px; border-radius: 24px; }
+      .wallet-card { inset: 70px 20px auto; padding: 18px; }
+      .wallet-value { font-size: 28px; }
+      .token-row { gap: 6px; }
+      .token-mini { padding: 9px; }
+      .asset-orb { width: 62px; height: 62px; border-radius: 18px; font-size: 12px; }
+      .orb-a { right: 14px; }
+      .orb-b { right: 10px; bottom: 24px; }
+      .orb-c { left: 10px; bottom: 20px; }
+      .orbit { left: 20px; }
+      .section { padding: 54px 0; }
+      .trust-panel, .rights-panel, .flow-card, .safety { padding: 20px; }
+      .compare-card { padding: 21px; }
+      .trust-top { align-items: flex-start; flex-direction: column; }
+      .asset-strip, .check-grid, .links { grid-template-columns: 1fr; }
+      .table-scroll-hint {
+        display: block;
+        margin: 0 0 8px;
+        color: #687489;
+        font-size: 11px;
+        font-weight: 800;
+        text-align: right;
+      }
+      .footer-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="shell">
+      <nav class="nav" aria-label="Navigazione principale">
+        <a class="brand" href="#top">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" stroke-width="2.2"/><path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" stroke-width="2.2"/></svg>
+          </span>
+          DeGate Guide
+        </a>
+        <div class="nav-links">
+          <a href="#fiducia">Fiducia</a>
+          <a href="#dividendi">Dividendi</a>
+          <a href="#prodotti">Prodotti</a>
+          <a href="#come-comprare">Come comprare</a>
+          <a href="#sicurezza">Sicurezza</a>
+        </div>
+        <a class="nav-cta" href="https://app.degate.com/">Apri DeGate ↗</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="shell hero">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Guida per utenti italiani · 2026</div>
+          <h1>Azioni on-chain.<br><span class="gradient-text">In self-custody.</span><br>Nel tuo wallet.</h1>
+          <p class="hero-copy">
+            Le azioni on-chain sono token che seguono il valore di azioni ed ETF. Nel mercato secondario puoi
+            <strong>comprarle, venderle e conservarle in self-custody</strong>, senza aprire un conto titoli presso l’emittente.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://app.degate.com/">Compra con DeGate</a>
+            <a class="button button-secondary" href="#prodotti">Confronta i prodotti</a>
+          </div>
+          <div class="micro-proof">
+            <span><i class="check">✓</i> Wallet self-custodial</span>
+            <span><i class="check">✓</i> Trading on-chain 24/7</span>
+            <span><i class="check">✓</i> Asset frazionabili</span>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Illustrazione di un wallet self-custodial con token azionari">
+          <div class="orbit"></div>
+          <div class="wallet-card">
+            <div class="wallet-top">
+              <span class="wallet-label">Self-custody portfolio</span>
+              <span class="wallet-status">On-chain</span>
+            </div>
+            <div class="wallet-value">$ 12,480.60</div>
+            <div class="token-row">
+              <div class="token-mini"><strong>AAPLx</strong><span>xStocks</span></div>
+              <div class="token-mini"><strong>NVDAon</strong><span>Ondo</span></div>
+              <div class="token-mini"><strong>SPY</strong><span>Robinhood</span></div>
+            </div>
+          </div>
+          <div class="asset-orb orb-a">AAPLx</div>
+          <div class="asset-orb orb-b">NVDAon</div>
+          <div class="asset-orb orb-c">SPY</div>
+        </div>
+      </section>
+
+      <section class="shell section-tight" id="fiducia">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Struttura e fiducia</p>
+            <h2>I principali emittenti di azioni on-chain</h2>
+          </div>
+          <div class="trust-badge"><span class="shield">✓</span> Asset sottostanti dichiarati a copertura</div>
+        </div>
+
+        <div class="compare-grid" aria-label="Confronto delle strutture legali e di custodia">
+          <article class="compare-card" style="--glow:rgba(36,92,255,.16);--logo-bg:#eef3ff;--logo-color:#245cff">
+            <div class="compare-logo" aria-label="Marchio vettoriale xStocks">
+              <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="30" height="30" rx="9" stroke="currentColor" stroke-width="2.5"/><path d="m13 13 14 14m0-14L13 27" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>xStocks</h3>
+            <p class="compare-summary">Tracker certificate emesso tramite una società dedicata in Jersey.</p>
+            <div class="compare-tags"><span class="compare-tag">Jersey SPV</span><span class="compare-tag">Copertura per asset</span></div>
+            <div class="fact-list">
+              <div class="fact-row"><span class="fact-mark">SPV</span><div><span class="fact-label">Emittente</span><strong class="fact-value">Backed Assets (JE) Limited</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label">Custodia</span><strong class="fact-value">Alpaca Securities · InCore Bank · Maerki Baumann</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label">Agente di sicurezza</span><strong class="fact-value">Security Agent Services AG</strong></div></div>
+            </div>
+            <a class="compare-link" href="https://assets.backed.fi/legal-documentation/service-providers">Documenti ufficiali →</a>
+          </article>
+
+          <article class="compare-card" style="--glow:rgba(115,87,255,.16);--logo-bg:#f1efff;--logo-color:#6548e8">
+            <div class="compare-logo" aria-label="Marchio vettoriale Ondo">
+              <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="2.5"/><path d="M11 20a9 9 0 0 1 18 0m-14 0a5 5 0 0 1 10 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 7v26" stroke="currentColor" stroke-width="2" opacity=".45"/></svg>
+            </div>
+            <h3>Ondo Stocks</h3>
+            <p class="compare-summary">Total-return tracker emesso da una società dedicata nelle BVI.</p>
+            <div class="compare-tags"><span class="compare-tag">BVI issuer</span><span class="compare-tag">Asset segregati</span></div>
+            <div class="fact-list">
+              <div class="fact-row"><span class="fact-mark">ISS</span><div><span class="fact-label">Emittente</span><strong class="fact-value">Ondo Global Markets (BVI) Limited</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label">Broker / custodia</span><strong class="fact-value">Alpaca Securities · strutture BitGo</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label">Agente di sicurezza</span><strong class="fact-value">Ankura Trust Company</strong></div></div>
+            </div>
+            <a class="compare-link" href="https://docs.ondo.finance/ondo-stocks/trust-and-transparency">Documenti ufficiali →</a>
+          </article>
+
+          <article class="compare-card" style="--glow:rgba(190,238,60,.24);--logo-bg:#efffc2;--logo-color:#18331d">
+            <div class="compare-logo" aria-label="Marchio vettoriale Robinhood">
+              <svg viewBox="0 0 40 40" fill="none"><path d="M11 29c2-11 8-17 18-19-5 4-7 9-7 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M14 31c3-7 8-11 15-12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M23 12c-1 6 1 10 5 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Robinhood Stock Tokens</h3>
+            <p class="compare-summary">Titoli di debito tokenizzati emessi tramite una società in Jersey.</p>
+            <div class="compare-tags"><span class="compare-tag">Jersey issuer</span><span class="compare-tag">Copertura 1:1</span></div>
+            <div class="fact-list">
+              <div class="fact-row"><span class="fact-mark">ISS</span><div><span class="fact-label">Emittente</span><strong class="fact-value">Robinhood Assets (Jersey) Limited</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label">Custodia</span><strong class="fact-value">Alpaca Securities</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label">Agente di sicurezza</span><strong class="fact-value">Security Agent Services AG</strong></div></div>
+            </div>
+            <a class="compare-link" href="https://robinhood.com/rhj/stocktokens/">Documenti ufficiali →</a>
+          </article>
+        </div>
+        <div class="comparison-note"><i>i</i><span>Il token offre esposizione economica al titolo, ma non rende l’utente azionista diretto della società quotata.</span></div>
+      </section>
+
+      <section class="shell section-tight" id="dividendi">
+        <div class="rights-panel">
+          <div class="rights-head">
+            <div>
+              <p class="kicker">Dividendi e diritti</p>
+              <h2>Il dividendo viene reinvestito. Il voto non passa al token.</h2>
+              <p class="section-lede">Se il titolo sottostante paga un dividendo, tutti e tre i prodotti ne trasferiscono il beneficio economico al token. Non arriva normalmente un pagamento cash separato nel wallet e non serve alcuna azione dell’utente.</p>
+            </div>
+            <div class="rights-answer"><strong>Cash nel wallet? Normalmente no.</strong>Il dividendo viene usato per aumentare l’esposizione al titolo sottostante.</div>
+          </div>
+          <p class="table-scroll-hint">Scorri la tabella verso destra →</p>
+          <div class="table-wrap">
+            <table aria-label="Dividendi e diritti di voto dei token azionari">
+              <colgroup>
+                <col style="width:16%">
+                <col style="width:13%">
+                <col style="width:28%">
+                <col style="width:29%">
+                <col style="width:14%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Prodotto</th>
+                  <th>Dividendo</th>
+                  <th>Come viene attribuito</th>
+                  <th>Cosa cambia nel wallet</th>
+                  <th>Diritto di voto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>xStocks</strong></td>
+                  <td><span class="answer-yes">Sì*</span></td>
+                  <td>Il cash ricevuto dal custode viene reinvestito in altre azioni dello stesso titolo, al netto delle ritenute applicabili.</td>
+                  <td>Il multiplier aumenta e il saldo visibile cresce proporzionalmente. Su Solana e TON la visualizzazione dipende dal supporto del wallet.</td>
+                  <td><span class="answer-no">No</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Ondo Stocks</strong></td>
+                  <td><span class="answer-yes">Sì*</span></td>
+                  <td>Il dividendo netto viene reinvestito nel titolo e incorporato nel total return del token.</td>
+                  <td>Di norma si riflette nel prezzo; su Solana e BNB Chain, con Scaled UI, può apparire nel saldo visualizzato.</td>
+                  <td><span class="answer-no">No</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Robinhood Stock Tokens</strong></td>
+                  <td><span class="answer-yes">Sì*</span></td>
+                  <td>Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni.</td>
+                  <td>Aumenta il multiplier, quindi ogni token rappresenta progressivamente più azioni sottostanti.</td>
+                  <td><span class="answer-no">No</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="rights-footnote"><i>i</i><span>* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l’importo reinvestito. Fonti: <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.</span></p>
+        </div>
+      </section>
+
+      <section class="shell section" id="prodotti">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Confronto operativo</p>
+            <h2>Dove e come comprare</h2>
+            <p class="section-lede">DeGate è il percorso consigliato per xStocks e Ondo. Robinhood richiede un wallet EVM, un bridge e una DEX.</p>
+          </div>
+          <p class="section-note">RFQ = quotazione diretta. AMM = swap contro una pool.</p>
+        </div>
+
+        <div class="compare-grid" aria-label="Confronto dei percorsi di acquisto">
+          <article class="compare-card" style="--glow:rgba(36,92,255,.16);--logo-bg:#eef3ff;--logo-color:#245cff">
+            <div class="compare-logo" aria-label="Marchio vettoriale xStocks">
+              <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="30" height="30" rx="9" stroke="currentColor" stroke-width="2.5"/><path d="m13 13 14 14m0-14L13 27" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>xStocks</h3>
+            <p class="compare-summary">Il percorso più diretto per comprare e conservare un xStock nel wallet.</p>
+            <div class="compare-tags"><span class="compare-tag">DeGate</span><span class="compare-tag">Solana + EVM</span><span class="compare-tag">RFQ + AMM</span></div>
+            <div class="route" aria-label="Percorso xStocks"><span class="route-node">USDC</span><span class="route-arrow">→</span><span class="route-node">DeGate</span><span class="route-arrow">→</span><span class="route-node">xStock</span></div>
+            <div class="fact-list">
+              <div class="fact-row"><span class="fact-mark">W</span><div><span class="fact-label">Wallet</span><strong class="fact-value">DeGate Wallet</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label">Acquisto</span><strong class="fact-value">RFQ/xChange oppure pool AMM</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label">Quando</span><strong class="fact-value">RFQ 24/5 · DEX 24/7</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">ALT</span><div><span class="fact-label">Alternative</span><strong class="fact-value">Jupiter · 1inch</strong></div></div>
+            </div>
+            <a class="compare-link" href="https://xstocks.com/products">Asset e contratti →</a>
+          </article>
+
+          <article class="compare-card" style="--glow:rgba(115,87,255,.16);--logo-bg:#f1efff;--logo-color:#6548e8">
+            <div class="compare-logo" aria-label="Marchio vettoriale Ondo">
+              <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="2.5"/><path d="M11 20a9 9 0 0 1 18 0m-14 0a5 5 0 0 1 10 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 7v26" stroke="currentColor" stroke-width="2" opacity=".45"/></svg>
+            </div>
+            <h3>Ondo Stocks</h3>
+            <p class="compare-summary">Ampia scelta di azioni ed ETF con routing RFQ/intent.</p>
+            <div class="compare-tags"><span class="compare-tag">DeGate</span><span class="compare-tag">Solana + EVM</span><span class="compare-tag">RFQ / intent</span></div>
+            <div class="route" aria-label="Percorso Ondo"><span class="route-node">USDC</span><span class="route-arrow">→</span><span class="route-node">DeGate</span><span class="route-arrow">→</span><span class="route-node">Ondo Stock</span></div>
+            <div class="fact-list">
+              <div class="fact-row"><span class="fact-mark">W</span><div><span class="fact-label">Wallet</span><strong class="fact-value">DeGate Wallet</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label">Acquisto</span><strong class="fact-value">RFQ/intent · AMM se disponibile</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label">Quando</span><strong class="fact-value">Ampia copertura 24/5 · weekend limitato</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">ALT</span><div><span class="fact-label">Alternative</span><strong class="fact-value">Jupiter · 1inch · Uniswap</strong></div></div>
+            </div>
+            <a class="compare-link" href="https://app.ondo.finance/">Esplora gli asset →</a>
+          </article>
+
+          <article class="compare-card" style="--glow:rgba(190,238,60,.24);--logo-bg:#efffc2;--logo-color:#18331d">
+            <div class="compare-logo" aria-label="Marchio vettoriale Robinhood Chain">
+              <svg viewBox="0 0 40 40" fill="none"><path d="M11 29c2-11 8-17 18-19-5 4-7 9-7 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M14 31c3-7 8-11 15-12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M23 12c-1 6 1 10 5 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Robinhood Stock Tokens</h3>
+            <p class="compare-summary">Richiede un wallet EVM e un trasferimento su Robinhood Chain.</p>
+            <div class="compare-tags"><span class="compare-tag">Rabby / MetaMask</span><span class="compare-tag">Chain 4663</span><span class="compare-tag">AMM + intent</span></div>
+            <div class="route" aria-label="Percorso Robinhood"><span class="route-node">Wallet EVM</span><span class="route-arrow">→</span><span class="route-node">Bridge</span><span class="route-arrow">→</span><span class="route-node">DEX</span></div>
+            <div class="fact-list">
+              <div class="fact-row"><span class="fact-mark">W</span><div><span class="fact-label">Wallet</span><strong class="fact-value">Rabby · MetaMask · Backpack*</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">BRG</span><div><span class="fact-label">Bridge</span><strong class="fact-value">Relay · Across · Stargate · LI.FI</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label">Acquisto</span><strong class="fact-value">Uniswap · 1inch</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label">Quando</span><strong class="fact-value">24/7 se esiste liquidità</strong></div></div>
+            </div>
+            <a class="compare-link" href="https://docs.robinhood.com/chain/contracts/">Contratti ufficiali →</a>
+          </article>
+        </div>
+        <div class="comparison-note"><i>i</i><span>* Backpack solo se la versione installata consente di aggiungere Robinhood Chain come rete EVM personalizzata.</span></div>
+      </section>
+
+      <section class="shell section" id="come-comprare">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Istruzioni pratiche</p>
+            <h2>Dal wallet al primo acquisto</h2>
+            <p class="section-lede">Prima verifica il contratto ufficiale. Poi esegui sempre un piccolo ordine di prova.</p>
+          </div>
+        </div>
+
+        <div class="how-grid">
+          <article class="flow-card">
+            <h3>xStocks e Ondo con DeGate</h3>
+            <p>Il percorso multichain più semplice, senza bridge manuale.</p>
+            <div class="steps">
+              <div class="step"><span class="step-num">1</span><div><div class="step-title">Apri DeGate Wallet</div><div class="step-copy">Crea o importa il wallet self-custodial.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title">Deposita USDC</div><div class="step-copy">DeGate gestisce rete, gas e routing multichain.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title">Cerca il ticker</div><div class="step-copy">AAPLx / NVDAx per xStocks; NVDAon / SPYon per Ondo.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title">Verifica e compra</div><div class="step-copy">Confronta contratto, prezzo, spread e price impact.</div></div></div>
+            </div>
+          </article>
+
+          <article class="flow-card featured">
+            <h3>Robinhood Chain con wallet EVM</h3>
+            <p>Aggiungi la rete, usa un bridge supportato e compra su una DEX.</p>
+            <div class="network-box">
+              Chain ID: 4663<br>
+              RPC: https://rpc.mainnet.chain.robinhood.com/<br>
+              Gas: ETH<br>
+              Explorer: robinhoodchain.blockscout.com
+            </div>
+            <div class="steps">
+              <div class="step"><span class="step-num">1</span><div><div class="step-title">Rabby, MetaMask o Backpack</div><div class="step-copy">Backpack solo se la versione permette la rete EVM personalizzata.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title">Bridge verso Robinhood Chain</div><div class="step-copy">Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title">Porta ETH + USDG</div><div class="step-copy">ETH per il gas; verifica la valuta accettata dalla pool.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title">Compra su Uniswap o 1inch</div><div class="step-copy">Confronta il contratto con la lista Robinhood ufficiale.</div></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="shell section-tight">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Orari</p>
+            <h2>Quando conviene comprare</h2>
+          </div>
+        </div>
+        <div class="timeline">
+          <article class="time-card best">
+            <span class="time-label">Consigliato</span>
+            <h3>15:30–22:00</h3>
+            <p>Borsa USA aperta: RFQ più competitive e prezzo più vicino al titolo sottostante.</p>
+          </article>
+          <article class="time-card">
+            <span class="time-label">Più prudenza</span>
+            <h3>Pre / after-market</h3>
+            <p>Meno market maker e spread più ampi. Riduci la dimensione dell’ordine.</p>
+          </article>
+          <article class="time-card">
+            <span class="time-label">Rischio elevato</span>
+            <h3>Weekend</h3>
+            <p>Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura.</p>
+          </article>
+        </div>
+        <p class="section-lede">Italia e Stati Uniti cambiano l’ora legale in date diverse: per alcune settimane l’apertura USA può spostarsi di un’ora.</p>
+      </section>
+
+      <section class="shell section" id="sicurezza">
+        <div class="safety">
+          <div>
+            <p class="kicker" style="color:#9db5ff">Checklist</p>
+            <h2>Riduci il rischio prima di firmare</h2>
+            <p>Il rischio principale nel mercato secondario è comprare il token sbagliato o pagare troppo quando la liquidità è bassa.</p>
+          </div>
+          <div class="check-grid">
+            <div class="check-item"><i>1</i><span><strong>Contratto ufficiale.</strong><br>Non fidarti solo del ticker.</span></div>
+            <div class="check-item"><i>2</i><span><strong>Orario USA.</strong><br>Preferisci 15:30–22:00.</span></div>
+            <div class="check-item"><i>3</i><span><strong>Spread e impact.</strong><br>Riduci l’ordine se sono elevati.</span></div>
+            <div class="check-item"><i>4</i><span><strong>Aggregatore.</strong><br>Confronta RFQ e pool AMM.</span></div>
+            <div class="check-item"><i>5</i><span><strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.</span></div>
+            <div class="check-item"><i>6</i><span><strong>Bridge supportato.</strong><br>Controlla rete e asset di destinazione.</span></div>
+            <div class="check-item"><i>7</i><span><strong>Gas separato.</strong><br>Conserva ETH, SOL o BNB necessari.</span></div>
+            <div class="check-item"><i>8</i><span><strong>Weekend.</strong><br>24/7 non significa liquidità garantita.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shell section-tight">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Link ufficiali</p>
+            <h2>Verifica prima di comprare</h2>
+          </div>
+        </div>
+        <div class="links">
+          <a class="link-card" href="https://app.degate.com/"><span>Wallet</span><strong>Apri DeGate</strong></a>
+          <a class="link-card" href="https://xstocks.com/products"><span>xStocks</span><strong>Asset e contratti</strong></a>
+          <a class="link-card" href="https://docs.ondo.finance/addresses"><span>Ondo</span><strong>Contratti ufficiali</strong></a>
+          <a class="link-card" href="https://docs.robinhood.com/chain/contracts/"><span>Robinhood</span><strong>Token contracts</strong></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <div class="footer-row">
+        <span>Guida informativa aggiornata al 14 luglio 2026.</span>
+        <span>Non costituisce consulenza finanziaria, legale o fiscale.</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
