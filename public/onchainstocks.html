@@ -91,6 +91,103 @@
     .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
     .nav-cta:hover, .button:hover { transform: translateY(-2px); }
 
+    /* ─── Language Selector ─── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .lang-selector {
+      position: relative;
+      z-index: 100;
+    }
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border: 1px solid #cfd6e2;
+      border-radius: 10px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(8px);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s;
+      line-height: 1;
+    }
+    .lang-btn:hover {
+      border-color: var(--blue-2);
+      box-shadow: 0 4px 14px rgba(36, 92, 255, .10);
+    }
+    .lang-btn .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+    .lang-btn .lang-chevron {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #778193;
+      margin-left: 2px;
+      transition: transform .2s;
+    }
+    .lang-selector.open .lang-chevron {
+      transform: rotate(180deg);
+    }
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 150px;
+      padding: 6px;
+      border: 1px solid #d1d9e6;
+      border-radius: 14px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(32,49,81,.13);
+      list-style: none;
+      margin: 0;
+    }
+    .lang-selector.open .lang-dropdown {
+      display: block;
+      animation: langFadeIn .18s ease;
+    }
+    @keyframes langFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .lang-dropdown li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #445066;
+      cursor: pointer;
+      transition: background .14s;
+    }
+    .lang-dropdown li:hover {
+      background: #eef3ff;
+      color: var(--blue);
+    }
+    .lang-dropdown li.active {
+      background: #eef3ff;
+      color: var(--blue);
+      font-weight: 850;
+    }
+    .lang-dropdown li .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr);
@@ -697,33 +794,48 @@
           DeGate Guide
         </a>
         <div class="nav-links">
-          <a href="#fiducia">Fiducia</a>
-          <a href="#dividendi">Dividendi</a>
-          <a href="#prodotti">Prodotti</a>
-          <a href="#come-comprare">Come comprare</a>
-          <a href="#sicurezza">Sicurezza</a>
+          <a href="#fiducia" data-i18n="nav_trust">Fiducia</a>
+          <a href="#dividendi" data-i18n="nav_dividends">Dividendi</a>
+          <a href="#prodotti" data-i18n="nav_products">Prodotti</a>
+          <a href="#come-comprare" data-i18n="nav_howto">Come comprare</a>
+          <a href="#sicurezza" data-i18n="nav_security">Sicurezza</a>
         </div>
-        <a class="nav-cta" href="https://app.degate.com/">Apri DeGate ↗</a>
+        <div class="nav-right">
+          <div class="lang-selector" id="langSelector">
+            <button class="lang-btn" id="langBtn" aria-label="Select language">
+              <span class="lang-flag" id="langFlag">🇮🇹</span>
+              <span class="lang-code" id="langCode">IT</span>
+              <span class="lang-chevron"></span>
+            </button>
+            <ul class="lang-dropdown" id="langDropdown">
+              <li data-lang="it" class="active"><span class="lang-flag">🇮🇹</span> Italiano</li>
+              <li data-lang="en"><span class="lang-flag">🇬🇧</span> English</li>
+              <li data-lang="es"><span class="lang-flag">🇪🇸</span> Español</li>
+              <li data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</li>
+            </ul>
+          </div>
+          <a class="nav-cta" href="https://app.degate.com/" data-i18n="nav_cta">Apri DeGate ↗</a>
+        </div>
       </nav>
     </header>
 
     <main id="top">
       <section class="shell hero">
         <div>
-          <div class="eyebrow"><span class="eyebrow-dot"></span> Guida per utenti italiani · 2026</div>
-          <h1>Azioni on-chain.<br><span class="gradient-text">In self-custody.</span><br>Nel tuo wallet.</h1>
-          <p class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> <span data-i18n="eyebrow">Guida per utenti italiani · 2026</span></div>
+          <h1 data-i18n-html="hero_title">Azioni on-chain.<br><span class="gradient-text">In self-custody.</span><br>Nel tuo wallet.</h1>
+          <p class="hero-copy" data-i18n-html="hero_copy">
             Le azioni on-chain sono token che seguono il valore di azioni ed ETF. Nel mercato secondario puoi
-            <strong>comprarle, venderle e conservarle in self-custody</strong>, senza aprire un conto titoli presso l’emittente.
+            <strong>comprarle, venderle e conservarle in self-custody</strong>, senza aprire un conto titoli presso l'emittente.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="https://app.degate.com/">Compra con DeGate</a>
-            <a class="button button-secondary" href="#prodotti">Confronta i prodotti</a>
+            <a class="button button-primary" href="https://app.degate.com/" data-i18n="hero_cta_buy">Compra con DeGate</a>
+            <a class="button button-secondary" href="#prodotti" data-i18n="hero_cta_compare">Confronta i prodotti</a>
           </div>
           <div class="micro-proof">
-            <span><i class="check">✓</i> Wallet self-custodial</span>
-            <span><i class="check">✓</i> Trading on-chain 24/7</span>
-            <span><i class="check">✓</i> Asset frazionabili</span>
+            <span><i class="check">✓</i> <span data-i18n="proof_wallet">Wallet self-custodial</span></span>
+            <span><i class="check">✓</i> <span data-i18n="proof_trading">Trading on-chain 24/7</span></span>
+            <span><i class="check">✓</i> <span data-i18n="proof_fractional">Asset frazionabili</span></span>
           </div>
         </div>
 
@@ -750,72 +862,75 @@
       <section class="shell section-tight" id="fiducia">
         <div class="section-head">
           <div>
-            <p class="kicker">Struttura e fiducia</p>
-            <h2>I principali emittenti di azioni on-chain</h2>
+            <p class="kicker" data-i18n="trust_kicker">Struttura e fiducia</p>
+            <h2 data-i18n="trust_title">I principali emittenti di azioni on-chain</h2>
           </div>
-          <div class="trust-badge"><span class="shield">✓</span> Asset sottostanti dichiarati a copertura</div>
+          <div class="trust-badge"><span class="shield">✓</span> <span data-i18n="trust_badge">Asset sottostanti dichiarati a copertura</span></div>
         </div>
 
         <div class="compare-grid" aria-label="Confronto delle strutture legali e di custodia">
+          <!-- xStocks card -->
           <article class="compare-card" style="--glow:rgba(36,92,255,.16);--logo-bg:#eef3ff;--logo-color:#245cff">
             <div class="compare-logo" aria-label="Marchio vettoriale xStocks">
               <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="30" height="30" rx="9" stroke="currentColor" stroke-width="2.5"/><path d="m13 13 14 14m0-14L13 27" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
             </div>
             <h3>xStocks</h3>
-            <p class="compare-summary">Tracker certificate emesso tramite una società dedicata in Jersey.</p>
-            <div class="compare-tags"><span class="compare-tag">Jersey SPV</span><span class="compare-tag">Copertura per asset</span></div>
+            <p class="compare-summary" data-i18n="trust_xs_summary">Tracker certificate emesso tramite una società dedicata in Jersey.</p>
+            <div class="compare-tags"><span class="compare-tag">Jersey SPV</span><span class="compare-tag" data-i18n="tag_asset_backed">Copertura per asset</span></div>
             <div class="fact-list">
-              <div class="fact-row"><span class="fact-mark">SPV</span><div><span class="fact-label">Emittente</span><strong class="fact-value">Backed Assets (JE) Limited</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label">Custodia</span><strong class="fact-value">Alpaca Securities · InCore Bank · Maerki Baumann</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label">Agente di sicurezza</span><strong class="fact-value">Security Agent Services AG</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SPV</span><div><span class="fact-label" data-i18n="label_issuer">Emittente</span><strong class="fact-value">Backed Assets (JE) Limited</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label" data-i18n="label_custody">Custodia</span><strong class="fact-value">Alpaca Securities · InCore Bank · Maerki Baumann</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label" data-i18n="label_security_agent">Agente di sicurezza</span><strong class="fact-value">Security Agent Services AG</strong></div></div>
             </div>
-            <a class="compare-link" href="https://assets.backed.fi/legal-documentation/service-providers">Documenti ufficiali →</a>
+            <a class="compare-link" href="https://assets.backed.fi/legal-documentation/service-providers" data-i18n="link_official_docs">Documenti ufficiali →</a>
           </article>
 
+          <!-- Ondo card -->
           <article class="compare-card" style="--glow:rgba(115,87,255,.16);--logo-bg:#f1efff;--logo-color:#6548e8">
             <div class="compare-logo" aria-label="Marchio vettoriale Ondo">
               <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="2.5"/><path d="M11 20a9 9 0 0 1 18 0m-14 0a5 5 0 0 1 10 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 7v26" stroke="currentColor" stroke-width="2" opacity=".45"/></svg>
             </div>
             <h3>Ondo Stocks</h3>
-            <p class="compare-summary">Total-return tracker emesso da una società dedicata nelle BVI.</p>
-            <div class="compare-tags"><span class="compare-tag">BVI issuer</span><span class="compare-tag">Asset segregati</span></div>
+            <p class="compare-summary" data-i18n="trust_ondo_summary">Total-return tracker emesso da una società dedicata nelle BVI.</p>
+            <div class="compare-tags"><span class="compare-tag">BVI issuer</span><span class="compare-tag" data-i18n="tag_segregated">Asset segregati</span></div>
             <div class="fact-list">
-              <div class="fact-row"><span class="fact-mark">ISS</span><div><span class="fact-label">Emittente</span><strong class="fact-value">Ondo Global Markets (BVI) Limited</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label">Broker / custodia</span><strong class="fact-value">Alpaca Securities · strutture BitGo</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label">Agente di sicurezza</span><strong class="fact-value">Ankura Trust Company</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">ISS</span><div><span class="fact-label" data-i18n="label_issuer">Emittente</span><strong class="fact-value">Ondo Global Markets (BVI) Limited</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label" data-i18n="label_broker_custody">Broker / custodia</span><strong class="fact-value">Alpaca Securities · strutture BitGo</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label" data-i18n="label_security_agent">Agente di sicurezza</span><strong class="fact-value">Ankura Trust Company</strong></div></div>
             </div>
-            <a class="compare-link" href="https://docs.ondo.finance/ondo-stocks/trust-and-transparency">Documenti ufficiali →</a>
+            <a class="compare-link" href="https://docs.ondo.finance/ondo-stocks/trust-and-transparency" data-i18n="link_official_docs">Documenti ufficiali →</a>
           </article>
 
+          <!-- Robinhood card -->
           <article class="compare-card" style="--glow:rgba(190,238,60,.24);--logo-bg:#efffc2;--logo-color:#18331d">
             <div class="compare-logo" aria-label="Marchio vettoriale Robinhood">
               <svg viewBox="0 0 40 40" fill="none"><path d="M11 29c2-11 8-17 18-19-5 4-7 9-7 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M14 31c3-7 8-11 15-12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M23 12c-1 6 1 10 5 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
             </div>
             <h3>Robinhood Stock Tokens</h3>
-            <p class="compare-summary">Titoli di debito tokenizzati emessi tramite una società in Jersey.</p>
-            <div class="compare-tags"><span class="compare-tag">Jersey issuer</span><span class="compare-tag">Copertura 1:1</span></div>
+            <p class="compare-summary" data-i18n="trust_rh_summary">Titoli di debito tokenizzati emessi tramite una società in Jersey.</p>
+            <div class="compare-tags"><span class="compare-tag">Jersey issuer</span><span class="compare-tag" data-i18n="tag_1to1">Copertura 1:1</span></div>
             <div class="fact-list">
-              <div class="fact-row"><span class="fact-mark">ISS</span><div><span class="fact-label">Emittente</span><strong class="fact-value">Robinhood Assets (Jersey) Limited</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label">Custodia</span><strong class="fact-value">Alpaca Securities</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label">Agente di sicurezza</span><strong class="fact-value">Security Agent Services AG</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">ISS</span><div><span class="fact-label" data-i18n="label_issuer">Emittente</span><strong class="fact-value">Robinhood Assets (Jersey) Limited</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">CUST</span><div><span class="fact-label" data-i18n="label_custody">Custodia</span><strong class="fact-value">Alpaca Securities</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SAFE</span><div><span class="fact-label" data-i18n="label_security_agent">Agente di sicurezza</span><strong class="fact-value">Security Agent Services AG</strong></div></div>
             </div>
-            <a class="compare-link" href="https://robinhood.com/rhj/stocktokens/">Documenti ufficiali →</a>
+            <a class="compare-link" href="https://robinhood.com/rhj/stocktokens/" data-i18n="link_official_docs">Documenti ufficiali →</a>
           </article>
         </div>
-        <div class="comparison-note"><i>i</i><span>Il token offre esposizione economica al titolo, ma non rende l’utente azionista diretto della società quotata.</span></div>
+        <div class="comparison-note"><i>i</i><span data-i18n="trust_note">Il token offre esposizione economica al titolo, ma non rende l'utente azionista diretto della società quotata.</span></div>
       </section>
 
       <section class="shell section-tight" id="dividendi">
         <div class="rights-panel">
           <div class="rights-head">
             <div>
-              <p class="kicker">Dividendi e diritti</p>
-              <h2>Il dividendo viene reinvestito. Il voto non passa al token.</h2>
-              <p class="section-lede">Se il titolo sottostante paga un dividendo, tutti e tre i prodotti ne trasferiscono il beneficio economico al token. Non arriva normalmente un pagamento cash separato nel wallet e non serve alcuna azione dell’utente.</p>
+              <p class="kicker" data-i18n="div_kicker">Dividendi e diritti</p>
+              <h2 data-i18n="div_title">Il dividendo viene reinvestito. Il voto non passa al token.</h2>
+              <p class="section-lede" data-i18n="div_lede">Se il titolo sottostante paga un dividendo, tutti e tre i prodotti ne trasferiscono il beneficio economico al token. Non arriva normalmente un pagamento cash separato nel wallet e non serve alcuna azione dell'utente.</p>
             </div>
-            <div class="rights-answer"><strong>Cash nel wallet? Normalmente no.</strong>Il dividendo viene usato per aumentare l’esposizione al titolo sottostante.</div>
+            <div class="rights-answer"><strong data-i18n="div_answer_title">Cash nel wallet? Normalmente no.</strong><span data-i18n="div_answer_body">Il dividendo viene usato per aumentare l'esposizione al titolo sottostante.</span></div>
           </div>
-          <p class="table-scroll-hint">Scorri la tabella verso destra →</p>
+          <p class="table-scroll-hint" data-i18n="table_scroll">Scorri la tabella verso destra →</p>
           <div class="table-wrap">
             <table aria-label="Dividendi e diritti di voto dei token azionari">
               <colgroup>
@@ -827,131 +942,134 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th>Prodotto</th>
-                  <th>Dividendo</th>
-                  <th>Come viene attribuito</th>
-                  <th>Cosa cambia nel wallet</th>
-                  <th>Diritto di voto</th>
+                  <th data-i18n="th_product">Prodotto</th>
+                  <th data-i18n="th_dividend">Dividendo</th>
+                  <th data-i18n="th_how_attributed">Come viene attribuito</th>
+                  <th data-i18n="th_wallet_change">Cosa cambia nel wallet</th>
+                  <th data-i18n="th_voting">Diritto di voto</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>xStocks</strong></td>
-                  <td><span class="answer-yes">Sì*</span></td>
-                  <td>Il cash ricevuto dal custode viene reinvestito in altre azioni dello stesso titolo, al netto delle ritenute applicabili.</td>
-                  <td>Il multiplier aumenta e il saldo visibile cresce proporzionalmente. Su Solana e TON la visualizzazione dipende dal supporto del wallet.</td>
-                  <td><span class="answer-no">No</span></td>
+                  <td><span class="answer-yes" data-i18n="yes_star">Sì*</span></td>
+                  <td data-i18n="xs_div_how">Il cash ricevuto dal custode viene reinvestito in altre azioni dello stesso titolo, al netto delle ritenute applicabili.</td>
+                  <td data-i18n="xs_div_wallet">Il multiplier aumenta e il saldo visibile cresce proporzionalmente. Su Solana e TON la visualizzazione dipende dal supporto del wallet.</td>
+                  <td><span class="answer-no" data-i18n="no">No</span></td>
                 </tr>
                 <tr>
                   <td><strong>Ondo Stocks</strong></td>
-                  <td><span class="answer-yes">Sì*</span></td>
-                  <td>Il dividendo netto viene reinvestito nel titolo e incorporato nel total return del token.</td>
-                  <td>Di norma si riflette nel prezzo; su Solana e BNB Chain, con Scaled UI, può apparire nel saldo visualizzato.</td>
-                  <td><span class="answer-no">No</span></td>
+                  <td><span class="answer-yes" data-i18n="yes_star">Sì*</span></td>
+                  <td data-i18n="ondo_div_how">Il dividendo netto viene reinvestito nel titolo e incorporato nel total return del token.</td>
+                  <td data-i18n="ondo_div_wallet">Di norma si riflette nel prezzo; su Solana e BNB Chain, con Scaled UI, può apparire nel saldo visualizzato.</td>
+                  <td><span class="answer-no" data-i18n="no">No</span></td>
                 </tr>
                 <tr>
                   <td><strong>Robinhood Stock Tokens</strong></td>
-                  <td><span class="answer-yes">Sì*</span></td>
-                  <td>Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni.</td>
-                  <td>Aumenta il multiplier, quindi ogni token rappresenta progressivamente più azioni sottostanti.</td>
-                  <td><span class="answer-no">No</span></td>
+                  <td><span class="answer-yes" data-i18n="yes_star">Sì*</span></td>
+                  <td data-i18n="rh_div_how">Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni.</td>
+                  <td data-i18n="rh_div_wallet">Aumenta il multiplier, quindi ogni token rappresenta progressivamente più azioni sottostanti.</td>
+                  <td><span class="answer-no" data-i18n="no">No</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="rights-footnote"><i>i</i><span>* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l’importo reinvestito. Fonti: <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.</span></p>
+          <p class="rights-footnote"><i>i</i><span data-i18n-html="div_footnote">* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l'importo reinvestito. Fonti: <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.</span></p>
         </div>
       </section>
 
       <section class="shell section" id="prodotti">
         <div class="section-head">
           <div>
-            <p class="kicker">Confronto operativo</p>
-            <h2>Dove e come comprare</h2>
-            <p class="section-lede">DeGate è il percorso consigliato per xStocks e Ondo. Robinhood richiede un wallet EVM, un bridge e una DEX.</p>
+            <p class="kicker" data-i18n="compare_kicker">Confronto operativo</p>
+            <h2 data-i18n="compare_title">Dove e come comprare</h2>
+            <p class="section-lede" data-i18n="compare_lede">DeGate è il percorso consigliato per xStocks e Ondo. Robinhood richiede un wallet EVM, un bridge e una DEX.</p>
           </div>
-          <p class="section-note">RFQ = quotazione diretta. AMM = swap contro una pool.</p>
+          <p class="section-note" data-i18n="compare_note">RFQ = quotazione diretta. AMM = swap contro una pool.</p>
         </div>
 
         <div class="compare-grid" aria-label="Confronto dei percorsi di acquisto">
+          <!-- xStocks buy path -->
           <article class="compare-card" style="--glow:rgba(36,92,255,.16);--logo-bg:#eef3ff;--logo-color:#245cff">
             <div class="compare-logo" aria-label="Marchio vettoriale xStocks">
               <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="5" width="30" height="30" rx="9" stroke="currentColor" stroke-width="2.5"/><path d="m13 13 14 14m0-14L13 27" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
             </div>
             <h3>xStocks</h3>
-            <p class="compare-summary">Il percorso più diretto per comprare e conservare un xStock nel wallet.</p>
+            <p class="compare-summary" data-i18n="buy_xs_summary">Il percorso più diretto per comprare e conservare un xStock nel wallet.</p>
             <div class="compare-tags"><span class="compare-tag">DeGate</span><span class="compare-tag">Solana + EVM</span><span class="compare-tag">RFQ + AMM</span></div>
             <div class="route" aria-label="Percorso xStocks"><span class="route-node">USDC</span><span class="route-arrow">→</span><span class="route-node">DeGate</span><span class="route-arrow">→</span><span class="route-node">xStock</span></div>
             <div class="fact-list">
               <div class="fact-row"><span class="fact-mark">W</span><div><span class="fact-label">Wallet</span><strong class="fact-value">DeGate Wallet</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label">Acquisto</span><strong class="fact-value">RFQ/xChange oppure pool AMM</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label">Quando</span><strong class="fact-value">RFQ 24/5 · DEX 24/7</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">ALT</span><div><span class="fact-label">Alternative</span><strong class="fact-value">Jupiter · 1inch</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label" data-i18n="label_purchase">Acquisto</span><strong class="fact-value">RFQ/xChange oppure pool AMM</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label" data-i18n="label_when">Quando</span><strong class="fact-value">RFQ 24/5 · DEX 24/7</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">ALT</span><div><span class="fact-label" data-i18n="label_alternatives">Alternative</span><strong class="fact-value">Jupiter · 1inch</strong></div></div>
             </div>
-            <a class="compare-link" href="https://xstocks.com/products">Asset e contratti →</a>
+            <a class="compare-link" href="https://xstocks.com/products" data-i18n="link_assets_contracts">Asset e contratti →</a>
           </article>
 
+          <!-- Ondo buy path -->
           <article class="compare-card" style="--glow:rgba(115,87,255,.16);--logo-bg:#f1efff;--logo-color:#6548e8">
             <div class="compare-logo" aria-label="Marchio vettoriale Ondo">
               <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="2.5"/><path d="M11 20a9 9 0 0 1 18 0m-14 0a5 5 0 0 1 10 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 7v26" stroke="currentColor" stroke-width="2" opacity=".45"/></svg>
             </div>
             <h3>Ondo Stocks</h3>
-            <p class="compare-summary">Ampia scelta di azioni ed ETF con routing RFQ/intent.</p>
+            <p class="compare-summary" data-i18n="buy_ondo_summary">Ampia scelta di azioni ed ETF con routing RFQ/intent.</p>
             <div class="compare-tags"><span class="compare-tag">DeGate</span><span class="compare-tag">Solana + EVM</span><span class="compare-tag">RFQ / intent</span></div>
             <div class="route" aria-label="Percorso Ondo"><span class="route-node">USDC</span><span class="route-arrow">→</span><span class="route-node">DeGate</span><span class="route-arrow">→</span><span class="route-node">Ondo Stock</span></div>
             <div class="fact-list">
               <div class="fact-row"><span class="fact-mark">W</span><div><span class="fact-label">Wallet</span><strong class="fact-value">DeGate Wallet</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label">Acquisto</span><strong class="fact-value">RFQ/intent · AMM se disponibile</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label">Quando</span><strong class="fact-value">Ampia copertura 24/5 · weekend limitato</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">ALT</span><div><span class="fact-label">Alternative</span><strong class="fact-value">Jupiter · 1inch · Uniswap</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label" data-i18n="label_purchase">Acquisto</span><strong class="fact-value" data-i18n="ondo_buy_method">RFQ/intent · AMM se disponibile</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label" data-i18n="label_when">Quando</span><strong class="fact-value" data-i18n="ondo_buy_when">Ampia copertura 24/5 · weekend limitato</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">ALT</span><div><span class="fact-label" data-i18n="label_alternatives">Alternative</span><strong class="fact-value">Jupiter · 1inch · Uniswap</strong></div></div>
             </div>
-            <a class="compare-link" href="https://app.ondo.finance/">Esplora gli asset →</a>
+            <a class="compare-link" href="https://app.ondo.finance/" data-i18n="link_explore_assets">Esplora gli asset →</a>
           </article>
 
+          <!-- Robinhood buy path -->
           <article class="compare-card" style="--glow:rgba(190,238,60,.24);--logo-bg:#efffc2;--logo-color:#18331d">
             <div class="compare-logo" aria-label="Marchio vettoriale Robinhood Chain">
               <svg viewBox="0 0 40 40" fill="none"><path d="M11 29c2-11 8-17 18-19-5 4-7 9-7 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M14 31c3-7 8-11 15-12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M23 12c-1 6 1 10 5 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
             </div>
             <h3>Robinhood Stock Tokens</h3>
-            <p class="compare-summary">Richiede un wallet EVM e un trasferimento su Robinhood Chain.</p>
+            <p class="compare-summary" data-i18n="buy_rh_summary">Richiede un wallet EVM e un trasferimento su Robinhood Chain.</p>
             <div class="compare-tags"><span class="compare-tag">Rabby / MetaMask</span><span class="compare-tag">Chain 4663</span><span class="compare-tag">AMM + intent</span></div>
             <div class="route" aria-label="Percorso Robinhood"><span class="route-node">Wallet EVM</span><span class="route-arrow">→</span><span class="route-node">Bridge</span><span class="route-arrow">→</span><span class="route-node">DEX</span></div>
             <div class="fact-list">
               <div class="fact-row"><span class="fact-mark">W</span><div><span class="fact-label">Wallet</span><strong class="fact-value">Rabby · MetaMask · Backpack*</strong></div></div>
               <div class="fact-row"><span class="fact-mark">BRG</span><div><span class="fact-label">Bridge</span><strong class="fact-value">Relay · Across · Stargate · LI.FI</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label">Acquisto</span><strong class="fact-value">Uniswap · 1inch</strong></div></div>
-              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label">Quando</span><strong class="fact-value">24/7 se esiste liquidità</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">SWAP</span><div><span class="fact-label" data-i18n="label_purchase">Acquisto</span><strong class="fact-value">Uniswap · 1inch</strong></div></div>
+              <div class="fact-row"><span class="fact-mark">24H</span><div><span class="fact-label" data-i18n="label_when">Quando</span><strong class="fact-value" data-i18n="rh_buy_when">24/7 se esiste liquidità</strong></div></div>
             </div>
-            <a class="compare-link" href="https://docs.robinhood.com/chain/contracts/">Contratti ufficiali →</a>
+            <a class="compare-link" href="https://docs.robinhood.com/chain/contracts/" data-i18n="link_official_contracts">Contratti ufficiali →</a>
           </article>
         </div>
-        <div class="comparison-note"><i>i</i><span>* Backpack solo se la versione installata consente di aggiungere Robinhood Chain come rete EVM personalizzata.</span></div>
+        <div class="comparison-note"><i>i</i><span data-i18n="buy_rh_note">* Backpack solo se la versione installata consente di aggiungere Robinhood Chain come rete EVM personalizzata.</span></div>
       </section>
 
       <section class="shell section" id="come-comprare">
         <div class="section-head">
           <div>
-            <p class="kicker">Istruzioni pratiche</p>
-            <h2>Dal wallet al primo acquisto</h2>
-            <p class="section-lede">Prima verifica il contratto ufficiale. Poi esegui sempre un piccolo ordine di prova.</p>
+            <p class="kicker" data-i18n="howto_kicker">Istruzioni pratiche</p>
+            <h2 data-i18n="howto_title">Dal wallet al primo acquisto</h2>
+            <p class="section-lede" data-i18n="howto_lede">Prima verifica il contratto ufficiale. Poi esegui sempre un piccolo ordine di prova.</p>
           </div>
         </div>
 
         <div class="how-grid">
           <article class="flow-card">
-            <h3>xStocks e Ondo con DeGate</h3>
-            <p>Il percorso multichain più semplice, senza bridge manuale.</p>
+            <h3 data-i18n="howto_degate_title">xStocks e Ondo con DeGate</h3>
+            <p data-i18n="howto_degate_desc">Il percorso multichain più semplice, senza bridge manuale.</p>
             <div class="steps">
-              <div class="step"><span class="step-num">1</span><div><div class="step-title">Apri DeGate Wallet</div><div class="step-copy">Crea o importa il wallet self-custodial.</div></div></div>
-              <div class="step"><span class="step-num">2</span><div><div class="step-title">Deposita USDC</div><div class="step-copy">DeGate gestisce rete, gas e routing multichain.</div></div></div>
-              <div class="step"><span class="step-num">3</span><div><div class="step-title">Cerca il ticker</div><div class="step-copy">AAPLx / NVDAx per xStocks; NVDAon / SPYon per Ondo.</div></div></div>
-              <div class="step"><span class="step-num">4</span><div><div class="step-title">Verifica e compra</div><div class="step-copy">Confronta contratto, prezzo, spread e price impact.</div></div></div>
+              <div class="step"><span class="step-num">1</span><div><div class="step-title" data-i18n="howto_dg_s1_title">Apri DeGate Wallet</div><div class="step-copy" data-i18n="howto_dg_s1_copy">Crea o importa il wallet self-custodial.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title" data-i18n="howto_dg_s2_title">Deposita USDC</div><div class="step-copy" data-i18n="howto_dg_s2_copy">DeGate gestisce rete, gas e routing multichain.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title" data-i18n="howto_dg_s3_title">Cerca il ticker</div><div class="step-copy" data-i18n="howto_dg_s3_copy">AAPLx / NVDAx per xStocks; NVDAon / SPYon per Ondo.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title" data-i18n="howto_dg_s4_title">Verifica e compra</div><div class="step-copy" data-i18n="howto_dg_s4_copy">Confronta contratto, prezzo, spread e price impact.</div></div></div>
             </div>
           </article>
 
           <article class="flow-card featured">
-            <h3>Robinhood Chain con wallet EVM</h3>
-            <p>Aggiungi la rete, usa un bridge supportato e compra su una DEX.</p>
+            <h3 data-i18n="howto_rh_title">Robinhood Chain con wallet EVM</h3>
+            <p data-i18n="howto_rh_desc">Aggiungi la rete, usa un bridge supportato e compra su una DEX.</p>
             <div class="network-box">
               Chain ID: 4663<br>
               RPC: https://rpc.mainnet.chain.robinhood.com/<br>
@@ -959,10 +1077,10 @@
               Explorer: robinhoodchain.blockscout.com
             </div>
             <div class="steps">
-              <div class="step"><span class="step-num">1</span><div><div class="step-title">Rabby, MetaMask o Backpack</div><div class="step-copy">Backpack solo se la versione permette la rete EVM personalizzata.</div></div></div>
-              <div class="step"><span class="step-num">2</span><div><div class="step-title">Bridge verso Robinhood Chain</div><div class="step-copy">Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper.</div></div></div>
-              <div class="step"><span class="step-num">3</span><div><div class="step-title">Porta ETH + USDG</div><div class="step-copy">ETH per il gas; verifica la valuta accettata dalla pool.</div></div></div>
-              <div class="step"><span class="step-num">4</span><div><div class="step-title">Compra su Uniswap o 1inch</div><div class="step-copy">Confronta il contratto con la lista Robinhood ufficiale.</div></div></div>
+              <div class="step"><span class="step-num">1</span><div><div class="step-title" data-i18n="howto_rh_s1_title">Rabby, MetaMask o Backpack</div><div class="step-copy" data-i18n="howto_rh_s1_copy">Backpack solo se la versione permette la rete EVM personalizzata.</div></div></div>
+              <div class="step"><span class="step-num">2</span><div><div class="step-title" data-i18n="howto_rh_s2_title">Bridge verso Robinhood Chain</div><div class="step-copy" data-i18n="howto_rh_s2_copy">Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper.</div></div></div>
+              <div class="step"><span class="step-num">3</span><div><div class="step-title" data-i18n="howto_rh_s3_title">Porta ETH + USDG</div><div class="step-copy" data-i18n="howto_rh_s3_copy">ETH per il gas; verifica la valuta accettata dalla pool.</div></div></div>
+              <div class="step"><span class="step-num">4</span><div><div class="step-title" data-i18n="howto_rh_s4_title">Compra su Uniswap o 1inch</div><div class="step-copy" data-i18n="howto_rh_s4_copy">Confronta il contratto con la lista Robinhood ufficiale.</div></div></div>
             </div>
           </article>
         </div>
@@ -971,46 +1089,46 @@
       <section class="shell section-tight">
         <div class="section-head">
           <div>
-            <p class="kicker">Orari</p>
-            <h2>Quando conviene comprare</h2>
+            <p class="kicker" data-i18n="time_kicker">Orari</p>
+            <h2 data-i18n="time_title">Quando conviene comprare</h2>
           </div>
         </div>
         <div class="timeline">
           <article class="time-card best">
-            <span class="time-label">Consigliato</span>
+            <span class="time-label" data-i18n="time_recommended">Consigliato</span>
             <h3>15:30–22:00</h3>
-            <p>Borsa USA aperta: RFQ più competitive e prezzo più vicino al titolo sottostante.</p>
+            <p data-i18n="time_best_desc">Borsa USA aperta: RFQ più competitive e prezzo più vicino al titolo sottostante.</p>
           </article>
           <article class="time-card">
-            <span class="time-label">Più prudenza</span>
-            <h3>Pre / after-market</h3>
-            <p>Meno market maker e spread più ampi. Riduci la dimensione dell’ordine.</p>
+            <span class="time-label" data-i18n="time_caution">Più prudenza</span>
+            <h3 data-i18n="time_preafter">Pre / after-market</h3>
+            <p data-i18n="time_caution_desc">Meno market maker e spread più ampi. Riduci la dimensione dell'ordine.</p>
           </article>
           <article class="time-card">
-            <span class="time-label">Rischio elevato</span>
+            <span class="time-label" data-i18n="time_high_risk">Rischio elevato</span>
             <h3>Weekend</h3>
-            <p>Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura.</p>
+            <p data-i18n="time_weekend_desc">Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura.</p>
           </article>
         </div>
-        <p class="section-lede">Italia e Stati Uniti cambiano l’ora legale in date diverse: per alcune settimane l’apertura USA può spostarsi di un’ora.</p>
+        <p class="section-lede" data-i18n="time_dst_note">Italia e Stati Uniti cambiano l'ora legale in date diverse: per alcune settimane l'apertura USA può spostarsi di un'ora.</p>
       </section>
 
       <section class="shell section" id="sicurezza">
         <div class="safety">
           <div>
-            <p class="kicker" style="color:#9db5ff">Checklist</p>
-            <h2>Riduci il rischio prima di firmare</h2>
-            <p>Il rischio principale nel mercato secondario è comprare il token sbagliato o pagare troppo quando la liquidità è bassa.</p>
+            <p class="kicker" style="color:#9db5ff" data-i18n="safety_kicker">Checklist</p>
+            <h2 data-i18n="safety_title">Riduci il rischio prima di firmare</h2>
+            <p data-i18n="safety_desc">Il rischio principale nel mercato secondario è comprare il token sbagliato o pagare troppo quando la liquidità è bassa.</p>
           </div>
           <div class="check-grid">
-            <div class="check-item"><i>1</i><span><strong>Contratto ufficiale.</strong><br>Non fidarti solo del ticker.</span></div>
-            <div class="check-item"><i>2</i><span><strong>Orario USA.</strong><br>Preferisci 15:30–22:00.</span></div>
-            <div class="check-item"><i>3</i><span><strong>Spread e impact.</strong><br>Riduci l’ordine se sono elevati.</span></div>
-            <div class="check-item"><i>4</i><span><strong>Aggregatore.</strong><br>Confronta RFQ e pool AMM.</span></div>
-            <div class="check-item"><i>5</i><span><strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.</span></div>
-            <div class="check-item"><i>6</i><span><strong>Bridge supportato.</strong><br>Controlla rete e asset di destinazione.</span></div>
-            <div class="check-item"><i>7</i><span><strong>Gas separato.</strong><br>Conserva ETH, SOL o BNB necessari.</span></div>
-            <div class="check-item"><i>8</i><span><strong>Weekend.</strong><br>24/7 non significa liquidità garantita.</span></div>
+            <div class="check-item"><i>1</i><span data-i18n-html="ck1"><strong>Contratto ufficiale.</strong><br>Non fidarti solo del ticker.</span></div>
+            <div class="check-item"><i>2</i><span data-i18n-html="ck2"><strong>Orario USA.</strong><br>Preferisci 15:30–22:00.</span></div>
+            <div class="check-item"><i>3</i><span data-i18n-html="ck3"><strong>Spread e impact.</strong><br>Riduci l'ordine se sono elevati.</span></div>
+            <div class="check-item"><i>4</i><span data-i18n-html="ck4"><strong>Aggregatore.</strong><br>Confronta RFQ e pool AMM.</span></div>
+            <div class="check-item"><i>5</i><span data-i18n-html="ck5"><strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.</span></div>
+            <div class="check-item"><i>6</i><span data-i18n-html="ck6"><strong>Bridge supportato.</strong><br>Controlla rete e asset di destinazione.</span></div>
+            <div class="check-item"><i>7</i><span data-i18n-html="ck7"><strong>Gas separato.</strong><br>Conserva ETH, SOL o BNB necessari.</span></div>
+            <div class="check-item"><i>8</i><span data-i18n-html="ck8"><strong>Weekend.</strong><br>24/7 non significa liquidità garantita.</span></div>
           </div>
         </div>
       </section>
@@ -1018,14 +1136,14 @@
       <section class="shell section-tight">
         <div class="section-head">
           <div>
-            <p class="kicker">Link ufficiali</p>
-            <h2>Verifica prima di comprare</h2>
+            <p class="kicker" data-i18n="links_kicker">Link ufficiali</p>
+            <h2 data-i18n="links_title">Verifica prima di comprare</h2>
           </div>
         </div>
         <div class="links">
-          <a class="link-card" href="https://app.degate.com/"><span>Wallet</span><strong>Apri DeGate</strong></a>
-          <a class="link-card" href="https://xstocks.com/products"><span>xStocks</span><strong>Asset e contratti</strong></a>
-          <a class="link-card" href="https://docs.ondo.finance/addresses"><span>Ondo</span><strong>Contratti ufficiali</strong></a>
+          <a class="link-card" href="https://app.degate.com/"><span>Wallet</span><strong data-i18n="link_open_degate">Apri DeGate</strong></a>
+          <a class="link-card" href="https://xstocks.com/products"><span>xStocks</span><strong data-i18n="link_xs_assets">Asset e contratti</strong></a>
+          <a class="link-card" href="https://docs.ondo.finance/addresses"><span>Ondo</span><strong data-i18n="link_ondo_contracts">Contratti ufficiali</strong></a>
           <a class="link-card" href="https://docs.robinhood.com/chain/contracts/"><span>Robinhood</span><strong>Token contracts</strong></a>
         </div>
       </section>
@@ -1033,10 +1151,596 @@
 
     <footer class="shell footer">
       <div class="footer-row">
-        <span>Guida informativa aggiornata al 14 luglio 2026.</span>
-        <span>Non costituisce consulenza finanziaria, legale o fiscale.</span>
+        <span data-i18n="footer_date">Guida informativa aggiornata al 14 luglio 2026.</span>
+        <span data-i18n="footer_disclaimer">Non costituisce consulenza finanziaria, legale o fiscale.</span>
       </div>
     </footer>
   </div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   MULTILINGUAL SYSTEM — IT · EN · ES · FR
+   ═══════════════════════════════════════════════ */
+
+const TRANSLATIONS = {
+  it: {
+    page_title: "Azioni on-chain — in self-custody",
+    nav_trust: "Fiducia",
+    nav_dividends: "Dividendi",
+    nav_products: "Prodotti",
+    nav_howto: "Come comprare",
+    nav_security: "Sicurezza",
+    nav_cta: "Apri DeGate ↗",
+    eyebrow: "Guida per utenti italiani · 2026",
+    hero_title: 'Azioni on-chain.<br><span class="gradient-text">In self-custody.</span><br>Nel tuo wallet.',
+    hero_copy: 'Le azioni on-chain sono token che seguono il valore di azioni ed ETF. Nel mercato secondario puoi <strong>comprarle, venderle e conservarle in self-custody</strong>, senza aprire un conto titoli presso l\'emittente.',
+    hero_cta_buy: "Compra con DeGate",
+    hero_cta_compare: "Confronta i prodotti",
+    proof_wallet: "Wallet self-custodial",
+    proof_trading: "Trading on-chain 24/7",
+    proof_fractional: "Asset frazionabili",
+    trust_kicker: "Struttura e fiducia",
+    trust_title: "I principali emittenti di azioni on-chain",
+    trust_badge: "Asset sottostanti dichiarati a copertura",
+    trust_xs_summary: "Tracker certificate emesso tramite una società dedicata in Jersey.",
+    tag_asset_backed: "Copertura per asset",
+    label_issuer: "Emittente",
+    label_custody: "Custodia",
+    label_security_agent: "Agente di sicurezza",
+    link_official_docs: "Documenti ufficiali →",
+    trust_ondo_summary: "Total-return tracker emesso da una società dedicata nelle BVI.",
+    tag_segregated: "Asset segregati",
+    label_broker_custody: "Broker / custodia",
+    trust_rh_summary: "Titoli di debito tokenizzati emessi tramite una società in Jersey.",
+    tag_1to1: "Copertura 1:1",
+    trust_note: "Il token offre esposizione economica al titolo, ma non rende l'utente azionista diretto della società quotata.",
+    div_kicker: "Dividendi e diritti",
+    div_title: "Il dividendo viene reinvestito. Il voto non passa al token.",
+    div_lede: "Se il titolo sottostante paga un dividendo, tutti e tre i prodotti ne trasferiscono il beneficio economico al token. Non arriva normalmente un pagamento cash separato nel wallet e non serve alcuna azione dell'utente.",
+    div_answer_title: "Cash nel wallet? Normalmente no.",
+    div_answer_body: "Il dividendo viene usato per aumentare l'esposizione al titolo sottostante.",
+    table_scroll: "Scorri la tabella verso destra →",
+    th_product: "Prodotto",
+    th_dividend: "Dividendo",
+    th_how_attributed: "Come viene attribuito",
+    th_wallet_change: "Cosa cambia nel wallet",
+    th_voting: "Diritto di voto",
+    yes_star: "Sì*",
+    no: "No",
+    xs_div_how: "Il cash ricevuto dal custode viene reinvestito in altre azioni dello stesso titolo, al netto delle ritenute applicabili.",
+    xs_div_wallet: "Il multiplier aumenta e il saldo visibile cresce proporzionalmente. Su Solana e TON la visualizzazione dipende dal supporto del wallet.",
+    ondo_div_how: "Il dividendo netto viene reinvestito nel titolo e incorporato nel total return del token.",
+    ondo_div_wallet: "Di norma si riflette nel prezzo; su Solana e BNB Chain, con Scaled UI, può apparire nel saldo visualizzato.",
+    rh_div_how: "Il dividendo non viene pagato in cash: viene reinvestito automaticamente per comprare altre azioni.",
+    rh_div_wallet: "Aumenta il multiplier, quindi ogni token rappresenta progressivamente più azioni sottostanti.",
+    div_footnote: '* Solo se il titolo o ETF sottostante distribuisce un dividendo. Ritenute, imposte e costi previsti dalla documentazione possono ridurre l\'importo reinvestito. Fonti: <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.',
+    compare_kicker: "Confronto operativo",
+    compare_title: "Dove e come comprare",
+    compare_lede: "DeGate è il percorso consigliato per xStocks e Ondo. Robinhood richiede un wallet EVM, un bridge e una DEX.",
+    compare_note: "RFQ = quotazione diretta. AMM = swap contro una pool.",
+    buy_xs_summary: "Il percorso più diretto per comprare e conservare un xStock nel wallet.",
+    label_purchase: "Acquisto",
+    label_when: "Quando",
+    label_alternatives: "Alternative",
+    link_assets_contracts: "Asset e contratti →",
+    buy_ondo_summary: "Ampia scelta di azioni ed ETF con routing RFQ/intent.",
+    ondo_buy_method: "RFQ/intent · AMM se disponibile",
+    ondo_buy_when: "Ampia copertura 24/5 · weekend limitato",
+    link_explore_assets: "Esplora gli asset →",
+    buy_rh_summary: "Richiede un wallet EVM e un trasferimento su Robinhood Chain.",
+    rh_buy_when: "24/7 se esiste liquidità",
+    link_official_contracts: "Contratti ufficiali →",
+    buy_rh_note: "* Backpack solo se la versione installata consente di aggiungere Robinhood Chain come rete EVM personalizzata.",
+    howto_kicker: "Istruzioni pratiche",
+    howto_title: "Dal wallet al primo acquisto",
+    howto_lede: "Prima verifica il contratto ufficiale. Poi esegui sempre un piccolo ordine di prova.",
+    howto_degate_title: "xStocks e Ondo con DeGate",
+    howto_degate_desc: "Il percorso multichain più semplice, senza bridge manuale.",
+    howto_dg_s1_title: "Apri DeGate Wallet",
+    howto_dg_s1_copy: "Crea o importa il wallet self-custodial.",
+    howto_dg_s2_title: "Deposita USDC",
+    howto_dg_s2_copy: "DeGate gestisce rete, gas e routing multichain.",
+    howto_dg_s3_title: "Cerca il ticker",
+    howto_dg_s3_copy: "AAPLx / NVDAx per xStocks; NVDAon / SPYon per Ondo.",
+    howto_dg_s4_title: "Verifica e compra",
+    howto_dg_s4_copy: "Confronta contratto, prezzo, spread e price impact.",
+    howto_rh_title: "Robinhood Chain con wallet EVM",
+    howto_rh_desc: "Aggiungi la rete, usa un bridge supportato e compra su una DEX.",
+    howto_rh_s1_title: "Rabby, MetaMask o Backpack",
+    howto_rh_s1_copy: "Backpack solo se la versione permette la rete EVM personalizzata.",
+    howto_rh_s2_title: "Bridge verso Robinhood Chain",
+    howto_rh_s2_copy: "Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper.",
+    howto_rh_s3_title: "Porta ETH + USDG",
+    howto_rh_s3_copy: "ETH per il gas; verifica la valuta accettata dalla pool.",
+    howto_rh_s4_title: "Compra su Uniswap o 1inch",
+    howto_rh_s4_copy: "Confronta il contratto con la lista Robinhood ufficiale.",
+    time_kicker: "Orari",
+    time_title: "Quando conviene comprare",
+    time_recommended: "Consigliato",
+    time_best_desc: "Borsa USA aperta: RFQ più competitive e prezzo più vicino al titolo sottostante.",
+    time_caution: "Più prudenza",
+    time_preafter: "Pre / after-market",
+    time_caution_desc: "Meno market maker e spread più ampi. Riduci la dimensione dell'ordine.",
+    time_high_risk: "Rischio elevato",
+    time_weekend_desc: "Wall Street è chiusa. La pool può essere aperta, ma il prezzo può deviare dalla chiusura.",
+    time_dst_note: "Italia e Stati Uniti cambiano l'ora legale in date diverse: per alcune settimane l'apertura USA può spostarsi di un'ora.",
+    safety_kicker: "Checklist",
+    safety_title: "Riduci il rischio prima di firmare",
+    safety_desc: "Il rischio principale nel mercato secondario è comprare il token sbagliato o pagare troppo quando la liquidità è bassa.",
+    ck1: "<strong>Contratto ufficiale.</strong><br>Non fidarti solo del ticker.",
+    ck2: "<strong>Orario USA.</strong><br>Preferisci 15:30–22:00.",
+    ck3: "<strong>Spread e impact.</strong><br>Riduci l'ordine se sono elevati.",
+    ck4: "<strong>Aggregatore.</strong><br>Confronta RFQ e pool AMM.",
+    ck5: "<strong>Ordine di prova.</strong><br>Inizia sempre con una piccola cifra.",
+    ck6: "<strong>Bridge supportato.</strong><br>Controlla rete e asset di destinazione.",
+    ck7: "<strong>Gas separato.</strong><br>Conserva ETH, SOL o BNB necessari.",
+    ck8: "<strong>Weekend.</strong><br>24/7 non significa liquidità garantita.",
+    links_kicker: "Link ufficiali",
+    links_title: "Verifica prima di comprare",
+    link_open_degate: "Apri DeGate",
+    link_xs_assets: "Asset e contratti",
+    link_ondo_contracts: "Contratti ufficiali",
+    footer_date: "Guida informativa aggiornata al 14 luglio 2026.",
+    footer_disclaimer: "Non costituisce consulenza finanziaria, legale o fiscale."
+  },
+
+  en: {
+    page_title: "On-chain stocks — self-custody",
+    nav_trust: "Trust",
+    nav_dividends: "Dividends",
+    nav_products: "Products",
+    nav_howto: "How to buy",
+    nav_security: "Security",
+    nav_cta: "Open DeGate ↗",
+    eyebrow: "Guide for on-chain investors · 2026",
+    hero_title: 'On-chain stocks.<br><span class="gradient-text">Self-custody.</span><br>In your wallet.',
+    hero_copy: 'On-chain stocks are tokens that track the value of stocks and ETFs. On the secondary market you can <strong>buy, sell, and hold them in self-custody</strong>, without opening a brokerage account with the issuer.',
+    hero_cta_buy: "Buy with DeGate",
+    hero_cta_compare: "Compare products",
+    proof_wallet: "Self-custodial wallet",
+    proof_trading: "On-chain trading 24/7",
+    proof_fractional: "Fractional assets",
+    trust_kicker: "Structure & trust",
+    trust_title: "The main issuers of on-chain stocks",
+    trust_badge: "Declared underlying assets as collateral",
+    trust_xs_summary: "Tracker certificate issued through a dedicated company in Jersey.",
+    tag_asset_backed: "Asset-backed",
+    label_issuer: "Issuer",
+    label_custody: "Custody",
+    label_security_agent: "Security agent",
+    link_official_docs: "Official documents →",
+    trust_ondo_summary: "Total-return tracker issued by a dedicated company in the BVI.",
+    tag_segregated: "Segregated assets",
+    label_broker_custody: "Broker / custody",
+    trust_rh_summary: "Tokenized debt instruments issued through a company in Jersey.",
+    tag_1to1: "1:1 coverage",
+    trust_note: "The token provides economic exposure to the stock, but does not make the holder a direct shareholder of the listed company.",
+    div_kicker: "Dividends & rights",
+    div_title: "Dividends are reinvested. Voting rights do not pass to the token.",
+    div_lede: "If the underlying stock pays a dividend, all three products transfer the economic benefit to the token. A separate cash payment does not normally arrive in the wallet and no user action is required.",
+    div_answer_title: "Cash in the wallet? Usually no.",
+    div_answer_body: "The dividend is used to increase exposure to the underlying stock.",
+    table_scroll: "Scroll the table to the right →",
+    th_product: "Product",
+    th_dividend: "Dividend",
+    th_how_attributed: "How it is attributed",
+    th_wallet_change: "What changes in the wallet",
+    th_voting: "Voting rights",
+    yes_star: "Yes*",
+    no: "No",
+    xs_div_how: "The cash received by the custodian is reinvested in additional shares of the same stock, net of applicable withholdings.",
+    xs_div_wallet: "The multiplier increases and the visible balance grows proportionally. On Solana and TON, display depends on wallet support.",
+    ondo_div_how: "The net dividend is reinvested in the stock and incorporated into the token's total return.",
+    ondo_div_wallet: "Normally reflected in the price; on Solana and BNB Chain, with Scaled UI, it may appear in the displayed balance.",
+    rh_div_how: "The dividend is not paid in cash: it is automatically reinvested to buy more shares.",
+    rh_div_wallet: "The multiplier increases, so each token progressively represents more underlying shares.",
+    div_footnote: '* Only if the underlying stock or ETF distributes a dividend. Withholdings, taxes, and costs provided for in the documentation may reduce the reinvested amount. Sources: <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.',
+    compare_kicker: "Operational comparison",
+    compare_title: "Where and how to buy",
+    compare_lede: "DeGate is the recommended path for xStocks and Ondo. Robinhood requires an EVM wallet, a bridge, and a DEX.",
+    compare_note: "RFQ = direct quote. AMM = swap against a pool.",
+    buy_xs_summary: "The most direct path to buy and hold an xStock in your wallet.",
+    label_purchase: "Purchase",
+    label_when: "When",
+    label_alternatives: "Alternatives",
+    link_assets_contracts: "Assets & contracts →",
+    buy_ondo_summary: "Wide selection of stocks and ETFs with RFQ/intent routing.",
+    ondo_buy_method: "RFQ/intent · AMM if available",
+    ondo_buy_when: "Wide coverage 24/5 · limited on weekends",
+    link_explore_assets: "Explore assets →",
+    buy_rh_summary: "Requires an EVM wallet and a transfer to Robinhood Chain.",
+    rh_buy_when: "24/7 if liquidity exists",
+    link_official_contracts: "Official contracts →",
+    buy_rh_note: "* Backpack only if the installed version allows adding Robinhood Chain as a custom EVM network.",
+    howto_kicker: "Practical instructions",
+    howto_title: "From wallet to first purchase",
+    howto_lede: "First verify the official contract. Then always execute a small test order.",
+    howto_degate_title: "xStocks and Ondo with DeGate",
+    howto_degate_desc: "The simplest multichain path, no manual bridge needed.",
+    howto_dg_s1_title: "Open DeGate Wallet",
+    howto_dg_s1_copy: "Create or import the self-custodial wallet.",
+    howto_dg_s2_title: "Deposit USDC",
+    howto_dg_s2_copy: "DeGate handles network, gas, and multichain routing.",
+    howto_dg_s3_title: "Search the ticker",
+    howto_dg_s3_copy: "AAPLx / NVDAx for xStocks; NVDAon / SPYon for Ondo.",
+    howto_dg_s4_title: "Verify and buy",
+    howto_dg_s4_copy: "Compare contract, price, spread, and price impact.",
+    howto_rh_title: "Robinhood Chain with EVM wallet",
+    howto_rh_desc: "Add the network, use a supported bridge, and buy on a DEX.",
+    howto_rh_s1_title: "Rabby, MetaMask, or Backpack",
+    howto_rh_s1_copy: "Backpack only if the version allows the custom EVM network.",
+    howto_rh_s2_title: "Bridge to Robinhood Chain",
+    howto_rh_s2_copy: "Canonical Bridge, Relay, Across, Stargate, or LI.FI/Jumper.",
+    howto_rh_s3_title: "Bring ETH + USDG",
+    howto_rh_s3_copy: "ETH for gas; verify the currency accepted by the pool.",
+    howto_rh_s4_title: "Buy on Uniswap or 1inch",
+    howto_rh_s4_copy: "Compare the contract with the official Robinhood list.",
+    time_kicker: "Trading hours",
+    time_title: "When to buy",
+    time_recommended: "Recommended",
+    time_best_desc: "US market open: more competitive RFQs and price closer to the underlying stock.",
+    time_caution: "More caution",
+    time_preafter: "Pre / after-market",
+    time_caution_desc: "Fewer market makers and wider spreads. Reduce the order size.",
+    time_high_risk: "High risk",
+    time_weekend_desc: "Wall Street is closed. The pool may be open, but the price can deviate from the closing price.",
+    time_dst_note: "Different countries change daylight saving time on different dates: for some weeks the US market opening may shift by one hour.",
+    safety_kicker: "Checklist",
+    safety_title: "Reduce risk before signing",
+    safety_desc: "The main risk on the secondary market is buying the wrong token or paying too much when liquidity is low.",
+    ck1: "<strong>Official contract.</strong><br>Don't trust the ticker alone.",
+    ck2: "<strong>US trading hours.</strong><br>Prefer 15:30–22:00 CET.",
+    ck3: "<strong>Spread & impact.</strong><br>Reduce the order if they are high.",
+    ck4: "<strong>Aggregator.</strong><br>Compare RFQ and AMM pools.",
+    ck5: "<strong>Test order.</strong><br>Always start with a small amount.",
+    ck6: "<strong>Supported bridge.</strong><br>Check the destination network and asset.",
+    ck7: "<strong>Separate gas.</strong><br>Keep ETH, SOL, or BNB as needed.",
+    ck8: "<strong>Weekend.</strong><br>24/7 does not mean guaranteed liquidity.",
+    links_kicker: "Official links",
+    links_title: "Verify before buying",
+    link_open_degate: "Open DeGate",
+    link_xs_assets: "Assets & contracts",
+    link_ondo_contracts: "Official contracts",
+    footer_date: "Informational guide updated July 14, 2026.",
+    footer_disclaimer: "This does not constitute financial, legal, or tax advice."
+  },
+
+  es: {
+    page_title: "Acciones on-chain — en auto-custodia",
+    nav_trust: "Confianza",
+    nav_dividends: "Dividendos",
+    nav_products: "Productos",
+    nav_howto: "Cómo comprar",
+    nav_security: "Seguridad",
+    nav_cta: "Abrir DeGate ↗",
+    eyebrow: "Guía para inversores on-chain · 2026",
+    hero_title: 'Acciones on-chain.<br><span class="gradient-text">En auto-custodia.</span><br>En tu wallet.',
+    hero_copy: 'Las acciones on-chain son tokens que siguen el valor de acciones y ETFs. En el mercado secundario puedes <strong>comprarlas, venderlas y conservarlas en auto-custodia</strong>, sin abrir una cuenta de valores con el emisor.',
+    hero_cta_buy: "Compra con DeGate",
+    hero_cta_compare: "Compara los productos",
+    proof_wallet: "Wallet auto-custodial",
+    proof_trading: "Trading on-chain 24/7",
+    proof_fractional: "Activos fraccionables",
+    trust_kicker: "Estructura y confianza",
+    trust_title: "Los principales emisores de acciones on-chain",
+    trust_badge: "Activos subyacentes declarados como cobertura",
+    trust_xs_summary: "Certificado tracker emitido a través de una sociedad dedicada en Jersey.",
+    tag_asset_backed: "Respaldado por activos",
+    label_issuer: "Emisor",
+    label_custody: "Custodia",
+    label_security_agent: "Agente de seguridad",
+    link_official_docs: "Documentos oficiales →",
+    trust_ondo_summary: "Tracker de retorno total emitido por una sociedad dedicada en las BVI.",
+    tag_segregated: "Activos segregados",
+    label_broker_custody: "Bróker / custodia",
+    trust_rh_summary: "Títulos de deuda tokenizados emitidos a través de una sociedad en Jersey.",
+    tag_1to1: "Cobertura 1:1",
+    trust_note: "El token ofrece exposición económica a la acción, pero no convierte al usuario en accionista directo de la empresa cotizada.",
+    div_kicker: "Dividendos y derechos",
+    div_title: "El dividendo se reinvierte. El voto no se transfiere al token.",
+    div_lede: "Si la acción subyacente paga un dividendo, los tres productos transfieren el beneficio económico al token. Normalmente no llega un pago en efectivo al wallet y no se requiere acción del usuario.",
+    div_answer_title: "¿Efectivo en el wallet? Normalmente no.",
+    div_answer_body: "El dividendo se utiliza para aumentar la exposición a la acción subyacente.",
+    table_scroll: "Desplaza la tabla a la derecha →",
+    th_product: "Producto",
+    th_dividend: "Dividendo",
+    th_how_attributed: "Cómo se atribuye",
+    th_wallet_change: "Qué cambia en el wallet",
+    th_voting: "Derecho de voto",
+    yes_star: "Sí*",
+    no: "No",
+    xs_div_how: "El efectivo recibido por el custodio se reinvierte en acciones adicionales del mismo título, neto de las retenciones aplicables.",
+    xs_div_wallet: "El multiplicador aumenta y el saldo visible crece proporcionalmente. En Solana y TON la visualización depende del soporte del wallet.",
+    ondo_div_how: "El dividendo neto se reinvierte en la acción y se incorpora al retorno total del token.",
+    ondo_div_wallet: "Normalmente se refleja en el precio; en Solana y BNB Chain, con Scaled UI, puede aparecer en el saldo mostrado.",
+    rh_div_how: "El dividendo no se paga en efectivo: se reinvierte automáticamente para comprar más acciones.",
+    rh_div_wallet: "El multiplicador aumenta, por lo que cada token representa progresivamente más acciones subyacentes.",
+    div_footnote: '* Solo si la acción o ETF subyacente distribuye un dividendo. Las retenciones, impuestos y costes previstos en la documentación pueden reducir el importe reinvertido. Fuentes: <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.',
+    compare_kicker: "Comparación operativa",
+    compare_title: "Dónde y cómo comprar",
+    compare_lede: "DeGate es la ruta recomendada para xStocks y Ondo. Robinhood requiere un wallet EVM, un bridge y una DEX.",
+    compare_note: "RFQ = cotización directa. AMM = swap contra un pool.",
+    buy_xs_summary: "La ruta más directa para comprar y conservar un xStock en tu wallet.",
+    label_purchase: "Compra",
+    label_when: "Cuándo",
+    label_alternatives: "Alternativas",
+    link_assets_contracts: "Activos y contratos →",
+    buy_ondo_summary: "Amplia selección de acciones y ETFs con enrutamiento RFQ/intent.",
+    ondo_buy_method: "RFQ/intent · AMM si disponible",
+    ondo_buy_when: "Amplia cobertura 24/5 · weekend limitado",
+    link_explore_assets: "Explorar activos →",
+    buy_rh_summary: "Requiere un wallet EVM y una transferencia a Robinhood Chain.",
+    rh_buy_when: "24/7 si existe liquidez",
+    link_official_contracts: "Contratos oficiales →",
+    buy_rh_note: "* Backpack solo si la versión instalada permite añadir Robinhood Chain como red EVM personalizada.",
+    howto_kicker: "Instrucciones prácticas",
+    howto_title: "Del wallet a la primera compra",
+    howto_lede: "Primero verifica el contrato oficial. Luego ejecuta siempre una pequeña orden de prueba.",
+    howto_degate_title: "xStocks y Ondo con DeGate",
+    howto_degate_desc: "La ruta multichain más sencilla, sin bridge manual.",
+    howto_dg_s1_title: "Abre DeGate Wallet",
+    howto_dg_s1_copy: "Crea o importa el wallet auto-custodial.",
+    howto_dg_s2_title: "Deposita USDC",
+    howto_dg_s2_copy: "DeGate gestiona red, gas y enrutamiento multichain.",
+    howto_dg_s3_title: "Busca el ticker",
+    howto_dg_s3_copy: "AAPLx / NVDAx para xStocks; NVDAon / SPYon para Ondo.",
+    howto_dg_s4_title: "Verifica y compra",
+    howto_dg_s4_copy: "Compara contrato, precio, spread y price impact.",
+    howto_rh_title: "Robinhood Chain con wallet EVM",
+    howto_rh_desc: "Añade la red, usa un bridge soportado y compra en una DEX.",
+    howto_rh_s1_title: "Rabby, MetaMask o Backpack",
+    howto_rh_s1_copy: "Backpack solo si la versión permite la red EVM personalizada.",
+    howto_rh_s2_title: "Bridge hacia Robinhood Chain",
+    howto_rh_s2_copy: "Canonical Bridge, Relay, Across, Stargate o LI.FI/Jumper.",
+    howto_rh_s3_title: "Lleva ETH + USDG",
+    howto_rh_s3_copy: "ETH para el gas; verifica la moneda aceptada por el pool.",
+    howto_rh_s4_title: "Compra en Uniswap o 1inch",
+    howto_rh_s4_copy: "Compara el contrato con la lista oficial de Robinhood.",
+    time_kicker: "Horarios",
+    time_title: "Cuándo conviene comprar",
+    time_recommended: "Recomendado",
+    time_best_desc: "Bolsa de EE.UU. abierta: RFQ más competitivas y precio más cercano a la acción subyacente.",
+    time_caution: "Más prudencia",
+    time_preafter: "Pre / after-market",
+    time_caution_desc: "Menos market makers y spreads más amplios. Reduce el tamaño de la orden.",
+    time_high_risk: "Riesgo elevado",
+    time_weekend_desc: "Wall Street está cerrada. El pool puede estar abierto, pero el precio puede desviarse del cierre.",
+    time_dst_note: "Los distintos países cambian al horario de verano en fechas diferentes: durante algunas semanas la apertura de EE.UU. puede desplazarse una hora.",
+    safety_kicker: "Checklist",
+    safety_title: "Reduce el riesgo antes de firmar",
+    safety_desc: "El riesgo principal en el mercado secundario es comprar el token equivocado o pagar demasiado cuando la liquidez es baja.",
+    ck1: "<strong>Contrato oficial.</strong><br>No te fíes solo del ticker.",
+    ck2: "<strong>Horario EE.UU.</strong><br>Prefiere 15:30–22:00 CET.",
+    ck3: "<strong>Spread e impacto.</strong><br>Reduce la orden si son elevados.",
+    ck4: "<strong>Agregador.</strong><br>Compara RFQ y pools AMM.",
+    ck5: "<strong>Orden de prueba.</strong><br>Empieza siempre con una cantidad pequeña.",
+    ck6: "<strong>Bridge soportado.</strong><br>Verifica la red y el activo de destino.",
+    ck7: "<strong>Gas separado.</strong><br>Conserva ETH, SOL o BNB necesarios.",
+    ck8: "<strong>Weekend.</strong><br>24/7 no significa liquidez garantizada.",
+    links_kicker: "Enlaces oficiales",
+    links_title: "Verifica antes de comprar",
+    link_open_degate: "Abrir DeGate",
+    link_xs_assets: "Activos y contratos",
+    link_ondo_contracts: "Contratos oficiales",
+    footer_date: "Guía informativa actualizada el 14 de julio de 2026.",
+    footer_disclaimer: "No constituye asesoramiento financiero, legal ni fiscal."
+  },
+
+  fr: {
+    page_title: "Actions on-chain — en auto-conservation",
+    nav_trust: "Confiance",
+    nav_dividends: "Dividendes",
+    nav_products: "Produits",
+    nav_howto: "Comment acheter",
+    nav_security: "Sécurité",
+    nav_cta: "Ouvrir DeGate ↗",
+    eyebrow: "Guide pour les investisseurs on-chain · 2026",
+    hero_title: 'Actions on-chain.<br><span class="gradient-text">En auto-conservation.</span><br>Dans votre wallet.',
+    hero_copy: 'Les actions on-chain sont des tokens qui suivent la valeur d\'actions et d\'ETFs. Sur le marché secondaire, vous pouvez <strong>les acheter, les vendre et les conserver en auto-conservation</strong>, sans ouvrir un compte-titres chez l\'émetteur.',
+    hero_cta_buy: "Acheter avec DeGate",
+    hero_cta_compare: "Comparer les produits",
+    proof_wallet: "Wallet auto-conservé",
+    proof_trading: "Trading on-chain 24/7",
+    proof_fractional: "Actifs fractionnables",
+    trust_kicker: "Structure et confiance",
+    trust_title: "Les principaux émetteurs d'actions on-chain",
+    trust_badge: "Actifs sous-jacents déclarés en couverture",
+    trust_xs_summary: "Certificat tracker émis via une société dédiée à Jersey.",
+    tag_asset_backed: "Couverture par actifs",
+    label_issuer: "Émetteur",
+    label_custody: "Conservation",
+    label_security_agent: "Agent de sûreté",
+    link_official_docs: "Documents officiels →",
+    trust_ondo_summary: "Tracker total-return émis par une société dédiée aux BVI.",
+    tag_segregated: "Actifs ségrégués",
+    label_broker_custody: "Courtier / conservation",
+    trust_rh_summary: "Titres de créance tokenisés émis via une société à Jersey.",
+    tag_1to1: "Couverture 1:1",
+    trust_note: "Le token offre une exposition économique à l'action, mais ne fait pas du détenteur un actionnaire direct de la société cotée.",
+    div_kicker: "Dividendes et droits",
+    div_title: "Le dividende est réinvesti. Le droit de vote ne passe pas au token.",
+    div_lede: "Si l'action sous-jacente verse un dividende, les trois produits en transfèrent le bénéfice économique au token. Un paiement en espèces séparé n'arrive normalement pas dans le wallet et aucune action de l'utilisateur n'est requise.",
+    div_answer_title: "Du cash dans le wallet ? Normalement non.",
+    div_answer_body: "Le dividende est utilisé pour augmenter l'exposition à l'action sous-jacente.",
+    table_scroll: "Faites défiler le tableau vers la droite →",
+    th_product: "Produit",
+    th_dividend: "Dividende",
+    th_how_attributed: "Comment il est attribué",
+    th_wallet_change: "Ce qui change dans le wallet",
+    th_voting: "Droit de vote",
+    yes_star: "Oui*",
+    no: "Non",
+    xs_div_how: "Le cash reçu par le dépositaire est réinvesti en actions supplémentaires du même titre, net des retenues applicables.",
+    xs_div_wallet: "Le multiplicateur augmente et le solde visible croît proportionnellement. Sur Solana et TON, l'affichage dépend du support du wallet.",
+    ondo_div_how: "Le dividende net est réinvesti dans l'action et incorporé au rendement total du token.",
+    ondo_div_wallet: "Normalement reflété dans le prix ; sur Solana et BNB Chain, avec Scaled UI, il peut apparaître dans le solde affiché.",
+    rh_div_how: "Le dividende n'est pas versé en espèces : il est automatiquement réinvesti pour acheter d'autres actions.",
+    rh_div_wallet: "Le multiplicateur augmente, chaque token représente donc progressivement plus d'actions sous-jacentes.",
+    div_footnote: '* Uniquement si l\'action ou l\'ETF sous-jacent distribue un dividende. Les retenues, impôts et frais prévus par la documentation peuvent réduire le montant réinvesti. Sources : <a class="table-link" href="https://docs.xstocks.fi/docs/dividends-and-stock-splits">xStocks</a>, <a class="table-link" href="https://docs.ondo.finance/ondo-stocks/corporate-actions">Ondo</a>, <a class="table-link" href="https://robinhood.com/rhj/stocktokens/">Robinhood</a>.',
+    compare_kicker: "Comparaison opérationnelle",
+    compare_title: "Où et comment acheter",
+    compare_lede: "DeGate est le parcours recommandé pour xStocks et Ondo. Robinhood nécessite un wallet EVM, un bridge et une DEX.",
+    compare_note: "RFQ = cotation directe. AMM = swap contre un pool.",
+    buy_xs_summary: "Le parcours le plus direct pour acheter et conserver un xStock dans votre wallet.",
+    label_purchase: "Achat",
+    label_when: "Quand",
+    label_alternatives: "Alternatives",
+    link_assets_contracts: "Actifs et contrats →",
+    buy_ondo_summary: "Large choix d'actions et d'ETFs avec routage RFQ/intent.",
+    ondo_buy_method: "RFQ/intent · AMM si disponible",
+    ondo_buy_when: "Large couverture 24/5 · weekend limité",
+    link_explore_assets: "Explorer les actifs →",
+    buy_rh_summary: "Nécessite un wallet EVM et un transfert vers Robinhood Chain.",
+    rh_buy_when: "24/7 si la liquidité existe",
+    link_official_contracts: "Contrats officiels →",
+    buy_rh_note: "* Backpack uniquement si la version installée permet d'ajouter Robinhood Chain comme réseau EVM personnalisé.",
+    howto_kicker: "Instructions pratiques",
+    howto_title: "Du wallet au premier achat",
+    howto_lede: "Vérifiez d'abord le contrat officiel. Puis exécutez toujours un petit ordre de test.",
+    howto_degate_title: "xStocks et Ondo avec DeGate",
+    howto_degate_desc: "Le parcours multichain le plus simple, sans bridge manuel.",
+    howto_dg_s1_title: "Ouvrez DeGate Wallet",
+    howto_dg_s1_copy: "Créez ou importez le wallet auto-conservé.",
+    howto_dg_s2_title: "Déposez des USDC",
+    howto_dg_s2_copy: "DeGate gère le réseau, le gas et le routage multichain.",
+    howto_dg_s3_title: "Cherchez le ticker",
+    howto_dg_s3_copy: "AAPLx / NVDAx pour xStocks ; NVDAon / SPYon pour Ondo.",
+    howto_dg_s4_title: "Vérifiez et achetez",
+    howto_dg_s4_copy: "Comparez contrat, prix, spread et impact sur le prix.",
+    howto_rh_title: "Robinhood Chain avec wallet EVM",
+    howto_rh_desc: "Ajoutez le réseau, utilisez un bridge supporté et achetez sur une DEX.",
+    howto_rh_s1_title: "Rabby, MetaMask ou Backpack",
+    howto_rh_s1_copy: "Backpack uniquement si la version permet le réseau EVM personnalisé.",
+    howto_rh_s2_title: "Bridge vers Robinhood Chain",
+    howto_rh_s2_copy: "Canonical Bridge, Relay, Across, Stargate ou LI.FI/Jumper.",
+    howto_rh_s3_title: "Apportez ETH + USDG",
+    howto_rh_s3_copy: "ETH pour le gas ; vérifiez la devise acceptée par le pool.",
+    howto_rh_s4_title: "Achetez sur Uniswap ou 1inch",
+    howto_rh_s4_copy: "Comparez le contrat avec la liste officielle Robinhood.",
+    time_kicker: "Horaires",
+    time_title: "Quand acheter",
+    time_recommended: "Recommandé",
+    time_best_desc: "Bourse américaine ouverte : RFQ plus compétitives et prix plus proche de l'action sous-jacente.",
+    time_caution: "Plus de prudence",
+    time_preafter: "Pré / après-marché",
+    time_caution_desc: "Moins de market makers et spreads plus larges. Réduisez la taille de l'ordre.",
+    time_high_risk: "Risque élevé",
+    time_weekend_desc: "Wall Street est fermée. Le pool peut être ouvert, mais le prix peut s'écarter de la clôture.",
+    time_dst_note: "Les différents pays changent d'heure à des dates différentes : pendant quelques semaines, l'ouverture du marché américain peut se décaler d'une heure.",
+    safety_kicker: "Checklist",
+    safety_title: "Réduisez le risque avant de signer",
+    safety_desc: "Le risque principal sur le marché secondaire est d'acheter le mauvais token ou de payer trop cher quand la liquidité est faible.",
+    ck1: "<strong>Contrat officiel.</strong><br>Ne faites pas confiance au seul ticker.",
+    ck2: "<strong>Horaire US.</strong><br>Préférez 15h30–22h00 CET.",
+    ck3: "<strong>Spread et impact.</strong><br>Réduisez l'ordre s'ils sont élevés.",
+    ck4: "<strong>Agrégateur.</strong><br>Comparez RFQ et pools AMM.",
+    ck5: "<strong>Ordre de test.</strong><br>Commencez toujours par un petit montant.",
+    ck6: "<strong>Bridge supporté.</strong><br>Vérifiez le réseau et l'actif de destination.",
+    ck7: "<strong>Gas séparé.</strong><br>Conservez l'ETH, le SOL ou le BNB nécessaires.",
+    ck8: "<strong>Weekend.</strong><br>24/7 ne signifie pas liquidité garantie.",
+    links_kicker: "Liens officiels",
+    links_title: "Vérifiez avant d'acheter",
+    link_open_degate: "Ouvrir DeGate",
+    link_xs_assets: "Actifs et contrats",
+    link_ondo_contracts: "Contrats officiels",
+    footer_date: "Guide informative mise à jour le 14 juillet 2026.",
+    footer_disclaimer: "Ne constitue pas un conseil financier, juridique ou fiscal."
+  }
+};
+
+/* ─── Flag & code mappings ─── */
+const LANG_META = {
+  it: { flag: "🇮🇹", code: "IT" },
+  en: { flag: "🇬🇧", code: "EN" },
+  es: { flag: "🇪🇸", code: "ES" },
+  fr: { flag: "🇫🇷", code: "FR" }
+};
+
+/* ─── Detect language from browser or localStorage ─── */
+function detectLanguage() {
+  // 1. Check localStorage for user's explicit choice
+  const saved = localStorage.getItem("dgfans_lang");
+  if (saved && TRANSLATIONS[saved]) return saved;
+
+  // 2. Auto-detect from browser locale
+  const browserLangs = navigator.languages || [navigator.language || navigator.userLanguage || ""];
+  for (const raw of browserLangs) {
+    const code = raw.toLowerCase().split("-")[0];
+    if (TRANSLATIONS[code]) return code;
+  }
+
+  // 3. Default: English (for international visitors)
+  return "en";
+}
+
+/* ─── Apply translations to the DOM ─── */
+function applyLanguage(lang) {
+  const t = TRANSLATIONS[lang];
+  if (!t) return;
+
+  // Update <html lang>
+  document.documentElement.lang = lang;
+
+  // Update <title>
+  document.title = t.page_title;
+
+  // Update all data-i18n elements (textContent)
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // Update all data-i18n-html elements (innerHTML — for bold, links, etc.)
+  document.querySelectorAll("[data-i18n-html]").forEach(el => {
+    const key = el.getAttribute("data-i18n-html");
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  // Update language selector button
+  const meta = LANG_META[lang];
+  document.getElementById("langFlag").textContent = meta.flag;
+  document.getElementById("langCode").textContent = meta.code;
+
+  // Update active state in dropdown
+  document.querySelectorAll("#langDropdown li").forEach(li => {
+    li.classList.toggle("active", li.dataset.lang === lang);
+  });
+
+  // Persist choice
+  localStorage.setItem("dgfans_lang", lang);
+}
+
+/* ─── Language selector interactions ─── */
+(function initLangSelector() {
+  const selector = document.getElementById("langSelector");
+  const btn = document.getElementById("langBtn");
+  const dropdown = document.getElementById("langDropdown");
+
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    selector.classList.toggle("open");
+  });
+
+  dropdown.querySelectorAll("li").forEach(li => {
+    li.addEventListener("click", () => {
+      applyLanguage(li.dataset.lang);
+      selector.classList.remove("open");
+    });
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", () => {
+    selector.classList.remove("open");
+  });
+
+  // Close on Escape
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") selector.classList.remove("open");
+  });
+})();
+
+/* ─── Initialize ─── */
+applyLanguage(detectLanguage());
+</script>
 </body>
 </html>
