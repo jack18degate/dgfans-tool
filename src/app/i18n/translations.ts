@@ -1,9 +1,10 @@
-export type Locale = 'en' | 'it' | 'es' | 'zh';
+export type Locale = 'en' | 'it' | 'es' | 'zh' | 'fr';
 
 export const LOCALES: { code: Locale; label: string; flag: string }[] = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
   { code: 'it', label: 'Italiano', flag: '🇮🇹' },
   { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'zh', label: '中文', flag: '🇨🇳' },
 ];
 
@@ -147,6 +148,11 @@ export interface Translations {
     etfsBadge: string;
     crossPlatformBadge: string;
   };
+  tools: {
+    compoundCalcTitle: string;
+    compoundCalcDesc: string;
+    turboAnalysisDesc: string;
+  };
 }
 
 const en: Translations = {
@@ -288,6 +294,11 @@ const en: Translations = {
     stocksBadge: '{count} Stocks',
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
+  },
+  tools: {
+    compoundCalcTitle: 'Compound Interest Calculator',
+    compoundCalcDesc: 'Simulate capital growth with real rates from Turbo Range pools',
+    turboAnalysisDesc: 'Advanced liquidity analysis and yield simulation',
   },
 };
 
@@ -431,6 +442,11 @@ const it: Translations = {
     etfsBadge: '{count} ETF',
     crossPlatformBadge: '{count} Cross-Platform',
   },
+  tools: {
+    compoundCalcTitle: 'Calcolatore di Interesse Composto',
+    compoundCalcDesc: 'Simula la crescita del capitale con i tassi reali dei pool Turbo Range',
+    turboAnalysisDesc: 'Analisi avanzata della liquidità e simulazione rendimenti',
+  },
 };
 
 const es: Translations = {
@@ -572,6 +588,11 @@ const es: Translations = {
     stocksBadge: '{count} Acciones',
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
+  },
+  tools: {
+    compoundCalcTitle: 'Calculadora de Interés Compuesto',
+    compoundCalcDesc: 'Simula el crecimiento del capital con tasas reales de pools Turbo Range',
+    turboAnalysisDesc: 'Análisis avanzado de liquidez y simulación de rendimientos',
   },
 };
 
@@ -715,6 +736,158 @@ const zh: Translations = {
     etfsBadge: '{count} 个 ETFs',
     crossPlatformBadge: '{count} 个双平台支持',
   },
+  tools: {
+    compoundCalcTitle: '复利计算器',
+    compoundCalcDesc: '用 Turbo Range 池的实时利率模拟资本增长',
+    turboAnalysisDesc: '高级流动性分析和收益模拟',
+  },
 };
 
-export const translations: Record<Locale, Translations> = { en, it, es, zh };
+const fr: Translations = {
+  nav: {
+    tools: 'Outils',
+    compoundInterest: 'Calculateur d\'intérêts',
+    turboRange: 'Turbo Range',
+    turboRangeGuide: 'Guide Turbo Range',
+    copyright: '© 2026 DeGate Tools',
+    themeLight: 'Thème clair',
+    themeDark: 'Thème sombre',
+    onchainMarkets: 'Marchés RWA On-Chain',
+  },
+  compound: {
+    title: 'Calculateur d\'intérêts composés',
+    subtitle: 'Calculez les intérêts composés avec une fréquence de réinvestissement personnalisée et visualisez la croissance de votre capital dans le temps.',
+    parameters: 'Paramètres',
+    investedCapital: 'Capital investi',
+    expectedAnnualRate: 'Taux annuel attendu',
+    reinvestFrequency: 'Fréquence de réinvestissement',
+    feePerReinvest: 'Frais par réinvestissement',
+    totalAnnualCost: 'Coût annuel total :',
+    timeHorizon: 'Horizon temporel',
+    years: 'ans',
+    year: 'an',
+    perYear: '/an',
+    finalBalance: 'Solde final',
+    afterYears: 'après',
+    netProfit: 'Bénéfice net',
+    totalROI: 'ROI total',
+    totalInterest: 'Intérêts totaux',
+    interestGenerated: 'intérêts générés',
+    totalFees: 'Frais totaux',
+    reinvestments: 'réinvestissements',
+    compound: 'Composé :',
+    simple: 'Simple :',
+    advantage: 'Avantage :',
+    capitalGrowth: 'Croissance du capital',
+    yearByYear: 'Détail année par année',
+    balance: 'Solde',
+    cumulativeInterest: 'Intérêts cumulés',
+    cumulativeFees: 'Frais cumulés',
+    netGain: 'Gain net',
+    turboTipTitle: '💡 Degate Turbo Range',
+    turboTipDesc: 'Obtenez des APY élevés avec une interface ultra-simple, directement depuis votre wallet Web3 !',
+    degateCta: 'Gagner avec Turbo Range',
+    degateDesc: 'Degate Turbo Range vous permet d\'obtenir des APY incroyables avec une interface ultra-simple, directement depuis votre wallet Web3 non-custodial. Aucune complexité, que des résultats.',
+    tryTurboRange: 'Essayer Turbo Range',
+    daily: 'Quotidien',
+    weekly: 'Hebdomadaire',
+    monthly: 'Mensuel',
+    quarterly: 'Trimestriel',
+    yearly: 'Annuel',
+    compoundInterestLabel: 'Intérêts composés',
+    simpleInterestLabel: 'Intérêts simples',
+    initialCapitalLabel: 'Capital initial',
+    yearLabel: 'Année',
+    livePools: 'Taux des pools en direct',
+    poolsDesc: 'APR en temps réel des pools Raydium et Uniswap',
+    useThisApr: 'Utiliser cet APR',
+    poolSelected: 'APR utilisé de',
+    clearPool: 'Effacer',
+    apr24h: '24h',
+    apr7d: '7j',
+    apr30d: '30j',
+    tvlLabel: 'TVL',
+    loadingPools: 'Chargement des pools...',
+    poolsError: 'Impossible de charger les données des pools',
+    disclaimer: 'L\'APR est basé sur les performances passées et peut varier',
+    priceRange: 'Fourchette de prix',
+    gasFeeDisclaimer: 'Les frais de gas sont dynamiques et varient selon l\'actif et les conditions de congestion du réseau.',
+    chooseAsset: 'Choisissez votre actif',
+    chooseAssetSubtitle: 'Choisissez votre actif et découvrez votre croissance future 🚀',
+    chooseAssetDesc: 'Sélectionnez un pool ci-dessus pour commencer à calculer les intérêts composés.',
+    selectAssetOverlay: '👆 Sélectionnez un actif ci-dessus pour débloquer le calculateur',
+  },
+  turbo: {
+    degatePools: 'Pools Degate',
+    refresh: 'Actualiser',
+    updating: 'Mise à jour...',
+    noPoolFound: 'Aucun pool trouvé.',
+    selectPoolPrompt: 'Analyse Turbo Range',
+    selectPoolDesc: 'Sélectionnez un pool dans la barre latérale pour lancer le scan de distribution de liquidité et simuler l\'Hyper-Yield.',
+    liquidityMap: 'Carte de liquidité',
+    currentPrice: 'Prix actuel',
+    zoom: 'Zoom',
+    loadingLiquidity: 'Calcul de la distribution de liquidité...',
+    analysisTitle: '💡 Analyse avancée d\'optimisation (Hot Zone ±10%)',
+    analysisDesc: 'Le Module Analytique analyse la distribution des ticks actifs et calcule le poids relatif de la liquidité concentrée, fournissant des métriques quantitatives sur le placement optimal des fourchettes LP.',
+    resistanceDown: 'Résistance passive à la baisse (-10%)',
+    resistanceUp: 'Résistance passive à la hausse (+10%)',
+    highSaturation: '🔴 Haute saturation',
+    optimalDecompression: '🟢 Décompression optimale',
+    balancedRange: '🟡 Fourchette équilibrée',
+    volumeCoeff: 'Coefficient volumétrique',
+    suggestedStrategy: 'Stratégie suggérée (Delta Allocation) :',
+    biasDown: 'Asymétrie excessive inférieure. La concentration liquide près du downside est structurellement saturée, réduisant les APY.',
+    biasUp: 'Inversion du mur de liquidité vers le haut. Forte concurrence des Market Makers. Action Delta-Neutre ou placement LP à prix réduit est optimal.',
+    biasNeutral: 'Équilibre Gaussien V3 sur le pricing local. Aucune déviation avantageuse détectée.',
+    maxYield: '🔥 Rendement maximum',
+    maxYieldDesc: 'Ultra-concentré. Frais très élevés, risque très élevé de sortie de fourchette.',
+    balanced: '⚖️ Équilibré',
+    balancedDesc: 'Canal équilibré pour absorber la volatilité standard sur plusieurs jours.',
+    relaxZone: '☕ Zone Relax',
+    relaxDesc: 'Bande large pour LP passifs. APR contenu mais gestion sans stress.',
+    simulator: 'Simulateur DIL et APR',
+    whaleTracker: 'Whale Tracker',
+    whaleTitle: '🐋 Whale Tracker',
+    whaleScanPassive: 'Scan passif 4h (Réseau public). Actualisation désactivée.',
+    poolList: '📋 Liste des pools',
+    analysis: '📊 Analyse',
+  },
+  onchainmarkets: {
+    title: 'Explorateur de tokens RWA',
+    subtitle: 'Explorez les actifs réels tokenisés sur Ondo Markets et xStocks',
+    loadingAssets: 'Chargement des actifs...',
+    searchPlaceholder: 'Rechercher par ticker, nom ou ISIN...',
+    all: 'Tous',
+    stocks: 'Actions',
+    etfs: 'ETFs',
+    both: 'Les deux',
+    showingAssets: 'Affichage de {count} sur {total} actifs',
+    noAssetsFound: 'Aucun actif ne correspond aux filtres',
+    details: 'Détails',
+    description: 'Description',
+    swapCheckTitle: 'Vérification Swap ($100 USDC)',
+    buyOnDegate: 'Acheter sur DeGate',
+    contractAddresses: 'Adresses de contrat',
+    buyOnEthereum: '⟠ Acheter {ticker} sur Ethereum',
+    buyOnSolana: '◎ Acheter {ticker} sur Solana',
+    checkingSwap: 'Vérification du swap...',
+    swappable: 'Échangeable',
+    marketClosed: 'Marché fermé',
+    noLiquidity: 'Pas de liquidité',
+    notTradable: 'Non négociable',
+    noRoute: 'Aucune route',
+    checkFailed: 'Vérification échouée',
+    totalAssetsBadge: '{count} actifs au total',
+    stocksBadge: '{count} actions',
+    etfsBadge: '{count} ETFs',
+    crossPlatformBadge: '{count} Cross-Platform',
+  },
+  tools: {
+    compoundCalcTitle: 'Calculateur d\'intérêts composés',
+    compoundCalcDesc: 'Simulez la croissance du capital avec les taux réels des pools Turbo Range',
+    turboAnalysisDesc: 'Analyse avancée de la liquidité et simulation de rendements',
+  },
+};
+
+export const translations: Record<Locale, Translations> = { en, it, es, fr, zh };

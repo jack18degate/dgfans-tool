@@ -5,13 +5,12 @@ import { useI18n } from '../i18n';
 import styles from './page.module.css';
 
 export default function ToolsLandingPage() {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeHeight, setIframeHeight] = useState(3000);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const isItalian = locale === 'it';
-  const src = isItalian ? '/landing/turborangeita.html' : '/landing/turborangeeng.html';
+  const src = locale === 'it' ? '/landing/turborangeita.html' : '/landing/turborangeeng.html';
 
   // Get current theme from <html data-theme>
   const getTheme = useCallback(() => {
@@ -82,7 +81,7 @@ export default function ToolsLandingPage() {
   // Reset state on locale change
   useEffect(() => {
     setIsLoaded(false);
-  }, [isItalian]);
+  }, [locale]);
 
   return (
     <main className={styles.landingContainer}>
@@ -121,12 +120,10 @@ export default function ToolsLandingPage() {
             </div>
             <span className={styles.landingBtnText}>
               <span className={styles.landingBtnTitle}>
-                {isItalian ? 'Calcolatore di Interesse Composto' : 'Compound Interest Calculator'}
+                {t.tools.compoundCalcTitle}
               </span>
               <span className={styles.landingBtnDesc}>
-                {isItalian
-                  ? 'Simula la crescita del capitale con i tassi reali dei pool Turbo Range'
-                  : 'Simulate capital growth with real rates from Turbo Range pools'}
+                {t.tools.compoundCalcDesc}
               </span>
             </span>
             <span className={styles.landingBtnArrow}>
@@ -147,9 +144,7 @@ export default function ToolsLandingPage() {
             <span className={styles.landingBtnText}>
               <span className={styles.landingBtnTitle}>Turbo Range Analysis</span>
               <span className={styles.landingBtnDesc}>
-                {isItalian
-                  ? 'Analisi avanzata della liquidità e simulazione rendimenti'
-                  : 'Advanced liquidity analysis and yield simulation'}
+                {t.tools.turboAnalysisDesc}
               </span>
             </span>
             <span className={`${styles.landingBtnArrow} ${styles.landingBtnArrowGreen}`}>
