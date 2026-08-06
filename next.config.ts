@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         source: '/onchainstocks',
         destination: '/onchainstocks.html',
       },
+      {
+        source: '/onchainstock/RFQ',
+        destination: '/rfq.html',
+      },
     ];
   },
 };
