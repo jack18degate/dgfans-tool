@@ -230,8 +230,8 @@
       max-width: 690px;
       margin: 26px 0 0;
       color: #526071;
-      font-size: 17px;
-      line-height: 1.7;
+      font-size: 18px;
+      line-height: 1.72;
       word-spacing: 0.01em;
     }
     .hero-copy strong { color: var(--ink); }
@@ -245,7 +245,7 @@
     .steps { display: grid; gap: 2px; }
     .step { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid #e2e6ed; }
     .step-num { display: grid; width: 28px; height: 28px; place-items: center; color: #fff; border-radius: 9px; background: var(--blue); font-size: 12px; font-weight: 900; }
-    .step-copy { margin-top: 2px; color: #697587; font-size: 15px; line-height: 1.72; word-spacing: 0.01em; }
+    .step-copy { margin-top: 2px; color: #526071; font-size: 16px; line-height: 1.72; word-spacing: 0.01em; }
     .step-copy strong { color: var(--ink); }
 
     .links {
@@ -284,24 +284,13 @@
 
     /* Article specific styles */
     .article-body p {
-      margin: 0 0 20px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.75;
-      word-spacing: 0.01em;
-    }
-    .article-body strong { color: var(--ink); font-weight: 700; }
-    .article-body ol { padding-left: 22px; margin: 0 0 20px; }
-    .article-body li {
-      margin: 10px 0;
-      color: var(--muted);
-      font-size: 16px;
+      margin: 0 0 22px;
+      color: #526071;
+      font-size: 18px;
       line-height: 1.72;
       word-spacing: 0.01em;
     }
-    .article-body ul { list-style: none; padding: 0; margin: 0 0 20px 0; }
-    .article-body ul li { position: relative; padding-left: 22px; }
-    .article-body ul li::before { content: "•"; position: absolute; left: 0; color: var(--blue); font-weight: bold; font-size: 18px; line-height: 1.6; }
+    .article-body strong { color: var(--ink); font-weight: 700; }
     
     .breadcrumb {
       display: inline-block;
@@ -390,12 +379,9 @@
               <div><div class="step-copy" data-i18n-html="s1_step4">Se accetti, firmi una transazione. I tuoi USDC vanno al market maker e i token azionari arrivano nel tuo wallet. Entrambi i trasferimenti avvengono insieme on-chain.</div></div>
             </div>
           </div>
-          <br>
-          <p data-i18n-html="s1_p2">Da dove provengono questi token? Di solito, in uno di questi due modi:</p>
-          <ul>
-            <li data-i18n-html="s1_li1">Il market maker possiede già i token e te li invia. In quel momento non è necessario acquistare nuove azioni.</li>
-            <li data-i18n-html="s1_li2">Se servono altri token, i fondi vengono inviati tramite l’emittente. Un broker acquista le azioni corrispondenti, vengono creati nuovi token e il market maker può consegnarli all’acquirente.</li>
-          </ul>
+          <p data-i18n-html="s1_p2">Da dove provengono questi token? Di solito, in uno di questi due modi.</p>
+          <p data-i18n-html="s1_p2a">Il market maker possiede già i token e te li invia. In quel momento non è necessario acquistare nuove azioni.</p>
+          <p data-i18n-html="s1_p2b">Se servono altri token, i fondi vengono inviati tramite l’emittente. Un broker acquista le azioni corrispondenti, vengono creati nuovi token e il market maker può consegnarli all’acquirente.</p>
           <p data-i18n-html="s1_p3">Il tuo wallet non invia gli USDC direttamente a una borsa valori. Le società che gestiscono il token si occupano del collegamento tra il tuo pagamento, il token e le azioni reali.</p>
           <p data-i18n-html="s1_p4">La quotazione scade rapidamente perché il prezzo dell’azione sottostante può cambiare. Se scade, il tuo wallet deve richiederne una nuova.</p>
         </div>
@@ -436,13 +422,11 @@
           </div>
         </div>
         <div class="article-body">
-          <ul>
-            <li data-i18n-html="s4_li1"><strong>Importo finale:</strong> controlla quanti token riceverai, non soltanto il prezzo dell’azione visualizzato.</li>
-            <li data-i18n-html="s4_li2"><strong>Spread e commissioni:</strong> confronta la quotazione con il prezzo dell’azione sottostante quando quel mercato è aperto e includi le commissioni della blockchain.</li>
-            <li data-i18n-html="s4_li3"><strong>Scadenza:</strong> firma prima che la quotazione scada; in caso contrario, richiedine una aggiornata.</li>
-            <li data-i18n-html="s4_li4"><strong>Orari di negoziazione:</strong> per ottenere prezzi più convenienti, quando possibile preferisci il normale orario di mercato negli Stati Uniti.</li>
-            <li data-i18n-html="s4_li5"><strong>Condizioni del token:</strong> controlla l’emittente, le attività a garanzia, le regole di rimborso e i Paesi supportati. Un token azionario non ti conferisce sempre la proprietà legale o il diritto di voto nella società sottostante.</li>
-          </ul>
+          <p data-i18n-html="s4_p2"><strong>Importo finale:</strong> controlla quanti token riceverai, non soltanto il prezzo dell’azione visualizzato.</p>
+          <p data-i18n-html="s4_p3"><strong>Spread e commissioni:</strong> confronta la quotazione con il prezzo dell’azione sottostante quando quel mercato è aperto e includi le commissioni della blockchain.</p>
+          <p data-i18n-html="s4_p4"><strong>Scadenza:</strong> firma prima che la quotazione scada; in caso contrario, richiedine una aggiornata.</p>
+          <p data-i18n-html="s4_p5"><strong>Orari di negoziazione:</strong> per ottenere prezzi più convenienti, quando possibile preferisci il normale orario di mercato negli Stati Uniti.</p>
+          <p data-i18n-html="s4_p6"><strong>Condizioni del token:</strong> controlla l’emittente, le attività a garanzia, le regole di rimborso e i Paesi supportati. Un token azionario non ti conferisce sempre la proprietà legale o il diritto di voto nella società sottostante.</p>
           <p data-i18n-html="s4_p1">In breve: il market maker fornisce il prezzo e la liquidità, mentre la blockchain gestisce lo scambio.</p>
         </div>
       </section>
@@ -497,9 +481,9 @@ const TRANSLATIONS = {
     s1_step2: "Il market maker controlla il prezzo dell’azione sottostante e restituisce un’offerta di breve durata, ad esempio: “Paga 1.000 USDC e ricevi 4,82 token”.",
     s1_step3: "Il tuo wallet mostra l’importo che riceverai, lo spread o la commissione e la scadenza della quotazione.",
     s1_step4: "Se accetti, firmi una transazione. I tuoi USDC vanno al market maker e i token azionari arrivano nel tuo wallet. Entrambi i trasferimenti avvengono insieme on-chain.",
-    s1_p2: "Da dove provengono questi token? Di solito, in uno di questi due modi:",
-    s1_li1: "Il market maker possiede già i token e te li invia. In quel momento non è necessario acquistare nuove azioni.",
-    s1_li2: "Se servono altri token, i fondi vengono inviati tramite l’emittente. Un broker acquista le azioni corrispondenti, vengono creati nuovi token e il market maker può consegnarli all’acquirente.",
+    s1_p2: "Da dove provengono questi token? Di solito, in uno di questi due modi.",
+    s1_p2a: "Il market maker possiede già i token e te li invia. In quel momento non è necessario acquistare nuove azioni.",
+    s1_p2b: "Se servono altri token, i fondi vengono inviati tramite l’emittente. Un broker acquista le azioni corrispondenti, vengono creati nuovi token e il market maker può consegnarli all’acquirente.",
     s1_p3: "Il tuo wallet non invia gli USDC direttamente a una borsa valori. Le società che gestiscono il token si occupano del collegamento tra il tuo pagamento, il token e le azioni reali.",
     s1_p4: "La quotazione scade rapidamente perché il prezzo dell’azione sottostante può cambiare. Se scade, il tuo wallet deve richiederne una nuova.",
     s2_kicker: "Mercato",
@@ -513,11 +497,11 @@ const TRANSLATIONS = {
     s3_p3: "Quando le borse statunitensi sono chiuse, la quotazione può utilizzare i prezzi di una piattaforma overnight o attiva 24 ore su 24, 7 giorni su 7, sulla quale vengono negoziate azioni reali, se disponibile. In caso contrario, dipende maggiormente dal mercato del token e dalla stima del market maker. Gli spread possono essere più ampi, la quantità disponibile può essere inferiore e il prezzo del token può differire dal prezzo di apertura successivo dell’azione.",
     s4_kicker: "Verifiche",
     s4_title: "Cosa dovresti controllare prima di fare trading?",
-    s4_li1: "<strong>Importo finale:</strong> controlla quanti token riceverai, non soltanto il prezzo dell’azione visualizzato.",
-    s4_li2: "<strong>Spread e commissioni:</strong> confronta la quotazione con il prezzo dell’azione sottostante quando quel mercato è aperto e includi le commissioni della blockchain.",
-    s4_li3: "<strong>Scadenza:</strong> firma prima che la quotazione scada; in caso contrario, richiedine una aggiornata.",
-    s4_li4: "<strong>Orari di negoziazione:</strong> per ottenere prezzi più convenienti, quando possibile preferisci il normale orario di mercato negli Stati Uniti.",
-    s4_li5: "<strong>Condizioni del token:</strong> controlla l’emittente, le attività a garanzia, le regole di rimborso e i Paesi supportati. Un token azionario non ti conferisce sempre la proprietà legale o il diritto di voto nella società sottostante.",
+    s4_p2: "<strong>Importo finale:</strong> controlla quanti token riceverai, non soltanto il prezzo dell’azione visualizzato.",
+    s4_p3: "<strong>Spread e commissioni:</strong> confronta la quotazione con il prezzo dell’azione sottostante quando quel mercato è aperto e includi le commissioni della blockchain.",
+    s4_p4: "<strong>Scadenza:</strong> firma prima che la quotazione scada; in caso contrario, richiedine una aggiornata.",
+    s4_p5: "<strong>Orari di negoziazione:</strong> per ottenere prezzi più convenienti, quando possibile preferisci il normale orario di mercato negli Stati Uniti.",
+    s4_p6: "<strong>Condizioni del token:</strong> controlla l’emittente, le attività a garanzia, le regole di rimborso e i Paesi supportati. Un token azionario non ti conferisce sempre la proprietà legale o il diritto di voto nella società sottostante.",
     s4_p1: "In breve: il market maker fornisce il prezzo e la liquidità, mentre la blockchain gestisce lo scambio.",
     s5_kicker: "Risorse",
     s5_title: "Fonti e ulteriori letture",
@@ -551,9 +535,9 @@ const TRANSLATIONS = {
     s1_step2: "The market maker checks the underlying stock price and returns a short-lived offer, such as: “Pay 1,000 USDC and receive 4.82 tokens.”",
     s1_step3: "Your wallet shows the amount you will receive, the spread or fee, and when the quote expires.",
     s1_step4: "If you accept, you sign a transaction. Your USDC goes to the market maker and the stock tokens go to your wallet. Both transfers happen together on-chain.",
-    s1_p2: "Where do those tokens come from? Usually in one of two ways:",
-    s1_li1: "The market maker already has the tokens and sends them to you. No new shares need to be bought at that moment.",
-    s1_li2: "If more tokens are needed, funds are sent through the issuer. A broker buys the matching shares, new tokens are created, and the market maker can deliver them to the buyer.",
+    s1_p2: "Where do those tokens come from? Usually in one of two ways.",
+    s1_p2a: "The market maker already has the tokens and sends them to you. <strong>No new shares need to be bought</strong> at that moment.",
+    s1_p2b: "If more tokens are needed, funds are sent through the issuer. A broker buys the matching shares, <strong>new tokens are created</strong>, and the market maker can deliver them to the buyer.",
     s1_p3: "Your wallet does not send USDC directly to a stock exchange. The companies behind the token handle the link between your payment, the token and the real shares.",
     s1_p4: "The quote expires quickly because the underlying stock price can move. If it expires, your wallet must request a new one.",
     s2_kicker: "Market",
@@ -564,14 +548,14 @@ const TRANSLATIONS = {
     s3_title: "When is the best time to trade?",
     s3_p1: "Execution is often best during regular US market hours. The underlying shares are actively trading, so market makers have a clear reference price and can hedge more easily. Spreads are usually tighter, especially for larger orders.",
     s3_p2: "Stock tokens may remain available outside those hours because blockchain markets do not close. However, 24/7 availability does not mean equally good pricing at all times.",
-    s3_p3: "When US exchanges are closed, the quote may use prices from an overnight or 24/7 real-share venue, if one is available. Otherwise, it relies more on the token market and the market maker’s estimate. Spreads may be wider, available size may be smaller, and the token price may differ from the stock’s next opening price.",
+    s3_p3: "When US exchanges are closed, the quote may use prices from an overnight or 24/7 real-share venue, if one is available. Otherwise, it relies more on the token market and the market maker's estimate. Spreads may be wider, available size may be smaller, and the token price may differ from the stock's next opening price.",
     s4_kicker: "Checks",
     s4_title: "What should you check before trading?",
-    s4_li1: "<strong>Final amount:</strong> Check how many tokens you will receive, not only the displayed stock price.",
-    s4_li2: "<strong>Spread and fees:</strong> Compare the quote with the underlying stock price when that market is open, and include blockchain fees.",
-    s4_li3: "<strong>Expiration:</strong> Sign before the quote expires; otherwise, request a fresh quote.",
-    s4_li4: "<strong>Trading hours:</strong> For tighter pricing, prefer regular US market hours when possible.",
-    s4_li5: "<strong>Token terms:</strong> Check the issuer, backing, redemption rules and supported countries. A stock token does not always give you legal ownership or voting rights in the underlying company.",
+    s4_p2: "<strong>Final amount.</strong> Check how many tokens you will receive, not only the displayed stock price.",
+    s4_p3: "<strong>Spread and fees.</strong> Compare the quote with the underlying stock price when that market is open, and include blockchain fees.",
+    s4_p4: "<strong>Expiration.</strong> Sign before the quote expires; otherwise, request a fresh quote.",
+    s4_p5: "<strong>Trading hours.</strong> For tighter pricing, prefer regular US market hours when possible.",
+    s4_p6: "<strong>Token terms.</strong> Check the issuer, backing, redemption rules and supported countries. A stock token does not always give you legal ownership or voting rights in the underlying company.",
     s4_p1: "In short: the market maker provides the price and liquidity, while the blockchain handles the exchange.",
     s5_kicker: "Resources",
     s5_title: "Sources and further reading",
@@ -605,9 +589,9 @@ const TRANSLATIONS = {
     s1_step2: "El creador de mercado comprueba el precio de la acción subyacente y devuelve una oferta de corta duración, por ejemplo: “Paga 1.000 USDC y recibe 4,82 tokens”.",
     s1_step3: "Tu billetera muestra la cantidad que recibirás, el diferencial (spread) o la comisión, y cuándo expira la cotización.",
     s1_step4: "Si aceptas, firmas una transacción. Tus USDC van al creador de mercado y los tokens de acciones van a tu billetera. Ambas transferencias ocurren simultáneamente en la cadena.",
-    s1_p2: "¿De dónde provienen esos tokens? Generalmente de dos maneras:",
-    s1_li1: "El creador de mercado ya tiene los tokens y te los envía. No es necesario comprar nuevas acciones en ese momento.",
-    s1_li2: "Si se necesitan más tokens, los fondos se envían a través del emisor. Un bróker compra las acciones correspondientes, se crean nuevos tokens y el creador de mercado puede entregarlos al comprador.",
+    s1_p2: "¿De dónde provienen esos tokens? Generalmente de dos maneras.",
+    s1_p2a: "El creador de mercado ya tiene los tokens y te los envía. En ese momento <strong>no es necesario comprar nuevas acciones</strong>.",
+    s1_p2b: "Si se necesitan más tokens, los fondos se envían a través del emisor. Un bróker compra las acciones correspondientes, <strong>se crean nuevos tokens</strong> y el creador de mercado puede entregarlos al comprador.",
     s1_p3: "Tu billetera no envía USDC directamente a una bolsa de valores. Las empresas detrás del token se encargan de la conexión entre tu pago, el token y las acciones reales.",
     s1_p4: "La cotización expira rápidamente porque el precio de la acción subyacente puede cambiar. Si expira, tu billetera debe solicitar una nueva.",
     s2_kicker: "Mercado",
@@ -621,11 +605,11 @@ const TRANSLATIONS = {
     s3_p3: "Cuando las bolsas estadounidenses están cerradas, la cotización puede usar precios de un mercado de acciones reales overnight o 24/7, si hay alguno disponible. De lo contrario, depende más del mercado del token y de la estimación del creador de mercado. Los diferenciales pueden ser más amplios, el tamaño disponible puede ser menor y el precio del token puede diferir del próximo precio de apertura de la acción.",
     s4_kicker: "Comprobaciones",
     s4_title: "¿Qué deberías revisar antes de operar?",
-    s4_li1: "<strong>Cantidad final:</strong> comprueba cuántos tokens recibirás, no solo el precio mostrado de la acción.",
-    s4_li2: "<strong>Diferencial y comisiones:</strong> compara la cotización con el precio de la acción subyacente cuando ese mercado esté abierto, e incluye las comisiones de la blockchain.",
-    s4_li3: "<strong>Expiración:</strong> firma antes de que expire la cotización; de lo contrario, solicita una nueva.",
-    s4_li4: "<strong>Horario de trading:</strong> para precios más ajustados, prefiere el horario habitual del mercado de EE. UU. cuando sea posible.",
-    s4_li5: "<strong>Términos del token:</strong> revisa el emisor, el respaldo, las reglas de reembolso y los países admitidos. Un token de acciones no siempre te otorga propiedad legal o derechos de voto en la empresa subyacente.",
+    s4_p2: "<strong>Cantidad final.</strong> Comprueba cuántos tokens recibirás, no solo el precio mostrado de la acción.",
+    s4_p3: "<strong>Diferencial y comisiones.</strong> Compara la cotización con el precio de la acción subyacente cuando ese mercado esté abierto, e incluye las comisiones de la blockchain.",
+    s4_p4: "<strong>Expiración.</strong> Firma antes de que expire la cotización; de lo contrario, solicita una nueva.",
+    s4_p5: "<strong>Horario de trading.</strong> Para precios más ajustados, prefiere el horario habitual del mercado de EE. UU. cuando sea posible.",
+    s4_p6: "<strong>Términos del token.</strong> Revisa el emisor, el respaldo, las reglas de reembolso y los países admitidos. Un token de acciones no siempre te otorga propiedad legal o derechos de voto en la empresa subyacente.",
     s4_p1: "En resumen: el creador de mercado proporciona el precio y la liquidez, mientras que la blockchain gestiona el intercambio.",
     s5_kicker: "Recursos",
     s5_title: "Fuentes y lectura adicional",
@@ -659,9 +643,9 @@ const TRANSLATIONS = {
     s1_step2: "Le teneur de marché vérifie le prix de l'action sous-jacente et renvoie une offre de courte durée, par exemple : “Payez 1 000 USDC et recevez 4,82 tokens”.",
     s1_step3: "Votre portefeuille affiche le montant que vous recevrez, l'écart (spread) ou les frais, et l'heure d'expiration de la cotation.",
     s1_step4: "Si vous acceptez, vous signez une transaction. Vos USDC vont au teneur de marché et les tokens d'actions vont dans votre portefeuille. Les deux transferts ont lieu en même temps on-chain.",
-    s1_p2: "D'où viennent ces tokens ? Généralement de deux manières :",
-    s1_li1: "Le teneur de marché possède déjà les tokens et vous les envoie. Il n'est pas nécessaire d'acheter de nouvelles actions à ce moment-là.",
-    s1_li2: "Si plus de tokens sont nécessaires, les fonds sont envoyés via l'émetteur. Un courtier achète les actions correspondantes, de nouveaux tokens sont créés, et le teneur de marché peut les livrer à l'acheteur.",
+    s1_p2: "D'où viennent ces tokens ? Généralement de deux manières.",
+    s1_p2a: "Le teneur de marché possède déjà les tokens et vous les envoie. À ce moment-là, <strong>il n'est pas nécessaire d'acheter de nouvelles actions</strong>.",
+    s1_p2b: "Si plus de tokens sont nécessaires, les fonds sont envoyés via l'émetteur. Un courtier achète les actions correspondantes, <strong>de nouveaux tokens sont créés</strong>, et le teneur de marché peut les livrer à l'acheteur.",
     s1_p3: "Votre portefeuille n'envoie pas d'USDC directement à une bourse. Les entreprises derrière le token gèrent le lien entre votre paiement, le token et les actions réelles.",
     s1_p4: "La cotation expire rapidement car le prix de l'action sous-jacente peut changer. Si elle expire, votre portefeuille doit en demander une nouvelle.",
     s2_kicker: "Marché",
@@ -675,11 +659,11 @@ const TRANSLATIONS = {
     s3_p3: "Lorsque les bourses américaines sont fermées, la cotation peut utiliser les prix d'un marché d'actions réelles de nuit ou 24/7, si un tel marché est disponible. Sinon, elle dépend davantage du marché du token et de l'estimation du teneur de marché. Les écarts peuvent être plus larges, la taille disponible peut être plus petite, et le prix du token peut différer du prochain prix d'ouverture de l'action.",
     s4_kicker: "Vérifications",
     s4_title: "Que devez-vous vérifier avant de trader ?",
-    s4_li1: "<strong>Montant final :</strong> vérifiez combien de tokens vous recevrez, pas seulement le prix affiché de l'action.",
-    s4_li2: "<strong>Écart et frais :</strong> comparez la cotation avec le prix de l'action sous-jacente lorsque ce marché est ouvert, et incluez les frais de la blockchain.",
-    s4_li3: "<strong>Expiration :</strong> signez avant l'expiration de la cotation ; sinon, demandez-en une nouvelle.",
-    s4_li4: "<strong>Heures de trading :</strong> pour des prix plus serrés, privilégiez les heures normales du marché américain lorsque cela est possible.",
-    s4_li5: "<strong>Conditions du token :</strong> vérifiez l'émetteur, la couverture, les règles de rachat et les pays pris en charge. Un token d'action ne vous donne pas toujours la propriété légale ou des droits de vote dans la société sous-jacente.",
+    s4_p2: "<strong>Montant final.</strong> Vérifiez combien de tokens vous recevrez, pas seulement le prix affiché de l'action.",
+    s4_p3: "<strong>Écart et frais.</strong> Comparez la cotation avec le prix de l'action sous-jacente lorsque ce marché est ouvert, et incluez les frais de la blockchain.",
+    s4_p4: "<strong>Expiration.</strong> Signez avant l'expiration de la cotation ; sinon, demandez-en une nouvelle.",
+    s4_p5: "<strong>Heures de trading.</strong> Pour des prix plus serrés, privilégiez les heures normales du marché américain lorsque cela est possible.",
+    s4_p6: "<strong>Conditions du token.</strong> Vérifiez l'émetteur, la couverture, les règles de rachat et les pays pris en charge. Un token d'action ne vous donne pas toujours la propriété légale ou des droits de vote dans la société sous-jacente.",
     s4_p1: "En bref : le teneur de marché fournit le prix et la liquidité, tandis que la blockchain gère l'échange.",
     s5_kicker: "Ressources",
     s5_title: "Sources et lectures complémentaires",
