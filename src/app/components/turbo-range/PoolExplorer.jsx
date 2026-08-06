@@ -136,10 +136,12 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
     if (!isDegateMatched(pool)) return false;
     
     // Only show the Raydium pool whose fee tier matches the DeGate pool
+    // DeGate fee is decimal (0.0025 = 0.25%), Raydium is tradeFeeRate/10000 (2500/10000 = 0.25)
     const degateFee = getDegatePoolFee(pool);
     if (degateFee !== null) {
-      const raydiumFee = pool.config?.tradeFeeRate / 10000;
-      if (Math.abs(raydiumFee - degateFee) > 0.001) return false;
+      const raydiumFeePercent = pool.config?.tradeFeeRate / 10000; // e.g. 0.25
+      const degateFeePct = degateFee * 100;                        // e.g. 0.0025 * 100 = 0.25
+      if (Math.abs(raydiumFeePercent - degateFeePct) > 0.01) return false;
     }
     
     return true;
