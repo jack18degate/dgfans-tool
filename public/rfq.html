@@ -216,33 +216,36 @@
       max-width: 720px;
       margin: 0;
       font-size: clamp(44px, 6vw, 72px);
-      line-height: .98;
-      letter-spacing: -.065em;
+      line-height: 1.02;
+      letter-spacing: -.055em;
+      word-spacing: 0.02em;
     }
     .gradient-text {
       color: transparent;
-      background: linear-gradient(135deg, #245cff 20%, #7357ff 80%);
+      background: linear-gradient(92deg, var(--blue), var(--violet));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .hero-copy {
       max-width: 690px;
       margin: 26px 0 0;
       color: #526071;
-      font-size: 18px;
+      font-size: 17px;
+      line-height: 1.7;
+      word-spacing: 0.01em;
     }
     .hero-copy strong { color: var(--ink); }
 
-    .section { padding: 50px 0; }
-    .section-tight { padding: 40px 0; }
-    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+    .section { padding: 56px 0; }
+    .section-tight { padding: 44px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 36px; }
     .kicker { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
-    h2 { margin: 0; font-size: clamp(31px, 4vw, 46px); line-height: 1.06; letter-spacing: -.05em; }
+    h2 { margin: 0; font-size: clamp(28px, 3.5vw, 42px); line-height: 1.1; letter-spacing: -.04em; }
 
-    .steps { display: grid; }
-    .step { display: grid; grid-template-columns: 34px 1fr; gap: 13px; padding: 15px 0; border-top: 1px solid #e2e6ed; }
+    .steps { display: grid; gap: 2px; }
+    .step { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid #e2e6ed; }
     .step-num { display: grid; width: 28px; height: 28px; place-items: center; color: #fff; border-radius: 9px; background: var(--blue); font-size: 12px; font-weight: 900; }
-    .step-copy { margin-top: 2px; color: #697587; font-size: 14px; line-height: 1.6; }
+    .step-copy { margin-top: 2px; color: #697587; font-size: 15px; line-height: 1.72; word-spacing: 0.01em; }
     .step-copy strong { color: var(--ink); }
 
     .links {
@@ -271,21 +274,34 @@
       .shell { width: min(100% - 24px, 1180px); }
       .nav-cta { display: none; }
       .hero { padding: 34px 0 56px; }
-      h1 { font-size: 43px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 26px; }
       .hero-copy { font-size: 16px; }
-      .section { padding: 40px 0; }
+      .section { padding: 44px 0; }
       .links { grid-template-columns: 1fr; }
       .footer-row { flex-direction: column; }
     }
 
     /* Article specific styles */
-    .article-body p { margin: 0 0 16px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .article-body p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      word-spacing: 0.01em;
+    }
     .article-body strong { color: var(--ink); font-weight: 700; }
-    .article-body ol { padding-left: 20px; }
-    .article-body li { margin: 8px 0; color: var(--muted); font-size: 15px; }
-    .article-body ul { list-style: none; padding: 0; margin: 0 0 16px 0; }
-    .article-body ul li { position: relative; padding-left: 20px; }
-    .article-body ul li::before { content: "•"; position: absolute; left: 0; color: var(--blue); font-weight: bold; }
+    .article-body ol { padding-left: 22px; margin: 0 0 20px; }
+    .article-body li {
+      margin: 10px 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.72;
+      word-spacing: 0.01em;
+    }
+    .article-body ul { list-style: none; padding: 0; margin: 0 0 20px 0; }
+    .article-body ul li { position: relative; padding-left: 22px; }
+    .article-body ul li::before { content: "•"; position: absolute; left: 0; color: var(--blue); font-weight: bold; font-size: 18px; line-height: 1.6; }
     
     .breadcrumb {
       display: inline-block;
