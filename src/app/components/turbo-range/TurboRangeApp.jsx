@@ -33,11 +33,11 @@ export default function TurboRangeApp() {
           width: 100%;
         }
         .turbo-sidebar {
-          max-height: 82vh;
+          max-height: 92vh;
           position: sticky;
           top: 1.5rem;
           align-self: start;
-          overflow: hidden;
+          overflow: auto;
         }
         .turbo-main { min-width: 0; }
         .turbo-mobile-toggle { display: none; }
@@ -54,7 +54,7 @@ export default function TurboRangeApp() {
 
       {/* ═══ Desktop Layout ═══ */}
       <div className="turbo-layout">
-        <div className="turbo-sidebar" style={{ ...glassCard, overflow: 'hidden' }}>
+        <div className="turbo-sidebar" style={{ ...glassCard, overflow: 'auto' }}>
           <PoolExplorer 
             onSelectPool={handleSelectPool} 
             selectedPoolId={selectedPool?.id} 
@@ -103,7 +103,7 @@ export default function TurboRangeApp() {
       )}
 
       <div className="turbo-mobile-pools" style={{ display: (selectedPool && mobileShowChart) ? 'none' : undefined }}>
-        <div style={{ ...glassCard, overflow: 'hidden', maxHeight: '70vh' }}>
+        <div style={{ ...glassCard, overflow: 'auto', maxHeight: '85vh' }}>
           <PoolExplorer 
             onSelectPool={handleSelectPool} 
             selectedPoolId={selectedPool?.id} 
