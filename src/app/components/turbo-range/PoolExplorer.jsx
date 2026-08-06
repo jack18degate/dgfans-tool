@@ -55,10 +55,9 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
           }));
           setDegatePairs(mapPairs);
 
-          // Build direct pool entries for non-SOLANA chains (BASE, ETHEREUM)
-          // These don't appear in Raydium, so we render them directly from DeGate data
+          // Build direct pool entries for ALL DeGate pools
+          // Raydium data will be preferred when available (deduplication below)
           const directPools = rawItems
-            .filter(p => p.chain_name !== 'SOLANA')
             .map(p => ({
               id: `degate-${p.id}`,
               isDirect: true,
@@ -147,8 +146,17 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
     return true;
   });
 
-  // Combine: DeGate-direct pools (BASE/ETH) first, then matched Raydium pools
-  const allPools = [...degateDirectPools, ...matchedRaydiumPools];
+  // Combine: start with matched Raydium pools (richer data), then add DeGate-direct
+  // pools that have NO matching Raydium pool (e.g. SpaceX, BASE, ETHEREUM pools)
+  const matchedSymbols = new Set(
+    matchedRaydiumPools.map(p => `${p.mintA?.symbol?.toUpperCase()}/${p.mintB?.symbol?.toUpperCase()}`)
+  );
+  const unmatchedDirectPools = degateDirectPools.filter(dp => {
+    const key = `${dp.mintA?.symbol?.toUpperCase()}/${dp.mintB?.symbol?.toUpperCase()}`;
+    const keyRev = `${dp.mintB?.symbol?.toUpperCase()}/${dp.mintA?.symbol?.toUpperCase()}`;
+    return !matchedSymbols.has(key) && !matchedSymbols.has(keyRev);
+  });
+  const allPools = [...unmatchedDirectPools, ...matchedRaydiumPools];
 
   const chainBadge = (pool) => {
     if (pool.isDirect) {
