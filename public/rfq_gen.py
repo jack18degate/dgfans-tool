@@ -1,0 +1,746 @@
+import os
+
+html = r"""<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Trading RFQ — Azioni on-chain</title>
+  <meta name="description" content="Come funziona il trading RFQ per le azioni on-chain tokenizzate.">
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #5f6b7a;
+      --line: #d8dee8;
+      --paper: #ffffff;
+      --wash: #f4f7fb;
+      --blue: #245cff;
+      --blue-2: #6d8cff;
+      --mint: #d9ff63;
+      --green: #126b4d;
+      --violet: #7357ff;
+      --orange: #ff9f43;
+      --shadow: 0 20px 55px rgba(31, 51, 91, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 2%, rgba(109, 140, 255, .18), transparent 28rem),
+        linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .site { min-height: 100vh; overflow: hidden; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1749e8, #7b60ff);
+      box-shadow: 0 10px 24px rgba(36, 92, 255, .25);
+    }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .nav-links { display: flex; gap: 24px; color: #445066; font-size: 14px; font-weight: 700; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a.active { color: var(--blue); }
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .nav-cta, .button-primary {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
+    }
+    .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
+
+    /* ─── Language Selector ─── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .lang-selector {
+      position: relative;
+      z-index: 100;
+    }
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border: 1px solid #cfd6e2;
+      border-radius: 10px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(8px);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s;
+      line-height: 1;
+    }
+    .lang-btn:hover {
+      border-color: var(--blue-2);
+      box-shadow: 0 4px 14px rgba(36, 92, 255, .10);
+    }
+    .lang-btn .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+    .lang-btn .lang-chevron {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #778193;
+      margin-left: 2px;
+      transition: transform .2s;
+    }
+    .lang-selector.open .lang-chevron {
+      transform: rotate(180deg);
+    }
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 150px;
+      padding: 6px;
+      border: 1px solid #d1d9e6;
+      border-radius: 14px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(32,49,81,.13);
+      list-style: none;
+      margin: 0;
+    }
+    .lang-selector.open .lang-dropdown {
+      display: block;
+      animation: langFadeIn .18s ease;
+    }
+    @keyframes langFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .lang-dropdown li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #445066;
+      cursor: pointer;
+      transition: background .14s;
+    }
+    .lang-dropdown li:hover {
+      background: #eef3ff;
+      color: var(--blue);
+    }
+    .lang-dropdown li.active {
+      background: #eef3ff;
+      color: var(--blue);
+      font-weight: 850;
+    }
+    .lang-dropdown li .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 70px 0 40px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 7px 11px;
+      color: #264083;
+      border: 1px solid #cbd7ff;
+      border-radius: 999px;
+      background: #eef3ff;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -.065em;
+    }
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(135deg, #245cff 20%, #7357ff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-copy {
+      max-width: 690px;
+      margin: 26px 0 0;
+      color: #526071;
+      font-size: 18px;
+    }
+    .hero-copy strong { color: var(--ink); }
+
+    .section { padding: 50px 0; }
+    .section-tight { padding: 40px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+    .kicker { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(31px, 4vw, 46px); line-height: 1.06; letter-spacing: -.05em; }
+
+    .steps { display: grid; }
+    .step { display: grid; grid-template-columns: 34px 1fr; gap: 13px; padding: 15px 0; border-top: 1px solid #e2e6ed; }
+    .step-num { display: grid; width: 28px; height: 28px; place-items: center; color: #fff; border-radius: 9px; background: var(--blue); font-size: 12px; font-weight: 900; }
+    .step-copy { margin-top: 2px; color: #697587; font-size: 14px; line-height: 1.6; }
+    .step-copy strong { color: var(--ink); }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .link-card {
+      min-height: 104px;
+      padding: 17px;
+      border: 1px solid #d5dbe6;
+      border-radius: 16px;
+      background: #fff;
+      text-decoration: none;
+    }
+    .link-card span { display: block; margin-bottom: 9px; color: #778193; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .link-card strong { font-size: 14px; color: var(--ink); display: block; }
+    .footer { padding: 26px 0 42px; color: #748094; border-top: 1px solid #d8dee8; font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .links { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .nav-cta { display: none; }
+      .hero { padding: 34px 0 56px; }
+      h1 { font-size: 43px; }
+      .hero-copy { font-size: 16px; }
+      .section { padding: 40px 0; }
+      .links { grid-template-columns: 1fr; }
+      .footer-row { flex-direction: column; }
+    }
+
+    /* Article specific styles */
+    .article-body p { margin: 0 0 16px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .article-body strong { color: var(--ink); font-weight: 700; }
+    .article-body ol { padding-left: 20px; }
+    .article-body li { margin: 8px 0; color: var(--muted); font-size: 15px; }
+    .article-body ul { list-style: none; padding: 0; margin: 0 0 16px 0; }
+    .article-body ul li { position: relative; padding-left: 20px; }
+    .article-body ul li::before { content: "•"; position: absolute; left: 0; color: var(--blue); font-weight: bold; }
+    
+    .breadcrumb {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .breadcrumb:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="shell">
+      <nav class="nav" aria-label="Navigazione principale">
+        <a class="brand" href="/onchainstocks">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" stroke-width="2.2"/><path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" stroke-width="2.2"/></svg>
+          </span>
+          DeGate Guide
+        </a>
+        <div class="nav-links">
+          <a href="/onchainstocks#fiducia" data-i18n="nav_trust">Fiducia</a>
+          <a href="/onchainstocks#dividendi" data-i18n="nav_dividends">Dividendi</a>
+          <a href="/onchainstocks#prodotti" data-i18n="nav_products">Prodotti</a>
+          <a href="/onchainstocks#come-comprare" data-i18n="nav_howto">Come comprare</a>
+          <a href="/onchainstocks#sicurezza" data-i18n="nav_security">Sicurezza</a>
+          <a href="#" class="active" data-i18n="nav_rfq">RFQ</a>
+        </div>
+        <div class="nav-right">
+          <div class="lang-selector" id="langSelector">
+            <button class="lang-btn" id="langBtn" aria-label="Select language">
+              <span class="lang-flag" id="langFlag">🇮🇹</span>
+              <span class="lang-code" id="langCode">IT</span>
+              <span class="lang-chevron"></span>
+            </button>
+            <ul class="lang-dropdown" id="langDropdown">
+              <li data-lang="it" class="active"><span class="lang-flag">🇮🇹</span> Italiano</li>
+              <li data-lang="en"><span class="lang-flag">🇬🇧</span> English</li>
+              <li data-lang="es"><span class="lang-flag">🇪🇸</span> Español</li>
+              <li data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</li>
+            </ul>
+          </div>
+          <a class="nav-cta" href="https://app.degate.com/" data-i18n="nav_cta">Apri DeGate ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="shell hero">
+        <a href="/onchainstocks" class="breadcrumb" data-i18n="breadcrumb">← Azioni on-chain</a>
+        <div>
+          <div class="eyebrow" data-i18n="eyebrow">Guida RFQ · 2026</div>
+          <h1 data-i18n-html="hero_title">Come funziona<br><span class="gradient-text">il trading RFQ</span><br>per le azioni on-chain.</h1>
+          <p class="hero-copy" data-i18n-html="hero_copy">
+            Un token azionario non ha sempre bisogno di una grande pool di liquidità su un DEX. Con l’<strong>RFQ</strong>, abbreviazione di <strong>request for quote</strong> (richiesta di quotazione), il tuo wallet chiede a un market maker professionale un prezzo per il tuo ordine specifico. Il prezzo viene calcolato off-chain, ma la transazione viene regolata on-chain.
+          </p>
+        </div>
+      </section>
+
+      <section class="shell section" id="funzionamento">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s1_kicker">Processo</p>
+            <h2 data-i18n="s1_title">Come funziona una transazione RFQ?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s1_p1">Supponiamo che tu voglia spendere 1.000 USDC per un token azionario:</p>
+          <div class="steps">
+            <div class="step">
+              <span class="step-num">1</span>
+              <div><div class="step-copy" data-i18n-html="s1_step1">Il tuo wallet comunica a un market maker quale token desideri e quanti USDC vuoi spendere.</div></div>
+            </div>
+            <div class="step">
+              <span class="step-num">2</span>
+              <div><div class="step-copy" data-i18n-html="s1_step2">Il market maker controlla il prezzo dell’azione sottostante e restituisce un’offerta di breve durata, ad esempio: "Paga 1.000 USDC e ricevi 4,82 token".</div></div>
+            </div>
+            <div class="step">
+              <span class="step-num">3</span>
+              <div><div class="step-copy" data-i18n-html="s1_step3">Il tuo wallet mostra l’importo che riceverai, lo spread o la commissione e la scadenza della quotazione.</div></div>
+            </div>
+            <div class="step">
+              <span class="step-num">4</span>
+              <div><div class="step-copy" data-i18n-html="s1_step4">Se accetti, firmi una transazione. I tuoi USDC vanno al market maker e i token azionari arrivano nel tuo wallet. Entrambi i trasferimenti avvengono insieme on-chain.</div></div>
+            </div>
+          </div>
+          <br>
+          <p data-i18n-html="s1_p2">Da dove provengono questi token? Di solito, in uno di questi due modi:</p>
+          <ul>
+            <li data-i18n-html="s1_li1">Il market maker possiede già i token e te li invia. In quel momento non è necessario acquistare nuove azioni.</li>
+            <li data-i18n-html="s1_li2">Se servono altri token, i fondi vengono inviati tramite l’emittente. Un broker acquista le azioni corrispondenti, vengono creati nuovi token e il market maker può consegnarli all’acquirente.</li>
+          </ul>
+          <p data-i18n-html="s1_p3">Il tuo wallet non invia gli USDC direttamente a una borsa valori. Le società che gestiscono il token si occupano del collegamento tra il tuo pagamento, il token e le azioni reali.</p>
+          <p data-i18n-html="s1_p4">La quotazione scade rapidamente perché il prezzo dell’azione sottostante può cambiare. Se scade, il tuo wallet deve richiederne una nuova.</p>
+        </div>
+      </section>
+
+      <section class="shell section" id="liquidita">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s2_kicker">Mercato</p>
+            <h2 data-i18n="s2_title">Perché non è necessaria una pool di liquidità?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s2_p1">Il market maker fornisce liquidità quando arriva un ordine, utilizzando i token che possiede o che può ottenere. Una pool AMM può comunque esistere, ma l’RFQ non dipende da essa.</p>
+          <p data-i18n-html="s2_p2">Se il prezzo di un AMM differisce da un prezzo RFQ effettivamente eseguibile, i trader possono acquistare sulla piattaforma meno cara e vendere su quella più costosa. Questo tende ad avvicinare i prezzi, anche se le commissioni e una liquidità limitata possono lasciare una piccola differenza.</p>
+        </div>
+      </section>
+
+      <section class="shell section" id="orari">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s3_kicker">Esecuzione</p>
+            <h2 data-i18n="s3_title">Qual è il momento migliore per fare trading?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s3_p1">L’esecuzione è spesso migliore durante il normale orario di mercato negli Stati Uniti. Le azioni sottostanti vengono negoziate attivamente, quindi i market maker dispongono di un prezzo di riferimento chiaro e possono coprirsi più facilmente. Gli spread sono generalmente più ridotti, soprattutto per gli ordini più grandi.</p>
+          <p data-i18n-html="s3_p2">I token azionari possono rimanere disponibili al di fuori di questi orari, perché i mercati blockchain non chiudono. Tuttavia, una disponibilità 24 ore su 24, 7 giorni su 7, non significa che i prezzi siano ugualmente convenienti in ogni momento.</p>
+          <p data-i18n-html="s3_p3">Quando le borse statunitensi sono chiuse, la quotazione può utilizzare i prezzi di una piattaforma overnight o attiva 24 ore su 24, 7 giorni su 7, sulla quale vengono negoziate azioni reali, se disponibile. In caso contrario, dipende maggiormente dal mercato del token e dalla stima del market maker. Gli spread possono essere più ampi, la quantità disponibile può essere inferiore e il prezzo del token può differire dal prezzo di apertura successivo dell’azione.</p>
+        </div>
+      </section>
+
+      <section class="shell section" id="checklist">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s4_kicker">Verifiche</p>
+            <h2 data-i18n="s4_title">Cosa dovresti controllare prima di fare trading?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <ul>
+            <li data-i18n-html="s4_li1"><strong>Importo finale:</strong> controlla quanti token riceverai, non soltanto il prezzo dell’azione visualizzato.</li>
+            <li data-i18n-html="s4_li2"><strong>Spread e commissioni:</strong> confronta la quotazione con il prezzo dell’azione sottostante quando quel mercato è aperto e includi le commissioni della blockchain.</li>
+            <li data-i18n-html="s4_li3"><strong>Scadenza:</strong> firma prima che la quotazione scada; in caso contrario, richiedine una aggiornata.</li>
+            <li data-i18n-html="s4_li4"><strong>Orari di negoziazione:</strong> per ottenere prezzi più convenienti, quando possibile preferisci il normale orario di mercato negli Stati Uniti.</li>
+            <li data-i18n-html="s4_li5"><strong>Condizioni del token:</strong> controlla l’emittente, le attività a garanzia, le regole di rimborso e i Paesi supportati. Un token azionario non ti conferisce sempre la proprietà legale o il diritto di voto nella società sottostante.</li>
+          </ul>
+          <p data-i18n-html="s4_p1">In breve: il market maker fornisce il prezzo e la liquidità, mentre la blockchain gestisce lo scambio.</p>
+        </div>
+      </section>
+
+      <section class="shell section">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s5_kicker">Risorse</p>
+            <h2 data-i18n="s5_title">Fonti e ulteriori letture</h2>
+          </div>
+        </div>
+        <div class="links">
+          <a class="link-card" href="https://docs.ondo.finance/api-reference/overview"><span>Ondo Stocks</span><strong data-i18n="link1">Panoramica dell’API</strong></a>
+          <a class="link-card" href="https://ondo.finance/learn/tokenized-rwas/tokenized-stocks-and-etfs"><span>Ondo</span><strong data-i18n="link2">Cosa sono le azioni e gli ETF tokenizzati?</strong></a>
+          <a class="link-card" href="https://docs.xstocks.fi/docs/how-xstocks-work"><span>xStocks</span><strong data-i18n="link3">Come funzionano gli xStocks</strong></a>
+          <a class="link-card" href="https://docs.xstocks.fi/docs/issuance-and-redemption/atomic-rfq-xchange"><span>xStocks</span><strong data-i18n="link4">xChange — RFQ atomico</strong></a>
+          <a class="link-card" href="https://docs.xstocks.fi/docs/issuance-and-redemption/market-flow"><span>xStocks</span><strong data-i18n="link5">Market Flow</strong></a>
+          <a class="link-card" href="https://docs.xstocks.fi/docs/frequently-asked-questions"><span>xStocks</span><strong data-i18n="link6">Domande frequenti</strong></a>
+          <a class="link-card" href="https://learn.backpack.exchange/articles/backpack-securities-trading-hours-fees"><span>Backpack</span><strong data-i18n="link7">Orari di negoziazione e prezzi</strong></a>
+          <a class="link-card" href="https://help.0x.org/articles/3310442497-understanding-0x-rfq-request-for-quote"><span>0x</span><strong data-i18n="link8">Comprendere l’RFQ</strong></a>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="shell footer">
+      <div class="footer-row">
+        <span data-i18n="footer_date">Guida informativa aggiornata al 14 luglio 2026.</span>
+        <span data-i18n="footer_disclaimer">Non costituisce consulenza finanziaria, legale o fiscale.</span>
+      </div>
+    </footer>
+  </div>
+
+<script>
+const TRANSLATIONS = {
+  it: {
+    nav_trust: "Fiducia",
+    nav_dividends: "Dividendi",
+    nav_products: "Prodotti",
+    nav_howto: "Come comprare",
+    nav_security: "Sicurezza",
+    nav_rfq: "RFQ",
+    nav_cta: "Apri DeGate ↗",
+    breadcrumb: "← Azioni on-chain",
+    eyebrow: "Guida RFQ · 2026",
+    hero_title: 'Come funziona<br><span class="gradient-text">il trading RFQ</span><br>per le azioni on-chain.',
+    hero_copy: 'Un token azionario non ha sempre bisogno di una grande pool di liquidità su un DEX. Con l’<strong>RFQ</strong>, abbreviazione di <strong>request for quote</strong> (richiesta di quotazione), il tuo wallet chiede a un market maker professionale un prezzo per il tuo ordine specifico. Il prezzo viene calcolato off-chain, ma la transazione viene regolata on-chain.',
+    s1_kicker: "Processo",
+    s1_title: "Come funziona una transazione RFQ?",
+    s1_p1: "Supponiamo che tu voglia spendere 1.000 USDC per un token azionario:",
+    s1_step1: "Il tuo wallet comunica a un market maker quale token desideri e quanti USDC vuoi spendere.",
+    s1_step2: "Il market maker controlla il prezzo dell’azione sottostante e restituisce un’offerta di breve durata, ad esempio: “Paga 1.000 USDC e ricevi 4,82 token”.",
+    s1_step3: "Il tuo wallet mostra l’importo che riceverai, lo spread o la commissione e la scadenza della quotazione.",
+    s1_step4: "Se accetti, firmi una transazione. I tuoi USDC vanno al market maker e i token azionari arrivano nel tuo wallet. Entrambi i trasferimenti avvengono insieme on-chain.",
+    s1_p2: "Da dove provengono questi token? Di solito, in uno di questi due modi:",
+    s1_li1: "Il market maker possiede già i token e te li invia. In quel momento non è necessario acquistare nuove azioni.",
+    s1_li2: "Se servono altri token, i fondi vengono inviati tramite l’emittente. Un broker acquista le azioni corrispondenti, vengono creati nuovi token e il market maker può consegnarli all’acquirente.",
+    s1_p3: "Il tuo wallet non invia gli USDC direttamente a una borsa valori. Le società che gestiscono il token si occupano del collegamento tra il tuo pagamento, il token e le azioni reali.",
+    s1_p4: "La quotazione scade rapidamente perché il prezzo dell’azione sottostante può cambiare. Se scade, il tuo wallet deve richiederne una nuova.",
+    s2_kicker: "Mercato",
+    s2_title: "Perché non è necessaria una pool di liquidità?",
+    s2_p1: "Il market maker fornisce liquidità quando arriva un ordine, utilizzando i token che possiede o che può ottenere. Una pool AMM può comunque esistere, ma l’RFQ non dipende da essa.",
+    s2_p2: "Se il prezzo di un AMM differisce da un prezzo RFQ effettivamente eseguibile, i trader possono acquistare sulla piattaforma meno cara e vendere su quella più costosa. Questo tende ad avvicinare i prezzi, anche se le commissioni e una liquidità limitata possono lasciare una piccola differenza.",
+    s3_kicker: "Esecuzione",
+    s3_title: "Qual è il momento migliore per fare trading?",
+    s3_p1: "L’esecuzione è spesso migliore durante il normale orario di mercato negli Stati Uniti. Le azioni sottostanti vengono negoziate attivamente, quindi i market maker dispongono di un prezzo di riferimento chiaro e possono coprirsi più facilmente. Gli spread sono generalmente più ridotti, soprattutto per gli ordini più grandi.",
+    s3_p2: "I token azionari possono rimanere disponibili al di fuori di questi orari, perché i mercati blockchain non chiudono. Tuttavia, una disponibilità 24 ore su 24, 7 giorni su 7, non significa che i prezzi siano ugualmente convenienti in ogni momento.",
+    s3_p3: "Quando le borse statunitensi sono chiuse, la quotazione può utilizzare i prezzi di una piattaforma overnight o attiva 24 ore su 24, 7 giorni su 7, sulla quale vengono negoziate azioni reali, se disponibile. In caso contrario, dipende maggiormente dal mercato del token e dalla stima del market maker. Gli spread possono essere più ampi, la quantità disponibile può essere inferiore e il prezzo del token può differire dal prezzo di apertura successivo dell’azione.",
+    s4_kicker: "Verifiche",
+    s4_title: "Cosa dovresti controllare prima di fare trading?",
+    s4_li1: "<strong>Importo finale:</strong> controlla quanti token riceverai, non soltanto il prezzo dell’azione visualizzato.",
+    s4_li2: "<strong>Spread e commissioni:</strong> confronta la quotazione con il prezzo dell’azione sottostante quando quel mercato è aperto e includi le commissioni della blockchain.",
+    s4_li3: "<strong>Scadenza:</strong> firma prima che la quotazione scada; in caso contrario, richiedine una aggiornata.",
+    s4_li4: "<strong>Orari di negoziazione:</strong> per ottenere prezzi più convenienti, quando possibile preferisci il normale orario di mercato negli Stati Uniti.",
+    s4_li5: "<strong>Condizioni del token:</strong> controlla l’emittente, le attività a garanzia, le regole di rimborso e i Paesi supportati. Un token azionario non ti conferisce sempre la proprietà legale o il diritto di voto nella società sottostante.",
+    s4_p1: "In breve: il market maker fornisce il prezzo e la liquidità, mentre la blockchain gestisce lo scambio.",
+    s5_kicker: "Risorse",
+    s5_title: "Fonti e ulteriori letture",
+    link1: "Panoramica dell’API",
+    link2: "Cosa sono le azioni e gli ETF tokenizzati?",
+    link3: "Come funzionano gli xStocks",
+    link4: "xChange — RFQ atomico",
+    link5: "Market Flow",
+    link6: "Domande frequenti",
+    link7: "Orari di negoziazione e prezzi",
+    link8: "Comprendere l’RFQ",
+    footer_date: "Guida informativa aggiornata al 14 luglio 2026.",
+    footer_disclaimer: "Non costituisce consulenza finanziaria, legale o fiscale."
+  },
+  en: {
+    nav_trust: "Trust",
+    nav_dividends: "Dividends",
+    nav_products: "Products",
+    nav_howto: "How to buy",
+    nav_security: "Security",
+    nav_rfq: "RFQ",
+    nav_cta: "Open DeGate ↗",
+    breadcrumb: "← On-chain stocks",
+    eyebrow: "RFQ Guide · 2026",
+    hero_title: 'How <span class="gradient-text">RFQ trading</span><br>works for on-chain stocks.',
+    hero_copy: 'A stock token does not always need a large DEX liquidity pool. With <strong>RFQ</strong>, short for <strong>request for quote</strong>, your wallet asks a professional market maker for a price for your specific order. The price is calculated off-chain, but the trade settles on-chain.',
+    s1_kicker: "Process",
+    s1_title: "How does an RFQ trade work?",
+    s1_p1: "Suppose you want to spend 1,000 USDC on a stock token:",
+    s1_step1: "Your wallet tells a market maker which token you want and how much USDC you want to spend.",
+    s1_step2: "The market maker checks the underlying stock price and returns a short-lived offer, such as: “Pay 1,000 USDC and receive 4.82 tokens.”",
+    s1_step3: "Your wallet shows the amount you will receive, the spread or fee, and when the quote expires.",
+    s1_step4: "If you accept, you sign a transaction. Your USDC goes to the market maker and the stock tokens go to your wallet. Both transfers happen together on-chain.",
+    s1_p2: "Where do those tokens come from? Usually in one of two ways:",
+    s1_li1: "The market maker already has the tokens and sends them to you. No new shares need to be bought at that moment.",
+    s1_li2: "If more tokens are needed, funds are sent through the issuer. A broker buys the matching shares, new tokens are created, and the market maker can deliver them to the buyer.",
+    s1_p3: "Your wallet does not send USDC directly to a stock exchange. The companies behind the token handle the link between your payment, the token and the real shares.",
+    s1_p4: "The quote expires quickly because the underlying stock price can move. If it expires, your wallet must request a new one.",
+    s2_kicker: "Market",
+    s2_title: "Why is a liquidity pool not necessary?",
+    s2_p1: "The market maker provides liquidity when an order arrives, using tokens it holds or can obtain. An AMM pool can still exist, but RFQ does not depend on one.",
+    s2_p2: "If an AMM price differs from an executable RFQ price, traders may buy from the cheaper venue and sell on the more expensive one. This tends to bring the prices closer together, although fees and limited liquidity can leave a small difference.",
+    s3_kicker: "Execution",
+    s3_title: "When is the best time to trade?",
+    s3_p1: "Execution is often best during regular US market hours. The underlying shares are actively trading, so market makers have a clear reference price and can hedge more easily. Spreads are usually tighter, especially for larger orders.",
+    s3_p2: "Stock tokens may remain available outside those hours because blockchain markets do not close. However, 24/7 availability does not mean equally good pricing at all times.",
+    s3_p3: "When US exchanges are closed, the quote may use prices from an overnight or 24/7 real-share venue, if one is available. Otherwise, it relies more on the token market and the market maker’s estimate. Spreads may be wider, available size may be smaller, and the token price may differ from the stock’s next opening price.",
+    s4_kicker: "Checks",
+    s4_title: "What should you check before trading?",
+    s4_li1: "<strong>Final amount:</strong> Check how many tokens you will receive, not only the displayed stock price.",
+    s4_li2: "<strong>Spread and fees:</strong> Compare the quote with the underlying stock price when that market is open, and include blockchain fees.",
+    s4_li3: "<strong>Expiration:</strong> Sign before the quote expires; otherwise, request a fresh quote.",
+    s4_li4: "<strong>Trading hours:</strong> For tighter pricing, prefer regular US market hours when possible.",
+    s4_li5: "<strong>Token terms:</strong> Check the issuer, backing, redemption rules and supported countries. A stock token does not always give you legal ownership or voting rights in the underlying company.",
+    s4_p1: "In short: the market maker provides the price and liquidity, while the blockchain handles the exchange.",
+    s5_kicker: "Resources",
+    s5_title: "Sources and further reading",
+    link1: "API overview",
+    link2: "What Are Tokenized Stocks and ETFs?",
+    link3: "How xStocks Work",
+    link4: "xChange — Atomic RFQ",
+    link5: "Market Flow",
+    link6: "Frequently Asked Questions",
+    link7: "Trading Hours and Pricing",
+    link8: "Understanding RFQ",
+    footer_date: "Informational guide updated July 14, 2026.",
+    footer_disclaimer: "Not financial, legal, or tax advice."
+  },
+  es: {
+    nav_trust: "Confianza",
+    nav_dividends: "Dividendos",
+    nav_products: "Productos",
+    nav_howto: "Cómo comprar",
+    nav_security: "Seguridad",
+    nav_rfq: "RFQ",
+    nav_cta: "Abrir DeGate ↗",
+    breadcrumb: "← Acciones on-chain",
+    eyebrow: "Guía RFQ · 2026",
+    hero_title: 'Cómo funciona<br><span class="gradient-text">el trading RFQ</span><br>para acciones on-chain.',
+    hero_copy: 'Un token de acciones no siempre necesita un gran pool de liquidez en un DEX. Con <strong>RFQ</strong> (request for quote, o solicitud de cotización), tu billetera solicita a un creador de mercado profesional un precio para tu orden específica. El precio se calcula fuera de la cadena, pero la transacción se liquida en la cadena.',
+    s1_kicker: "Proceso",
+    s1_title: "¿Cómo funciona una transacción RFQ?",
+    s1_p1: "Supongamos que deseas gastar 1.000 USDC en un token de acciones:",
+    s1_step1: "Tu billetera indica a un creador de mercado qué token deseas y cuántos USDC quieres gastar.",
+    s1_step2: "El creador de mercado comprueba el precio de la acción subyacente y devuelve una oferta de corta duración, por ejemplo: “Paga 1.000 USDC y recibe 4,82 tokens”.",
+    s1_step3: "Tu billetera muestra la cantidad que recibirás, el diferencial (spread) o la comisión, y cuándo expira la cotización.",
+    s1_step4: "Si aceptas, firmas una transacción. Tus USDC van al creador de mercado y los tokens de acciones van a tu billetera. Ambas transferencias ocurren simultáneamente en la cadena.",
+    s1_p2: "¿De dónde provienen esos tokens? Generalmente de dos maneras:",
+    s1_li1: "El creador de mercado ya tiene los tokens y te los envía. No es necesario comprar nuevas acciones en ese momento.",
+    s1_li2: "Si se necesitan más tokens, los fondos se envían a través del emisor. Un bróker compra las acciones correspondientes, se crean nuevos tokens y el creador de mercado puede entregarlos al comprador.",
+    s1_p3: "Tu billetera no envía USDC directamente a una bolsa de valores. Las empresas detrás del token se encargan de la conexión entre tu pago, el token y las acciones reales.",
+    s1_p4: "La cotización expira rápidamente porque el precio de la acción subyacente puede cambiar. Si expira, tu billetera debe solicitar una nueva.",
+    s2_kicker: "Mercado",
+    s2_title: "¿Por qué no es necesario un pool de liquidez?",
+    s2_p1: "El creador de mercado proporciona liquidez cuando llega una orden, utilizando los tokens que posee o puede obtener. Aún puede existir un pool AMM, pero el sistema RFQ no depende de uno.",
+    s2_p2: "Si el precio de un AMM difiere de un precio RFQ ejecutable, los traders pueden comprar en el lugar más barato y vender en el más caro. Esto tiende a acercar los precios, aunque las comisiones y la liquidez limitada pueden dejar una pequeña diferencia.",
+    s3_kicker: "Ejecución",
+    s3_title: "¿Cuándo es el mejor momento para operar?",
+    s3_p1: "La ejecución suele ser mejor durante el horario habitual del mercado de EE. UU. Las acciones subyacentes se negocian activamente, por lo que los creadores de mercado tienen un precio de referencia claro y pueden cubrirse más fácilmente. Los diferenciales (spreads) suelen ser más ajustados, especialmente para órdenes grandes.",
+    s3_p2: "Los tokens de acciones pueden seguir disponibles fuera de ese horario porque los mercados blockchain no cierran. Sin embargo, una disponibilidad 24/7 no significa precios igualmente buenos en todo momento.",
+    s3_p3: "Cuando las bolsas estadounidenses están cerradas, la cotización puede usar precios de un mercado de acciones reales overnight o 24/7, si hay alguno disponible. De lo contrario, depende más del mercado del token y de la estimación del creador de mercado. Los diferenciales pueden ser más amplios, el tamaño disponible puede ser menor y el precio del token puede diferir del próximo precio de apertura de la acción.",
+    s4_kicker: "Comprobaciones",
+    s4_title: "¿Qué deberías revisar antes de operar?",
+    s4_li1: "<strong>Cantidad final:</strong> comprueba cuántos tokens recibirás, no solo el precio mostrado de la acción.",
+    s4_li2: "<strong>Diferencial y comisiones:</strong> compara la cotización con el precio de la acción subyacente cuando ese mercado esté abierto, e incluye las comisiones de la blockchain.",
+    s4_li3: "<strong>Expiración:</strong> firma antes de que expire la cotización; de lo contrario, solicita una nueva.",
+    s4_li4: "<strong>Horario de trading:</strong> para precios más ajustados, prefiere el horario habitual del mercado de EE. UU. cuando sea posible.",
+    s4_li5: "<strong>Términos del token:</strong> revisa el emisor, el respaldo, las reglas de reembolso y los países admitidos. Un token de acciones no siempre te otorga propiedad legal o derechos de voto en la empresa subyacente.",
+    s4_p1: "En resumen: el creador de mercado proporciona el precio y la liquidez, mientras que la blockchain gestiona el intercambio.",
+    s5_kicker: "Recursos",
+    s5_title: "Fuentes y lectura adicional",
+    link1: "Descripción general de la API",
+    link2: "¿Qué son las acciones y ETF tokenizados?",
+    link3: "Cómo funcionan los xStocks",
+    link4: "xChange — RFQ atómico",
+    link5: "Flujo de mercado",
+    link6: "Preguntas frecuentes",
+    link7: "Horarios de trading y precios",
+    link8: "Entendiendo RFQ",
+    footer_date: "Guía informativa actualizada el 14 de julio de 2026.",
+    footer_disclaimer: "No constituye asesoramiento financiero, legal ni fiscal."
+  },
+  fr: {
+    nav_trust: "Confiance",
+    nav_dividends: "Dividendes",
+    nav_products: "Produits",
+    nav_howto: "Comment acheter",
+    nav_security: "Sécurité",
+    nav_rfq: "RFQ",
+    nav_cta: "Ouvrir DeGate ↗",
+    breadcrumb: "← Actions on-chain",
+    eyebrow: "Guide RFQ · 2026",
+    hero_title: 'Comment fonctionne<br><span class="gradient-text">le trading RFQ</span><br>pour les actions on-chain.',
+    hero_copy: 'Un token d\'action n\'a pas toujours besoin d\'une grande pool de liquidité sur un DEX. Avec <strong>RFQ</strong>, abréviation de <strong>request for quote</strong> (demande de cotation), votre portefeuille demande à un teneur de marché professionnel un prix pour votre ordre spécifique. Le prix est calculé hors chaîne, mais la transaction est réglée on-chain.',
+    s1_kicker: "Processus",
+    s1_title: "Comment fonctionne une transaction RFQ ?",
+    s1_p1: "Supposons que vous souhaitiez dépenser 1 000 USDC pour un token d'action :",
+    s1_step1: "Votre portefeuille indique à un teneur de marché quel token vous voulez et combien d'USDC vous souhaitez dépenser.",
+    s1_step2: "Le teneur de marché vérifie le prix de l'action sous-jacente et renvoie une offre de courte durée, par exemple : “Payez 1 000 USDC et recevez 4,82 tokens”.",
+    s1_step3: "Votre portefeuille affiche le montant que vous recevrez, l'écart (spread) ou les frais, et l'heure d'expiration de la cotation.",
+    s1_step4: "Si vous acceptez, vous signez une transaction. Vos USDC vont au teneur de marché et les tokens d'actions vont dans votre portefeuille. Les deux transferts ont lieu en même temps on-chain.",
+    s1_p2: "D'où viennent ces tokens ? Généralement de deux manières :",
+    s1_li1: "Le teneur de marché possède déjà les tokens et vous les envoie. Il n'est pas nécessaire d'acheter de nouvelles actions à ce moment-là.",
+    s1_li2: "Si plus de tokens sont nécessaires, les fonds sont envoyés via l'émetteur. Un courtier achète les actions correspondantes, de nouveaux tokens sont créés, et le teneur de marché peut les livrer à l'acheteur.",
+    s1_p3: "Votre portefeuille n'envoie pas d'USDC directement à une bourse. Les entreprises derrière le token gèrent le lien entre votre paiement, le token et les actions réelles.",
+    s1_p4: "La cotización expire rapidement car le prix de l'action sous-jacente peut changer. Si elle expire, votre portefeuille doit en demander une nouvelle.",
+    s2_kicker: "Marché",
+    s2_title: "Pourquoi une pool de liquidité n'est-elle pas nécessaire ?",
+    s2_p1: "Le teneur de marché fournit de la liquidité lorsqu'un ordre arrive, en utilisant les tokens qu'il détient ou peut obtenir. Une pool AMM peut toujours exister, mais le RFQ n'en dépend pas.",
+    s2_p2: "Si le prix d'un AMM diffère d'un prix RFQ exécutable, les traders peuvent acheter sur la plateforme la moins chère et vendre sur la plus chère. Cela tend à rapprocher les prix, bien que les frais et une liquidité limitée puissent laisser une petite différence.",
+    s3_kicker: "Exécution",
+    s3_title: "Quel est le meilleur moment pour trader ?",
+    s3_p1: "L'exécution est souvent meilleure pendant les heures normales d'ouverture du marché américain. Les actions sous-jacentes sont activement négociées, ce qui donne aux teneurs de marché un prix de référence clair et facilite leur couverture. Les écarts sont généralement plus serrés, en particulier pour les gros ordres.",
+    s3_p2: "Les tokens d'actions peuvent rester disponibles en dehors de ces heures car les marchés blockchain ne ferment pas. Cependant, une disponibilité 24/7 ne signifie pas que les prix sont toujours aussi bons.",
+    s3_p3: "Lorsque les bourses américaines sont fermées, la cotation peut utiliser les prix d'un marché d'actions réelles de nuit ou 24/7, si un tel marché est disponible. Sinon, elle dépend davantage du marché du token et de l'estimation du teneur de marché. Les écarts peuvent être plus larges, la taille disponible peut être plus petite, et le prix du token peut différer du prochain prix d'ouverture de l'action.",
+    s4_kicker: "Vérifications",
+    s4_title: "Que devez-vous vérifier avant de trader ?",
+    s4_li1: "<strong>Montant final :</strong> vérifiez combien de tokens vous recevrez, pas seulement le prix affiché de l'action.",
+    s4_li2: "<strong>Écart et frais :</strong> comparez la cotation avec le prix de l'action sous-jacente lorsque ce marché est ouvert, et incluez les frais de la blockchain.",
+    s4_li3: "<strong>Expiration :</strong> signez avant l'expiration de la cotation ; sinon, demandez-en une nouvelle.",
+    s4_li4: "<strong>Heures de trading :</strong> pour des prix plus serrés, privilégiez les heures normales du marché américain lorsque cela est possible.",
+    s4_li5: "<strong>Conditions du token :</strong> vérifiez l'émetteur, la couverture, les règles de rachat et les pays pris en charge. Un token d'action ne vous donne pas toujours la propriété légale ou des droits de vote dans la société sous-jacente.",
+    s4_p1: "En bref : le teneur de marché fournit le prix et la liquidité, tandis que la blockchain gère l'échange.",
+    s5_kicker: "Ressources",
+    s5_title: "Sources et lectures complémentaires",
+    link1: "Aperçu de l'API",
+    link2: "Que sont les actions et les ETF tokenisés ?",
+    link3: "Comment fonctionnent les xStocks",
+    link4: "xChange — RFQ atomique",
+    link5: "Flux de marché",
+    link6: "Foire aux questions",
+    link7: "Heures de trading et prix",
+    link8: "Comprendre le RFQ",
+    footer_date: "Guide d'information mis à jour le 14 juillet 2026.",
+    footer_disclaimer: "Ne constitue pas un conseil financier, juridique ou fiscal."
+  }
+};
+
+const LANG_META = {
+  it: { flag: '🇮🇹', code: 'IT' },
+  en: { flag: '🇬🇧', code: 'EN' },
+  es: { flag: '🇪🇸', code: 'ES' },
+  fr: { flag: '🇫🇷', code: 'FR' }
+};
+
+function applyLanguage(lang) {
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS.it;
+  document.documentElement.lang = lang;
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  const meta = LANG_META[lang];
+  document.getElementById('langFlag').textContent = meta.flag;
+  document.getElementById('langCode').textContent = meta.code;
+
+  document.querySelectorAll('.lang-dropdown li').forEach(li => {
+    li.classList.toggle('active', li.dataset.lang === lang);
+  });
+}
+
+function detectLanguage() {
+  const saved = localStorage.getItem('dgfans_lang');
+  if (saved && TRANSLATIONS[saved]) return saved;
+  const userLang = navigator.language.slice(0, 2);
+  return TRANSLATIONS[userLang] ? userLang : 'it';
+}
+
+const currentLang = detectLanguage();
+applyLanguage(currentLang);
+
+const langBtn = document.getElementById('langBtn');
+const langSelector = document.getElementById('langSelector');
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langSelector.classList.toggle('open');
+});
+document.addEventListener('click', () => {
+  langSelector.classList.remove('open');
+});
+document.querySelectorAll('.lang-dropdown li').forEach(li => {
+  li.addEventListener('click', () => {
+    const lang = li.dataset.lang;
+    localStorage.setItem('dgfans_lang', lang);
+    applyLanguage(lang);
+  });
+});
+</script>
+</body>
+</html>
+"""
+
+with open("c:\\Users\\Bruga viaggi\\Progetti Antigravity\\Sito dgfans.io\\dgfans-repo\\public\\rfq.html", "w", encoding="utf-8") as f:
+    f.write(html)
