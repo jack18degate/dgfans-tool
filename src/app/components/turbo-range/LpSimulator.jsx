@@ -9,7 +9,7 @@ const LpSimulator = ({ pool, activeRange }) => {
   const stats = useMemo(() => {
     if (!pool || !activeRange) return null;
 
-    const pSpot = pool.price;
+    const pSpot = Number(pool.price) || 0;
     const pLower = activeRange.min;
     const pUpper = activeRange.max;
 

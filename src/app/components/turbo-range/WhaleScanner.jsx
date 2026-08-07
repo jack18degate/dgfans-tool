@@ -230,7 +230,7 @@ const WhaleScanner = ({ pool, onWhaleHover }) => {
      }
   };
 
-  if (!pool || pool.isExternal) return null;
+  if (!pool || pool.isExternal || pool.isDirect) return null;
 
   return (
     <div className="bg-background border border-border rounded-lg p-4 flex flex-col mt-6">

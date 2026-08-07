@@ -65,16 +65,25 @@ const LiquidityChart = ({ pool }) => {
     setZoomLevel(100);
     setActiveRangeId(null);
     
+    // For non-Solana direct pools, skip Raydium API entirely
+    if (pool.isDirect && pool.chain && pool.chain !== 'SOLANA') {
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
     const fetchLiquidity = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`https://api-v3.raydium.io/pools/line/position?id=${pool.id}`);
+        // For direct DeGate Solana pools, use poolAddress as Raydium ID
+        const raydiumId = pool.isDirect ? pool.poolAddress : pool.id;
+        const response = await axios.get(`https://api-v3.raydium.io/pools/line/position?id=${raydiumId}`);
         if (response.data && response.data.success && response.data.data?.line) {
           // Parse string liquidity to numbers
           const parsedLine = response.data.data.line.map(item => ({
             price: Number(item.price),
-            liquidity: Number(item.liquidity) / 1000000, // Dividiamo per il fattore di conversione tipico (1e6) per scalare i valori grezzi
+            liquidity: Number(item.liquidity) / 1000000,
             tick: item.tick
           })).sort((a, b) => a.price - b.price);
           
@@ -411,6 +420,43 @@ const LiquidityChart = ({ pool }) => {
     }
   };
 
+  // For non-Solana direct pools, show info panel instead of chart
+  if (pool.isDirect && pool.chain && pool.chain !== 'SOLANA') {
+    const poolPrice = Number(pool.price) || 0;
+    return (
+      <div style={{ background: 'var(--surface-glass)', backdropFilter: 'blur(24px) saturate(160%)', WebkitBackdropFilter: 'blur(24px) saturate(160%)', border: '1px solid var(--border)', borderTop: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg)', padding: '1.5rem' }} className="flex flex-col">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <span className="text-primary">{pool.mintA?.symbol}/{pool.mintB?.symbol}</span>
+              <span style={{ fontSize: '11px', background: pool.chain === 'BASE' ? 'rgba(0,82,255,0.15)' : 'rgba(98,126,234,0.15)', color: pool.chain === 'BASE' ? '#4d8eff' : '#8b9ff5', border: `1px solid ${pool.chain === 'BASE' ? 'rgba(0,82,255,0.25)' : 'rgba(98,126,234,0.25)'}`, padding: '2px 8px', borderRadius: '6px', fontWeight: 700 }}>{pool.chain}</span>
+            </h2>
+            <p className="text-sm text-textMuted mt-1">{t.turbo.currentPrice}: ${poolPrice.toLocaleString('en-US', { maximumFractionDigits: 2 })}</p>
+          </div>
+        </div>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '2rem' }} className="flex flex-col items-center justify-center text-center gap-4 min-h-[300px]">
+          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(6,214,160,0.1), rgba(59,130,246,0.08))', border: '1px solid rgba(6,214,160,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ fontSize: '1.5rem' }}>🌐</span>
+          </div>
+          <div>
+            <p className="text-lg font-bold text-white mb-2">{pool.name || pool.mintA?.symbol}</p>
+            <div className="flex gap-6 justify-center text-sm mb-4">
+              <div><span className="text-textMuted">APR:</span> <span className="text-primary font-bold">{pool.weekApr?.toFixed(2)}%</span></div>
+              <div><span className="text-textMuted">TVL:</span> <span className="text-white font-semibold">${Number(pool.protocolTvl || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</span></div>
+              <div><span className="text-textMuted">Fee:</span> <span className="text-white font-semibold">{(pool.feeRate * 100).toFixed(2)}%</span></div>
+            </div>
+            <p className="text-sm text-textMuted max-w-md">Liquidity chart analysis is available for Solana (Raydium) pools. This pool runs on {pool.chain === 'BASE' ? 'Base (Uniswap)' : 'Ethereum (Uniswap)'}.</p>
+          </div>
+          {pool.poolUrl && (
+            <a href={pool.poolUrl} target="_blank" rel="noopener noreferrer" className="mt-2 px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg text-sm font-semibold hover:bg-primary/20 transition-colors">
+              Open on {pool.chain === 'BASE' ? 'Uniswap (Base)' : 'Uniswap (Ethereum)'} →
+            </a>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   if (!pool) return (
     <div className="bg-surface rounded-xl border border-border flex items-center justify-center p-8 h-full text-textMuted">
       Seleziona una CLMM Pool dal pannello per analizzare le inefficienze di mercato
@@ -425,7 +471,7 @@ const LiquidityChart = ({ pool }) => {
             <span className="text-primary">{pool.mintA?.symbol}/{pool.mintB?.symbol}</span>
             <span className="text-text">{t.turbo.liquidityMap}</span>
           </h2>
-          <p className="text-sm text-textMuted mt-1">{t.turbo.currentPrice}: ${pool.price?.toFixed(4)}</p>
+          <p className="text-sm text-textMuted mt-1">{t.turbo.currentPrice}: ${(Number(pool.price) || 0).toFixed(4)}</p>
         </div>
         
         <div className="flex items-center gap-3">

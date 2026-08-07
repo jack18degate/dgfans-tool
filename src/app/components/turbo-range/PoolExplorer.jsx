@@ -67,7 +67,7 @@ const PoolExplorer = ({ onSelectPool, selectedPoolId }) => {
               poolUrl: p.pool_url,
               feeRate: p.swap_pool_fee,
               weekApr: p.week_apr,
-              price: p.current_price,
+              price: Number(p.current_price) || 0,
               change24h: p['24h_changes'],
               protocolTvl: p.protocol_tvl,
               tokenA: {
