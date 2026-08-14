@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>All-World Index on-chain: VTx — Azioni on-chain</title>
+  <meta name="description" content="VTx: l'alternativa on-chain al VWCE per un'esposizione azionaria globale diversificata tramite xStocks.">
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #5f6b7a;
+      --line: #d8dee8;
+      --paper: #ffffff;
+      --wash: #f4f7fb;
+      --blue: #245cff;
+      --blue-2: #6d8cff;
+      --mint: #d9ff63;
+      --green: #126b4d;
+      --violet: #7357ff;
+      --orange: #ff9f43;
+      --shadow: 0 20px 55px rgba(31, 51, 91, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 2%, rgba(109, 140, 255, .18), transparent 28rem),
+        linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .site { min-height: 100vh; overflow: hidden; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1749e8, #7b60ff);
+      box-shadow: 0 10px 24px rgba(36, 92, 255, .25);
+    }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .nav-links { display: flex; gap: 24px; color: #445066; font-size: 14px; font-weight: 700; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a.active { color: var(--blue); }
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .nav-cta, .button-primary {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
+    }
+    .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
+
+    /* ─── Language Selector ─── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .lang-selector {
+      position: relative;
+      z-index: 100;
+    }
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border: 1px solid #cfd6e2;
+      border-radius: 10px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(8px);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s;
+      line-height: 1;
+    }
+    .lang-btn:hover {
+      border-color: var(--blue-2);
+      box-shadow: 0 4px 14px rgba(36, 92, 255, .10);
+    }
+    .lang-btn .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+    .lang-btn .lang-chevron {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #778193;
+      margin-left: 2px;
+      transition: transform .2s;
+    }
+    .lang-selector.open .lang-chevron {
+      transform: rotate(180deg);
+    }
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 150px;
+      padding: 6px;
+      border: 1px solid #d1d9e6;
+      border-radius: 14px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(32,49,81,.13);
+      list-style: none;
+      margin: 0;
+    }
+    .lang-selector.open .lang-dropdown {
+      display: block;
+      animation: langFadeIn .18s ease;
+    }
+    @keyframes langFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .lang-dropdown li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #445066;
+      cursor: pointer;
+      transition: background .14s;
+    }
+    .lang-dropdown li:hover {
+      background: #eef3ff;
+      color: var(--blue);
+    }
+    .lang-dropdown li.active {
+      background: #eef3ff;
+      color: var(--blue);
+      font-weight: 850;
+    }
+    .lang-dropdown li .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 70px 0 40px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 7px 11px;
+      color: #264083;
+      border: 1px solid #cbd7ff;
+      border-radius: 999px;
+      background: #eef3ff;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+      word-spacing: 0.02em;
+    }
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(135deg, #245cff 20%, #7357ff 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-copy {
+      max-width: 690px;
+      margin: 26px 0 0;
+      color: #526071;
+      font-size: 18px;
+      line-height: 1.72;
+      word-spacing: 0.01em;
+    }
+    .hero-copy strong { color: var(--ink); }
+
+    .section { padding: 56px 0; }
+    .section-tight { padding: 44px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 36px; }
+    .kicker { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(28px, 3.5vw, 42px); line-height: 1.1; letter-spacing: -.04em; }
+
+    .footer { padding: 26px 0 42px; color: #748094; border-top: 1px solid #d8dee8; font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .nav-cta { display: none; }
+      .hero { padding: 34px 0 56px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 26px; }
+      .hero-copy { font-size: 16px; }
+      .section { padding: 44px 0; }
+      .footer-row { flex-direction: column; }
+    }
+
+    /* Article specific styles */
+    .article-body p {
+      margin: 0 0 22px;
+      color: #526071;
+      font-size: 18px;
+      line-height: 1.72;
+      word-spacing: 0.01em;
+    }
+    .article-body strong { color: var(--ink); font-weight: 700; }
+    
+    .article-body a {
+      color: var(--blue);
+      text-decoration: underline;
+    }
+
+    .breadcrumb {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .breadcrumb a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+
+    .disclaimer-box {
+      margin: 40px 0;
+      padding: 24px;
+      background: var(--wash);
+      border-radius: 16px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .cta-link {
+      display: inline-block;
+      margin: 20px 0 60px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .cta-link:hover { text-decoration: underline; }
+
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="shell">
+      <nav class="nav" aria-label="Navigazione principale">
+        <a class="brand" href="/onchainstocks">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" stroke-width="2.2"/><path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" stroke-width="2.2"/></svg>
+          </span>
+          DeGate Guide
+        </a>
+        <div class="nav-links">
+          <a href="/onchainstocks#fiducia" data-i18n="nav_trust">Fiducia</a>
+          <a href="/onchainstocks#dividendi" data-i18n="nav_dividends">Dividendi</a>
+          <a href="/onchainstocks#prodotti" data-i18n="nav_products">Prodotti</a>
+          <a href="/onchainstocks#come-comprare" data-i18n="nav_howto">Come comprare</a>
+          <a href="/onchainstocks#sicurezza" data-i18n="nav_security">Sicurezza</a>
+          <a href="/onchainstocks/rfq" data-i18n="nav_rfq">RFQ</a>
+          <a href="/onchainstocks/articoli" class="active" data-i18n="nav_articles">Articoli</a>
+        </div>
+        <div class="nav-right">
+          <div class="lang-selector" id="langSelector">
+            <button class="lang-btn" id="langBtn" aria-label="Select language">
+              <span class="lang-flag" id="langFlag">🇮🇹</span>
+              <span class="lang-code" id="langCode">IT</span>
+              <span class="lang-chevron"></span>
+            </button>
+            <ul class="lang-dropdown" id="langDropdown">
+              <li data-lang="it" class="active"><span class="lang-flag">🇮🇹</span> Italiano</li>
+              <li data-lang="en"><span class="lang-flag">🇬🇧</span> English</li>
+              <li data-lang="es"><span class="lang-flag">🇪🇸</span> Español</li>
+              <li data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</li>
+            </ul>
+          </div>
+          <a class="nav-cta" href="https://app.degate.com/" data-i18n="nav_cta">Apri DeGate ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="shell hero">
+        <div class="breadcrumb" data-i18n-html="breadcrumb"><a href="/onchainstocks">← Azioni on-chain</a> / <a href="/onchainstocks/articoli">Articoli</a> / All-World Index on-chain: VTx</div>
+        <div>
+          <div class="eyebrow" data-i18n="eyebrow">Articolo · Agosto 2026</div>
+          <h1 data-i18n-html="hero_title">All-World Index on-chain:<br><span class="gradient-text">VTx</span></h1>
+          <p class="hero-copy" data-i18n-html="hero_copy">
+            In questa serie esploriamo le alternative on-chain più vicine agli asset discussi più di frequente dagli investitori retail. Questa edizione è dedicata a VTx, una via on-chain per ottenere un'ampia esposizione azionaria globale.<br><br>L'ETF più menzionato nelle community europee di investitori su Reddit è il <strong>VWCE</strong>. La sua controparte tokenizzata on-chain più simile è <strong>VTx</strong>, uno xStock che porta un'esposizione azionaria globale direttamente in un crypto wallet.
+          </p>
+        </div>
+      </section>
+
+      <section class="shell section" id="struttura">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s1_kicker">Struttura</p>
+            <h2 data-i18n="s1_title">Cos'è VTx?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s1_p1">VTx è il tracker tokenizzato del <strong>Vanguard Total World Stock ETF (VT)</strong> quotato negli Stati Uniti. È emesso da <strong>Backed Assets (JE) Limited</strong> ed è garantito dal corrispondente asset sottostante detenuto nella struttura di custodia dell'emittente.</p>
+          <p data-i18n-html="s1_p2">VT investe nei mercati sviluppati ed emergenti e replica il FTSE Global All Cap Index. Questo rende VTx una valida alternativa on-chain al VWCE per gli investitori che cercano un'esposizione azionaria globale diversificata. Non è tuttavia una versione tokenizzata del VWCE: il VWCE replica l'indice FTSE All-World, mentre VTx è legato a VT.</p>
+          <p data-i18n-html="s1_p3">Ogni VTx è progettato per fornire il valore economico del suo asset sottostante. Il prodotto è descritto come <strong>garantito 1:1</strong>, il che significa che i token in circolazione corrispondono alla relativa esposizione sottostante detenuta in riserva. Questo non va interpretato come una garanzia permanente che un token VTx equivalga sempre esattamente a un'azione VT, poiché le azioni societarie e gli aggiustamenti dei dividendi potrebbero riflettersi tramite il moltiplicatore del token.</p>
+          <p><a href="https://assets.backed.fi/products/vanguard-total-world-xstock" data-i18n="s1_link1">Visualizza la pagina ufficiale del prodotto VTx</a></p>
+        </div>
+      </section>
+
+      <section class="shell section" id="dividendi">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s2_kicker">Dividendi</p>
+            <h2 data-i18n="s2_title">Come funzionano i dividendi?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s2_p1">VWCE e VT gestiscono i dividendi in modo diverso.</p>
+          <p data-i18n-html="s2_p2"><strong>VWCE è un ETF ad accumulazione.</strong> Le società in portafoglio pagano i dividendi, ma il fondo li reinveste internamente invece di distribuire contanti ai possessori di VWCE. Vanguard dichiara che tutti i dividendi vengono reinvestiti per le sue quote ad accumulazione.</p>
+          <p data-i18n-html="s2_p3"><strong>VT è un ETF a distribuzione.</strong> Normalmente distribuisce in contanti i proventi ai suoi azionisti ogni trimestre.</p>
+          <p data-i18n-html="s2_p4">Poiché VTx è supportato da VT, le distribuzioni dall'ETF sottostante vengono trasmesse economicamente ai detentori di VTx, ma non sotto forma di un pagamento separato in contanti o USDC nei loro wallet. Secondo la documentazione di xStocks, i dividendi ricevuti sull'asset sottostante vengono reinvestiti in unità aggiuntive dopo le ritenute fiscali applicabili. Il valore risultante si riflette attraverso il meccanismo di rebasing o moltiplicatore di xStocks. A seconda della blockchain e dell'interfaccia, ciò potrebbe apparire come un aggiustamento nel saldo visualizzato dal detentore del token.</p>
+          <p>
+            <a href="https://www.vanguard.co.uk/professional/product/etf/equity/9679/ftse-all-world-ucits-etf-accumulating" data-i18n="s2_source1">Vanguard FTSE All-World UCITS ETF — quota ad accumulazione</a><br>
+            <a href="https://investor.vanguard.com/investment-products/etfs/profile/vt" data-i18n="s2_source2">Vanguard Total World Stock ETF (VT)</a><br>
+            <a href="https://docs.xstocks.fi/docs/dividends-and-stock-splits" data-i18n="s2_source3">xStocks: Dividendi e frazionamenti azionari</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="shell section" id="utilizzo">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s3_kicker">Utilizzo</p>
+            <h2 data-i18n="s3_title">Perché usare VTx on-chain?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s3_p1">VTx consente agli investitori di mantenere una vasta esposizione azionaria globale direttamente in un crypto wallet compatibile. A seconda della piattaforma, può essere negoziato sui mercati secondari <strong>24/7</strong>, trasferito on-chain e conservato in auto-custodia.</p>
+          <p data-i18n-html="s3_p2">Gli xStock sono frazionabili per design, quindi gli investitori non hanno bisogno di acquistare l'equivalente di un'intera azione VT. xStocks pubblicizza un accesso a partire da circa <strong>1 $</strong>, anche se l'ordine minimo effettivo dipende dalla piattaforma utilizzata.</p>
+          <p data-i18n-html="s3_p3">VTx può essere acquistato tramite <a href="https://app.degate.com/?utm_source=os_article_vt">DeGate Wallet</a>. Apri la sezione <strong>Swap</strong> e cerca VTx usando il suo indirizzo token: <strong>XsEdDDTcVGJU6nvdRdVnj53eKTrsCkvtrVfXGmUK68V</strong>. DeGate Wallet permette agli utenti di negoziare gli asset on-chain supportati mantenendo il controllo dei propri fondi.</p>
+          <p data-i18n-html="s3_p4">VTx può anche collegare l'esposizione al mercato tradizionale con le applicazioni on-chain supportate. Gli utenti possono guadagnare <strong>xPoints</strong> attraverso attività qualificanti nell'ecosistema xStocks, come trading, prestiti o fornitura di liquidità.</p>
+          <p>
+            <a href="https://xstocks.com/" data-i18n="s3_source1">Sito ufficiale xStocks</a><br>
+            <a href="https://xstocks.com/news/introducing-xpoints" data-i18n="s3_source2">Presentazione di xPoints</a><br>
+            <a href="https://docs.xstocks.fi/docs/frequently-asked-questions" data-i18n="s3_source3">FAQ xStocks</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="shell section" id="rischi">
+        <div class="section-head">
+          <div>
+            <p class="kicker" data-i18n="s4_kicker">Rischi</p>
+            <h2 data-i18n="s4_title">Quali sono i rischi?</h2>
+          </div>
+        </div>
+        <div class="article-body">
+          <p data-i18n-html="s4_p1">La disponibilità on-chain non elimina i rischi strutturali o di mercato. VTx rimane esposto alle fluttuazioni dei mercati azionari globali e dipende anche dall'emittente del token, dagli accordi di custodia, dagli smart contract, dalle blockchain supportate e dalla liquidità disponibile sul mercato secondario.</p>
+          <p data-i18n-html="s4_p2">Anche se il trading dei token può continuare fuori dagli orari del mercato azionario USA, il mercato VT sottostante in quei periodi è chiuso. Di conseguenza, la liquidità potrebbe essere inferiore, gli spread più ampi e il prezzo di mercato di VTx potrebbe discostarsi temporaneamente dal valore della sua esposizione sottostante. Le restrizioni all'accesso e al trasferimento possono inoltre variare a seconda della giurisdizione e della piattaforma.</p>
+        </div>
+      </section>
+      
+      <div class="shell disclaimer-box">
+        <span data-i18n-html="disclaimer">Questo articolo ha solo scopo educativo e non costituisce consulenza finanziaria, di investimento, legale o fiscale. La disponibilità e l'idoneità del prodotto dipendono dalla giurisdizione dell'utente e dalla piattaforma utilizzata. Consulta sempre la documentazione aggiornata dell'emittente prima di operare.</span>
+      </div>
+
+      <div class="shell">
+        <a href="/onchainstocks/articoli" class="cta-link" data-i18n="cta">Leggi altri articoli →</a>
+      </div>
+
+    </main>
+
+    <footer class="shell footer">
+      <div class="footer-row">
+        <span data-i18n="footer_date">Guida informativa aggiornata ad agosto 2026.</span>
+        <span data-i18n="footer_disclaimer">Non costituisce consulenza finanziaria, legale o fiscale.</span>
+      </div>
+    </footer>
+  </div>
+
+<script>
+const TRANSLATIONS = {
+  it: {
+    nav_trust: "Fiducia",
+    nav_dividends: "Dividendi",
+    nav_products: "Prodotti",
+    nav_howto: "Come comprare",
+    nav_security: "Sicurezza",
+    nav_rfq: "RFQ",
+    nav_articles: "Articoli",
+    nav_cta: "Apri DeGate ↗",
+    breadcrumb: "<a href=\"/onchainstocks\">← Azioni on-chain</a> / <a href=\"/onchainstocks/articoli\">Articoli</a> / All-World Index on-chain: VTx",
+    eyebrow: "Articolo · Agosto 2026",
+    hero_title: "All-World Index on-chain:<br><span class=\"gradient-text\">VTx</span>",
+    hero_copy: "In questa serie esploriamo le alternative on-chain più vicine agli asset discussi più di frequente dagli investitori retail. Questa edizione è dedicata a VTx, una via on-chain per ottenere un'ampia esposizione azionaria globale.<br><br>L'ETF più menzionato nelle community europee di investitori su Reddit è il <strong>VWCE</strong>. La sua controparte tokenizzata on-chain più simile è <strong>VTx</strong>, uno xStock che porta un'esposizione azionaria globale direttamente in un crypto wallet.",
+    s1_kicker: "Struttura",
+    s1_title: "Cos'è VTx?",
+    s1_p1: "VTx è il tracker tokenizzato del <strong>Vanguard Total World Stock ETF (VT)</strong> quotato negli Stati Uniti. È emesso da <strong>Backed Assets (JE) Limited</strong> ed è garantito dal corrispondente asset sottostante detenuto nella struttura di custodia dell'emittente.",
+    s1_p2: "VT investe nei mercati sviluppati ed emergenti e replica il FTSE Global All Cap Index. Questo rende VTx una valida alternativa on-chain al VWCE per gli investitori che cercano un'esposizione azionaria globale diversificata. Non è tuttavia una versione tokenizzata del VWCE: il VWCE replica l'indice FTSE All-World, mentre VTx è legato a VT.",
+    s1_p3: "Ogni VTx è progettato per fornire il valore economico del suo asset sottostante. Il prodotto è descritto come <strong>garantito 1:1</strong>, il che significa che i token in circolazione corrispondono alla relativa esposizione sottostante detenuta in riserva. Questo non va interpretato come una garanzia permanente che un token VTx equivalga sempre esattamente a un'azione VT, poiché le azioni societarie e gli aggiustamenti dei dividendi potrebbero riflettersi tramite il moltiplicatore del token.",
+    s1_link1: "Visualizza la pagina ufficiale del prodotto VTx",
+    s2_kicker: "Dividendi",
+    s2_title: "Come funzionano i dividendi?",
+    s2_p1: "VWCE e VT gestiscono i dividendi in modo diverso.",
+    s2_p2: "<strong>VWCE è un ETF ad accumulazione.</strong> Le società in portafoglio pagano i dividendi, ma il fondo li reinveste internamente invece di distribuire contanti ai possessori di VWCE. Vanguard dichiara che tutti i dividendi vengono reinvestiti per le sue quote ad accumulazione.",
+    s2_p3: "<strong>VT è un ETF a distribuzione.</strong> Normalmente distribuisce in contanti i proventi ai suoi azionisti ogni trimestre.",
+    s2_p4: "Poiché VTx è supportato da VT, le distribuzioni dall'ETF sottostante vengono trasmesse economicamente ai detentori di VTx, ma non sotto forma di un pagamento separato in contanti o USDC nei loro wallet. Secondo la documentazione di xStocks, i dividendi ricevuti sull'asset sottostante vengono reinvestiti in unità aggiuntive dopo le ritenute fiscali applicabili. Il valore risultante si riflette attraverso il meccanismo di rebasing o moltiplicatore di xStocks. A seconda della blockchain e dell'interfaccia, ciò potrebbe apparire come un aggiustamento nel saldo visualizzato dal detentore del token.",
+    s2_source1: "Vanguard FTSE All-World UCITS ETF — quota ad accumulazione",
+    s2_source2: "Vanguard Total World Stock ETF (VT)",
+    s2_source3: "xStocks: Dividendi e frazionamenti azionari",
+    s3_kicker: "Utilizzo",
+    s3_title: "Perché usare VTx on-chain?",
+    s3_p1: "VTx consente agli investitori di mantenere una vasta esposizione azionaria globale direttamente in un crypto wallet compatibile. A seconda della piattaforma, può essere negoziato sui mercati secondari <strong>24/7</strong>, trasferito on-chain e conservato in auto-custodia.",
+    s3_p2: "Gli xStock sono frazionabili per design, quindi gli investitori non hanno bisogno di acquistare l'equivalente di un'intera azione VT. xStocks pubblicizza un accesso a partire da circa <strong>1 $</strong>, anche se l'ordine minimo effettivo dipende dalla piattaforma utilizzata.",
+    s3_p3: "VTx può essere acquistato tramite <a href=\"https://app.degate.com/?utm_source=os_article_vt\">DeGate Wallet</a>. Apri la sezione <strong>Swap</strong> e cerca VTx usando il suo indirizzo token: <strong>XsEdDDTcVGJU6nvdRdVnj53eKTrsCkvtrVfXGmUK68V</strong>. DeGate Wallet permette agli utenti di negoziare gli asset on-chain supportati mantenendo il controllo dei propri fondi.",
+    s3_p4: "VTx può anche collegare l'esposizione al mercato tradizionale con le applicazioni on-chain supportate. Gli utenti possono guadagnare <strong>xPoints</strong> attraverso attività qualificanti nell'ecosistema xStocks, come trading, prestiti o fornitura di liquidità.",
+    s3_source1: "Sito ufficiale xStocks",
+    s3_source2: "Presentazione di xPoints",
+    s3_source3: "FAQ xStocks",
+    s4_kicker: "Rischi",
+    s4_title: "Quali sono i rischi?",
+    s4_p1: "La disponibilità on-chain non elimina i rischi strutturali o di mercato. VTx rimane esposto alle fluttuazioni dei mercati azionari globali e dipende anche dall'emittente del token, dagli accordi di custodia, dagli smart contract, dalle blockchain supportate e dalla liquidità disponibile sul mercato secondario.",
+    s4_p2: "Anche se il trading dei token può continuare fuori dagli orari del mercato azionario USA, il mercato VT sottostante in quei periodi è chiuso. Di conseguenza, la liquidità potrebbe essere inferiore, gli spread più ampi e il prezzo di mercato di VTx potrebbe discostarsi temporaneamente dal valore della sua esposizione sottostante. Le restrizioni all'accesso e al trasferimento possono inoltre variare a seconda della giurisdizione e della piattaforma.",
+    disclaimer: "Questo articolo ha solo scopo educativo e non costituisce consulenza finanziaria, di investimento, legale o fiscale. La disponibilità e l'idoneità del prodotto dipendono dalla giurisdizione dell'utente e dalla piattaforma utilizzata. Consulta sempre la documentazione aggiornata dell'emittente prima di operare.",
+    cta: "Leggi altri articoli →",
+    footer_date: "Guida informativa aggiornata ad agosto 2026.",
+    footer_disclaimer: "Non costituisce consulenza finanziaria, legale o fiscale."
+  },
+  en: {
+    nav_trust: "Trust",
+    nav_dividends: "Dividends",
+    nav_products: "Products",
+    nav_howto: "How to buy",
+    nav_security: "Security",
+    nav_rfq: "RFQ",
+    nav_articles: "Articles",
+    nav_cta: "Open DeGate ↗",
+    breadcrumb: "<a href=\"/onchainstocks\">← On-chain stocks</a> / <a href=\"/onchainstocks/articoli\">Articles</a> / All-World Index on-chain: VTx",
+    eyebrow: "Article · August 2026",
+    hero_title: "All-World Index on-chain:<br><span class=\"gradient-text\">VTx</span>",
+    hero_copy: "In this series, we explore the closest onchain alternatives to the assets most frequently discussed by retail investors. This edition looks at VTx, an onchain route to broad global equity exposure.<br><br>The ETF most frequently mentioned in the European investing communities on Reddit is <strong>VWCE</strong>. Its closest on-chain stock counterpart is <strong>VTx</strong>, an xStock that brings broad global equity exposure into a crypto wallet.",
+    s1_kicker: "Structure",
+    s1_title: "What is VTx?",
+    s1_p1: "VTx is the tokenized tracker of the US-listed <strong>Vanguard Total World Stock ETF (VT)</strong>. It is issued by <strong>Backed Assets (JE) Limited</strong> and backed by the corresponding underlying asset held within the issuer's custody structure.",
+    s1_p2: "VT invests across developed and emerging markets and tracks the FTSE Global All Cap Index. This makes VTx a close on-chain alternative to VWCE for investors seeking diversified global equity exposure. It is not, however, a tokenized version of VWCE: VWCE tracks the FTSE All-World Index, while VTx is linked to VT.",
+    s1_p3: "Each VTx is designed to provide the economic value of its underlying asset. The product is described as <strong>1:1 backed</strong>, meaning that the tokens in circulation are matched by the relevant underlying exposure held in reserve. This should not be interpreted as a permanent guarantee that one VTx token will always equal exactly one VT share, because corporate actions and dividend adjustments may be reflected through the token's multiplier.",
+    s1_link1: "View the official VTx product page",
+    s2_kicker: "Dividends",
+    s2_title: "How do dividends work?",
+    s2_p1: "VWCE and VT handle dividends differently.",
+    s2_p2: "<strong>VWCE is an accumulating ETF.</strong> Its portfolio companies pay dividends, but the fund reinvests them internally instead of distributing cash to VWCE holders. Vanguard states that all dividends are reinvested for its accumulation shares.",
+    s2_p3: "<strong>VT is a distributing ETF.</strong> It normally pays cash distributions to its shareholders every quarter.",
+    s2_p4: "Because VTx is backed by VT, distributions from the underlying ETF are passed on economically to VTx holders—but not as a separate cash or USDC payment to their wallets. According to the xStocks documentation, dividends received on the underlying asset are reinvested into additional units after applicable withholding taxes. The resulting value is reflected through xStocks' rebasing or multiplier mechanism. Depending on the blockchain and interface, this may appear as an adjustment to the holder's displayed token balance.",
+    s2_source1: "Vanguard FTSE All-World UCITS ETF — accumulating share class",
+    s2_source2: "Vanguard Total World Stock ETF (VT)",
+    s2_source3: "xStocks: Dividends and Stock Splits",
+    s3_kicker: "Usage",
+    s3_title: "Why use VTx on-chain?",
+    s3_p1: "VTx lets investors hold broad global equity exposure directly in a compatible crypto wallet. Depending on the venue, it can be traded on secondary markets <strong>24/7</strong>, transferred on-chain and held in self-custody.",
+    s3_p2: "xStocks are fractional by design, so investors do not need to purchase the equivalent of an entire VT share. xStocks advertises access starting from approximately <strong>$1</strong>, although the actual minimum order depends on the platform being used.",
+    s3_p3: "VTx can be bought through <a href=\"https://app.degate.com/?utm_source=os_article_vt\">DeGate Wallet</a>. Open the <strong>Swap</strong> section and search for VTx using its token address: <strong>XsEdDDTcVGJU6nvdRdVnj53eKTrsCkvtrVfXGmUK68V</strong>. DeGate Wallet lets users trade supported on-chain assets while retaining control of their funds.",
+    s3_p4: "VTx can also connect traditional market exposure with supported on-chain applications. Users can earn <strong>xPoints</strong> through qualifying xStocks ecosystem activities, including eligible trading, lending or liquidity providing.",
+    s3_source1: "xStocks official website",
+    s3_source2: "Introducing xPoints",
+    s3_source3: "xStocks FAQ",
+    s4_kicker: "Risks",
+    s4_title: "What are the risks?",
+    s4_p1: "On-chain availability does not remove market or structural risk. VTx remains exposed to movements in global equity markets and also depends on the token issuer, custody arrangements, smart contracts, supported blockchains and available secondary-market liquidity.",
+    s4_p2: "Although token trading may continue outside US stock-market hours, the underlying VT market is closed during those periods. Liquidity may therefore be lower, spreads may be wider and the market price of VTx may temporarily differ from the value of its underlying exposure. Access and transfer restrictions may also vary by jurisdiction and platform.",
+    disclaimer: "This article is for educational purposes only and does not constitute financial, investment, legal or tax advice. Product availability and eligibility depend on the user's jurisdiction and the platform used. Always review the issuer's current documentation before transacting.",
+    cta: "Read more articles →",
+    footer_date: "Informational guide updated August 2026.",
+    footer_disclaimer: "Not financial, legal, or tax advice."
+  },
+  es: {
+    nav_trust: "Confianza",
+    nav_dividends: "Dividendos",
+    nav_products: "Productos",
+    nav_howto: "Cómo comprar",
+    nav_security: "Seguridad",
+    nav_rfq: "RFQ",
+    nav_articles: "Artículos",
+    nav_cta: "Abrir DeGate ↗",
+    breadcrumb: "<a href=\"/onchainstocks\">← Acciones on-chain</a> / <a href=\"/onchainstocks/articoli\">Artículos</a> / All-World Index on-chain: VTx",
+    eyebrow: "Artículo · Agosto 2026",
+    hero_title: "All-World Index on-chain:<br><span class=\"gradient-text\">VTx</span>",
+    hero_copy: "En esta serie, exploramos las alternativas on-chain más cercanas a los activos más discutidos por los inversores minoristas. Esta edición analiza VTx, una ruta on-chain hacia una amplia exposición bursátil global.<br><br>El ETF más mencionado en las comunidades de inversión europeas de Reddit es <strong>VWCE</strong>. Su contraparte de acciones on-chain más cercana es <strong>VTx</strong>, un xStock que lleva la exposición global a acciones a un monedero de criptomonedas.",
+    s1_kicker: "Estructura",
+    s1_title: "¿Qué es VTx?",
+    s1_p1: "VTx es el rastreador tokenizado del <strong>Vanguard Total World Stock ETF (VT)</strong> que cotiza en EE. UU. Es emitido por <strong>Backed Assets (JE) Limited</strong> y está respaldado por el activo subyacente correspondiente mantenido en la estructura de custodia del emisor.",
+    s1_p2: "VT invierte en mercados desarrollados y emergentes y sigue el FTSE Global All Cap Index. Esto hace de VTx una alternativa on-chain cercana a VWCE para los inversores que buscan exposición bursátil diversificada a nivel global. Sin embargo, no es una versión tokenizada de VWCE: VWCE rastrea el FTSE All-World Index, mientras que VTx está vinculado a VT.",
+    s1_p3: "Cada VTx está diseñado para proporcionar el valor económico de su activo subyacente. El producto se describe como <strong>respaldado 1:1</strong>, lo que significa que los tokens en circulación se corresponden con la exposición subyacente relevante mantenida en reserva. Esto no debe interpretarse como una garantía permanente de que un token VTx siempre equivaldrá a exactamente una acción VT, porque las acciones corporativas y los ajustes de dividendos pueden reflejarse a través del multiplicador del token.",
+    s1_link1: "Ver la página oficial del producto VTx",
+    s2_kicker: "Dividendos",
+    s2_title: "¿Cómo funcionan los dividendos?",
+    s2_p1: "VWCE y VT manejan los dividendos de manera diferente.",
+    s2_p2: "<strong>VWCE es un ETF de acumulación.</strong> Las empresas de su cartera pagan dividendos, pero el fondo los reinvierte internamente en lugar de distribuir efectivo a los titulares de VWCE. Vanguard afirma que todos los dividendos se reinvierten para sus acciones de acumulación.",
+    s2_p3: "<strong>VT es un ETF de distribución.</strong> Normalmente paga distribuciones en efectivo a sus accionistas cada trimestre.",
+    s2_p4: "Como VTx está respaldado por VT, las distribuciones del ETF subyacente se pasan económicamente a los titulares de VTx, pero no como un pago separado en efectivo o USDC a sus billeteras. Según la documentación de xStocks, los dividendos recibidos sobre el activo subyacente se reinvierten en unidades adicionales después de los impuestos aplicables. El valor resultante se refleja a través del mecanismo de rebase o multiplicador de xStocks. Dependiendo de la cadena de bloques y la interfaz, esto puede aparecer como un ajuste al saldo del token mostrado del titular.",
+    s2_source1: "Vanguard FTSE All-World UCITS ETF — clase de acumulación",
+    s2_source2: "Vanguard Total World Stock ETF (VT)",
+    s2_source3: "xStocks: Dividendos y splits de acciones",
+    s3_kicker: "Uso",
+    s3_title: "¿Por qué usar VTx on-chain?",
+    s3_p1: "VTx permite a los inversores mantener una amplia exposición a acciones globales directamente en una billetera criptográfica compatible. Dependiendo del lugar, se puede negociar en mercados secundarios <strong>24/7</strong>, transferirse en la cadena y mantenerse en autocustodia.",
+    s3_p2: "Los xStocks son fraccionarios por diseño, por lo que los inversores no necesitan comprar el equivalente a una acción VT entera. xStocks anuncia el acceso a partir de aproximadamente <strong>$1</strong>, aunque el pedido mínimo real depende de la plataforma que se utilice.",
+    s3_p3: "VTx se puede comprar a través de <a href=\"https://app.degate.com/?utm_source=os_article_vt\">DeGate Wallet</a>. Abra la sección <strong>Swap</strong> y busque VTx utilizando su dirección de token: <strong>XsEdDDTcVGJU6nvdRdVnj53eKTrsCkvtrVfXGmUK68V</strong>. DeGate Wallet permite a los usuarios intercambiar activos on-chain compatibles mientras mantienen el control de sus fondos.",
+    s3_p4: "VTx también puede conectar la exposición al mercado tradicional con aplicaciones en cadena compatibles. Los usuarios pueden ganar <strong>xPoints</strong> a través de actividades calificadas del ecosistema de xStocks, incluidos el intercambio, los préstamos o el suministro de liquidez.",
+    s3_source1: "Sitio web oficial de xStocks",
+    s3_source2: "Presentación de xPoints",
+    s3_source3: "Preguntas frecuentes de xStocks",
+    s4_kicker: "Riesgos",
+    s4_title: "¿Cuáles son los riesgos?",
+    s4_p1: "La disponibilidad on-chain no elimina el riesgo de mercado o estructural. VTx sigue expuesto a los movimientos en los mercados bursátiles mundiales y también depende del emisor del token, los acuerdos de custodia, los contratos inteligentes, las cadenas de bloques compatibles y la liquidez disponible en el mercado secundario.",
+    s4_p2: "Aunque el comercio de tokens puede continuar fuera del horario del mercado de valores de EE. UU., el mercado de VT subyacente está cerrado durante esos períodos. Por lo tanto, la liquidez puede ser menor, los diferenciales pueden ser más amplios y el precio de mercado de VTx puede diferir temporalmente del valor de su exposición subyacente. Las restricciones de acceso y transferencia también pueden variar según la jurisdicción y la plataforma.",
+    disclaimer: "Este artículo es solo para fines educativos y no constituye asesoramiento financiero, de inversión, legal o fiscal. La disponibilidad y elegibilidad del producto dependen de la jurisdicción del usuario y de la plataforma utilizada. Siempre revise la documentación actual del emisor antes de realizar transacciones.",
+    cta: "Leer más artículos →",
+    footer_date: "Guía informativa actualizada en agosto de 2026.",
+    footer_disclaimer: "No constituye asesoramiento financiero, legal ni fiscal."
+  },
+  fr: {
+    nav_trust: "Confiance",
+    nav_dividends: "Dividendes",
+    nav_products: "Produits",
+    nav_howto: "Comment acheter",
+    nav_security: "Sécurité",
+    nav_rfq: "RFQ",
+    nav_articles: "Articles",
+    nav_cta: "Ouvrir DeGate ↗",
+    breadcrumb: "<a href=\"/onchainstocks\">← Actions on-chain</a> / <a href=\"/onchainstocks/articoli\">Articles</a> / All-World Index on-chain: VTx",
+    eyebrow: "Article · Août 2026",
+    hero_title: "All-World Index on-chain:<br><span class=\"gradient-text\">VTx</span>",
+    hero_copy: "Dans cette série, nous explorons les alternatives on-chain les plus proches des actifs les plus fréquemment discutés par les investisseurs de détail. Cette édition se penche sur VTx, une voie on-chain vers une large exposition aux actions mondiales.<br><br>L'ETF le plus fréquemment mentionné dans les communautés d'investissement européennes sur Reddit est <strong>VWCE</strong>. Son équivalent en action on-chain le plus proche est <strong>VTx</strong>, un xStock qui apporte une large exposition aux actions mondiales dans un portefeuille crypto.",
+    s1_kicker: "Structure",
+    s1_title: "Qu'est-ce que VTx ?",
+    s1_p1: "VTx est le tracker tokenisé de l'ETF <strong>Vanguard Total World Stock (VT)</strong> coté aux États-Unis. Il est émis par <strong>Backed Assets (JE) Limited</strong> et adossé à l'actif sous-jacent correspondant détenu dans la structure de conservation de l'émetteur.",
+    s1_p2: "VT investit sur les marchés développés et émergents et suit l'indice FTSE Global All Cap. Cela fait de VTx une alternative on-chain proche de VWCE pour les investisseurs recherchant une exposition diversifiée aux actions mondiales. Il ne s'agit cependant pas d'une version tokenisée de VWCE : VWCE suit l'indice FTSE All-World, tandis que VTx est lié à VT.",
+    s1_p3: "Chaque VTx est conçu pour fournir la valeur économique de son actif sous-jacent. Le produit est décrit comme <strong>adossé 1:1</strong>, ce qui signifie que les tokens en circulation correspondent à l'exposition sous-jacente pertinente détenue en réserve. Cela ne doit pas être interprété comme une garantie permanente qu'un token VTx vaudra toujours exactement une action VT, car les opérations sur titres et les ajustements de dividendes peuvent être reflétés par le multiplicateur du token.",
+    s1_link1: "Voir la page officielle du produit VTx",
+    s2_kicker: "Dividendes",
+    s2_title: "Comment fonctionnent les dividendes ?",
+    s2_p1: "VWCE et VT gèrent les dividendes différemment.",
+    s2_p2: "<strong>VWCE est un ETF par capitalisation.</strong> Les sociétés de son portefeuille versent des dividendes, mais le fonds les réinvestit en interne au lieu de distribuer de l'argent aux détenteurs de VWCE. Vanguard déclare que tous les dividendes sont réinvestis pour ses parts de capitalisation.",
+    s2_p3: "<strong>VT est un ETF de distribution.</strong> Il verse normalement des distributions en espèces à ses actionnaires chaque trimestre.",
+    s2_p4: "Étant donné que VTx est adossé à VT, les distributions de l'ETF sous-jacent sont répercutées économiquement sur les détenteurs de VTx, mais pas sous forme de paiement distinct en espèces ou en USDC sur leurs portefeuilles. Selon la documentation xStocks, les dividendes reçus sur l'actif sous-jacent sont réinvestis dans des parts supplémentaires après les retenues à la source applicables. La valeur résultante est reflétée par le mécanisme de rebase ou le multiplicateur de xStocks. Selon la blockchain et l'interface, cela peut apparaître comme un ajustement du solde de token affiché par le détenteur.",
+    s2_source1: "Vanguard FTSE All-World UCITS ETF — part de capitalisation",
+    s2_source2: "Vanguard Total World Stock ETF (VT)",
+    s2_source3: "xStocks : Dividendes et fractionnements d'actions",
+    s3_kicker: "Utilisation",
+    s3_title: "Pourquoi utiliser VTx on-chain ?",
+    s3_p1: "VTx permet aux investisseurs de détenir une large exposition aux actions mondiales directement dans un portefeuille crypto compatible. Selon la plateforme, il peut être négocié sur les marchés secondaires <strong>24/7</strong>, transféré sur la chaîne et détenu en auto-conservation.",
+    s3_p2: "Les xStocks sont fractionnaires par conception, les investisseurs n'ont donc pas besoin d'acheter l'équivalent d'une action VT entière. xStocks annonce un accès à partir d'environ <strong>1 $</strong>, bien que la commande minimum réelle dépende de la plateforme utilisée.",
+    s3_p3: "VTx peut être acheté via <a href=\"https://app.degate.com/?utm_source=os_article_vt\">DeGate Wallet</a>. Ouvrez la section <strong>Swap</strong> et recherchez VTx à l'aide de son adresse de token : <strong>XsEdDDTcVGJU6nvdRdVnj53eKTrsCkvtrVfXGmUK68V</strong>. DeGate Wallet permet aux utilisateurs de trader des actifs on-chain pris en charge tout en gardant le contrôle de leurs fonds.",
+    s3_p4: "VTx peut également relier l'exposition aux marchés traditionnels aux applications on-chain prises en charge. Les utilisateurs peuvent gagner des <strong>xPoints</strong> grâce à des activités éligibles dans l'écosystème xStocks, notamment le trading, les prêts ou l'apport de liquidités.",
+    s3_source1: "Site officiel de xStocks",
+    s3_source2: "Présentation des xPoints",
+    s3_source3: "FAQ xStocks",
+    s4_kicker: "Risques",
+    s4_title: "Quels sont les risques ?",
+    s4_p1: "La disponibilité on-chain ne supprime pas les risques de marché ou structurels. VTx reste exposé aux mouvements des marchés boursiers mondiaux et dépend également de l'émetteur du token, des accords de conservation, des contrats intelligents, des blockchains prises en charge et de la liquidité disponible sur le marché secondaire.",
+    s4_p2: "Bien que le trading de tokens puisse se poursuivre en dehors des heures d'ouverture de la bourse américaine, le marché sous-jacent de VT est fermé pendant ces périodes. La liquidité peut donc être plus faible, les spreads peuvent être plus larger et le prix du marché de VTx peut temporairement différer de la valeur de son exposition sous-jacente. Les restrictions d'accès et de transfert peuvent également varier selon la juridiction et la plateforme.",
+    disclaimer: "Cet article est uniquement à des fins éducatives et ne constitue pas un conseil financier, d'investissement, juridique ou fiscal. La disponibilité et l'éligibilité du produit dépendent de la juridiction de l'utilisateur et de la plateforme utilisée. Consultez toujours la documentation actuelle de l'émetteur avant d'effectuer une transaction.",
+    cta: "Lire plus d'articles →",
+    footer_date: "Guide d'information mis à jour en août 2026.",
+    footer_disclaimer: "Ne constitue pas un conseil financier, juridique ou fiscal."
+  }
+};
+
+const LANG_META = {
+  it: { flag: '🇮🇹', code: 'IT' },
+  en: { flag: '🇬🇧', code: 'EN' },
+  es: { flag: '🇪🇸', code: 'ES' },
+  fr: { flag: '🇫🇷', code: 'FR' }
+};
+
+function applyLanguage(lang) {
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS.it;
+  document.documentElement.lang = lang;
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  const meta = LANG_META[lang];
+  document.getElementById('langFlag').textContent = meta.flag;
+  document.getElementById('langCode').textContent = meta.code;
+
+  document.querySelectorAll('.lang-dropdown li').forEach(li => {
+    li.classList.toggle('active', li.dataset.lang === lang);
+  });
+}
+
+function detectLanguage() {
+  const saved = localStorage.getItem('dgfans_lang');
+  if (saved && TRANSLATIONS[saved]) return saved;
+  const userLang = navigator.language.slice(0, 2);
+  return TRANSLATIONS[userLang] ? userLang : 'it';
+}
+
+const currentLang = detectLanguage();
+applyLanguage(currentLang);
+
+const langBtn = document.getElementById('langBtn');
+const langSelector = document.getElementById('langSelector');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langSelector.classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  if (!langSelector.contains(e.target)) {
+    langSelector.classList.remove('open');
+  }
+});
+
+document.querySelectorAll('.lang-dropdown li').forEach(li => {
+  li.addEventListener('click', () => {
+    const lang = li.dataset.lang;
+    localStorage.setItem('dgfans_lang', lang);
+    applyLanguage(lang);
+    langSelector.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>

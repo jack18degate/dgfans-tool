@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Articoli — Azioni on-chain</title>
+  <meta name="description" content="Guide, analisi e approfondimenti sulle azioni tokenizzate on-chain.">
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #5f6b7a;
+      --line: #d8dee8;
+      --paper: #ffffff;
+      --wash: #f4f7fb;
+      --blue: #245cff;
+      --blue-2: #6d8cff;
+      --mint: #d9ff63;
+      --green: #126b4d;
+      --violet: #7357ff;
+      --orange: #ff9f43;
+      --shadow: 0 20px 55px rgba(31, 51, 91, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 2%, rgba(109, 140, 255, .18), transparent 28rem),
+        linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    .site { min-height: 100vh; overflow: hidden; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: #fff;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1749e8, #7b60ff);
+      box-shadow: 0 10px 24px rgba(36, 92, 255, .25);
+    }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .nav-links { display: flex; gap: 24px; color: #445066; font-size: 14px; font-weight: 700; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a.active { color: var(--blue); }
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .nav-cta, .button-primary {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
+    }
+    .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
+
+    /* ─── Language Selector ─── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .lang-selector {
+      position: relative;
+      z-index: 100;
+    }
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border: 1px solid #cfd6e2;
+      border-radius: 10px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(8px);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s;
+      line-height: 1;
+    }
+    .lang-btn:hover {
+      border-color: var(--blue-2);
+      box-shadow: 0 4px 14px rgba(36, 92, 255, .10);
+    }
+    .lang-btn .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+    .lang-btn .lang-chevron {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #778193;
+      margin-left: 2px;
+      transition: transform .2s;
+    }
+    .lang-selector.open .lang-chevron {
+      transform: rotate(180deg);
+    }
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 150px;
+      padding: 6px;
+      border: 1px solid #d1d9e6;
+      border-radius: 14px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(32,49,81,.13);
+      list-style: none;
+      margin: 0;
+    }
+    .lang-selector.open .lang-dropdown {
+      display: block;
+      animation: langFadeIn .18s ease;
+    }
+    @keyframes langFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .lang-dropdown li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #445066;
+      cursor: pointer;
+      transition: background .14s;
+    }
+    .lang-dropdown li:hover {
+      background: #eef3ff;
+      color: var(--blue);
+    }
+    .lang-dropdown li.active {
+      background: #eef3ff;
+      color: var(--blue);
+      font-weight: 850;
+    }
+    .lang-dropdown li .lang-flag {
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 70px 0 40px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 7px 11px;
+      color: #264083;
+      border: 1px solid #cbd7ff;
+      border-radius: 999px;
+      background: #eef3ff;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+      word-spacing: 0.02em;
+    }
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(92deg, var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-copy {
+      max-width: 690px;
+      margin: 26px 0 0;
+      color: #526071;
+      font-size: 18px;
+      line-height: 1.72;
+      word-spacing: 0.01em;
+    }
+    .hero-copy strong { color: var(--ink); }
+
+    .section { padding: 56px 0; }
+    .section-tight { padding: 44px 0; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 36px; }
+    .kicker { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(28px, 3.5vw, 42px); line-height: 1.1; letter-spacing: -.04em; }
+
+    .footer { padding: 26px 0 42px; color: #748094; border-top: 1px solid #d8dee8; font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; }
+
+    .breadcrumb {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .breadcrumb a {
+        color: var(--blue);
+        text-decoration: none;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* Article Cards Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 28px;
+      background: #ffffff;
+      border: 1px solid #d5dbe6;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+      color: var(--ink);
+    }
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: #c0c9d8;
+    }
+    .card-tag {
+      display: inline-flex;
+      padding: 5px 12px;
+      margin-bottom: 16px;
+      background: #eef3ff;
+      color: #264083;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      border-radius: 999px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 10px;
+      line-height: 1.3;
+      letter-spacing: -.02em;
+    }
+    .card-excerpt {
+      font-size: 14px;
+      color: #526071;
+      margin: 0 0 20px;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+    .card-date {
+      font-size: 12px;
+      color: #778193;
+      font-weight: 600;
+      margin-top: auto;
+    }
+    .empty-state {
+      text-align: center;
+      margin-top: 60px;
+      padding: 40px;
+      color: #778193;
+      font-size: 15px;
+      font-weight: 600;
+      border-top: 1px dashed #d5dbe6;
+    }
+
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .nav-cta { display: none; }
+      .hero { padding: 34px 0 56px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 26px; }
+      .hero-copy { font-size: 16px; }
+      .section { padding: 44px 0; }
+      .footer-row { flex-direction: column; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="shell">
+      <nav class="nav" aria-label="Navigazione principale">
+        <a class="brand" href="/onchainstocks">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" stroke-width="2.2"/><path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" stroke-width="2.2"/></svg>
+          </span>
+          DeGate Guide
+        </a>
+        <div class="nav-links">
+          <a href="/onchainstocks#fiducia" data-i18n="nav_trust">Fiducia</a>
+          <a href="/onchainstocks#dividendi" data-i18n="nav_dividends">Dividendi</a>
+          <a href="/onchainstocks#prodotti" data-i18n="nav_products">Prodotti</a>
+          <a href="/onchainstocks#come-comprare" data-i18n="nav_howto">Come comprare</a>
+          <a href="/onchainstocks#sicurezza" data-i18n="nav_security">Sicurezza</a>
+          <a href="/onchainstocks/RFQ" data-i18n="nav_rfq">RFQ</a>
+          <a href="/onchainstocks/articoli" class="active" data-i18n="nav_articles">Articoli</a>
+        </div>
+        <div class="nav-right">
+          <div class="lang-selector" id="langSelector">
+            <button class="lang-btn" id="langBtn" aria-label="Select language">
+              <span class="lang-flag" id="langFlag">🇮🇹</span>
+              <span class="lang-code" id="langCode">IT</span>
+              <span class="lang-chevron"></span>
+            </button>
+            <ul class="lang-dropdown" id="langDropdown">
+              <li data-lang="it" class="active"><span class="lang-flag">🇮🇹</span> Italiano</li>
+              <li data-lang="en"><span class="lang-flag">🇬🇧</span> English</li>
+              <li data-lang="es"><span class="lang-flag">🇪🇸</span> Español</li>
+              <li data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</li>
+            </ul>
+          </div>
+          <a class="nav-cta" href="https://app.degate.com/" data-i18n="nav_cta">Apri DeGate ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="shell hero">
+        <div class="breadcrumb" data-i18n-html="breadcrumb">
+          <a href="/onchainstocks">← Azioni on-chain</a> / Articoli
+        </div>
+        <div>
+          <div class="eyebrow" data-i18n="eyebrow">Approfondimenti · 2026</div>
+          <h1 data-i18n-html="hero_title">Articoli<br><span class="gradient-text">Azioni on-chain</span></h1>
+          <p class="hero-copy" data-i18n="hero_copy">
+            Guide, analisi e approfondimenti sulle azioni tokenizzate e il loro ecosistema.
+          </p>
+        </div>
+      </section>
+
+      <section class="shell section" id="articoli">
+        <div class="grid">
+          <!-- Article 1 -->
+          <a href="/onchainstocks/articoli/all-world-index-vtx" class="article-card">
+            <span class="card-tag" data-i18n="tag_xstocks">xStocks</span>
+            <h3 class="card-title" data-i18n="article1_title">All-World Index on-chain: VTx</h3>
+            <p class="card-excerpt" data-i18n="article1_excerpt">VTx è l'alternativa on-chain al VWCE per un'esposizione azionaria globale diversificata.</p>
+            <span class="card-date" data-i18n="article1_date">14 agosto 2026</span>
+          </a>
+        </div>
+        
+        <div class="empty-state" data-i18n="empty_state">
+          📝 Altri articoli in arrivo. Torna a trovarci!
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="shell footer">
+      <div class="footer-row">
+        <span data-i18n="footer_date">Guida informativa aggiornata al 14 agosto 2026.</span>
+        <span data-i18n="footer_disclaimer">Non costituisce consulenza finanziaria, legale o fiscale.</span>
+      </div>
+    </footer>
+  </div>
+
+<script>
+const TRANSLATIONS = {
+  it: {
+    nav_trust: "Fiducia",
+    nav_dividends: "Dividendi",
+    nav_products: "Prodotti",
+    nav_howto: "Come comprare",
+    nav_security: "Sicurezza",
+    nav_rfq: "RFQ",
+    nav_articles: "Articoli",
+    nav_cta: "Apri DeGate ↗",
+    breadcrumb: '<a href="/onchainstocks">← Azioni on-chain</a> / Articoli',
+    eyebrow: "Approfondimenti · 2026",
+    hero_title: 'Articoli<br><span class="gradient-text">Azioni on-chain</span>',
+    hero_copy: "Guide, analisi e approfondimenti sulle azioni tokenizzate e il loro ecosistema.",
+    tag_xstocks: "xStocks",
+    article1_title: "All-World Index on-chain: VTx",
+    article1_excerpt: "VTx è l'alternativa on-chain al VWCE per un'esposizione azionaria globale diversificata.",
+    article1_date: "14 agosto 2026",
+    empty_state: "📝 Altri articoli in arrivo. Torna a trovarci!",
+    footer_date: "Guida informativa aggiornata al 14 agosto 2026.",
+    footer_disclaimer: "Non costituisce consulenza finanziaria, legale o fiscale."
+  },
+  en: {
+    nav_trust: "Trust",
+    nav_dividends: "Dividends",
+    nav_products: "Products",
+    nav_howto: "How to buy",
+    nav_security: "Security",
+    nav_rfq: "RFQ",
+    nav_articles: "Articles",
+    nav_cta: "Open DeGate ↗",
+    breadcrumb: '<a href="/onchainstocks">← On-chain stocks</a> / Articles',
+    eyebrow: "Insights · 2026",
+    hero_title: 'Articles<br><span class="gradient-text">On-chain stocks</span>',
+    hero_copy: "Guides, analysis, and insights on tokenized stocks and their ecosystem.",
+    tag_xstocks: "xStocks",
+    article1_title: "All-World Index on-chain: VTx",
+    article1_excerpt: "VTx is the on-chain alternative to VWCE for diversified global equity exposure.",
+    article1_date: "August 14, 2026",
+    empty_state: "📝 More articles coming soon. Check back later!",
+    footer_date: "Informational guide updated August 14, 2026.",
+    footer_disclaimer: "Not financial, legal, or tax advice."
+  },
+  es: {
+    nav_trust: "Confianza",
+    nav_dividends: "Dividendos",
+    nav_products: "Productos",
+    nav_howto: "Cómo comprar",
+    nav_security: "Seguridad",
+    nav_rfq: "RFQ",
+    nav_articles: "Artículos",
+    nav_cta: "Abrir DeGate ↗",
+    breadcrumb: '<a href="/onchainstocks">← Acciones on-chain</a> / Artículos',
+    eyebrow: "Perspectivas · 2026",
+    hero_title: 'Artículos<br><span class="gradient-text">Acciones on-chain</span>',
+    hero_copy: "Guías, análisis y perspectivas sobre acciones tokenizadas y su ecosistema.",
+    tag_xstocks: "xStocks",
+    article1_title: "All-World Index on-chain: VTx",
+    article1_excerpt: "VTx es la alternativa on-chain a VWCE para una exposición global diversificada en acciones.",
+    article1_date: "14 de agosto de 2026",
+    empty_state: "📝 Más artículos próximamente. ¡Vuelve pronto!",
+    footer_date: "Guía informativa actualizada el 14 de agosto de 2026.",
+    footer_disclaimer: "No constituye asesoramiento financiero, legal ni fiscal."
+  },
+  fr: {
+    nav_trust: "Confiance",
+    nav_dividends: "Dividendes",
+    nav_products: "Produits",
+    nav_howto: "Comment acheter",
+    nav_security: "Sécurité",
+    nav_rfq: "RFQ",
+    nav_articles: "Articles",
+    nav_cta: "Ouvrir DeGate ↗",
+    breadcrumb: '<a href="/onchainstocks">← Actions on-chain</a> / Articles',
+    eyebrow: "Aperçus · 2026",
+    hero_title: 'Articles<br><span class="gradient-text">Actions on-chain</span>',
+    hero_copy: "Guides, analyses et aperçus sur les actions tokenisées et leur écosystème.",
+    tag_xstocks: "xStocks",
+    article1_title: "All-World Index on-chain: VTx",
+    article1_excerpt: "VTx est l'alternative on-chain au VWCE pour une exposition diversifiée aux actions mondiales.",
+    article1_date: "14 août 2026",
+    empty_state: "📝 D'autres articles à venir. Revenez plus tard !",
+    footer_date: "Guide d'information mis à jour le 14 août 2026.",
+    footer_disclaimer: "Ne constitue pas un conseil financier, juridique ou fiscal."
+  }
+};
+
+const LANG_META = {
+  it: { flag: '🇮🇹', code: 'IT' },
+  en: { flag: '🇬🇧', code: 'EN' },
+  es: { flag: '🇪🇸', code: 'ES' },
+  fr: { flag: '🇫🇷', code: 'FR' }
+};
+
+function applyLanguage(lang) {
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS.it;
+  document.documentElement.lang = lang;
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  const meta = LANG_META[lang];
+  document.getElementById('langFlag').textContent = meta.flag;
+  document.getElementById('langCode').textContent = meta.code;
+
+  document.querySelectorAll('.lang-dropdown li').forEach(li => {
+    li.classList.toggle('active', li.dataset.lang === lang);
+  });
+}
+
+function detectLanguage() {
+  const saved = localStorage.getItem('dgfans_lang');
+  if (saved && TRANSLATIONS[saved]) return saved;
+  const userLang = navigator.language.slice(0, 2);
+  return TRANSLATIONS[userLang] ? userLang : 'it';
+}
+
+const currentLang = detectLanguage();
+applyLanguage(currentLang);
+
+const langBtn = document.getElementById('langBtn');
+const langSelector = document.getElementById('langSelector');
+const langDropdown = document.getElementById('langDropdown');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  langSelector.classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  if (!langSelector.contains(e.target)) {
+    langSelector.classList.remove('open');
+  }
+});
+
+langDropdown.addEventListener('click', (e) => {
+  const li = e.target.closest('li');
+  if (!li) return;
+  const newLang = li.dataset.lang;
+  localStorage.setItem('dgfans_lang', newLang);
+  applyLanguage(newLang);
+  langSelector.classList.remove('open');
+});
+</script>
+</body>
+</html>
