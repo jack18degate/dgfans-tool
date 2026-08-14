@@ -274,13 +274,30 @@
       border: 1px solid #d5dbe6;
       border-radius: var(--radius);
       text-decoration: none;
-      transition: transform .18s ease, box-shadow .18s ease;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       color: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+    .article-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-radius: var(--radius) var(--radius) 0 0;
+      opacity: 0;
+      transition: opacity .18s ease;
     }
     .article-card:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow);
-      border-color: #c0c9d8;
+      box-shadow: 0 24px 55px rgba(31, 51, 91, .14);
+      border-color: #b8c4d8;
+    }
+    .article-card:hover::before {
+      opacity: 1;
     }
     .card-tag {
       display: inline-flex;
@@ -312,11 +329,29 @@
       overflow: hidden;
       flex-grow: 1;
     }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: auto;
+    }
     .card-date {
       font-size: 12px;
       color: #778193;
       font-weight: 600;
-      margin-top: auto;
+    }
+    .card-arrow {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--blue);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .article-card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(0);
     }
     .empty-state {
       text-align: center;
@@ -361,7 +396,7 @@
           <a href="/onchainstocks#prodotti" data-i18n="nav_products">Prodotti</a>
           <a href="/onchainstocks#come-comprare" data-i18n="nav_howto">Come comprare</a>
           <a href="/onchainstocks#sicurezza" data-i18n="nav_security">Sicurezza</a>
-          <a href="/onchainstocks/RFQ" data-i18n="nav_rfq">RFQ</a>
+          <a href="/onchainstock/RFQ" data-i18n="nav_rfq">RFQ</a>
           <a href="/onchainstocks/articoli" class="active" data-i18n="nav_articles">Articoli</a>
         </div>
         <div class="nav-right">
@@ -404,7 +439,10 @@
             <span class="card-tag" data-i18n="tag_xstocks">xStocks</span>
             <h3 class="card-title" data-i18n="article1_title">All-World Index on-chain: VTx</h3>
             <p class="card-excerpt" data-i18n="article1_excerpt">VTx è l'alternativa on-chain al VWCE per un'esposizione azionaria globale diversificata.</p>
-            <span class="card-date" data-i18n="article1_date">14 agosto 2026</span>
+            <div class="card-footer">
+              <span class="card-date" data-i18n="article1_date">14 agosto 2026</span>
+              <span class="card-arrow">→</span>
+            </div>
           </a>
         </div>
         
