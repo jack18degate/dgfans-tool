@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { TrendingUp, Menu, X, Rocket, ExternalLink, Globe, ChevronDown, Zap, Sun, Moon } from 'lucide-react';
+import { TrendingUp, Menu, X, Rocket, ExternalLink, Globe, ChevronDown, Zap, Sun, Moon, Landmark } from 'lucide-react';
 import { useI18n, LOCALES } from '../i18n';
 import styles from './Navbar.module.css';
 
@@ -13,10 +13,11 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const { locale, setLocale, t } = useI18n();
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
   const NAV_ITEMS = [
     { href: '/tools', label: t.nav.turboRangeGuide || 'Turbo Range Guide', icon: Rocket, emoji: '🚀' },
+    { href: '/onchainstocks', label: t.nav.onchainStocks || 'Azioni On-Chain', icon: Landmark, emoji: '🏛️' },
     { href: '/compound', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
     { href: '/turbo', label: 'Turbo Range Analysis', icon: Zap, emoji: '⚡' },
     { href: '/onchainmarkets', label: t.nav.onchainMarkets || 'On-Chain RWA Markets', icon: Globe, emoji: '🌐' },
@@ -29,7 +30,7 @@ export default function Navbar() {
         setTheme(saved);
         document.documentElement.setAttribute('data-theme', saved);
       } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'light');
       }
     } catch { /* SSR or no localStorage */ }
   }, []);
@@ -77,7 +78,12 @@ export default function Navbar() {
       <nav className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ''}`}>
         {/* Logo */}
         <Link href="/tools" className={styles.logo} onClick={() => setMobileOpen(false)}>
-          <div className={styles.logoIcon}>⚡</div>
+          <div className={styles.logoIcon}>
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+              <path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <div className={styles.logoText}>
             <span className={styles.logoTitle}>DeGate</span>
             <span className={styles.logoSub}>Tools</span>
@@ -89,6 +95,19 @@ export default function Navbar() {
           <span className={styles.navLabel}>{t.nav.tools}</span>
           {NAV_ITEMS.map(item => {
             const isActive = pathname === item.href;
+            if (item.href === '/onchainstocks') {
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={`${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className={styles.navEmoji}>{item.emoji}</span>
+                  <span className={styles.navText}>{item.label}</span>
+                </a>
+              );
+            }
             return (
               <Link
                 key={item.href}

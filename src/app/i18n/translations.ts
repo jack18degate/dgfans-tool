@@ -18,6 +18,7 @@ export interface Translations {
     themeLight: string;
     themeDark: string;
     onchainMarkets: string;
+    onchainStocks: string;
   };
   compound: {
     title: string;
@@ -165,6 +166,7 @@ const en: Translations = {
     themeLight: 'Light Theme',
     themeDark: 'Dark Theme',
     onchainMarkets: 'On-Chain RWA Markets',
+    onchainStocks: 'On-Chain Stocks',
   },
   compound: {
     title: 'Compound Interest Calculator',
@@ -312,6 +314,7 @@ const it: Translations = {
     themeLight: 'Tema Chiaro',
     themeDark: 'Tema Scuro',
     onchainMarkets: 'Mercati RWA On-Chain',
+    onchainStocks: 'Azioni On-Chain',
   },
   compound: {
     title: 'Calcolatore di Interesse Composto',
@@ -459,6 +462,7 @@ const es: Translations = {
     themeLight: 'Tema Claro',
     themeDark: 'Tema Oscuro',
     onchainMarkets: 'Mercados RWA On-Chain',
+    onchainStocks: 'Acciones On-Chain',
   },
   compound: {
     title: 'Calculadora de Interés Compuesto',
@@ -606,6 +610,7 @@ const zh: Translations = {
     themeLight: '浅色模式',
     themeDark: '深色模式',
     onchainMarkets: '链上 RWA 市场',
+    onchainStocks: '链上股票',
   },
   compound: {
     title: '复利计算器',
@@ -753,6 +758,7 @@ const fr: Translations = {
     themeLight: 'Thème clair',
     themeDark: 'Thème sombre',
     onchainMarkets: 'Marchés RWA On-Chain',
+    onchainStocks: 'Actions On-Chain',
   },
   compound: {
     title: 'Calculateur d\'intérêts composés',

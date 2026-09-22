@@ -1,54 +1,63 @@
 /* Scoped Styles for RWA Explorer under .rwa-explorer */
 
 .rwa-explorer {
-  --bg-deepest: #0a0b0f;
-  --bg-surface: #12141a;
-  --bg-card: #1a1d26;
-  --bg-card-hover: #1f2330;
-  --accent: #4f8fff;
-  --accent-glow: rgba(79, 143, 255, 0.15);
-  --success: #00d68f;
-  --warning: #ffaa00;
-  --error: #ff4757;
-  --text-primary: #e8eaed;
-  --text-secondary: #8b8fa3;
-  --text-muted: #5a5e72;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --ondo-color: #4f8fff;
-  --ondo-bg: rgba(79, 143, 255, 0.12);
-  --xstocks-color: #00d68f;
-  --xstocks-bg: rgba(0, 214, 143, 0.12);
-  --stock-color: #a78bfa;
-  --stock-bg: rgba(167, 139, 250, 0.12);
-  --etf-color: #fb923c;
-  --etf-bg: rgba(251, 146, 60, 0.12);
+  --bg-deepest: #fbfcff;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f4f7fb;
+  --accent: #245cff;
+  --accent-glow: rgba(36, 92, 255, 0.12);
+  --success: #126b4d;
+  --warning: #d97706;
+  --error: #ef4444;
+  --text-primary: #101828;
+  --text-secondary: #5f6b7a;
+  --text-muted: #8c97a7;
+  --border: #d8dee8;
+  --border-hover: #b8c4d6;
+  --ondo-color: #245cff;
+  --ondo-bg: rgba(36, 92, 255, 0.08);
+  --xstocks-color: #126b4d;
+  --xstocks-bg: rgba(18, 107, 77, 0.08);
+  --stock-color: #7357ff;
+  --stock-bg: rgba(115, 87, 255, 0.08);
+  --etf-color: #d97706;
+  --etf-bg: rgba(217, 119, 6, 0.08);
   --radius: 16px;
   --radius-sm: 8px;
   --radius-pill: 100px;
   --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--text-primary);
   line-height: 1.6;
   padding-bottom: 50px;
 }
 
-/* Light Theme overrides mapping to main theme variables */
-html[data-theme="light"] .rwa-explorer {
-  --bg-deepest: var(--background);
-  --bg-surface: var(--surface);
-  --bg-card: rgba(15, 23, 42, 0.035);
-  --bg-card-hover: rgba(15, 23, 42, 0.07);
-  --accent: #2563eb;
-  --accent-glow: rgba(37, 99, 235, 0.1);
-  --text-primary: var(--text-primary);
-  --text-secondary: var(--text-secondary);
-  --text-muted: var(--text-muted);
-  --border: var(--border);
-  --border-hover: var(--border-light);
-  --ondo-color: #2563eb;
-  --ondo-bg: rgba(37, 99, 235, 0.08);
+/* Dark Theme overrides when toggled */
+html[data-theme="dark"] .rwa-explorer {
+  --bg-deepest: #0a0e1a;
+  --bg-surface: #111827;
+  --bg-card: #172033;
+  --bg-card-hover: #1e293b;
+  --accent: #4f8fff;
+  --accent-glow: rgba(79, 143, 255, 0.18);
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --ondo-color: #4f8fff;
+  --ondo-bg: rgba(79, 143, 255, 0.15);
+  --xstocks-color: #34d399;
+  --xstocks-bg: rgba(52, 211, 153, 0.15);
+  --stock-color: #a78bfa;
+  --stock-bg: rgba(167, 139, 250, 0.15);
+  --etf-color: #fb923c;
+  --etf-bg: rgba(251, 146, 60, 0.15);
 }
 
 /* ─── Container ─── */
@@ -66,7 +75,7 @@ html[data-theme="light"] .rwa-explorer {
 .rwa-explorer .header-title {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), #a855f7, var(--success));
+  background: linear-gradient(92deg, #245cff, #7357ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -204,19 +213,20 @@ html[data-theme="light"] .rwa-explorer {
   transition: all var(--transition);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.04);
 }
 .rwa-explorer .asset-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(79, 143, 255, 0.03), transparent);
+  background: linear-gradient(135deg, rgba(36, 92, 255, 0.03), transparent);
   opacity: 0;
   transition: opacity var(--transition);
 }
 .rwa-explorer .asset-card:hover {
-  border-color: var(--border-hover);
+  border-color: var(--accent);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--border-hover);
+  box-shadow: 0 12px 28px rgba(16, 24, 40, 0.08), 0 0 0 1px var(--accent-glow);
 }
 .rwa-explorer .asset-card:hover::before {
   opacity: 1;
@@ -307,6 +317,7 @@ html[data-theme="light"] .rwa-explorer {
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(16, 24, 40, 0.16);
   max-width: 520px;
   width: 100%;
   max-height: 85vh;

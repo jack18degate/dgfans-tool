@@ -34,11 +34,11 @@ const LiquidityChart = ({ pool }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useI18n();
-  const [activeTheme, setActiveTheme] = useState('dark');
+  const [activeTheme, setActiveTheme] = useState('light');
 
   useEffect(() => {
     const checkTheme = () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       setActiveTheme(currentTheme);
     };
 
@@ -435,15 +435,15 @@ const LiquidityChart = ({ pool }) => {
           </div>
         </div>
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '2rem' }} className="flex flex-col items-center justify-center text-center gap-4 min-h-[300px]">
-          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(6,214,160,0.1), rgba(59,130,246,0.08))', border: '1px solid rgba(6,214,160,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(36,92,255,0.1), rgba(115,87,255,0.08))', border: '1px solid rgba(36,92,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ fontSize: '1.5rem' }}>🌐</span>
           </div>
           <div>
-            <p className="text-lg font-bold text-white mb-2">{pool.name || pool.mintA?.symbol}</p>
+            <p className="text-lg font-bold text-text mb-2">{pool.name || pool.mintA?.symbol}</p>
             <div className="flex gap-6 justify-center text-sm mb-4">
               <div><span className="text-textMuted">APR:</span> <span className="text-primary font-bold">{pool.weekApr?.toFixed(2)}%</span></div>
-              <div><span className="text-textMuted">TVL:</span> <span className="text-white font-semibold">${Number(pool.protocolTvl || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</span></div>
-              <div><span className="text-textMuted">Fee:</span> <span className="text-white font-semibold">{(pool.feeRate * 100).toFixed(2)}%</span></div>
+              <div><span className="text-textMuted">TVL:</span> <span className="text-text font-semibold">${Number(pool.protocolTvl || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</span></div>
+              <div><span className="text-textMuted">Fee:</span> <span className="text-text font-semibold">{(pool.feeRate * 100).toFixed(2)}%</span></div>
             </div>
             <p className="text-sm text-textMuted max-w-md">Liquidity chart analysis is available for Solana (Raydium) pools. This pool runs on {pool.chain === 'BASE' ? 'Base (Uniswap)' : 'Ethereum (Uniswap)'}.</p>
           </div>
@@ -581,13 +581,13 @@ const LiquidityChart = ({ pool }) => {
             <div className="flex items-center gap-2 border-b border-border mb-4 px-2">
                <button
                   onClick={() => setActiveFeatureTab('simulator')}
-                  className={`pb-2.5 px-3 flex items-center gap-1.5 text-sm font-semibold border-b-2 transition-colors ${activeFeatureTab === 'simulator' ? 'border-primary text-primary' : 'border-transparent text-textMuted hover:text-white'}`}
+                  className={`pb-2.5 px-3 flex items-center gap-1.5 text-sm font-semibold border-b-2 transition-colors ${activeFeatureTab === 'simulator' ? 'border-primary text-primary' : 'border-transparent text-textMuted hover:text-text'}`}
                >
                   <Activity className="w-4 h-4" /> {t.turbo.simulator}
                </button>
                <button
                   onClick={() => setActiveFeatureTab('whale')}
-                  className={`pb-2.5 px-3 flex items-center gap-1.5 text-sm font-semibold border-b-2 transition-colors ${activeFeatureTab === 'whale' ? 'border-purple-400 text-purple-400' : 'border-transparent text-textMuted hover:text-white'}`}
+                  className={`pb-2.5 px-3 flex items-center gap-1.5 text-sm font-semibold border-b-2 transition-colors ${activeFeatureTab === 'whale' ? 'border-purple-400 text-purple-400' : 'border-transparent text-textMuted hover:text-text'}`}
                >
                   <Binary className="w-4 h-4" /> Whale Tracker
                </button>

@@ -1,17 +1,17 @@
 /* ═══════════════════════════════════════════════════════════
    DEGATE TOOLS — Sidebar Navigation
-   Premium Glass Sidebar with Neon Accents
+   Clean Modern Fintech Style (aligned with onchainstocks.html)
    ═══════════════════════════════════════════════════════════ */
 
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 240px;
+  width: 250px;
   height: 100vh;
   background: var(--surface-glass);
-  backdrop-filter: blur(30px) saturate(150%);
-  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -26,26 +26,27 @@
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  padding: 0.5rem 0.75rem;
-  margin-bottom: 2rem;
-  border-radius: 12px;
-  transition: background 0.2s ease;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 1.75rem;
+  border-radius: 14px;
+  transition: background 0.18s ease, transform 0.18s ease;
 }
 
 .logo:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-hover);
+  transform: translateY(-1px);
 }
 
 .logoIcon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 11px;
-  background: linear-gradient(135deg, rgba(20, 241, 149, 0.2), rgba(153, 69, 255, 0.2));
-  border: 1px solid rgba(20, 241, 149, 0.3);
+  background: linear-gradient(135deg, #1749e8, #7b60ff);
+  box-shadow: 0 10px 24px rgba(36, 92, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  color: #ffffff;
   flex-shrink: 0;
 }
 
@@ -56,62 +57,68 @@
 }
 
 .logoTitle {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--brand-solana), var(--brand-solana-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.18rem;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
 }
 
 .logoSub {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  letter-spacing: 0.04em;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--brand-primary);
+  background: var(--blue-soft, #eef3ff);
+  padding: 1.5px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--blue-border, #cbd7ff);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 2px;
 }
 
 /* ── Nav Links ── */
 .navLinks {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
   flex: 1;
 }
 
 .navLabel {
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 850;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.09em;
   color: var(--text-muted);
   padding: 0 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  padding: 0.7rem 0.75rem;
-  border-radius: 10px;
+  gap: 0.75rem;
+  padding: 0.72rem 0.85rem;
+  border-radius: 12px;
   color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.88rem;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
   position: relative;
+  border: 1px solid transparent;
 }
 
 .navItem:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-hover);
   color: var(--text-primary);
   transform: translateX(2px);
 }
 
 .navEmoji {
-  font-size: 1rem;
+  font-size: 1.05rem;
   width: 24px;
   text-align: center;
   flex-shrink: 0;
@@ -125,9 +132,10 @@
 
 /* ── Active State ── */
 .navItemActive {
-  background: rgba(20, 241, 149, 0.08) !important;
-  color: var(--brand-solana) !important;
-  font-weight: 700;
+  background: var(--blue-soft, #eef3ff) !important;
+  color: var(--brand-primary, #245cff) !important;
+  font-weight: 800 !important;
+  border-color: var(--blue-border, #cbd7ff) !important;
 }
 
 .navItemActive::before {
@@ -136,11 +144,11 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
-  border-radius: 0 3px 3px 0;
-  background: var(--brand-solana);
-  box-shadow: 0 0 12px rgba(20, 241, 149, 0.5);
+  width: 3.5px;
+  height: 55%;
+  border-radius: 0 4px 4px 0;
+  background: var(--brand-primary, #245cff);
+  box-shadow: 0 0 10px rgba(36, 92, 255, 0.4);
 }
 
 .activeIndicator {
@@ -160,18 +168,18 @@
 .themeBtn {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   width: 100%;
-  padding: 0.55rem 0.75rem;
-  border-radius: 8px;
-  background: var(--surface-hover);
+  padding: 0.6rem 0.85rem;
+  border-radius: 10px;
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-secondary);
   font-size: 0.78rem;
-  font-weight: 600;
-  font-family: var(--font-sans);
+  font-weight: 750;
+  font-family: inherit;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 }
 
 .themeBtn:hover {
@@ -183,7 +191,7 @@
 
 .themeIcon {
   flex-shrink: 0;
-  color: var(--neon-cyan);
+  color: var(--brand-primary);
 }
 
 /* ── Language Switcher ── */
@@ -194,18 +202,18 @@
 .langBtn {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   width: 100%;
-  padding: 0.55rem 0.75rem;
-  border-radius: 8px;
-  background: var(--surface-hover);
+  padding: 0.6rem 0.85rem;
+  border-radius: 10px;
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-secondary);
   font-size: 0.78rem;
-  font-weight: 600;
-  font-family: var(--font-sans);
+  font-weight: 750;
+  font-family: inherit;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 }
 
 .langBtn:hover {
@@ -223,11 +231,11 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 14px;
   overflow: hidden;
   z-index: 60;
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
-  animation: langPop 0.2s ease;
+  box-shadow: 0 14px 40px rgba(32, 49, 81, 0.13);
+  animation: langPop 0.18s ease;
 }
 
 @keyframes langPop {
@@ -238,18 +246,18 @@
 .langItem {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   width: 100%;
-  padding: 0.6rem 0.75rem;
+  padding: 0.65rem 0.85rem;
   border: none;
   background: none;
   color: var(--text-secondary);
   font-size: 0.82rem;
-  font-weight: 600;
-  font-family: var(--font-sans);
+  font-weight: 700;
+  font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all 0.14s ease;
+  border-bottom: 1px solid var(--border);
 }
 
 .langItem:last-child {
@@ -257,43 +265,47 @@
 }
 
 .langItem:hover {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-primary);
+  background: var(--surface-hover);
+  color: var(--brand-primary);
 }
 
 .langItemActive {
-  background: rgba(20, 241, 149, 0.08) !important;
-  color: var(--brand-solana) !important;
+  background: var(--blue-soft, #eef3ff) !important;
+  color: var(--brand-primary, #245cff) !important;
+  font-weight: 850 !important;
 }
 
+/* ── CTA Button ── */
 .ctaBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  padding: 0.65rem 1rem;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(99, 102, 241, 0.1));
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  color: var(--brand-solana-accent);
-  font-weight: 700;
-  font-size: 0.8rem;
+  gap: 0.5rem;
+  padding: 0.72rem 1rem;
+  border-radius: 12px;
+  background: var(--ink, #101828);
+  border: 1px solid transparent;
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 0.82rem;
   text-decoration: none;
-  transition: all 0.25s ease;
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.16);
+  transition: all 0.18s ease;
 }
 
 .ctaBtn:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(99, 102, 241, 0.2));
-  border-color: rgba(168, 85, 247, 0.4);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(16, 24, 40, 0.24);
+  color: #ffffff !important;
+  text-decoration: none;
 }
 
 .footerCopy {
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   color: var(--text-muted);
   text-align: center;
   letter-spacing: 0.02em;
+  font-weight: 600;
 }
 
 /* ── Mobile Toggle ── */
@@ -303,23 +315,25 @@
   top: 1rem;
   left: 1rem;
   z-index: 200;
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: rgba(12, 14, 26, 0.85);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 0 8px 24px rgba(32, 49, 81, 0.1);
   transition: all 0.2s ease;
 }
 
 .mobileToggle:hover {
-  background: rgba(12, 14, 26, 0.95);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
+  border-color: var(--border-light);
+  transform: translateY(-1px);
 }
 
 /* ── Overlay ── */
@@ -330,7 +344,9 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(16, 24, 40, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 90;
 }
 
@@ -344,7 +360,7 @@
 
   .sidebarOpen {
     transform: translateX(0);
-    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 8px 0 40px rgba(32, 49, 81, 0.18);
   }
 
   .mobileToggle {
@@ -353,13 +369,11 @@
 
   .overlay {
     display: block;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
   }
 
   .navItem {
-    padding: 0.85rem 0.75rem;
-    font-size: 1rem;
+    padding: 0.85rem 0.85rem;
+    font-size: 0.95rem;
   }
 
   .navEmoji {
@@ -367,8 +381,8 @@
   }
 
   .ctaBtn {
-    padding: 0.8rem 1rem;
-    font-size: 0.85rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.88rem;
   }
 
   .logo {

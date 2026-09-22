@@ -66,7 +66,7 @@ export default function TurboRangeApp() {
             <LiquidityChart pool={selectedPool} />
           ) : (
             <div style={{ ...glassCard, padding: '4rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '400px', textAlign: 'center' }}>
-              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(6,214,160,0.1), rgba(59,130,246,0.08))', border: '1px solid rgba(6,214,160,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(36,92,255,0.1), rgba(115,87,255,0.08))', border: '1px solid rgba(36,92,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
                 <span style={{ fontSize: '1.5rem' }}>⚡</span>
               </div>
               <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>Turbo Range Analysis</h2>
@@ -87,16 +87,16 @@ export default function TurboRangeApp() {
         }}>
           <button onClick={() => setMobileShowChart(false)} style={{
             flex: 1, padding: '0.75rem', fontSize: '0.85rem', fontWeight: 700,
-            background: !mobileShowChart ? 'rgba(6,214,160,0.08)' : 'transparent',
-            color: !mobileShowChart ? '#06d6a0' : 'var(--text-secondary)',
-            border: 'none', borderBottom: !mobileShowChart ? '2px solid #06d6a0' : '2px solid transparent',
+            background: !mobileShowChart ? 'rgba(36,92,255,0.08)' : 'transparent',
+            color: !mobileShowChart ? 'var(--brand-primary, #245cff)' : 'var(--text-secondary)',
+            border: 'none', borderBottom: !mobileShowChart ? '2px solid var(--brand-primary, #245cff)' : '2px solid transparent',
             cursor: 'pointer', fontFamily: 'var(--font-sans)',
           }}>📋 Pool List</button>
           <button onClick={() => setMobileShowChart(true)} style={{
             flex: 1, padding: '0.75rem', fontSize: '0.85rem', fontWeight: 700,
-            background: mobileShowChart ? 'rgba(6,214,160,0.08)' : 'transparent',
-            color: mobileShowChart ? '#06d6a0' : 'var(--text-secondary)',
-            border: 'none', borderBottom: mobileShowChart ? '2px solid #06d6a0' : '2px solid transparent',
+            background: mobileShowChart ? 'rgba(36,92,255,0.08)' : 'transparent',
+            color: mobileShowChart ? 'var(--brand-primary, #245cff)' : 'var(--text-secondary)',
+            border: 'none', borderBottom: mobileShowChart ? '2px solid var(--brand-primary, #245cff)' : '2px solid transparent',
             cursor: 'pointer', fontFamily: 'var(--font-sans)',
           }}>📊 Analysis</button>
         </div>

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: "Calculate compound interest with real-time DeFi pool rates.",
   },
   other: {
-    "theme-color": "#05060f",
+    "theme-color": "#fbfcff",
   },
 };
 
@@ -33,7 +33,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;850;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body>
         <ClientProviders>

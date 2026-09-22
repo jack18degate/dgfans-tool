@@ -77,20 +77,20 @@
 
 /* ── Input Panel ── */
 .inputPanel {
-  background: var(--surface-glass);
+  background: var(--surface);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid var(--border);
   border-top: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  border-radius: var(--radius-xl, 22px);
+  padding: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
   position: sticky;
   top: 1.5rem;
   height: fit-content;
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-card, 0 14px 40px rgba(32, 49, 81, 0.08));
   min-width: 0;
   box-sizing: border-box;
 }
@@ -187,7 +187,7 @@
   width: 100%;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--border, #d8dee8);
   outline: none;
   cursor: pointer;
   margin-top: 0.25rem;
@@ -199,26 +199,26 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #3B82F6;
+  background: var(--brand-primary, #245cff);
   cursor: pointer;
-  border: 3px solid var(--background);
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 8px rgba(36, 92, 255, 0.4);
   transition: all 0.15s ease;
 }
 
 .slider::-webkit-slider-thumb:hover {
   transform: scale(1.15);
-  box-shadow: 0 0 16px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 16px rgba(36, 92, 255, 0.5);
 }
 
 .slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #3B82F6;
+  background: var(--brand-primary, #245cff);
   cursor: pointer;
-  border: 3px solid var(--background);
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 8px rgba(36, 92, 255, 0.4);
 }
 
 .sliderRow {
@@ -451,31 +451,31 @@
 }
 
 .resultCard {
-  background: var(--surface-glass);
+  background: var(--surface);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid var(--border);
   border-top: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
+  border-radius: var(--radius-xl, 22px);
+  padding: 1.35rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-card, 0 14px 40px rgba(32, 49, 81, 0.08));
   overflow: hidden;
   box-sizing: border-box;
 }
 
 .resultCard:hover {
-  border-color: var(--border-light);
+  border-color: var(--blue-border, #cbd7ff);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow, 0 20px 55px rgba(31, 51, 91, 0.12));
 }
 
 .resultCardPrimary {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), var(--surface-glass));
-  border-color: rgba(59, 130, 246, 0.25);
+  background: linear-gradient(135deg, var(--blue-soft, #eef3ff), var(--surface));
+  border-color: var(--blue-border, #cbd7ff);
 }
 
 .resultCardPrimary::before {
@@ -484,8 +484,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brand-primary, #245cff), transparent);
 }
 
 .resultLabel {
@@ -517,7 +517,7 @@
   align-items: center;
   gap: 1.5rem;
   padding: 1rem 1.25rem;
-  background: var(--surface-glass);
+  background: var(--surface);
   backdrop-filter: blur(24px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -543,14 +543,14 @@
 
 /* ── Chart Card ── */
 .chartCard {
-  background: var(--surface-glass);
+  background: var(--surface);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid var(--border);
   border-top: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl, 22px);
   padding: 1.5rem;
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-card, 0 14px 40px rgba(32, 49, 81, 0.08));
   overflow: hidden;
   box-sizing: border-box;
 }

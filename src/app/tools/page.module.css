@@ -1,4 +1,8 @@
-/* ── Landing Page Container ── */
+/* ═══════════════════════════════════════════════════════════
+   TOOLS LANDING PAGE — Styles
+   Modern Fintech Cards aligned with onchainstocks.html
+   ═══════════════════════════════════════════════════════════ */
+
 .landingContainer {
   width: 100%;
   min-height: 100vh;
@@ -22,10 +26,10 @@
 }
 
 .landingSpinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(0, 128, 255, 0.15);
-  border-top-color: #0080FF;
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(36, 92, 255, 0.15);
+  border-top-color: var(--brand-primary, #245cff);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -51,13 +55,13 @@
 /* ── CTA Buttons Section ── */
 .landingCta {
   width: 100%;
-  max-width: 740px;
+  max-width: 820px;
   margin: 0 auto;
   padding: 0 32px 80px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  animation: fadeInUp 0.5s ease 0.2s both;
+  animation: fadeInUp 0.4s ease 0.15s both;
 }
 
 @keyframes fadeInUp {
@@ -75,33 +79,41 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(135deg, rgba(0, 128, 255, 0.08) 0%, rgba(0, 193, 255, 0.04) 100%);
-  border: 1px solid rgba(0, 128, 255, 0.2);
-  border-radius: 14px;
-  padding: 24px 28px;
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border, #d8dee8);
+  border-radius: 18px;
+  padding: 22px 28px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-card, 0 14px 40px rgba(32, 49, 81, 0.08));
+  transition: all 0.25s ease;
   cursor: pointer;
   color: inherit;
 }
 
 .landingBtn:hover {
-  border-color: rgba(0, 128, 255, 0.4);
-  background: linear-gradient(135deg, rgba(0, 128, 255, 0.12) 0%, rgba(0, 193, 255, 0.06) 100%);
+  border-color: var(--blue-border, #cbd7ff);
+  background: var(--surface, #ffffff);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 128, 255, 0.1);
+  box-shadow: var(--shadow, 0 20px 55px rgba(31, 51, 91, 0.12));
   text-decoration: none;
 }
 
 .landingBtnSecondary {
-  background: linear-gradient(135deg, rgba(80, 228, 162, 0.08) 0%, rgba(0, 193, 255, 0.04) 100%);
-  border-color: rgba(80, 228, 162, 0.2);
+  background: var(--surface, #ffffff);
 }
 
 .landingBtnSecondary:hover {
-  border-color: rgba(80, 228, 162, 0.4);
-  background: linear-gradient(135deg, rgba(80, 228, 162, 0.12) 0%, rgba(0, 193, 255, 0.06) 100%);
-  box-shadow: 0 12px 40px rgba(80, 228, 162, 0.1);
+  border-color: rgba(18, 107, 77, 0.3);
+  box-shadow: 0 16px 45px rgba(18, 107, 77, 0.1);
+}
+
+.landingBtnStocks {
+  background: var(--surface, #ffffff);
+}
+
+.landingBtnStocks:hover {
+  border-color: rgba(115, 87, 255, 0.3);
+  box-shadow: 0 16px 45px rgba(115, 87, 255, 0.12);
 }
 
 /* Icon box */
@@ -109,29 +121,30 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(0, 128, 255, 0.12);
-  border: 1px solid rgba(0, 128, 255, 0.2);
+  background: var(--blue-soft, #eef3ff);
+  border: 1px solid var(--blue-border, #cbd7ff);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #0080FF;
-  transition: all 0.3s ease;
+  color: var(--brand-primary, #245cff);
+  transition: all 0.25s ease;
 }
 
 .landingBtn:hover .landingBtnIconBox {
-  background: rgba(0, 128, 255, 0.2);
   transform: scale(1.05);
 }
 
 .landingBtnIconBoxGreen {
-  background: rgba(80, 228, 162, 0.12);
-  border-color: rgba(80, 228, 162, 0.2);
-  color: #50E4A2;
+  background: #d9f7ea;
+  border-color: #cfe1d7;
+  color: #126b4d;
 }
 
-.landingBtn:hover .landingBtnIconBoxGreen {
-  background: rgba(80, 228, 162, 0.2);
+.landingBtnIconBoxViolet {
+  background: #f3f0ff;
+  border-color: #ddd6fe;
+  color: #7357ff;
 }
 
 .landingBtnText {
@@ -143,20 +156,21 @@
 }
 
 .landingBtnTitle {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary, #101828);
+  letter-spacing: -0.02em;
 }
 
 .landingBtnDesc {
   font-size: 0.88rem;
-  color: var(--text-secondary, #b0b8c4);
+  color: var(--text-secondary, #5f6b7a);
   line-height: 1.5;
 }
 
 .landingBtnArrow {
   margin-left: auto;
-  color: #0080FF;
+  color: var(--brand-primary, #245cff);
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
@@ -166,7 +180,11 @@
 }
 
 .landingBtnArrowGreen {
-  color: #50E4A2;
+  color: #126b4d;
+}
+
+.landingBtnArrowViolet {
+  color: #7357ff;
 }
 
 /* ── Responsive ── */
@@ -187,7 +205,7 @@
   }
 
   .landingBtnTitle {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
   }
 
   .landingBtnDesc {

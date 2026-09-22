@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#06d6a0', // Neon Cyan from DG Fans map
-        secondary: '#a855f7',
+        primary: '#245cff',
+        secondary: '#7357ff',
         background: 'var(--background)',
         surface: 'var(--surface)',
         'surface-hover': 'var(--surface-hover)',

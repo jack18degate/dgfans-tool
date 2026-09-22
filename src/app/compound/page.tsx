@@ -36,11 +36,11 @@ function formatNumber(value: number): string {
 
 export default function CompoundInterestPage() {
   const { t } = useI18n();
-  const [activeTheme, setActiveTheme] = useState<'dark' | 'light'>('dark');
+  const [activeTheme, setActiveTheme] = useState<'dark' | 'light'>('light');
 
   useEffect(() => {
     const checkTheme = () => {
-      const currentTheme = (document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null) || 'dark';
+      const currentTheme = (document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null) || 'light';
       setActiveTheme(currentTheme);
     };
 
@@ -201,12 +201,12 @@ export default function CompoundInterestPage() {
   const chartOption = useMemo(() => ({
     tooltip: {
       trigger: 'axis',
-      backgroundColor: activeTheme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(12, 14, 26, 0.9)',
-      borderColor: activeTheme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)',
-      textStyle: { color: activeTheme === 'light' ? '#0f172a' : '#edf0f7', fontFamily: 'Outfit', fontSize: 13 },
+      backgroundColor: activeTheme === 'light' ? '#ffffff' : '#111827',
+      borderColor: activeTheme === 'light' ? '#d8dee8' : '#1e293b',
+      textStyle: { color: activeTheme === 'light' ? '#101828' : '#f8fafc', fontFamily: 'Inter', fontSize: 13 },
       formatter: (params: any) => {
         const year = params[0].name;
-        let html = `<div style="font-weight:700;margin-bottom:6px">${t.compound.yearLabel} ${year}</div>`;
+        let html = `<div style="font-weight:800;margin-bottom:6px">${t.compound.yearLabel} ${year}</div>`;
         params.forEach((p: any) => {
           html += `<div style="display:flex;align-items:center;gap:6px;margin:3px 0">
             <span style="width:8px;height:8px;border-radius:50%;background:${p.color};display:inline-block"></span>
@@ -219,7 +219,7 @@ export default function CompoundInterestPage() {
     legend: {
       data: [t.compound.compoundInterestLabel, t.compound.simpleInterestLabel, t.compound.initialCapitalLabel],
       bottom: 0,
-      textStyle: { color: activeTheme === 'light' ? '#475569' : '#6b7a99', fontFamily: 'Outfit', fontSize: 12 },
+      textStyle: { color: activeTheme === 'light' ? '#5f6b7a' : '#94a3b8', fontFamily: 'Inter', fontSize: 12 },
       icon: 'roundRect',
       itemWidth: 14,
       itemHeight: 8,
@@ -229,19 +229,19 @@ export default function CompoundInterestPage() {
     xAxis: {
       type: 'category',
       data: yearlyData.map(d => d.year.toString()),
-      axisLabel: { color: activeTheme === 'light' ? '#475569' : '#6b7a99', fontFamily: 'Outfit', fontSize: 11 },
-      axisLine: { lineStyle: { color: activeTheme === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)' } },
+      axisLabel: { color: activeTheme === 'light' ? '#5f6b7a' : '#94a3b8', fontFamily: 'Inter', fontSize: 11 },
+      axisLine: { lineStyle: { color: activeTheme === 'light' ? '#d8dee8' : '#1e293b' } },
       axisTick: { show: false },
     },
     yAxis: {
       type: 'value',
       axisLabel: {
-        color: activeTheme === 'light' ? '#475569' : '#6b7a99',
-        fontFamily: 'Outfit',
+        color: activeTheme === 'light' ? '#5f6b7a' : '#94a3b8',
+        fontFamily: 'Inter',
         fontSize: 11,
         formatter: (v: number) => formatCurrency(v),
       },
-      splitLine: { lineStyle: { color: activeTheme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.04)' } },
+      splitLine: { lineStyle: { color: activeTheme === 'light' ? '#f0f4f8' : 'rgba(255,255,255,0.05)' } },
       axisLine: { show: false },
       axisTick: { show: false },
     },
@@ -251,14 +251,14 @@ export default function CompoundInterestPage() {
         type: 'line',
         data: yearlyData.map(d => parseFloat(d.balance.toFixed(2))),
         smooth: true,
-        lineStyle: { width: 3, color: '#22C55E' },
-        itemStyle: { color: '#22C55E' },
+        lineStyle: { width: 3, color: '#126b4d' },
+        itemStyle: { color: '#126b4d' },
         areaStyle: {
           color: {
             type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(20, 241, 149, 0.2)' },
-              { offset: 1, color: 'rgba(20, 241, 149, 0)' },
+              { offset: 0, color: 'rgba(36, 92, 255, 0.16)' },
+              { offset: 1, color: 'rgba(36, 92, 255, 0)' },
             ],
           },
         },
@@ -270,8 +270,8 @@ export default function CompoundInterestPage() {
         type: 'line',
         data: yearlyData.map((_, i) => parseFloat((capital * (1 + (annualRate / 100) * (i + 1))).toFixed(2))),
         smooth: true,
-        lineStyle: { width: 2, color: '#6366f1', type: 'dashed' },
-        itemStyle: { color: '#6366f1' },
+        lineStyle: { width: 2, color: '#245cff', type: 'dashed' },
+        itemStyle: { color: '#245cff' },
         symbol: 'none',
       },
       {
