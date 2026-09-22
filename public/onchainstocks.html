@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <title>Azioni on-chain — in self-custody</title>
   <style>
     :root {
@@ -20,6 +20,7 @@
       --orange: #ff9f43;
       --shadow: 0 20px 55px rgba(31, 51, 91, .12);
       --radius: 22px;
+      --sidebar-width: 250px;
     }
 
     * { box-sizing: border-box; }
@@ -35,40 +36,418 @@
     }
 
     a { color: inherit; }
-    .site { min-height: 100vh; overflow: hidden; }
+    .site { min-height: 100vh; overflow-x: hidden; }
     .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 
-    .nav {
+    /* ═══════════════════════════════════════════════════════════
+       DEGATE TOOLS — Left Sidebar Navigation
+       ═══════════════════════════════════════════════════════════ */
+    .dg-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      z-index: 1000;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+    }
+
+    html[data-theme="dark"] .dg-sidebar {
+      background: rgba(17, 24, 39, 0.92);
+      border-right-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .dg-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 1.75rem;
+      border-radius: 14px;
+      transition: background 0.18s ease, transform 0.18s ease;
+      color: inherit;
+    }
+    .dg-logo:hover {
+      background: var(--wash);
+      transform: translateY(-1px);
+    }
+
+    .dg-logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1749e8, #7b60ff);
+      box-shadow: 0 10px 24px rgba(36, 92, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .dg-logo-icon svg { width: 20px; height: 20px; }
+
+    .dg-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .dg-logo-title {
+      font-size: 1.18rem;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    .dg-logo-sub {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--blue);
+      background: #eef3ff;
+      padding: 1.5px 7px;
+      border-radius: 999px;
+      border: 1px solid #cbd7ff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-block;
+      width: fit-content;
+      margin-top: 2px;
+    }
+    html[data-theme="dark"] .dg-logo-sub {
+      background: rgba(36, 92, 255, 0.15);
+      border-color: rgba(147, 197, 253, 0.25);
+      color: #93c5fd;
+    }
+
+    .dg-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+    }
+
+    .dg-nav-label {
+      font-size: 0.68rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      padding: 0 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .dg-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.72rem 0.85rem;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      position: relative;
+      border: 1px solid transparent;
+    }
+    .dg-nav-item:hover {
+      background: var(--wash);
+      color: var(--ink);
+      transform: translateX(2px);
+    }
+    .dg-nav-emoji {
+      font-size: 1.05rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .dg-nav-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dg-nav-item.active {
+      background: #eef3ff !important;
+      color: var(--blue) !important;
+      font-weight: 850 !important;
+      border-color: #cbd7ff !important;
+    }
+    html[data-theme="dark"] .dg-nav-item.active {
+      background: rgba(36, 92, 255, 0.15) !important;
+      color: #93c5fd !important;
+      border-color: rgba(147, 197, 253, 0.25) !important;
+    }
+
+    .dg-nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3.5px;
+      height: 55%;
+      border-radius: 0 4px 4px 0;
+      background: var(--blue);
+      box-shadow: 0 0 10px rgba(36, 92, 255, 0.4);
+    }
+
+    .dg-sidebar-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+    html[data-theme="dark"] .dg-sidebar-footer {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .dg-theme-btn, .dg-lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      border-radius: 10px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-sizing: border-box;
+    }
+    .dg-theme-btn:hover, .dg-lang-btn:hover {
+      background: var(--wash);
+      color: var(--ink);
+      border-color: #b8c4d6;
+    }
+    html[data-theme="dark"] .dg-theme-btn, html[data-theme="dark"] .dg-lang-btn {
+      background: #151d2e;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+    html[data-theme="dark"] .dg-theme-btn:hover, html[data-theme="dark"] .dg-lang-btn:hover {
+      background: #1a2335;
+      color: var(--ink);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .dg-lang-wrapper {
+      position: relative;
+    }
+    .dg-lang-menu {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      z-index: 1010;
+      box-shadow: 0 14px 40px rgba(32, 49, 81, 0.13);
+      animation: dgLangPop 0.18s ease;
+    }
+    html[data-theme="dark"] .dg-lang-menu {
+      background: #151d2e;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+    }
+    .dg-lang-wrapper.open .dg-lang-menu {
+      display: block;
+    }
+    .dg-lang-wrapper.open #dgLangChevron {
+      transform: rotate(180deg);
+    }
+
+    @keyframes dgLangPop {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dg-lang-item {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      border-bottom: 1px solid var(--line);
+      box-sizing: border-box;
+      text-align: left;
+    }
+    .dg-lang-item:last-child {
+      border-bottom: none;
+    }
+    .dg-lang-item:hover {
+      background: var(--wash);
+      color: var(--blue);
+    }
+    .dg-lang-item.active {
+      background: #eef3ff !important;
+      color: var(--blue) !important;
+      font-weight: 850 !important;
+    }
+    html[data-theme="dark"] .dg-lang-item.active {
+      background: rgba(36, 92, 255, 0.15) !important;
+      color: #93c5fd !important;
+    }
+
+    .dg-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.72rem 1rem;
+      border-radius: 12px;
+      background: var(--ink);
+      border: 1px solid transparent;
+      color: #ffffff !important;
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(16, 24, 40, 0.16);
+      transition: all 0.18s ease;
+    }
+    .dg-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(16, 24, 40, 0.24);
+      color: #ffffff !important;
+      text-decoration: none;
+    }
+    html[data-theme="dark"] .dg-cta-btn {
+      background: #245cff;
+      box-shadow: 0 12px 30px rgba(36, 92, 255, 0.25);
+    }
+
+    .dg-footer-copy {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+      font-weight: 600;
+    }
+
+    .dg-mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1200;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--paper);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(32, 49, 81, 0.1);
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    html[data-theme="dark"] .dg-mobile-toggle {
+      background: #151d2e;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #f1f5f9;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .dg-sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(16, 24, 40, 0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 990;
+    }
+    .dg-sidebar-overlay.open {
+      display: block;
+    }
+
+    /* ── In-page subnavigation ribbon ── */
+    .inpage-nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-      padding: 22px 0;
+      gap: 18px;
+      padding: 16px 22px;
+      margin-top: 18px;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(31, 51, 91, 0.04);
     }
-    .brand {
+    html[data-theme="dark"] .inpage-nav {
+      background: rgba(17, 24, 39, 0.72);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .inpage-badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-size: 21px;
-      font-weight: 850;
-      letter-spacing: -.04em;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+    .inpage-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 3px rgba(36, 92, 255, 0.2);
+    }
+    .inpage-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .inpage-links a {
       text-decoration: none;
+      transition: color 0.15s ease;
     }
-    .brand-mark {
-      display: grid;
-      width: 35px;
-      height: 35px;
-      place-items: center;
-      color: #fff;
-      border-radius: 11px;
-      background: linear-gradient(135deg, #1749e8, #7b60ff);
-      box-shadow: 0 10px 24px rgba(36, 92, 255, .25);
+    .inpage-links a:hover {
+      color: var(--blue);
     }
-    .brand-mark svg { width: 21px; height: 21px; }
-    .nav-links { display: flex; gap: 24px; color: #445066; font-size: 14px; font-weight: 700; }
-    .nav-links a { text-decoration: none; }
-    .nav-links a:hover { color: var(--blue); }
-    .nav-cta,
+
+    /* ── Buttons used in content ── */
     .button {
       display: inline-flex;
       align-items: center;
@@ -83,110 +462,17 @@
       text-decoration: none;
       transition: transform .18s ease, box-shadow .18s ease;
     }
-    .nav-cta, .button-primary {
+    .button-primary {
       color: #fff;
       background: var(--ink);
       box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
     }
-    .button-secondary { color: var(--ink); border-color: #cfd6e2; background: rgba(255,255,255,.76); }
-    .nav-cta:hover, .button:hover { transform: translateY(-2px); }
-
-    /* ─── Language Selector ─── */
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .lang-selector {
-      position: relative;
-      z-index: 100;
-    }
-    .lang-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 12px;
-      border: 1px solid #cfd6e2;
-      border-radius: 10px;
-      background: rgba(255,255,255,.82);
-      backdrop-filter: blur(8px);
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 800;
+    .button-secondary {
       color: var(--ink);
-      cursor: pointer;
-      transition: border-color .18s, box-shadow .18s;
-      line-height: 1;
+      border-color: #cfd6e2;
+      background: rgba(255,255,255,.76);
     }
-    .lang-btn:hover {
-      border-color: var(--blue-2);
-      box-shadow: 0 4px 14px rgba(36, 92, 255, .10);
-    }
-    .lang-btn .lang-flag {
-      font-size: 17px;
-      line-height: 1;
-    }
-    .lang-btn .lang-chevron {
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 5px solid #778193;
-      margin-left: 2px;
-      transition: transform .2s;
-    }
-    .lang-selector.open .lang-chevron {
-      transform: rotate(180deg);
-    }
-    .lang-dropdown {
-      display: none;
-      position: absolute;
-      top: calc(100% + 6px);
-      right: 0;
-      min-width: 150px;
-      padding: 6px;
-      border: 1px solid #d1d9e6;
-      border-radius: 14px;
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 14px 40px rgba(32,49,81,.13);
-      list-style: none;
-      margin: 0;
-    }
-    .lang-selector.open .lang-dropdown {
-      display: block;
-      animation: langFadeIn .18s ease;
-    }
-    @keyframes langFadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .lang-dropdown li {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #445066;
-      cursor: pointer;
-      transition: background .14s;
-    }
-    .lang-dropdown li:hover {
-      background: #eef3ff;
-      color: var(--blue);
-    }
-    .lang-dropdown li.active {
-      background: #eef3ff;
-      color: var(--blue);
-      font-weight: 850;
-    }
-    .lang-dropdown li .lang-flag {
-      font-size: 17px;
-      line-height: 1;
-    }
+    .button:hover { transform: translateY(-2px); }
 
     .hero {
       display: grid;
@@ -738,8 +1024,44 @@
     .footer { padding: 26px 0 42px; color: #748094; border-top: 1px solid #d8dee8; font-size: 12px; }
     .footer-row { display: flex; justify-content: space-between; gap: 24px; }
 
+    /* ── Layout responsive for sidebar ── */
+    @media (min-width: 901px) {
+      .site {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+        box-sizing: border-box;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .dg-sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+        padding: 1.5rem 1.25rem;
+      }
+      .dg-sidebar.open {
+        transform: translateX(0);
+      }
+      .dg-mobile-toggle {
+        display: flex;
+      }
+      .site {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 60px;
+      }
+      .inpage-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .inpage-links {
+        gap: 12px;
+        font-size: 12px;
+      }
+    }
+
     @media (max-width: 920px) {
-      .nav-links { display: none; }
       .hero { grid-template-columns: 1fr; padding-top: 45px; }
       .hero-art { min-height: 410px; }
       .products, .compare-grid, .timeline { grid-template-columns: 1fr; }
@@ -752,7 +1074,6 @@
     }
     @media (max-width: 620px) {
       .shell { width: min(100% - 24px, 1180px); }
-      .nav-cta { display: none; }
       .hero { padding: 34px 0 56px; }
       h1 { font-size: 43px; }
       .hero-copy { font-size: 16px; }
@@ -781,19 +1102,368 @@
       }
       .footer-row { flex-direction: column; }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       DARK THEME OVERRIDES (html[data-theme="dark"])
+       ═══════════════════════════════════════════════════════════ */
+    html[data-theme="dark"] {
+      --ink: #f1f5f9;
+      --muted: #94a3b8;
+      --line: rgba(255, 255, 255, 0.08);
+      --paper: #111827;
+      --wash: #172033;
+      --blue: #4f8fff;
+      --blue-2: #6d8cff;
+      --mint: #34d399;
+      --green: #34d399;
+      --violet: #a78bfa;
+      --orange: #fb923c;
+      --shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+    }
+
+    html[data-theme="dark"] body {
+      color: #f1f5f9;
+      background:
+        radial-gradient(circle at 90% 2%, rgba(79, 143, 255, .12), transparent 28rem),
+        linear-gradient(180deg, #0a0e1a 0%, #0f172a 100%);
+    }
+
+    html[data-theme="dark"] .eyebrow {
+      color: #93c5fd;
+      background: rgba(36, 92, 255, 0.15);
+      border-color: rgba(147, 197, 253, 0.25);
+    }
+
+    html[data-theme="dark"] .hero-copy {
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .hero-copy strong {
+      color: #f1f5f9;
+    }
+
+    html[data-theme="dark"] .micro-proof {
+      color: #94a3b8;
+    }
+
+    html[data-theme="dark"] .hero-art {
+      background:
+        linear-gradient(145deg, #111827, #172033),
+        repeating-linear-gradient(90deg, transparent 0 29px, rgba(255,255,255,.03) 30px),
+        repeating-linear-gradient(0deg, transparent 0 29px, rgba(255,255,255,.03) 30px);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+    }
+
+    html[data-theme="dark"] .wallet-card {
+      background: rgba(23, 32, 51, 0.9);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .wallet-label {
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .wallet-value {
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .token-mini {
+      background: #141d2e;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .token-mini span {
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .orbit {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    html[data-theme="dark"] .button-secondary {
+      background: #172033;
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
+    }
+
+    html[data-theme="dark"] .trust-panel {
+      background: #111827;
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    html[data-theme="dark"] .rights-panel {
+      background:
+        radial-gradient(circle at 96% 8%, rgba(217,255,99,.12), transparent 16rem),
+        linear-gradient(145deg, #111827, #162032);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+    }
+    html[data-theme="dark"] .rights-answer {
+      background: #172033;
+      border-color: rgba(52, 211, 153, 0.25);
+      color: #a7f3d0;
+    }
+    html[data-theme="dark"] .rights-footnote {
+      color: #94a3b8;
+    }
+
+    html[data-theme="dark"] .compare-card {
+      background: #111827;
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .compare-summary {
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .compare-tag {
+      background: #172033;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .fact-list {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+    html[data-theme="dark"] .fact-row {
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+    html[data-theme="dark"] .fact-label {
+      color: #64748b;
+    }
+    html[data-theme="dark"] .fact-value {
+      color: #f1f5f9;
+    }
+
+    html[data-theme="dark"] .comparison-note {
+      background: #172033;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+
+    html[data-theme="dark"] .product-card {
+      background: #111827;
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .pill {
+      background: #172033;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .product-meta {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+    html[data-theme="dark"] .meta-line span {
+      color: #94a3b8;
+    }
+    html[data-theme="dark"] .meta-line strong {
+      color: #f1f5f9;
+    }
+
+    html[data-theme="dark"] .asset-card {
+      background: #141d2e;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .asset-card span {
+      color: #94a3b8;
+    }
+
+    html[data-theme="dark"] .route {
+      background: #0d1424;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    html[data-theme="dark"] .route-node {
+      background: #172033;
+      color: #f1f5f9;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    html[data-theme="dark"] .flow-card {
+      background: #111827;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .step {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+    html[data-theme="dark"] .step-copy {
+      color: #94a3b8;
+    }
+
+    html[data-theme="dark"] .timeline {
+      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    html[data-theme="dark"] .time-card {
+      background: #111827;
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .time-card.best {
+      background: linear-gradient(145deg, #0d281e, #132f25);
+    }
+    html[data-theme="dark"] .time-card.best .time-label {
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.15);
+    }
+    html[data-theme="dark"] .time-label {
+      color: #94a3b8;
+      background: #172033;
+    }
+    html[data-theme="dark"] .time-card p {
+      color: #94a3b8;
+    }
+
+    html[data-theme="dark"] .safety {
+      background: radial-gradient(circle at 5% 10%, rgba(36,92,255,.35), transparent 24rem), #0b111e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    html[data-theme="dark"] .check-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    html[data-theme="dark"] .link-card {
+      background: #111827;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .link-card:hover {
+      background: #172033;
+      border-color: #245cff;
+    }
+    html[data-theme="dark"] .link-card span {
+      color: #64748b;
+    }
+
+    html[data-theme="dark"] .footer {
+      border-top-color: rgba(255, 255, 255, 0.08);
+      color: #64748b;
+    }
+
+    html[data-theme="dark"] table {
+      background: #111827;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+    html[data-theme="dark"] th {
+      background: #172033;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] td {
+      border-color: rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+    }
+    html[data-theme="dark"] tbody tr:nth-child(even) td {
+      background: #141d2e;
+    }
+    html[data-theme="dark"] td strong {
+      color: #f1f5f9;
+    }
+    html[data-theme="dark"] .table-link {
+      color: #60a5fa;
+    }
   </style>
 </head>
 <body>
+  <!-- Mobile Toggle Button -->
+  <button class="dg-mobile-toggle" id="dgMobileToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+  </button>
+
+  <!-- Sidebar Overlay -->
+  <div class="dg-sidebar-overlay" id="dgSidebarOverlay"></div>
+
+  <!-- Left Sidebar Navigation -->
+  <nav class="dg-sidebar" id="dgSidebar">
+    <!-- Logo -->
+    <a class="dg-logo" href="/tools">
+      <div class="dg-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+          <path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="dg-logo-text">
+        <span class="dg-logo-title">DeGate</span>
+        <span class="dg-logo-sub">Tools</span>
+      </div>
+    </a>
+
+    <!-- Nav Links -->
+    <div class="dg-nav-links">
+      <span class="dg-nav-label" data-i18n="nav_tools_label">Tools</span>
+
+      <a href="/tools" class="dg-nav-item">
+        <span class="dg-nav-emoji">🚀</span>
+        <span class="dg-nav-text" data-i18n="nav_turbo_range_guide">Turbo Range Guide</span>
+      </a>
+
+      <a href="/onchainstocks" class="dg-nav-item active">
+        <span class="dg-nav-emoji">🏛️</span>
+        <span class="dg-nav-text" data-i18n="nav_onchain_stocks">Azioni On-Chain</span>
+      </a>
+
+      <a href="/compound" class="dg-nav-item">
+        <span class="dg-nav-emoji">📈</span>
+        <span class="dg-nav-text" data-i18n="nav_compound_calculator">Interest Calculator</span>
+      </a>
+
+      <a href="/turbo" class="dg-nav-item">
+        <span class="dg-nav-emoji">⚡</span>
+        <span class="dg-nav-text" data-i18n="nav_turbo_analysis">Turbo Range Analysis</span>
+      </a>
+
+      <a href="/onchainmarkets" class="dg-nav-item">
+        <span class="dg-nav-emoji">🌐</span>
+        <span class="dg-nav-text" data-i18n="nav_onchain_markets">On-Chain RWA Markets</span>
+      </a>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="dg-sidebar-footer">
+      <!-- Theme Switcher -->
+      <button class="dg-theme-btn" id="dgThemeBtn" aria-label="Toggle Theme">
+        <span id="dgThemeIcon">🌙</span>
+        <span id="dgThemeLabel" data-i18n="theme_dark">Dark Theme</span>
+      </button>
+
+      <!-- Language Switcher in Sidebar -->
+      <div class="dg-lang-wrapper" id="dgLangWrapper">
+        <button class="dg-lang-btn" id="dgLangBtn" aria-label="Select Language">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span id="dgLangLabel">🇮🇹 Italiano</span>
+          <svg id="dgLangChevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;transition:transform 0.2s ease"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="dg-lang-menu" id="dgLangMenu">
+          <button class="dg-lang-item active" data-lang="it"><span>🇮🇹</span><span>Italiano</span></button>
+          <button class="dg-lang-item" data-lang="en"><span>🇬🇧</span><span>English</span></button>
+          <button class="dg-lang-item" data-lang="es"><span>🇪🇸</span><span>Español</span></button>
+          <button class="dg-lang-item" data-lang="fr"><span>🇫🇷</span><span>Français</span></button>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <a href="https://app.degate.com/?utm_source=calculator&s=jack18" target="_blank" rel="noopener noreferrer" class="dg-cta-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
+        <span>Turbo Range</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+      </a>
+
+      <span class="dg-footer-copy">© 2026 DeGate Tools</span>
+    </div>
+  </nav>
+
   <div class="site">
+    <!-- In-page Section Subnavigation -->
     <header class="shell">
-      <nav class="nav" aria-label="Navigazione principale">
-        <a class="brand" href="#top">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h6a6 6 0 0 1 0 12H5V6Z" stroke="currentColor" stroke-width="2.2"/><path d="M10 9h4.5a3 3 0 1 1 0 6H10" stroke="currentColor" stroke-width="2.2"/></svg>
-          </span>
-          DeGate Guide
-        </a>
-        <div class="nav-links">
+      <nav class="inpage-nav" aria-label="Navigazione sezioni articolo">
+        <div class="inpage-badge">
+          <span class="inpage-badge-dot"></span>
+          <span>Guida On-Chain</span>
+        </div>
+        <div class="inpage-links">
           <a href="#fiducia" data-i18n="nav_trust">Fiducia</a>
           <a href="#dividendi" data-i18n="nav_dividends">Dividendi</a>
           <a href="#prodotti" data-i18n="nav_products">Prodotti</a>
@@ -801,22 +1471,6 @@
           <a href="#sicurezza" data-i18n="nav_security">Sicurezza</a>
           <a href="/onchainstock/RFQ" data-i18n="nav_rfq">RFQ</a>
           <a href="/onchainstocks/articles" data-i18n="nav_articles">Articoli</a>
-        </div>
-        <div class="nav-right">
-          <div class="lang-selector" id="langSelector">
-            <button class="lang-btn" id="langBtn" aria-label="Select language">
-              <span class="lang-flag" id="langFlag">🇮🇹</span>
-              <span class="lang-code" id="langCode">IT</span>
-              <span class="lang-chevron"></span>
-            </button>
-            <ul class="lang-dropdown" id="langDropdown">
-              <li data-lang="it" class="active"><span class="lang-flag">🇮🇹</span> Italiano</li>
-              <li data-lang="en"><span class="lang-flag">🇬🇧</span> English</li>
-              <li data-lang="es"><span class="lang-flag">🇪🇸</span> Español</li>
-              <li data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</li>
-            </ul>
-          </div>
-          <a class="nav-cta" href="https://app.degate.com/" data-i18n="nav_cta">Apri DeGate ↗</a>
         </div>
       </nav>
     </header>
@@ -1167,6 +1821,14 @@
 const TRANSLATIONS = {
   it: {
     page_title: "Azioni on-chain — in self-custody",
+    nav_tools_label: "Tools",
+    nav_turbo_range_guide: "Guida Turbo Range",
+    nav_onchain_stocks: "Azioni On-Chain",
+    nav_compound_calculator: "Calcolatore Compound",
+    nav_turbo_analysis: "Turbo Range Analysis",
+    nav_onchain_markets: "Mercati RWA On-Chain",
+    theme_light: "Tema Chiaro",
+    theme_dark: "Tema Scuro",
     nav_trust: "Fiducia",
     nav_dividends: "Dividendi",
     nav_products: "Prodotti",
@@ -1291,6 +1953,14 @@ const TRANSLATIONS = {
 
   en: {
     page_title: "On-chain stocks — self-custody",
+    nav_tools_label: "Tools",
+    nav_turbo_range_guide: "Turbo Range Guide",
+    nav_onchain_stocks: "On-Chain Stocks",
+    nav_compound_calculator: "Interest Calculator",
+    nav_turbo_analysis: "Turbo Range Analysis",
+    nav_onchain_markets: "On-Chain RWA Markets",
+    theme_light: "Light Theme",
+    theme_dark: "Dark Theme",
     nav_trust: "Trust",
     nav_dividends: "Dividends",
     nav_products: "Products",
@@ -1415,6 +2085,14 @@ const TRANSLATIONS = {
 
   es: {
     page_title: "Acciones on-chain — en auto-custodia",
+    nav_tools_label: "Herramientas",
+    nav_turbo_range_guide: "Guía Turbo Range",
+    nav_onchain_stocks: "Acciones On-Chain",
+    nav_compound_calculator: "Calculadora Interés",
+    nav_turbo_analysis: "Turbo Range Analysis",
+    nav_onchain_markets: "Mercados RWA On-Chain",
+    theme_light: "Tema Claro",
+    theme_dark: "Tema Oscuro",
     nav_trust: "Confianza",
     nav_dividends: "Dividendos",
     nav_products: "Productos",
@@ -1539,6 +2217,14 @@ const TRANSLATIONS = {
 
   fr: {
     page_title: "Actions on-chain — en auto-conservation",
+    nav_tools_label: "Outils",
+    nav_turbo_range_guide: "Guide Turbo Range",
+    nav_onchain_stocks: "Actions On-Chain",
+    nav_compound_calculator: "Calculateur d'intérêts",
+    nav_turbo_analysis: "Turbo Range Analysis",
+    nav_onchain_markets: "Marchés RWA On-Chain",
+    theme_light: "Thème Clair",
+    theme_dark: "Thème Sombre",
     nav_trust: "Confiance",
     nav_dividends: "Dividendes",
     nav_products: "Produits",
@@ -1710,51 +2396,140 @@ function applyLanguage(lang) {
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
 
-  // Update language selector button
-  const meta = LANG_META[lang];
-  document.getElementById("langFlag").textContent = meta.flag;
-  document.getElementById("langCode").textContent = meta.code;
+  // Update language selector in sidebar
+  const meta = LANG_META[lang] || LANG_META.it;
+  const langLabel = document.getElementById("dgLangLabel");
+  if (langLabel) {
+    const nameMap = { it: "Italiano", en: "English", es: "Español", fr: "Français" };
+    langLabel.textContent = meta.flag + " " + (nameMap[lang] || "Italiano");
+  }
 
-  // Update active state in dropdown
-  document.querySelectorAll("#langDropdown li").forEach(li => {
-    li.classList.toggle("active", li.dataset.lang === lang);
+  // Update active state in sidebar dropdown
+  document.querySelectorAll("#dgLangMenu .dg-lang-item").forEach(item => {
+    item.classList.toggle("active", item.dataset.lang === lang);
   });
 
-  // Persist choice
-  localStorage.setItem("dgfans_lang", lang);
+  // Update theme label text in chosen language
+  applyTheme(currentTheme);
+
+  // Persist choice for both guide and tools
+  try {
+    localStorage.setItem("dgfans_lang", lang);
+    localStorage.setItem("degate-tools-locale", lang);
+  } catch (e) {}
 }
 
-/* ─── Language selector interactions ─── */
-(function initLangSelector() {
-  const selector = document.getElementById("langSelector");
-  const btn = document.getElementById("langBtn");
-  const dropdown = document.getElementById("langDropdown");
+/* ─── Theme Management (Light <-> Dark) ─── */
+function getInitialTheme() {
+  try {
+    const saved = localStorage.getItem('degate-tools-theme');
+    if (saved === 'dark' || saved === 'light') return saved;
+  } catch (e) {}
+  return 'light';
+}
+
+let currentTheme = getInitialTheme();
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  try {
+    localStorage.setItem('degate-tools-theme', theme);
+  } catch (e) {}
+
+  const themeIcon = document.getElementById('dgThemeIcon');
+  const themeLabel = document.getElementById('dgThemeLabel');
+  const lang = document.documentElement.lang || 'it';
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.it;
+
+  if (theme === 'dark') {
+    if (themeIcon) themeIcon.textContent = '☀️';
+    if (themeLabel) themeLabel.textContent = t.theme_light || 'Light Theme';
+  } else {
+    if (themeIcon) themeIcon.textContent = '🌙';
+    if (themeLabel) themeLabel.textContent = t.theme_dark || 'Dark Theme';
+  }
+
+  window.dispatchEvent(new Event('themechange'));
+}
+
+function toggleTheme() {
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+}
+
+document.getElementById('dgThemeBtn')?.addEventListener('click', toggleTheme);
+
+/* ─── Sidebar Language Selector Interactions ─── */
+(function initSidebarLang() {
+  const wrapper = document.getElementById("dgLangWrapper");
+  const btn = document.getElementById("dgLangBtn");
+  const menu = document.getElementById("dgLangMenu");
+
+  if (!wrapper || !btn || !menu) return;
 
   btn.addEventListener("click", e => {
     e.stopPropagation();
-    selector.classList.toggle("open");
+    wrapper.classList.toggle("open");
   });
 
-  dropdown.querySelectorAll("li").forEach(li => {
-    li.addEventListener("click", () => {
-      applyLanguage(li.dataset.lang);
-      selector.classList.remove("open");
+  menu.querySelectorAll(".dg-lang-item").forEach(item => {
+    item.addEventListener("click", () => {
+      applyLanguage(item.dataset.lang);
+      wrapper.classList.remove("open");
     });
   });
 
-  // Close dropdown when clicking outside
   document.addEventListener("click", () => {
-    selector.classList.remove("open");
+    wrapper.classList.remove("open");
+  });
+})();
+
+/* ─── Mobile Navigation Drawer Interactions ─── */
+(function initMobileNav() {
+  const toggle = document.getElementById("dgMobileToggle");
+  const sidebar = document.getElementById("dgSidebar");
+  const overlay = document.getElementById("dgSidebarOverlay");
+
+  if (!toggle || !sidebar || !overlay) return;
+
+  function openNav() {
+    sidebar.classList.add("open");
+    overlay.classList.add("open");
+    toggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+    toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function closeNav() {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("open");
+    toggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>';
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  toggle.addEventListener("click", () => {
+    if (sidebar.classList.contains("open")) {
+      closeNav();
+    } else {
+      openNav();
+    }
   });
 
-  // Close on Escape
+  overlay.addEventListener("click", closeNav);
+
+  sidebar.querySelectorAll(".dg-nav-item").forEach(link => {
+    link.addEventListener("click", closeNav);
+  });
+
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape") selector.classList.remove("open");
+    if (e.key === "Escape" && sidebar.classList.contains("open")) {
+      closeNav();
+    }
   });
 })();
 
 /* ─── Initialize ─── */
 applyLanguage(detectLanguage());
+applyTheme(currentTheme);
 </script>
 </body>
 </html>
