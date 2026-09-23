@@ -32,6 +32,18 @@ const nextConfig: NextConfig = {
         source: '/onchainstocks/articles/:slug',
         destination: '/articles/:slug.html',
       },
+      {
+        source: '/turborange',
+        destination: '/turborange/index.html',
+      },
+      {
+        source: '/turborange/',
+        destination: '/turborange/index.html',
+      },
+      {
+        source: '/assets/:path*',
+        destination: '/turborange/assets/:path*',
+      },
     ];
   },
 };
