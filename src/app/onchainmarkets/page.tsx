@@ -57,11 +57,6 @@ export default function OnChainMarketsPage() {
     <div className="rwa-explorer">
       <div className="container">
         <header className="header">
-          <div className="header-badge-pill">
-            <span className="live-pulse" />
-            <span>Multi-Chain RWA Aggregator • Robinhood Chain • Ondo • xStocks</span>
-          </div>
-
           <h1 className="header-title">{labelTitle}</h1>
           <p className="header-subtitle">{labelSubtitle}</p>
 

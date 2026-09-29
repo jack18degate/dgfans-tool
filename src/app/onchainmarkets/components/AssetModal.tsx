@@ -162,85 +162,91 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
           <div className="modal-ca-clean-list">
             {asset.platforms.ondo && (
               <div className="ca-clean-row">
-                <span className="ca-clean-chain">Ethereum</span>
+                <div className="ca-clean-header">
+                  <span className="ca-clean-chain">Ethereum</span>
+                  <div className="ca-clean-actions">
+                    <button
+                      type="button"
+                      className={`btn-ca-clean-copy ${copiedKey === 'ondo' ? 'copied' : ''}`}
+                      onClick={() => copyToClipboard(asset.platforms.ondo!.address, 'ondo')}
+                      title={labelCopy}
+                    >
+                      {copiedKey === 'ondo' ? labelCopied : labelCopy}
+                    </button>
+                    <a
+                      href={`https://etherscan.io/token/${asset.platforms.ondo.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ca-clean-link"
+                      title="Etherscan"
+                    >
+                      ↗
+                    </a>
+                  </div>
+                </div>
                 <code className="ca-clean-address" title={asset.platforms.ondo.address}>
                   {asset.platforms.ondo.address}
                 </code>
-                <div className="ca-clean-actions">
-                  <button
-                    type="button"
-                    className={`btn-ca-clean-copy ${copiedKey === 'ondo' ? 'copied' : ''}`}
-                    onClick={() => copyToClipboard(asset.platforms.ondo!.address, 'ondo')}
-                    title={labelCopy}
-                  >
-                    {copiedKey === 'ondo' ? labelCopied : labelCopy}
-                  </button>
-                  <a
-                    href={`https://etherscan.io/token/${asset.platforms.ondo.address}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ca-clean-link"
-                    title="Etherscan"
-                  >
-                    ↗
-                  </a>
-                </div>
               </div>
             )}
 
             {asset.platforms.xstocks && (
               <div className="ca-clean-row">
-                <span className="ca-clean-chain">Solana</span>
+                <div className="ca-clean-header">
+                  <span className="ca-clean-chain">Solana</span>
+                  <div className="ca-clean-actions">
+                    <button
+                      type="button"
+                      className={`btn-ca-clean-copy ${copiedKey === 'xstocks' ? 'copied' : ''}`}
+                      onClick={() => copyToClipboard(asset.platforms.xstocks!.address, 'xstocks')}
+                      title={labelCopy}
+                    >
+                      {copiedKey === 'xstocks' ? labelCopied : labelCopy}
+                    </button>
+                    <a
+                      href={`https://solscan.io/token/${asset.platforms.xstocks.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ca-clean-link"
+                      title="Solscan"
+                    >
+                      ↗
+                    </a>
+                  </div>
+                </div>
                 <code className="ca-clean-address" title={asset.platforms.xstocks.address}>
                   {asset.platforms.xstocks.address}
                 </code>
-                <div className="ca-clean-actions">
-                  <button
-                    type="button"
-                    className={`btn-ca-clean-copy ${copiedKey === 'xstocks' ? 'copied' : ''}`}
-                    onClick={() => copyToClipboard(asset.platforms.xstocks!.address, 'xstocks')}
-                    title={labelCopy}
-                  >
-                    {copiedKey === 'xstocks' ? labelCopied : labelCopy}
-                  </button>
-                  <a
-                    href={`https://solscan.io/token/${asset.platforms.xstocks.address}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ca-clean-link"
-                    title="Solscan"
-                  >
-                    ↗
-                  </a>
-                </div>
               </div>
             )}
 
             {asset.platforms.robinhood && (
               <div className="ca-clean-row">
-                <span className="ca-clean-chain">Robinhood Chain</span>
+                <div className="ca-clean-header">
+                  <span className="ca-clean-chain">Robinhood Chain</span>
+                  <div className="ca-clean-actions">
+                    <button
+                      type="button"
+                      className={`btn-ca-clean-copy ${copiedKey === 'rh' ? 'copied' : ''}`}
+                      onClick={() => copyToClipboard(asset.platforms.robinhood!.address, 'rh')}
+                      title={labelCopy}
+                    >
+                      {copiedKey === 'rh' ? labelCopied : labelCopy}
+                    </button>
+                    <a
+                      href={asset.platforms.robinhood.explorerUrl || `https://robinhoodchain.blockscout.com/token/${asset.platforms.robinhood!.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ca-clean-link"
+                      title="Blockscout"
+                    >
+                      ↗
+                    </a>
+                  </div>
+                </div>
                 <code className="ca-clean-address" title={asset.platforms.robinhood.address}>
                   {asset.platforms.robinhood.address}
                 </code>
-                <div className="ca-clean-actions">
-                  <button
-                    type="button"
-                    className={`btn-ca-clean-copy ${copiedKey === 'rh' ? 'copied' : ''}`}
-                    onClick={() => copyToClipboard(asset.platforms.robinhood!.address, 'rh')}
-                    title={labelCopy}
-                  >
-                    {copiedKey === 'rh' ? labelCopied : labelCopy}
-                  </button>
-                  <a
-                    href={asset.platforms.robinhood.explorerUrl || `https://robinhoodchain.blockscout.com/token/${asset.platforms.robinhood!.address}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ca-clean-link"
-                    title="Blockscout"
-                  >
-                    ↗
-                  </a>
-                </div>
               </div>
             )}
           </div>

@@ -40,18 +40,14 @@ interface AssetCardProps {
 export default function AssetCard({ asset, onClick }: AssetCardProps) {
   const [imgError, setImgError] = useState(false);
 
-  const platformCount = (asset.platforms.ondo ? 1 : 0) +
+  const platformCount =
+    (asset.platforms.ondo ? 1 : 0) +
     (asset.platforms.xstocks ? 1 : 0) +
     (asset.platforms.robinhood ? 1 : 0);
 
-  // Check if Robinhood multiplier > 1 (e.g. 1.001148)
-  const rhMultiplier = asset.platforms.robinhood?.multiplier;
-  const hasDividendGrowth = rhMultiplier && parseFloat(rhMultiplier) > 1.000001;
-  const formattedMultiplier = hasDividendGrowth ? `${parseFloat(rhMultiplier).toFixed(4)}x` : null;
-
   return (
     <div
-      className="asset-card"
+      className="asset-card asset-card-minimal"
       onClick={() => onClick(asset)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -61,65 +57,47 @@ export default function AssetCard({ asset, onClick }: AssetCardProps) {
       }}
       role="button"
       tabIndex={0}
-      aria-label={`View ${asset.name} (${asset.ticker})`}
+      aria-label={`Visualizza ${asset.name} (${asset.ticker})`}
+      title={`${asset.name} (${asset.ticker})`}
     >
-      <div className="card-top">
-        <div className="card-logo-container">
-          {asset.logo && !imgError ? (
-            <img
-              src={asset.logo}
-              alt={asset.ticker}
-              className="card-logo"
-              loading="lazy"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className="card-logo-fallback">{asset.ticker.slice(0, 2)}</div>
-          )}
-        </div>
-        <div className="card-title-group">
-          <span className="card-ticker">{asset.ticker}</span>
-          {platformCount > 1 && (
-            <span className="badge badge-multichain" title={`Available across ${platformCount} ecosystems`}>
-              {platformCount} Chains
+      <div className="card-minimal-content">
+        <div className="card-minimal-main">
+          <div className="card-logo-container">
+            {asset.logo && !imgError ? (
+              <img
+                src={asset.logo}
+                alt={asset.ticker}
+                className="card-logo"
+                loading="lazy"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <div className="card-logo-fallback">{asset.ticker.slice(0, 2)}</div>
+            )}
+          </div>
+          <div className="card-minimal-info">
+            <span className="card-ticker">{asset.ticker}</span>
+            <span className="card-chain-pill">
+              {platformCount} {platformCount === 1 ? 'Chain' : 'Chain'}
             </span>
-          )}
+          </div>
         </div>
-      </div>
 
-      <div className="card-name" title={asset.name}>
-        {asset.name}
-      </div>
-
-      <div className="card-badges">
-        <span className={`badge ${asset.type === 'ETF' ? 'badge-etf' : 'badge-stock'}`}>
-          {asset.type}
-        </span>
-        {asset.platforms.robinhood && (
-          <span className="badge badge-robinhood" title="Official Robinhood Chain Token (Chain ID 4663)">
-            Robinhood
-          </span>
-        )}
-        {asset.platforms.ondo && (
-          <span className="badge badge-ondo" title="Ondo Finance (Ethereum)">
-            Ondo
-          </span>
-        )}
-        {asset.platforms.xstocks && (
-          <span className="badge badge-xstocks" title="xStocks (Solana)">
-            xStocks
-          </span>
-        )}
-        {(asset.platforms.xstocks || asset.platforms.ondo) && (
-          <span className="badge badge-degate-card" title="Scambiabile su DeGate App">
-            ⚡ DeGate App
-          </span>
-        )}
-        {formattedMultiplier && (
-          <span className="badge badge-multiplier" title={`Auto-reinvested dividend multiplier: ${rhMultiplier}`}>
-            📈 {formattedMultiplier}
-          </span>
-        )}
+        <div className="card-arrow-icon" aria-hidden="true" title="Apri dettagli">
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </div>
       </div>
     </div>
   );
