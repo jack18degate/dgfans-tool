@@ -35,7 +35,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--text-primary);
   line-height: 1.6;
-  padding-bottom: 50px;
+  padding-bottom: 60px;
 }
 
 /* Dark Theme overrides when toggled */
@@ -77,7 +77,7 @@ html[data-theme="dark"] .rwa-explorer {
 
 /* ─── Header ─── */
 .rwa-explorer .header {
-  padding: 40px 0 24px;
+  padding: 36px 0 24px;
   text-align: center;
 }
 
@@ -196,17 +196,15 @@ html[data-theme="dark"] .rwa-explorer {
 
 /* ─── Filter Bar ─── */
 .rwa-explorer .filter-bar {
-  padding: 20px 0 20px;
+  padding: 20px 0 16px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .rwa-explorer .search-wrapper {
   position: relative;
-  flex: 1;
-  min-width: 240px;
+  width: 100%;
 }
 
 .rwa-explorer .search-icon {
@@ -215,18 +213,18 @@ html[data-theme="dark"] .rwa-explorer {
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   pointer-events: none;
 }
 
 .rwa-explorer .search-input {
   width: 100%;
-  padding: 10px 38px 10px 38px;
+  padding: 12px 40px 12px 42px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-family: inherit;
   transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
@@ -250,8 +248,8 @@ html[data-theme="dark"] .rwa-explorer {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
-  font-size: 0.85rem;
-  padding: 4px;
+  font-size: 0.9rem;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,6 +259,75 @@ html[data-theme="dark"] .rwa-explorer {
 
 .rwa-explorer .search-clear-btn:hover {
   color: var(--text-primary);
+}
+
+/* ─── Trending / Popular Searches ─── */
+.rwa-explorer .trending-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.rwa-explorer .trending-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rwa-explorer .trending-chips-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 2px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rwa-explorer .trending-chips-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.rwa-explorer .trending-chip {
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.rwa-explorer .trending-chip:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.rwa-explorer .trending-chip.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+/* ─── Filter Controls Row ─── */
+.rwa-explorer .filter-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .rwa-explorer .filter-group {
@@ -532,13 +599,22 @@ html[data-theme="dark"] .rwa-explorer {
   border: 1px solid var(--border);
   border-radius: 20px;
   box-shadow: 0 24px 64px rgba(16, 24, 40, 0.2);
-  max-width: 580px;
+  max-width: 600px;
   width: 100%;
   max-height: 88vh;
   overflow-y: auto;
   padding: 28px;
   animation: rwaSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+}
+
+.rwa-explorer .modal-drag-handle {
+  display: none;
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin: 0 auto 16px;
 }
 
 .rwa-explorer .modal-close {
@@ -571,7 +647,7 @@ html[data-theme="dark"] .rwa-explorer {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   padding-right: 40px;
 }
 
@@ -621,6 +697,88 @@ html[data-theme="dark"] .rwa-explorer {
   font-weight: 700;
 }
 
+/* ─── Share and Quick Actions ─── */
+.rwa-explorer .modal-quick-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.rwa-explorer .btn-share-card {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rwa-explorer .btn-share-card:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.rwa-explorer .btn-share-card.copied {
+  border-color: var(--success);
+  color: var(--success);
+  background: rgba(18, 107, 77, 0.1);
+}
+
+.rwa-explorer .wallet-feedback-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--success);
+  animation: rwaFadeIn 0.2s ease;
+}
+
+/* ─── Anti-Scam Verification Banner ─── */
+.rwa-explorer .modal-verification-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(18, 107, 77, 0.08);
+  border: 1px solid rgba(18, 107, 77, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+
+html[data-theme="dark"] .rwa-explorer .modal-verification-banner {
+  background: rgba(52, 211, 153, 0.08);
+  border-color: rgba(52, 211, 153, 0.25);
+}
+
+.rwa-explorer .verification-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rwa-explorer .verification-text strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--success);
+  margin-bottom: 2px;
+}
+
+.rwa-explorer .verification-text p {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ─── Modal Details Grid ─── */
 .rwa-explorer .modal-section {
   margin-bottom: 20px;
 }
@@ -680,21 +838,56 @@ html[data-theme="dark"] .rwa-explorer {
   display: inline-block;
 }
 
-.rwa-explorer .modal-description {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.5;
+/* ─── Which Chain to Choose Helper Box ─── */
+.rwa-explorer .modal-which-chain-box {
   background: var(--bg-card);
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 20px;
 }
+
+.rwa-explorer .which-chain-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.rwa-explorer .which-chain-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rwa-explorer .which-chain-list li {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  padding-left: 12px;
+  position: relative;
+}
+
+.rwa-explorer .which-chain-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.rwa-explorer .rh-brand-text { color: var(--robinhood-color); }
+.rwa-explorer .xstocks-brand-text { color: var(--xstocks-color); }
+.rwa-explorer .ondo-brand-text { color: var(--ondo-color); }
 
 /* ─── Platform Deployments in Modal ─── */
 .rwa-explorer .platform-cards-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .rwa-explorer .platform-card {
@@ -813,6 +1006,49 @@ html[data-theme="dark"] .rwa-explorer {
   border-color: #10b981;
 }
 
+/* ─── Web3 Wallet Action Buttons ─── */
+.rwa-explorer .web3-wallet-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.rwa-explorer .btn-web3-action {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid rgba(36, 92, 255, 0.3);
+  background: var(--accent-glow);
+  color: var(--accent);
+  transition: all var(--transition);
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rwa-explorer .btn-web3-action:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.rwa-explorer .btn-web3-secondary {
+  border-color: rgba(0, 200, 5, 0.3);
+  background: var(--robinhood-bg);
+  color: var(--robinhood-color);
+}
+
+.rwa-explorer .btn-web3-secondary:hover {
+  background: var(--robinhood-color);
+  color: #fff;
+  border-color: var(--robinhood-color);
+}
+
 .rwa-explorer .platform-card-footer {
   display: flex;
   justify-content: space-between;
@@ -847,6 +1083,61 @@ html[data-theme="dark"] .rwa-explorer {
 .rwa-explorer .swap-source-label {
   font-size: 0.75rem;
   color: var(--text-muted);
+}
+
+/* ─── Manual Network Box ─── */
+.rwa-explorer .manual-network-box {
+  background: var(--bg-card);
+  border: 1px dashed var(--robinhood-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  animation: rwaSlideUp 0.2s ease;
+}
+
+.rwa-explorer .manual-network-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.rwa-explorer .btn-close-sub {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.rwa-explorer .manual-network-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+.rwa-explorer .manual-network-grid code {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  background: var(--bg-surface);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.rwa-explorer .modal-description {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  background: var(--bg-card);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 
 /* ─── Swap Status ─── */
@@ -1010,6 +1301,7 @@ html[data-theme="dark"] .rwa-explorer {
 /* ─── Keyframes ─── */
 @keyframes rwaFadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes rwaSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes rwaSlideUpMobile { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
 @keyframes rwaSpin { to { transform: rotate(360deg); } }
 @keyframes rwaPulse {
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 200, 5, 0.7); }
@@ -1017,19 +1309,125 @@ html[data-theme="dark"] .rwa-explorer {
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 200, 5, 0); }
 }
 
-/* ─── Responsive ─── */
+/* ─── Responsive & Mobile Bottom Sheet ─── */
 @media (max-width: 640px) {
-  .rwa-explorer .header { padding: 24px 0 16px; }
-  .rwa-explorer .header-title { font-size: 1.8rem; }
-  .rwa-explorer .header-subtitle { font-size: 0.9rem; }
-  .rwa-explorer .stats-row { gap: 6px; }
-  .rwa-explorer .stat-badge { font-size: 0.75rem; padding: 5px 10px; }
-  .rwa-explorer .filter-bar { flex-direction: column; align-items: stretch; gap: 10px; }
-  .rwa-explorer .search-wrapper { min-width: 100%; }
-  .rwa-explorer .filter-group { justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
-  .rwa-explorer .filter-pill { font-size: 0.78rem; padding: 6px 12px; }
-  .rwa-explorer .modal-content { padding: 20px; }
-  .rwa-explorer .modal-info-grid { grid-template-columns: 1fr; }
-  .rwa-explorer .platform-contract-row { flex-direction: column; align-items: flex-start; }
-  .rwa-explorer .platform-actions { width: 100%; justify-content: flex-end; }
+  .rwa-explorer {
+    padding-bottom: 80px;
+  }
+  .rwa-explorer .container {
+    padding: 0 16px;
+  }
+  .rwa-explorer .header {
+    padding: 24px 0 16px;
+  }
+  .rwa-explorer .header-title {
+    font-size: 1.75rem;
+  }
+  .rwa-explorer .header-subtitle {
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+  .rwa-explorer .stats-row {
+    gap: 6px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .rwa-explorer .stats-row::-webkit-scrollbar {
+    display: none;
+  }
+  .rwa-explorer .stat-badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    flex-shrink: 0;
+  }
+  .rwa-explorer .filter-bar {
+    gap: 12px;
+    padding: 12px 0 16px;
+  }
+  .rwa-explorer .search-input {
+    font-size: 1rem; /* Prevents iOS auto-zoom on input focus */
+    padding: 12px 38px;
+  }
+  .rwa-explorer .filter-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .rwa-explorer .filter-group {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .rwa-explorer .filter-group::-webkit-scrollbar {
+    display: none;
+  }
+  .rwa-explorer .filter-pill {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    padding: 6px 12px;
+  }
+  
+  /* Mobile Bottom-Sheet Modal */
+  .rwa-explorer .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .rwa-explorer .modal-content {
+    max-height: 90vh;
+    border-radius: 24px 24px 0 0;
+    padding: 16px 20px 32px;
+    margin: 0;
+    max-width: 100%;
+    animation: rwaSlideUpMobile 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .rwa-explorer .modal-drag-handle {
+    display: block;
+  }
+  .rwa-explorer .modal-header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .rwa-explorer .modal-logo,
+  .rwa-explorer .modal-logo-fallback {
+    width: 48px;
+    height: 48px;
+  }
+  .rwa-explorer .modal-title-group h2 {
+    font-size: 1.15rem;
+  }
+  .rwa-explorer .platform-contract-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .rwa-explorer .platform-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .rwa-explorer .btn-copy,
+  .rwa-explorer .btn-explorer {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+  .rwa-explorer .web3-wallet-actions {
+    flex-direction: column;
+  }
+  .rwa-explorer .btn-web3-action {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  .rwa-explorer .buy-btn {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
 }

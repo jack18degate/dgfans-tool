@@ -15,6 +15,8 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
   const [swapResults, setSwapResults] = useState<Record<string, any>>({});
   const [logoError, setLogoError] = useState(false);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [walletFeedback, setWalletFeedback] = useState<string | null>(null);
+  const [showNetworkInfo, setShowNetworkInfo] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { t } = useI18n();
   const ocm = (t as any).onchainmarkets || {};
@@ -89,6 +91,68 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
     }, 2000);
   };
 
+  const shareAssetCard = () => {
+    if (typeof window === 'undefined') return;
+    const shareUrl = `${window.location.origin}/onchainmarkets?ticker=${asset.ticker}`;
+    copyToClipboard(shareUrl, 'share');
+  };
+
+  const addTokenToMetaMask = async (address: string, symbol: string, decimals: number = 18, image?: string) => {
+    if (typeof window !== 'undefined' && (window as any).ethereum) {
+      try {
+        const wasAdded = await (window as any).ethereum.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address,
+              symbol,
+              decimals,
+              image: image || asset.logo,
+            },
+          },
+        });
+        if (wasAdded) {
+          setWalletFeedback(ocm.tokenAdded || 'Token Aggiunto! ✓');
+          setTimeout(() => setWalletFeedback(null), 3000);
+        }
+      } catch (err) {
+        console.error('MetaMask watchAsset error:', err);
+      }
+    } else {
+      setShowNetworkInfo(true);
+    }
+  };
+
+  const addRobinhoodChainToMetaMask = async () => {
+    if (typeof window !== 'undefined' && (window as any).ethereum) {
+      try {
+        await (window as any).ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: '0x1237', // 4663 in hex
+              chainName: 'Robinhood Chain',
+              nativeCurrency: {
+                name: 'Ether',
+                symbol: 'ETH',
+                decimals: 18,
+              },
+              rpcUrls: ['https://rpc.mainnet.chain.robinhood.com'],
+              blockExplorerUrls: ['https://robinhoodchain.blockscout.com'],
+            },
+          ],
+        });
+        setWalletFeedback(ocm.networkAdded || 'Rete Aggiunta! ✓');
+        setTimeout(() => setWalletFeedback(null), 3000);
+      } catch (err) {
+        console.error('MetaMask addEthereumChain error:', err);
+      }
+    } else {
+      setShowNetworkInfo(true);
+    }
+  };
+
   const degateLink = (address: string, chain: string) =>
     `https://app.degate.com/en/swap/USDC/${address}?chain=${chain}&utm_source=dgtools`;
 
@@ -96,14 +160,15 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
 
   const labelDetails = ocm.details || 'Details';
   const labelDescription = ocm.description || 'Description';
-  const labelSwapCheck = ocm.swapCheckTitle || 'Swap Check ($100 USDC)';
-  const labelBuyOnDegate = ocm.buyOnDegate || 'Trade on DeGate';
   const labelContractAddresses = ocm.contractAddresses || 'Supported Networks & Contracts';
   const labelBuyOnEthereum = ocm.buyOnEthereum?.replace('{ticker}', asset.ticker) || `⟠ Trade ${asset.ticker} on Ethereum`;
   const labelBuyOnSolana = ocm.buyOnSolana?.replace('{ticker}', asset.ticker) || `◎ Trade ${asset.ticker} on Solana`;
   const labelCopied = ocm.copied || 'Copied! ✓';
   const labelCopy = ocm.copyAddress || 'Copy';
   const labelExplorer = ocm.viewExplorer || 'Explorer ↗';
+  const labelAddToWallet = ocm.addToWallet || 'Add to Wallet';
+  const labelAddNetwork = ocm.addNetwork || 'Add Robinhood Network';
+  const labelShare = ocm.shareAsset || 'Share Asset';
 
   const platformCount = (asset.platforms.ondo ? 1 : 0) +
     (asset.platforms.xstocks ? 1 : 0) +
@@ -116,6 +181,9 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
   return (
     <div className="modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
       <div className="modal-content">
+        {/* Mobile Drag Handle */}
+        <div className="modal-drag-handle" />
+
         <button
           className="modal-close"
           onClick={onClose}
@@ -150,6 +218,33 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                 </span>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Global Share & Wallet Feedback Row */}
+        <div className="modal-quick-actions-row">
+          <button
+            type="button"
+            className={`btn-share-card ${copiedKey === 'share' ? 'copied' : ''}`}
+            onClick={shareAssetCard}
+            title="Copy link to share this stock with clients"
+          >
+            {copiedKey === 'share' ? ocm.linkCopied || 'Link Copiato! ✓' : `🔗 ${labelShare}`}
+          </button>
+          {walletFeedback && (
+            <span className="wallet-feedback-badge">{walletFeedback}</span>
+          )}
+        </div>
+
+        {/* Anti-Scam Official Verification Notice */}
+        <div className="modal-verification-banner">
+          <div className="verification-icon">🛡️</div>
+          <div className="verification-text">
+            <strong>{ocm.verifiedContractTitle || 'Contratto Ufficiale Verificato (Anti-Scam 100%)'}</strong>
+            <p>
+              {ocm.verifiedContractDesc ||
+                'Asset ufficiale con collaterale 1:1 emesso da entità regolamentate (Robinhood Assets / Ondo / Backed). Diffida da copie non ufficiali.'}
+            </p>
           </div>
         </div>
 
@@ -188,19 +283,36 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
           </div>
         </div>
 
-        {/* Description */}
-        {asset.description && (
-          <div className="modal-section">
-            <div className="modal-section-title">{labelDescription}</div>
-            <p className="modal-description">
-              {asset.description.length > 280
-                ? asset.description.slice(0, 280) + '...'
-                : asset.description}
-            </p>
+        {/* Multi-Chain Comparison Helper */}
+        {platformCount > 1 && (
+          <div className="modal-which-chain-box">
+            <div className="which-chain-title">
+              💡 {ocm.whichChainTitle || 'Quale chain scegliere?'}
+            </div>
+            <ul className="which-chain-list">
+              {rhPlatform && (
+                <li>
+                  <strong className="rh-brand-text">Robinhood Chain:</strong>{' '}
+                  {ocm.rhChainFeature || 'Gas micro (<$0.01), mercato 24/5 continuo + overnight, dividendi reinvestiti.'}
+                </li>
+              )}
+              {asset.platforms.xstocks && (
+                <li>
+                  <strong className="xstocks-brand-text">Solana (xStocks):</strong>{' '}
+                  {ocm.solChainFeature || 'Velocità sub-second, fee micro (<$0.01), swap istantaneo su Jupiter / DeGate.'}
+                </li>
+              )}
+              {asset.platforms.ondo && (
+                <li>
+                  <strong className="ondo-brand-text">Ethereum (Ondo):</strong>{' '}
+                  {ocm.ethChainFeature || 'Massima profondità di liquidità istituzionale e sicurezza per importi elevati.'}
+                </li>
+              )}
+            </ul>
           </div>
         )}
 
-        {/* Multi-Chain Deployments & Contracts */}
+        {/* Multi-Chain Deployments & Verified Contracts */}
         <div className="modal-section">
           <div className="modal-section-title">{labelContractAddresses}</div>
           <div className="platform-cards-list">
@@ -239,6 +351,26 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                       {labelExplorer}
                     </a>
                   </div>
+                </div>
+
+                {/* Web3 Add to Wallet Buttons */}
+                <div className="web3-wallet-actions">
+                  <button
+                    type="button"
+                    className="btn-web3-action"
+                    onClick={() => addTokenToMetaMask(rhPlatform.address, rhPlatform.tokenSymbol, 18, rhPlatform.logo)}
+                    title="Aggiungi token a MetaMask o Rabby"
+                  >
+                    🦊 {labelAddToWallet}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-web3-action btn-web3-secondary"
+                    onClick={addRobinhoodChainToMetaMask}
+                    title="Aggiungi la rete Robinhood Chain al wallet con 1 clic"
+                  >
+                    🌐 {labelAddNetwork}
+                  </button>
                 </div>
 
                 <div className="platform-card-footer">
@@ -284,6 +416,18 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                       {labelExplorer}
                     </a>
                   </div>
+                </div>
+
+                {/* Web3 Add Token */}
+                <div className="web3-wallet-actions">
+                  <button
+                    type="button"
+                    className="btn-web3-action"
+                    onClick={() => addTokenToMetaMask(asset.platforms.ondo!.address, asset.platforms.ondo!.tokenSymbol, 18, asset.logo)}
+                    title="Aggiungi token a MetaMask"
+                  >
+                    🦊 {labelAddToWallet}
+                  </button>
                 </div>
 
                 {/* Swap Status */}
@@ -348,10 +492,45 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
           </div>
         </div>
 
+        {/* Manual Network Parameters Box if requested or wallet not found */}
+        {showNetworkInfo && (
+          <div className="manual-network-box">
+            <div className="manual-network-header">
+              <strong>Parametri Manuali Robinhood Chain (RPC):</strong>
+              <button
+                type="button"
+                className="btn-close-sub"
+                onClick={() => setShowNetworkInfo(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="manual-network-grid">
+              <div>Network: <code>Robinhood Chain</code></div>
+              <div>RPC URL: <code>https://rpc.mainnet.chain.robinhood.com</code></div>
+              <div>Chain ID: <code>4663</code></div>
+              <div>Symbol: <code>ETH</code></div>
+              <div>Explorer: <code>https://robinhoodchain.blockscout.com</code></div>
+            </div>
+          </div>
+        )}
+
+        {/* Description */}
+        {asset.description && (
+          <div className="modal-section">
+            <div className="modal-section-title">{labelDescription}</div>
+            <p className="modal-description">
+              {asset.description.length > 320
+                ? asset.description.slice(0, 320) + '...'
+                : asset.description}
+            </p>
+          </div>
+        )}
+
         {/* DeGate Trading Buttons */}
         {(asset.platforms.ondo || asset.platforms.xstocks) && (
           <div className="modal-section">
-            <div className="modal-section-title">{labelBuyOnDegate}</div>
+            <div className="modal-section-title">{ocm.buyOnDegate || 'Trade on DeGate DEX'}</div>
             <div className="buy-buttons">
               {asset.platforms.ondo && (
                 <a

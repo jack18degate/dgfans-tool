@@ -162,6 +162,19 @@ export interface Translations {
     etfsBadge: string;
     crossPlatformBadge: string;
     robinhoodBadge: string;
+    popularSearches: string;
+    verifiedContractTitle: string;
+    verifiedContractDesc: string;
+    whichChainTitle: string;
+    rhChainFeature: string;
+    solChainFeature: string;
+    ethChainFeature: string;
+    addToWallet: string;
+    addNetwork: string;
+    shareAsset: string;
+    linkCopied: string;
+    tokenAdded: string;
+    networkAdded: string;
   };
   tools: {
     compoundCalcTitle: string;
@@ -324,6 +337,19 @@ const en: Translations = {
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
     robinhoodBadge: '{count} Robinhood',
+    popularSearches: 'Popular searches',
+    verifiedContractTitle: 'Official Verified Contract (Anti-Scam 100%)',
+    verifiedContractDesc: 'Official token issued by regulated entities (Robinhood Assets / Ondo / Backed). Beware of unofficial or third-party copies.',
+    whichChainTitle: 'Which chain to choose?',
+    rhChainFeature: 'Robinhood Chain: Micro gas (<$0.01), 24/5 + overnight continuous market, auto-compounding dividends.',
+    solChainFeature: 'Solana (xStocks): Sub-second speed, micro fees (<$0.01), instant swap via Jupiter / DeGate.',
+    ethChainFeature: 'Ethereum (Ondo): Deepest institutional liquidity and max security for large orders.',
+    addToWallet: 'Add to Wallet',
+    addNetwork: 'Add Network to Wallet',
+    shareAsset: 'Share Asset',
+    linkCopied: 'Link Copied! ✓',
+    tokenAdded: 'Token Added! ✓',
+    networkAdded: 'Network Added! ✓',
   },
   tools: {
     compoundCalcTitle: 'Compound Interest Calculator',
@@ -486,6 +512,19 @@ const it: Translations = {
     etfsBadge: '{count} ETF',
     crossPlatformBadge: '{count} Cross-Platform',
     robinhoodBadge: '{count} Robinhood',
+    popularSearches: 'Ricerche rapide',
+    verifiedContractTitle: 'Contratto Ufficiale Verificato (Anti-Scam 100%)',
+    verifiedContractDesc: 'Token ufficiale emesso e garantito da entità regolamentate (Robinhood Assets / Ondo / Backed). Diffida da copie o token non ufficiali.',
+    whichChainTitle: 'Quale chain scegliere?',
+    rhChainFeature: 'Robinhood Chain: Gas micro (<$0.01), mercato 24/5 continuativo anche overnight, dividendi reinvestiti.',
+    solChainFeature: 'Solana (xStocks): Velocità sub-second, fee micro (<$0.01), swap istantaneo su Jupiter / DeGate.',
+    ethChainFeature: 'Ethereum (Ondo): Massima profondità di liquidità istituzionale e sicurezza per importi elevati.',
+    addToWallet: 'Aggiungi al Wallet',
+    addNetwork: 'Aggiungi Rete Robinhood',
+    shareAsset: 'Condividi Scheda',
+    linkCopied: 'Link Copiato! ✓',
+    tokenAdded: 'Token Aggiunto! ✓',
+    networkAdded: 'Rete Aggiunta! ✓',
   },
   tools: {
     compoundCalcTitle: 'Calcolatore di Interesse Composto',
@@ -648,6 +687,19 @@ const es: Translations = {
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
     robinhoodBadge: '{count} Robinhood',
+    popularSearches: 'Búsquedas populares',
+    verifiedContractTitle: 'Contrato Oficial Verificado (Anti-Scam 100%)',
+    verifiedContractDesc: 'Token oficial emitido por entidades reguladas (Robinhood Assets / Ondo / Backed). Desconfíe de copias o tokens no oficiales.',
+    whichChainTitle: '¿Qué red elegir?',
+    rhChainFeature: 'Robinhood Chain: Gas micro (<$0.01), mercado continuo 24/5 + overnight, dividendos reinvertidos.',
+    solChainFeature: 'Solana (xStocks): Velocidad sub-segundo, tarifas micro (<$0.01), swap instantáneo en Jupiter / DeGate.',
+    ethChainFeature: 'Ethereum (Ondo): Máxima profundidad de liquidez institucional y seguridad para grandes volúmenes.',
+    addToWallet: 'Añadir a Wallet',
+    addNetwork: 'Añadir Red Robinhood',
+    shareAsset: 'Compartir Ficha',
+    linkCopied: '¡Enlace Copiado! ✓',
+    tokenAdded: '¡Token Añadido! ✓',
+    networkAdded: '¡Red Añadida! ✓',
   },
   tools: {
     compoundCalcTitle: 'Calculadora de Interés Compuesto',
@@ -810,6 +862,19 @@ const zh: Translations = {
     etfsBadge: '{count} 个 ETFs',
     crossPlatformBadge: '{count} 个跨平台支持',
     robinhoodBadge: '{count} 个 Robinhood',
+    popularSearches: '热门快速搜索',
+    verifiedContractTitle: '官方验证合约 (100% 防诈骗)',
+    verifiedContractDesc: '由受监管机构 (Robinhood Assets / Ondo / Backed) 官方发行的真实资产代币。请警惕第三方同名仿冒代币。',
+    whichChainTitle: '如何选择网络？',
+    rhChainFeature: 'Robinhood Chain: 极低 Gas 费 (<$0.01)，24/5 连续全天候与夜盘交易，股息自动复利。',
+    solChainFeature: 'Solana (xStocks): 亚秒级确认速度，极低费率 (<$0.01)，可通过 Jupiter / DeGate 快速兑换。',
+    ethChainFeature: 'Ethereum (Ondo): 最深厚的机构级流动性，适合大额资金及最高安全性需求。',
+    addToWallet: '添加到钱包',
+    addNetwork: '添加 Robinhood 网络',
+    shareAsset: '分享资产',
+    linkCopied: '链接已复制! ✓',
+    tokenAdded: '已添加代币! ✓',
+    networkAdded: '已添加网络! ✓',
   },
   tools: {
     compoundCalcTitle: '复利计算器',
@@ -972,6 +1037,19 @@ const fr: Translations = {
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
     robinhoodBadge: '{count} Robinhood',
+    popularSearches: 'Recherches rapides',
+    verifiedContractTitle: 'Contrat Officiel Vérifié (100% Anti-Arnaque)',
+    verifiedContractDesc: 'Token officiel émis par des entités régulées (Robinhood Assets / Ondo / Backed). Méfiez-vous des copies non officielles de tiers.',
+    whichChainTitle: 'Quelle blockchain choisir ?',
+    rhChainFeature: 'Robinhood Chain : Frais micro (<0,01 $), marché continu 24/5 + overnight, dividendes réinvestis.',
+    solChainFeature: 'Solana (xStocks) : Vitesse sub-seconde, frais micro (<0,01 $), swap instantané via Jupiter / DeGate.',
+    ethChainFeature: 'Ethereum (Ondo) : Liquidité institutionnelle maximale et sécurité maximale pour gros volumes.',
+    addToWallet: 'Ajouter au Wallet',
+    addNetwork: 'Ajouter le Réseau Robinhood',
+    shareAsset: 'Partager la Fiche',
+    linkCopied: 'Lien copié ! ✓',
+    tokenAdded: 'Token ajouté ! ✓',
+    networkAdded: 'Réseau ajouté ! ✓',
   },
   tools: {
     compoundCalcTitle: 'Calculateur d\'intérêts composés',

@@ -5,6 +5,7 @@ import FilterBar from './FilterBar';
 import AssetCard, { Asset } from './AssetCard';
 import AssetModal from './AssetModal';
 import { useI18n } from '../../i18n';
+import { ASSET_ALIASES } from '@/lib/constants.js';
 
 interface AssetGridProps {
   assets: Asset[];
@@ -26,6 +27,28 @@ export default function AssetGrid({
   const { t } = useI18n();
   const ocm = (t as any).onchainmarkets || {};
 
+  // Parse URL search params on mount or when assets load (e.g. ?q=apple or ?ticker=SPCX)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlQuery = params.get('q') || params.get('search');
+      if (urlQuery && !searchQuery) {
+        setSearchQuery(urlQuery);
+      }
+
+      const targetTicker = params.get('ticker') || params.get('asset');
+      if (targetTicker && assets.length > 0) {
+        const match = assets.find(
+          (a) => a.ticker.toUpperCase() === targetTicker.toUpperCase()
+        );
+        if (match) setSelectedAsset(match);
+      }
+    } catch {
+      /* ignore SSR */
+    }
+  }, [assets]);
+
+  // Handle URL hash navigation (e.g. #robinhood, #ondo, #xstocks)
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();
@@ -79,19 +102,33 @@ export default function AssetGrid({
   const filtered = useMemo(() => {
     let result = assets;
 
-    // Search query filter
+    // Advanced search query filter (with synonyms & aliases)
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
-      result = result.filter(
-        (a) =>
-          a.ticker.toLowerCase().includes(q) ||
-          a.name.toLowerCase().includes(q) ||
-          (a.isin && a.isin.toLowerCase().includes(q)) ||
-          a.platforms.robinhood?.tokenSymbol?.toLowerCase().includes(q) ||
-          a.platforms.robinhood?.tokenName?.toLowerCase().includes(q) ||
-          a.platforms.ondo?.tokenSymbol?.toLowerCase().includes(q) ||
-          a.platforms.xstocks?.tokenSymbol?.toLowerCase().includes(q)
-      );
+
+      // Find any tickers matching aliases
+      const aliasTickers = new Set<string>();
+      for (const [k, v] of Object.entries(ASSET_ALIASES)) {
+        if (k.includes(q) || q.includes(k)) {
+          v.forEach((t) => aliasTickers.add(t.toUpperCase()));
+        }
+      }
+
+      result = result.filter((a) => {
+        const tUpper = a.ticker.toUpperCase();
+        if (aliasTickers.has(tUpper)) return true;
+        if (a.ticker.toLowerCase().includes(q)) return true;
+        if (a.name.toLowerCase().includes(q)) return true;
+        if (a.isin && a.isin.toLowerCase().includes(q)) return true;
+        if (a.platforms.robinhood?.tokenSymbol?.toLowerCase().includes(q)) return true;
+        if (a.platforms.robinhood?.tokenName?.toLowerCase().includes(q)) return true;
+        if (a.platforms.robinhood?.address?.toLowerCase().includes(q)) return true;
+        if (a.platforms.ondo?.tokenSymbol?.toLowerCase().includes(q)) return true;
+        if (a.platforms.ondo?.address?.toLowerCase().includes(q)) return true;
+        if (a.platforms.xstocks?.tokenSymbol?.toLowerCase().includes(q)) return true;
+        if (a.platforms.xstocks?.address?.toLowerCase().includes(q)) return true;
+        return false;
+      });
     }
 
     // Type filter
@@ -135,6 +172,25 @@ export default function AssetGrid({
     }
   };
 
+  const handleOpenAsset = (asset: Asset) => {
+    setSelectedAsset(asset);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('ticker', asset.ticker);
+      history.replaceState(null, '', url.toString());
+    } catch { /* ignore */ }
+  };
+
+  const handleCloseAsset = () => {
+    setSelectedAsset(null);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('ticker');
+      url.searchParams.delete('asset');
+      history.replaceState(null, '', url.toString());
+    } catch { /* ignore */ }
+  };
+
   return (
     <>
       <FilterBar
@@ -169,13 +225,13 @@ export default function AssetGrid({
       ) : (
         <div className="asset-grid">
           {filtered.map((asset) => (
-            <AssetCard key={asset.id} asset={asset} onClick={setSelectedAsset} />
+            <AssetCard key={asset.id} asset={asset} onClick={handleOpenAsset} />
           ))}
         </div>
       )}
 
       {selectedAsset && (
-        <AssetModal asset={selectedAsset} onClose={() => setSelectedAsset(null)} />
+        <AssetModal asset={selectedAsset} onClose={handleCloseAsset} />
       )}
     </>
   );
