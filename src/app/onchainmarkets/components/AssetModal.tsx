@@ -62,7 +62,9 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
     ? `https://app.degate.com/en/swap/USDC/${asset.platforms.xstocks.address}?chain=solana&utm_source=dgfans`
     : null;
 
-  const robinhoodLink = `https://robinhood.com/stocks/${asset.ticker}`;
+  const degateRhLink = asset.platforms.robinhood
+    ? `https://app.degate.com/en/swap/USDC/${asset.platforms.robinhood.address}?chain=robinhood&utm_source=dgfans`
+    : null;
 
   return (
     <div className="modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
@@ -126,9 +128,9 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
             </a>
           )}
 
-          {asset.platforms.robinhood && (
+          {degateRhLink && (
             <a
-              href={robinhoodLink}
+              href={degateRhLink}
               target="_blank"
               rel="noopener noreferrer"
               className="modal-buy-btn modal-buy-rh"

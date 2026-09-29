@@ -355,7 +355,7 @@ const en: Translations = {
     networkAdded: 'Network Added! ✓',
     buyOnDegateEth: 'Buy on DeGate (Ethereum) ↗',
     buyOnDegateSol: 'Buy on DeGate (Solana) ↗',
-    buyOnRobinhood: 'Buy on Robinhood ↗',
+    buyOnRobinhood: 'Buy on DeGate (Robinhood Chain) ↗',
   },
   tools: {
     compoundCalcTitle: 'Compound Interest Calculator',
@@ -533,7 +533,7 @@ const it: Translations = {
     networkAdded: 'Rete Aggiunta! ✓',
     buyOnDegateEth: 'Acquista su DeGate (Ethereum) ↗',
     buyOnDegateSol: 'Acquista su DeGate (Solana) ↗',
-    buyOnRobinhood: 'Acquista su Robinhood ↗',
+    buyOnRobinhood: 'Acquista su DeGate (Robinhood Chain) ↗',
   },
   tools: {
     compoundCalcTitle: 'Calcolatore di Interesse Composto',
@@ -711,7 +711,7 @@ const es: Translations = {
     networkAdded: '¡Red Añadida! ✓',
     buyOnDegateEth: 'Comprar en DeGate (Ethereum) ↗',
     buyOnDegateSol: 'Comprar en DeGate (Solana) ↗',
-    buyOnRobinhood: 'Comprar en Robinhood ↗',
+    buyOnRobinhood: 'Comprar en DeGate (Robinhood Chain) ↗',
   },
   tools: {
     compoundCalcTitle: 'Calculadora de Interés Compuesto',
@@ -889,7 +889,7 @@ const zh: Translations = {
     networkAdded: '已添加网络! ✓',
     buyOnDegateEth: '在 DeGate 购买 (Ethereum) ↗',
     buyOnDegateSol: '在 DeGate 购买 (Solana) ↗',
-    buyOnRobinhood: '在 Robinhood 购买 ↗',
+    buyOnRobinhood: '在 DeGate 购买 (Robinhood Chain) ↗',
   },
   tools: {
     compoundCalcTitle: '复利计算器',
@@ -1067,7 +1067,7 @@ const fr: Translations = {
     networkAdded: 'Réseau ajouté ! ✓',
     buyOnDegateEth: 'Acheter sur DeGate (Ethereum) ↗',
     buyOnDegateSol: 'Acheter sur DeGate (Solana) ↗',
-    buyOnRobinhood: 'Acheter sur Robinhood ↗',
+    buyOnRobinhood: 'Acheter sur DeGate (Robinhood Chain) ↗',
   },
   tools: {
     compoundCalcTitle: 'Calculateur d\'intérêts composés',
