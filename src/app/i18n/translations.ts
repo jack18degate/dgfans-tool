@@ -128,13 +128,26 @@ export interface Translations {
     stocks: string;
     etfs: string;
     both: string;
+    robinhood: string;
+    crossPlatform: string;
     showingAssets: string;
     noAssetsFound: string;
+    clearSearch: string;
     details: string;
     description: string;
     swapCheckTitle: string;
     buyOnDegate: string;
     contractAddresses: string;
+    copyAddress: string;
+    copied: string;
+    viewExplorer: string;
+    multiplier: string;
+    tradingStatus: string;
+    tradable: string;
+    viewGuide: string;
+    network: string;
+    robinhoodChainInfo: string;
+    multiChainBadge: string;
     buyOnEthereum: string;
     buyOnSolana: string;
     checkingSwap: string;
@@ -148,6 +161,7 @@ export interface Translations {
     stocksBadge: string;
     etfsBadge: string;
     crossPlatformBadge: string;
+    robinhoodBadge: string;
   };
   tools: {
     compoundCalcTitle: string;
@@ -269,20 +283,33 @@ const en: Translations = {
   },
   onchainmarkets: {
     title: 'RWA Token Explorer',
-    subtitle: 'Explore tokenized real-world assets across Ondo Markets & xStocks',
+    subtitle: 'Explore tokenized real-world assets across Ondo Markets, Robinhood Chain & xStocks',
     loadingAssets: 'Loading assets...',
     searchPlaceholder: 'Search by ticker, name, or ISIN...',
     all: 'All',
     stocks: 'Stocks',
     etfs: 'ETFs',
     both: 'Both',
+    robinhood: 'Robinhood',
+    crossPlatform: 'Cross-Platform',
     showingAssets: 'Showing {count} of {total} assets',
     noAssetsFound: 'No assets match your filters',
+    clearSearch: 'Clear search',
     details: 'Details',
     description: 'Description',
     swapCheckTitle: 'Swap Check ($100 USDC)',
     buyOnDegate: 'Buy on DeGate',
     contractAddresses: 'Contract Addresses',
+    copyAddress: 'Copy contract address',
+    copied: 'Copied! ✓',
+    viewExplorer: 'Explorer',
+    multiplier: 'Dividend Multiplier',
+    tradingStatus: 'Trading Status',
+    tradable: 'Tradable 24/5 + Overnight',
+    viewGuide: 'Read On-Chain Stocks Guide',
+    network: 'Network',
+    robinhoodChainInfo: 'Official stock token issued by Robinhood Assets (Jersey) Limited on Robinhood Chain.',
+    multiChainBadge: '{count} Chains',
     buyOnEthereum: '⟠ Buy {ticker} on Ethereum',
     buyOnSolana: '◎ Buy {ticker} on Solana',
     checkingSwap: 'Checking swap...',
@@ -296,6 +323,7 @@ const en: Translations = {
     stocksBadge: '{count} Stocks',
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
+    robinhoodBadge: '{count} Robinhood',
   },
   tools: {
     compoundCalcTitle: 'Compound Interest Calculator',
@@ -417,20 +445,33 @@ const it: Translations = {
   },
   onchainmarkets: {
     title: 'Esploratore RWA Token',
-    subtitle: 'Esplora gli asset reali tokenizzati su Ondo Markets e xStocks',
+    subtitle: 'Esplora gli asset reali tokenizzati su Ondo Markets, Robinhood Chain e xStocks',
     loadingAssets: 'Caricamento asset...',
     searchPlaceholder: 'Cerca per ticker, nome, o ISIN...',
     all: 'Tutti',
     stocks: 'Azioni',
     etfs: 'ETF',
     both: 'Entrambi',
+    robinhood: 'Robinhood',
+    crossPlatform: 'Cross-Platform',
     showingAssets: 'Mostrando {count} di {total} asset',
     noAssetsFound: 'Nessun asset corrisponde ai filtri',
+    clearSearch: 'Cancella ricerca',
     details: 'Dettagli',
     description: 'Descrizione',
     swapCheckTitle: 'Verifica Swap ($100 USDC)',
     buyOnDegate: 'Acquista su DeGate',
     contractAddresses: 'Indirizzi Smart Contract',
+    copyAddress: 'Copia indirizzo contratto',
+    copied: 'Copiato! ✓',
+    viewExplorer: 'Explorer',
+    multiplier: 'Moltiplicatore Dividendi',
+    tradingStatus: 'Stato di Trading',
+    tradable: 'Negoziabile 24/5 + Overnight',
+    viewGuide: 'Leggi la Guida alle Azioni On-Chain',
+    network: 'Rete',
+    robinhoodChainInfo: 'Token azionario ufficiale emesso da Robinhood Assets (Jersey) Limited su Robinhood Chain.',
+    multiChainBadge: '{count} Chain',
     buyOnEthereum: '⟠ Acquista {ticker} su Ethereum',
     buyOnSolana: '◎ Acquista {ticker} su Solana',
     checkingSwap: 'Verifica swap...',
@@ -444,6 +485,7 @@ const it: Translations = {
     stocksBadge: '{count} Azioni',
     etfsBadge: '{count} ETF',
     crossPlatformBadge: '{count} Cross-Platform',
+    robinhoodBadge: '{count} Robinhood',
   },
   tools: {
     compoundCalcTitle: 'Calcolatore di Interesse Composto',
@@ -565,20 +607,33 @@ const es: Translations = {
   },
   onchainmarkets: {
     title: 'Explorador RWA Token',
-    subtitle: 'Explore activos tokenizados del mundo real en Ondo Markets y xStocks',
+    subtitle: 'Explore activos tokenizados del mundo real en Ondo Markets, Robinhood Chain y xStocks',
     loadingAssets: 'Cargando activos...',
     searchPlaceholder: 'Buscar por ticker, nombre o ISIN...',
     all: 'Todos',
     stocks: 'Acciones',
     etfs: 'ETFs',
     both: 'Ambos',
+    robinhood: 'Robinhood',
+    crossPlatform: 'Cross-Platform',
     showingAssets: 'Mostrando {count} de {total} activos',
     noAssetsFound: 'Ningún activo coincide con los filtros',
+    clearSearch: 'Limpiar búsqueda',
     details: 'Detalles',
     description: 'Descripción',
     swapCheckTitle: 'Verificar Swap ($100 USDC)',
     buyOnDegate: 'Comprar en DeGate',
     contractAddresses: 'Direcciones de Contrato',
+    copyAddress: 'Copiar dirección del contrato',
+    copied: '¡Copiado! ✓',
+    viewExplorer: 'Explorador',
+    multiplier: 'Multiplicador de Dividendos',
+    tradingStatus: 'Estado de Negociación',
+    tradable: 'Negociable 24/5 + Overnight',
+    viewGuide: 'Leer Guía de Acciones On-Chain',
+    network: 'Red',
+    robinhoodChainInfo: 'Token bursátil oficial emitido por Robinhood Assets (Jersey) Limited en Robinhood Chain.',
+    multiChainBadge: '{count} Cadenas',
     buyOnEthereum: '⟠ Comprar {ticker} en Ethereum',
     buyOnSolana: '◎ Comprar {ticker} en Solana',
     checkingSwap: 'Comprobando swap...',
@@ -592,6 +647,7 @@ const es: Translations = {
     stocksBadge: '{count} Acciones',
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
+    robinhoodBadge: '{count} Robinhood',
   },
   tools: {
     compoundCalcTitle: 'Calculadora de Interés Compuesto',
@@ -713,20 +769,33 @@ const zh: Translations = {
   },
   onchainmarkets: {
     title: '链上 RWA 代币浏览器',
-    subtitle: '探索 Ondo Markets 和 xStocks 上的链上真实世界资产 (RWA)',
+    subtitle: '探索 Ondo Markets、Robinhood Chain 和 xStocks 上的链上真实世界资产 (RWA)',
     loadingAssets: '正在加载资产...',
     searchPlaceholder: '按代币简称、名称或 ISIN 搜索...',
     all: '全部',
     stocks: '股票',
     etfs: 'ETFs',
-    both: '双平台',
+    both: '跨平台',
+    robinhood: 'Robinhood',
+    crossPlatform: '跨平台支持',
     showingAssets: '显示 {count} / {total} 个资产',
     noAssetsFound: '没有资产匹配您的筛选条件',
+    clearSearch: '清除搜索',
     details: '代币详情',
     description: '资产描述',
     swapCheckTitle: '兑换检测 ($100 USDC)',
     buyOnDegate: '在 DeGate 交易',
     contractAddresses: '合约地址',
+    copyAddress: '复制合约地址',
+    copied: '已复制! ✓',
+    viewExplorer: '区块浏览器',
+    multiplier: '股息复利乘数',
+    tradingStatus: '交易状态',
+    tradable: '支持 24/5 全天候与夜盘交易',
+    viewGuide: '查看链上美股指南',
+    network: '网络',
+    robinhoodChainInfo: '由 Robinhood Assets (Jersey) Limited 在 Robinhood Chain 上发行的官方美股代币。',
+    multiChainBadge: '{count} 条链',
     buyOnEthereum: '⟠ 在 Ethereum 购买 {ticker}',
     buyOnSolana: '◎ 在 Solana 购买 {ticker}',
     checkingSwap: '正在检测兑换路径...',
@@ -739,7 +808,8 @@ const zh: Translations = {
     totalAssetsBadge: '{count} 个总资产',
     stocksBadge: '{count} 个股票',
     etfsBadge: '{count} 个 ETFs',
-    crossPlatformBadge: '{count} 个双平台支持',
+    crossPlatformBadge: '{count} 个跨平台支持',
+    robinhoodBadge: '{count} 个 Robinhood',
   },
   tools: {
     compoundCalcTitle: '复利计算器',
@@ -861,20 +931,33 @@ const fr: Translations = {
   },
   onchainmarkets: {
     title: 'Explorateur de tokens RWA',
-    subtitle: 'Explorez les actifs réels tokenisés sur Ondo Markets et xStocks',
+    subtitle: 'Explorez les actifs réels tokenisés sur Ondo Markets, Robinhood Chain et xStocks',
     loadingAssets: 'Chargement des actifs...',
     searchPlaceholder: 'Rechercher par ticker, nom ou ISIN...',
     all: 'Tous',
     stocks: 'Actions',
     etfs: 'ETFs',
     both: 'Les deux',
+    robinhood: 'Robinhood',
+    crossPlatform: 'Cross-Platform',
     showingAssets: 'Affichage de {count} sur {total} actifs',
     noAssetsFound: 'Aucun actif ne correspond aux filtres',
+    clearSearch: 'Effacer la recherche',
     details: 'Détails',
     description: 'Description',
     swapCheckTitle: 'Vérification Swap ($100 USDC)',
     buyOnDegate: 'Acheter sur DeGate',
     contractAddresses: 'Adresses de contrat',
+    copyAddress: 'Copier l\'adresse du contrat',
+    copied: 'Copié ! ✓',
+    viewExplorer: 'Explorateur',
+    multiplier: 'Multiplicateur de dividendes',
+    tradingStatus: 'Statut de négociation',
+    tradable: 'Négociable 24/5 + Overnight',
+    viewGuide: 'Lire le guide des actions on-chain',
+    network: 'Réseau',
+    robinhoodChainInfo: 'Token d\'action officiel émis par Robinhood Assets (Jersey) Limited sur Robinhood Chain.',
+    multiChainBadge: '{count} Blockchains',
     buyOnEthereum: '⟠ Acheter {ticker} sur Ethereum',
     buyOnSolana: '◎ Acheter {ticker} sur Solana',
     checkingSwap: 'Vérification du swap...',
@@ -888,6 +971,7 @@ const fr: Translations = {
     stocksBadge: '{count} actions',
     etfsBadge: '{count} ETFs',
     crossPlatformBadge: '{count} Cross-Platform',
+    robinhoodBadge: '{count} Robinhood',
   },
   tools: {
     compoundCalcTitle: 'Calculateur d\'intérêts composés',

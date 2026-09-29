@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import SwapStatus from './SwapStatus';
 import { Asset } from './AssetCard';
 import { useI18n } from '../../i18n';
+import Link from 'next/link';
 
 interface AssetModalProps {
   asset: Asset;
@@ -13,6 +14,7 @@ interface AssetModalProps {
 export default function AssetModal({ asset, onClose }: AssetModalProps) {
   const [swapResults, setSwapResults] = useState<Record<string, any>>({});
   const [logoError, setLogoError] = useState(false);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { t } = useI18n();
   const ocm = (t as any).onchainmarkets || {};
@@ -36,36 +38,39 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
     };
   }, []);
 
+  // Swap quote checks for Ethereum (Ondo) and Solana (xStocks)
   useEffect(() => {
     const controller = new AbortController();
-    const platforms = Object.entries(asset.platforms);
+    const platformsToCheck = [];
+    if (asset.platforms.ondo) platformsToCheck.push(['ondo', asset.platforms.ondo]);
+    if (asset.platforms.xstocks) platformsToCheck.push(['xstocks', asset.platforms.xstocks]);
 
     const initial: Record<string, { status: string }> = {};
-    platforms.forEach(([platform]) => {
-      initial[platform] = { status: 'LOADING' };
+    platformsToCheck.forEach(([p]) => {
+      initial[p as string] = { status: 'LOADING' };
     });
     setSwapResults(initial);
 
     (async () => {
-      for (const [platform, info] of platforms) {
+      for (const [platform, info] of platformsToCheck) {
         if (!info) continue;
         if (controller.signal.aborted) break;
         try {
           const params = new URLSearchParams({
-            address: info.address,
-            chain: info.chain,
-            symbol: info.tokenSymbol,
+            address: (info as any).address,
+            chain: (info as any).chain,
+            symbol: (info as any).tokenSymbol,
           });
           const res = await fetch(`/api/check-swap?${params}`, {
             signal: controller.signal,
           });
           const data = await res.json();
-          setSwapResults((prev) => ({ ...prev, [platform]: data }));
+          setSwapResults((prev) => ({ ...prev, [platform as string]: data }));
         } catch (err: any) {
           if (err.name !== 'AbortError') {
             setSwapResults((prev) => ({
               ...prev,
-              [platform]: { status: 'ERROR', details: 'Request failed' },
+              [platform as string]: { status: 'ERROR', details: 'Request failed' },
             }));
           }
         }
@@ -75,6 +80,15 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
     return () => controller.abort();
   }, [asset]);
 
+  const copyToClipboard = (text: string, key: string) => {
+    if (!navigator?.clipboard) return;
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => {
+      setCopiedKey((curr) => (curr === key ? null : curr));
+    }, 2000);
+  };
+
   const degateLink = (address: string, chain: string) =>
     `https://app.degate.com/en/swap/USDC/${address}?chain=${chain}&utm_source=dgtools`;
 
@@ -83,15 +97,33 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
   const labelDetails = ocm.details || 'Details';
   const labelDescription = ocm.description || 'Description';
   const labelSwapCheck = ocm.swapCheckTitle || 'Swap Check ($100 USDC)';
-  const labelBuyOnDegate = ocm.buyOnDegate || 'Buy on DeGate';
-  const labelContractAddresses = ocm.contractAddresses || 'Contract Addresses';
-  const labelBuyOnEthereum = ocm.buyOnEthereum?.replace('{ticker}', asset.ticker) || `⟠ Buy ${asset.ticker} on Ethereum`;
-  const labelBuyOnSolana = ocm.buyOnSolana?.replace('{ticker}', asset.ticker) || `◎ Buy ${asset.ticker} on Solana`;
+  const labelBuyOnDegate = ocm.buyOnDegate || 'Trade on DeGate';
+  const labelContractAddresses = ocm.contractAddresses || 'Supported Networks & Contracts';
+  const labelBuyOnEthereum = ocm.buyOnEthereum?.replace('{ticker}', asset.ticker) || `⟠ Trade ${asset.ticker} on Ethereum`;
+  const labelBuyOnSolana = ocm.buyOnSolana?.replace('{ticker}', asset.ticker) || `◎ Trade ${asset.ticker} on Solana`;
+  const labelCopied = ocm.copied || 'Copied! ✓';
+  const labelCopy = ocm.copyAddress || 'Copy';
+  const labelExplorer = ocm.viewExplorer || 'Explorer ↗';
+
+  const platformCount = (asset.platforms.ondo ? 1 : 0) +
+    (asset.platforms.xstocks ? 1 : 0) +
+    (asset.platforms.robinhood ? 1 : 0);
+
+  const rhPlatform = asset.platforms.robinhood;
+  const rhMultiplier = rhPlatform?.multiplier;
+  const hasDividendGrowth = rhMultiplier && parseFloat(rhMultiplier) > 1.000001;
 
   return (
     <div className="modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
       <div className="modal-content">
-        <button className="modal-close" onClick={onClose}>✕</button>
+        <button
+          className="modal-close"
+          onClick={onClose}
+          aria-label="Close dialog"
+          title="Close (Esc)"
+        >
+          ✕
+        </button>
 
         {/* Header */}
         <div className="modal-header">
@@ -107,17 +139,21 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
           )}
           <div className="modal-title-group">
             <h2>{asset.name}</h2>
-            <span className="modal-ticker">
-              {asset.ticker}
-              {' '}
+            <div className="modal-subtitle-row">
+              <span className="modal-ticker">{asset.ticker}</span>
               <span className={`badge ${asset.type === 'ETF' ? 'badge-etf' : 'badge-stock'}`}>
                 {asset.type}
               </span>
-            </span>
+              {platformCount > 1 && (
+                <span className="badge badge-multichain">
+                  {platformCount} Chains
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Info */}
+        {/* Overview Stats */}
         <div className="modal-section">
           <div className="modal-section-title">{labelDetails}</div>
           <div className="modal-info-grid">
@@ -133,110 +169,213 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                 <div className="modal-info-value">{asset.sector}</div>
               </div>
             )}
-            {asset.platforms.ondo && (
-              <div className="modal-info-item">
-                <div className="modal-info-label">Ondo Token</div>
-                <div className="modal-info-value">{asset.platforms.ondo.tokenSymbol}</div>
+            {rhPlatform && (
+              <div className="modal-info-item modal-info-rh">
+                <div className="modal-info-label">Robinhood Chain</div>
+                <div className="modal-info-value">
+                  <span className="rh-status-dot" /> Active (24/5 + Overnight)
+                </div>
               </div>
             )}
-            {asset.platforms.xstocks && (
-              <div className="modal-info-item">
-                <div className="modal-info-label">xStocks Token</div>
-                <div className="modal-info-value">{asset.platforms.xstocks.tokenSymbol}</div>
+            {hasDividendGrowth && (
+              <div className="modal-info-item modal-info-multiplier">
+                <div className="modal-info-label">{ocm.multiplier || 'Dividend Multiplier'}</div>
+                <div className="modal-info-value">
+                  {parseFloat(rhMultiplier).toFixed(6)}x
+                </div>
               </div>
             )}
           </div>
         </div>
 
+        {/* Description */}
         {asset.description && (
           <div className="modal-section">
             <div className="modal-section-title">{labelDescription}</div>
             <p className="modal-description">
-              {asset.description.length > 200
-                ? asset.description.slice(0, 200) + '...'
+              {asset.description.length > 280
+                ? asset.description.slice(0, 280) + '...'
                 : asset.description}
             </p>
           </div>
         )}
 
-        {/* Swap Check */}
+        {/* Multi-Chain Deployments & Contracts */}
         <div className="modal-section">
-          <div className="modal-section-title">{labelSwapCheck}</div>
-          {asset.platforms.ondo && (
-            <div className="swap-check-row">
-              <div className="swap-check-label">
-                <span className="badge badge-ondo">Ondo</span>
-                Ethereum
-              </div>
-              <SwapStatus
-                status={swapResults.ondo?.status || 'LOADING'}
-                details={swapResults.ondo?.details}
-                priceUsd={swapResults.ondo?.priceUsd}
-              />
-            </div>
-          )}
-          {asset.platforms.xstocks && (
-            <div className="swap-check-row">
-              <div className="swap-check-label">
-                <span className="badge badge-xstocks">xStocks</span>
-                Solana
-              </div>
-              <SwapStatus
-                status={swapResults.xstocks?.status || 'LOADING'}
-                details={swapResults.xstocks?.details}
-                priceUsd={swapResults.xstocks?.priceUsd}
-              />
-            </div>
-          )}
-        </div>
+          <div className="modal-section-title">{labelContractAddresses}</div>
+          <div className="platform-cards-list">
 
-        {/* Buy Buttons */}
-        <div className="modal-section">
-          <div className="modal-section-title">{labelBuyOnDegate}</div>
-          <div className="buy-buttons">
-            {asset.platforms.ondo && (
-              <a
-                href={degateLink(asset.platforms.ondo.address, 'ethereum')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="buy-btn buy-btn-eth"
-              >
-                {labelBuyOnEthereum}
-              </a>
+            {/* Robinhood Chain Deployment */}
+            {rhPlatform && (
+              <div className="platform-card platform-card-robinhood">
+                <div className="platform-card-header">
+                  <div className="platform-brand">
+                    <span className="platform-indicator rh-indicator" />
+                    <strong>Robinhood Chain</strong>
+                    <span className="platform-chain-tag">Arbitrum Nitro L2 (4663)</span>
+                  </div>
+                  <span className="badge badge-robinhood">{rhPlatform.tokenSymbol}</span>
+                </div>
+
+                <div className="platform-contract-row">
+                  <code className="platform-address" title={rhPlatform.address}>
+                    {rhPlatform.address}
+                  </code>
+                  <div className="platform-actions">
+                    <button
+                      type="button"
+                      className={`btn-copy ${copiedKey === 'rh' ? 'copied' : ''}`}
+                      onClick={() => copyToClipboard(rhPlatform.address, 'rh')}
+                      title={labelCopy}
+                    >
+                      {copiedKey === 'rh' ? labelCopied : '📋 ' + labelCopy}
+                    </button>
+                    <a
+                      href={rhPlatform.explorerUrl || `https://robinhoodchain.blockscout.com/token/${rhPlatform.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-explorer"
+                    >
+                      {labelExplorer}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="platform-card-footer">
+                  <span>🟢 24/5 Market &amp; Overnight Trading</span>
+                  <Link href="/onchainstocks" className="rh-guide-link">
+                    Guida Azioni On-Chain ↗
+                  </Link>
+                </div>
+              </div>
             )}
+
+            {/* Ethereum (Ondo) Deployment */}
+            {asset.platforms.ondo && (
+              <div className="platform-card platform-card-ondo">
+                <div className="platform-card-header">
+                  <div className="platform-brand">
+                    <span className="platform-indicator ondo-indicator" />
+                    <strong>Ondo Finance</strong>
+                    <span className="platform-chain-tag">Ethereum Mainnet</span>
+                  </div>
+                  <span className="badge badge-ondo">{asset.platforms.ondo.tokenSymbol}</span>
+                </div>
+
+                <div className="platform-contract-row">
+                  <code className="platform-address" title={asset.platforms.ondo.address}>
+                    {asset.platforms.ondo.address}
+                  </code>
+                  <div className="platform-actions">
+                    <button
+                      type="button"
+                      className={`btn-copy ${copiedKey === 'ondo' ? 'copied' : ''}`}
+                      onClick={() => copyToClipboard(asset.platforms.ondo!.address, 'ondo')}
+                      title={labelCopy}
+                    >
+                      {copiedKey === 'ondo' ? labelCopied : '📋 ' + labelCopy}
+                    </button>
+                    <a
+                      href={`https://etherscan.io/token/${asset.platforms.ondo.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-explorer"
+                    >
+                      {labelExplorer}
+                    </a>
+                  </div>
+                </div>
+
+                {/* Swap Status */}
+                <div className="platform-swap-row">
+                  <span className="swap-source-label">CowSwap Quote ($100 USDC):</span>
+                  <SwapStatus
+                    status={swapResults.ondo?.status || 'LOADING'}
+                    details={swapResults.ondo?.details}
+                    priceUsd={swapResults.ondo?.priceUsd}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Solana (xStocks) Deployment */}
             {asset.platforms.xstocks && (
-              <a
-                href={degateLink(asset.platforms.xstocks.address, 'solana')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="buy-btn buy-btn-sol"
-              >
-                {labelBuyOnSolana}
-              </a>
+              <div className="platform-card platform-card-xstocks">
+                <div className="platform-card-header">
+                  <div className="platform-brand">
+                    <span className="platform-indicator xstocks-indicator" />
+                    <strong>xStocks (Backed)</strong>
+                    <span className="platform-chain-tag">Solana</span>
+                  </div>
+                  <span className="badge badge-xstocks">{asset.platforms.xstocks.tokenSymbol}</span>
+                </div>
+
+                <div className="platform-contract-row">
+                  <code className="platform-address" title={asset.platforms.xstocks.address}>
+                    {asset.platforms.xstocks.address}
+                  </code>
+                  <div className="platform-actions">
+                    <button
+                      type="button"
+                      className={`btn-copy ${copiedKey === 'xstocks' ? 'copied' : ''}`}
+                      onClick={() => copyToClipboard(asset.platforms.xstocks!.address, 'xstocks')}
+                      title={labelCopy}
+                    >
+                      {copiedKey === 'xstocks' ? labelCopied : '📋 ' + labelCopy}
+                    </button>
+                    <a
+                      href={`https://solscan.io/token/${asset.platforms.xstocks.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-explorer"
+                    >
+                      {labelExplorer}
+                    </a>
+                  </div>
+                </div>
+
+                {/* Swap Status */}
+                <div className="platform-swap-row">
+                  <span className="swap-source-label">Jupiter Quote ($100 USDC):</span>
+                  <SwapStatus
+                    status={swapResults.xstocks?.status || 'LOADING'}
+                    details={swapResults.xstocks?.details}
+                    priceUsd={swapResults.xstocks?.priceUsd}
+                  />
+                </div>
+              </div>
             )}
           </div>
         </div>
 
-        {/* Contract Addresses */}
-        <div className="modal-section">
-          <div className="modal-section-title">{labelContractAddresses}</div>
-          {asset.platforms.ondo && (
-            <div className="modal-info-item" style={{ marginBottom: 8 }}>
-              <div className="modal-info-label">Ethereum (Ondo)</div>
-              <div className="modal-info-value" style={{ fontSize: '0.72rem' }}>
-                {asset.platforms.ondo.address}
-              </div>
+        {/* DeGate Trading Buttons */}
+        {(asset.platforms.ondo || asset.platforms.xstocks) && (
+          <div className="modal-section">
+            <div className="modal-section-title">{labelBuyOnDegate}</div>
+            <div className="buy-buttons">
+              {asset.platforms.ondo && (
+                <a
+                  href={degateLink(asset.platforms.ondo.address, 'ethereum')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="buy-btn buy-btn-eth"
+                >
+                  {labelBuyOnEthereum} ↗
+                </a>
+              )}
+              {asset.platforms.xstocks && (
+                <a
+                  href={degateLink(asset.platforms.xstocks.address, 'solana')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="buy-btn buy-btn-sol"
+                >
+                  {labelBuyOnSolana} ↗
+                </a>
+              )}
             </div>
-          )}
-          {asset.platforms.xstocks && (
-            <div className="modal-info-item">
-              <div className="modal-info-label">Solana (xStocks)</div>
-              <div className="modal-info-value" style={{ fontSize: '0.72rem' }}>
-                {asset.platforms.xstocks.address}
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

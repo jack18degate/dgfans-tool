@@ -36,17 +36,17 @@ export const JUPITER_DELAY      = 2200;  // Jupiter keyless rate-limit (~0.5 r/s
 // Used to classify assets whose underlying ticker matches a US-listed ETF.
 export const ETF_TICKERS = new Set([
   // Bond / Fixed Income
-  'SGOV', 'JAAA', 'JPST', 'FLBL', 'FAAA',
+  'SGOV', 'JAAA', 'JPST', 'FLBL', 'FAAA', 'BND', 'SHY',
   // Broad Equity
-  'VOO', 'VT', 'VUG', 'VXUS', 'VGK', 'VTI',
+  'VOO', 'VT', 'VUG', 'VXUS', 'VGK', 'VTI', 'SPMO', 'SCHD',
   // Semiconductor
   'SMH', 'SOXX', 'SOXL',
   // Small / Mid Cap
   'IWM', 'IJR', 'FLQM', 'FSML',
   // International / Country
-  'IEMG', 'SCHF', 'EWY', 'EWU', 'EWG', 'EWQ', 'FEZ', 'DAX',
+  'IEMG', 'SCHF', 'EWY', 'EWU', 'EWG', 'EWQ', 'FEZ', 'DAX', 'EWT', 'INDA',
   // Sector
-  'ITA', 'XLE', 'XOP', 'MOO',
+  'ITA', 'XLE', 'XOP', 'MOO', 'XLK',
   // Index
   'SPY', 'QQQ', 'TQQQ', 'SQQQ',
   // Commodity
@@ -54,8 +54,14 @@ export const ETF_TICKERS = new Set([
   // Crypto
   'BITX',
   // Thematic / Other
-  'VCX', 'YLDE', 'IQM', 'VIDA', 'USAR', 'USPX', 'FGDL',
+  'VCX', 'YLDE', 'IQM', 'VIDA', 'USPX', 'FGDL',
 ]);
+
+// ─── Robinhood Chain Parameters ───────────────────────────────────────────
+export const ROBINHOOD_CHAIN_ID = 4663;
+export const ROBINHOOD_RPC_URL  = 'https://rpc.mainnet.chain.robinhood.com';
+export const ROBINHOOD_EXPLORER_TOKEN = (addr) => `https://robinhoodchain.blockscout.com/token/${addr}`;
+export const ROBINHOOD_API_URL  = 'https://api.robinhood.com/rhj/assets';
 
 // ─── Swap Status Enum ───────────────────────────────────────────────────────
 export const SwapStatus = {

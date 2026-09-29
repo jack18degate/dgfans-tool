@@ -4,6 +4,7 @@ import React from 'react';
 import { useI18n } from '../../i18n';
 
 interface FilterBarProps {
+  searchQuery: string;
   onSearchChange: (query: string) => void;
   typeFilter: string;
   platformFilter: string;
@@ -15,11 +16,13 @@ interface FilterBarProps {
     etfs: number;
     ondo: number;
     xstocks: number;
+    robinhood: number;
     both: number;
   };
 }
 
 export default function FilterBar({
+  searchQuery,
   onSearchChange,
   typeFilter,
   platformFilter,
@@ -34,7 +37,9 @@ export default function FilterBar({
   const labelAll = ocm.all || 'All';
   const labelStocks = ocm.stocks || 'Stocks';
   const labelEtfs = ocm.etfs || 'ETFs';
-  const labelBoth = ocm.both || 'Both';
+  const labelRobinhood = ocm.robinhood || 'Robinhood';
+  const labelBoth = ocm.crossPlatform || ocm.both || 'Cross-Platform';
+  const labelClear = ocm.clearSearch || 'Clear';
 
   return (
     <div className="filter-bar">
@@ -44,18 +49,31 @@ export default function FilterBar({
           type="text"
           className="search-input"
           placeholder={searchPlaceholder}
+          value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
         />
+        {searchQuery && (
+          <button
+            type="button"
+            className="search-clear-btn"
+            onClick={() => onSearchChange('')}
+            aria-label={labelClear}
+            title={labelClear}
+          >
+            ✕
+          </button>
+        )}
       </div>
 
-      <div className="filter-group">
+      <div className="filter-group type-filter-group">
         {[
           { key: 'All', label: `${labelAll} (${counts.total})` },
           { key: 'Stocks', label: `${labelStocks} (${counts.stocks})` },
-          { key: 'ETFs', label: `${labelEtfs} (${counts.etfs})` }
+          { key: 'ETFs', label: `${labelEtfs} (${counts.etfs})` },
         ].map((item) => (
           <button
             key={item.key}
+            type="button"
             className={`filter-pill ${typeFilter === item.key ? 'active' : ''}`}
             onClick={() => onTypeChange(item.key)}
           >
@@ -64,20 +82,30 @@ export default function FilterBar({
         ))}
       </div>
 
-      <div className="filter-group">
+      <div className="filter-group platform-filter-group">
         {[
           { key: 'All', label: labelAll },
+          { key: 'Robinhood', label: `${labelRobinhood} (${counts.robinhood})` },
           { key: 'Ondo', label: `Ondo (${counts.ondo})` },
           { key: 'xStocks', label: `xStocks (${counts.xstocks})` },
-          { key: 'Both', label: `${labelBoth} (${counts.both})` }
+          { key: 'Both', label: `${labelBoth} (${counts.both})` },
         ].map((item) => {
           const isActive = platformFilter === item.key;
           let cls = 'filter-pill';
-          if (isActive && item.key === 'Ondo') cls += ' active-ondo';
-          else if (isActive && item.key === 'xStocks') cls += ' active-xstocks';
-          else if (isActive) cls += ' active';
+          if (isActive) {
+            if (item.key === 'Robinhood') cls += ' active-robinhood';
+            else if (item.key === 'Ondo') cls += ' active-ondo';
+            else if (item.key === 'xStocks') cls += ' active-xstocks';
+            else if (item.key === 'Both') cls += ' active-both';
+            else cls += ' active';
+          }
           return (
-            <button key={item.key} className={cls} onClick={() => onPlatformChange(item.key)}>
+            <button
+              key={item.key}
+              type="button"
+              className={cls}
+              onClick={() => onPlatformChange(item.key)}
+            >
               {item.label}
             </button>
           );
