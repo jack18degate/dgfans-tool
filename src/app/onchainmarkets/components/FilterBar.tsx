@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useI18n } from '../../i18n';
-import { TRENDING_SEARCHES } from '@/lib/constants.js';
 
 interface FilterBarProps {
   searchQuery: string;
@@ -41,7 +40,6 @@ export default function FilterBar({
   const labelRobinhood = ocm.robinhood || 'Robinhood';
   const labelBoth = ocm.crossPlatform || ocm.both || 'Cross-Platform';
   const labelClear = ocm.clearSearch || 'Clear';
-  const labelPopular = ocm.popularSearches || 'Ricerche rapide';
 
   return (
     <div className="filter-bar">
@@ -66,26 +64,6 @@ export default function FilterBar({
             ✕
           </button>
         )}
-      </div>
-
-      {/* Trending / Popular Quick Searches */}
-      <div className="trending-chips-row">
-        <span className="trending-label">{labelPopular}:</span>
-        <div className="trending-chips-scroll">
-          {TRENDING_SEARCHES.map((chip) => {
-            const isChipActive = searchQuery.toUpperCase() === chip.query.toUpperCase();
-            return (
-              <button
-                key={chip.query}
-                type="button"
-                className={`trending-chip ${isChipActive ? 'active' : ''}`}
-                onClick={() => onSearchChange(isChipActive ? '' : chip.query)}
-              >
-                {chip.label}
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       <div className="filter-controls-row">

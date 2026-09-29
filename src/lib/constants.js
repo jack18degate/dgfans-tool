@@ -138,17 +138,28 @@ export const ASSET_ALIASES = {
   'rare earth': ['USAR'],
 };
 
-export const TRENDING_SEARCHES = [
-  { label: '🔥 SpaceX (Pre-IPO)', query: 'SPCX' },
-  { label: '🤖 Nvidia', query: 'NVDA' },
-  { label: '⚡ Tesla', query: 'TSLA' },
-  { label: '🍏 Apple', query: 'AAPL' },
-  { label: '🪙 Oro (GLD)', query: 'GLD' },
-  { label: '📈 S&P 500', query: 'SPY' },
-  { label: '🏢 MicroStrategy', query: 'MSTR' },
-  { label: '🚀 Reddit', query: 'RDDT' },
-  { label: '⚛️ D-Wave', query: 'QBTS' },
-  { label: '💰 Treasury US', query: 'SGOV' },
+export const TOP_FAMOUS_TICKERS = [
+  'NVDA',  // Nvidia
+  'AAPL',  // Apple
+  'TSLA',  // Tesla
+  'MSFT',  // Microsoft
+  'AMZN',  // Amazon
+  'GOOGL', // Alphabet (Google)
+  'META',  // Meta
+  'SPY',   // S&P 500 ETF
+  'QQQ',   // Nasdaq 100 ETF
+  'SPCX',  // SpaceX (Pre-IPO)
+  'MSTR',  // MicroStrategy
+  'COIN',  // Coinbase
+  'AMD',   // AMD
+  'PLTR',  // Palantir
+  'GLD',   // Oro (SPDR Gold Shares)
+  'RDDT',  // Reddit
+  'NFLX',  // Netflix
+  'VOO',   // Vanguard S&P 500
+  'DIS',   // Disney
+  'BABA',  // Alibaba
+  'ARM',   // ARM Holdings
 ];
 
 // ─── Swap Status Enum ───────────────────────────────────────────────────────

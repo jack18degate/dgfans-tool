@@ -5,7 +5,7 @@ import FilterBar from './FilterBar';
 import AssetCard, { Asset } from './AssetCard';
 import AssetModal from './AssetModal';
 import { useI18n } from '../../i18n';
-import { ASSET_ALIASES } from '@/lib/constants.js';
+import { ASSET_ALIASES, TOP_FAMOUS_TICKERS } from '@/lib/constants.js';
 
 interface AssetGridProps {
   assets: Asset[];
@@ -149,7 +149,25 @@ export default function AssetGrid({
       });
     }
 
-    return result;
+    // Sort: Top ~20 most famous stocks first, followed by all others alphabetically
+    const famousRankMap = new Map(
+      TOP_FAMOUS_TICKERS.map((t, idx) => [t.toUpperCase(), idx])
+    );
+
+    const sorted = [...result].sort((a, b) => {
+      const tA = a.ticker.toUpperCase();
+      const tB = b.ticker.toUpperCase();
+      const rankA = famousRankMap.has(tA) ? famousRankMap.get(tA)! : 999999;
+      const rankB = famousRankMap.has(tB) ? famousRankMap.get(tB)! : 999999;
+
+      if (rankA !== rankB) {
+        return rankA - rankB;
+      }
+
+      return a.ticker.localeCompare(b.ticker);
+    });
+
+    return sorted;
   }, [assets, searchQuery, typeFilter, platformFilter]);
 
   const showingText =
