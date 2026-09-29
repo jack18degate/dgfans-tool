@@ -175,13 +175,9 @@ export interface Translations {
     linkCopied: string;
     tokenAdded: string;
     networkAdded: string;
-    buyDirectDegateApp: string;
-    buyDirectDegateSubtitle: string;
-    buyOnDegateSolana: string;
-    buyOnDegateEthereum: string;
-    openDegateApp: string;
-    robinhoodTradeNote: string;
-    degateBadge: string;
+    buyOnDegateEth: string;
+    buyOnDegateSol: string;
+    buyOnRobinhood: string;
   };
   tools: {
     compoundCalcTitle: string;
@@ -357,13 +353,9 @@ const en: Translations = {
     linkCopied: 'Link Copied! ✓',
     tokenAdded: 'Token Added! ✓',
     networkAdded: 'Network Added! ✓',
-    buyDirectDegateApp: '⚡ Instant Buy on DeGate App',
-    buyDirectDegateSubtitle: 'Trade directly on DeGate App with 0% KYC & self-custody Web3 wallet',
-    buyOnDegateSolana: '⚡ Buy {ticker} on DeGate (Solana • Gas <$0.01)',
-    buyOnDegateEthereum: '⟠ Buy {ticker} on DeGate (Ethereum Mainnet)',
-    openDegateApp: '⚡ Open DeGate App ↗',
-    robinhoodTradeNote: 'Native Robinhood Chain L2 token. To trade on DeGate, use the cross-chain Solana or Ethereum version.',
-    degateBadge: '⚡ DeGate App',
+    buyOnDegateEth: 'Buy on DeGate (Ethereum) ↗',
+    buyOnDegateSol: 'Buy on DeGate (Solana) ↗',
+    buyOnRobinhood: 'Buy on Robinhood ↗',
   },
   tools: {
     compoundCalcTitle: 'Compound Interest Calculator',
@@ -539,13 +531,9 @@ const it: Translations = {
     linkCopied: 'Link Copiato! ✓',
     tokenAdded: 'Token Aggiunto! ✓',
     networkAdded: 'Rete Aggiunta! ✓',
-    buyDirectDegateApp: '⚡ Acquista Subito su DeGate App',
-    buyDirectDegateSubtitle: 'Scambia direttamente su DeGate App senza KYC e con custodia Web3',
-    buyOnDegateSolana: '⚡ Acquista {ticker} su DeGate App (Solana • Gas <$0.01 • Consigliato)',
-    buyOnDegateEthereum: '⟠ Acquista {ticker} su DeGate App (Ethereum Mainnet)',
-    openDegateApp: '⚡ Apri DeGate App ↗',
-    robinhoodTradeNote: 'Token nativo Robinhood Chain L2. Per scambiare su DeGate usa la versione Solana o Ethereum.',
-    degateBadge: '⚡ DeGate App',
+    buyOnDegateEth: 'Acquista su DeGate (Ethereum) ↗',
+    buyOnDegateSol: 'Acquista su DeGate (Solana) ↗',
+    buyOnRobinhood: 'Acquista su Robinhood ↗',
   },
   tools: {
     compoundCalcTitle: 'Calcolatore di Interesse Composto',
@@ -721,13 +709,9 @@ const es: Translations = {
     linkCopied: '¡Enlace Copiado! ✓',
     tokenAdded: '¡Token Añadido! ✓',
     networkAdded: '¡Red Añadida! ✓',
-    buyDirectDegateApp: '⚡ Compra Instantánea en DeGate App',
-    buyDirectDegateSubtitle: 'Opera directamente en DeGate App sin KYC y custodia Web3 propia',
-    buyOnDegateSolana: '⚡ Comprar {ticker} en DeGate App (Solana • Gas <$0.01 • Recomendado)',
-    buyOnDegateEthereum: '⟠ Comprar {ticker} en DeGate App (Ethereum Mainnet)',
-    openDegateApp: '⚡ Abrir DeGate App ↗',
-    robinhoodTradeNote: 'Token nativo Robinhood Chain L2. Para operar en DeGate use la versión Solana o Ethereum.',
-    degateBadge: '⚡ DeGate App',
+    buyOnDegateEth: 'Comprar en DeGate (Ethereum) ↗',
+    buyOnDegateSol: 'Comprar en DeGate (Solana) ↗',
+    buyOnRobinhood: 'Comprar en Robinhood ↗',
   },
   tools: {
     compoundCalcTitle: 'Calculadora de Interés Compuesto',
@@ -903,13 +887,9 @@ const zh: Translations = {
     linkCopied: '链接已复制! ✓',
     tokenAdded: '已添加代币! ✓',
     networkAdded: '已添加网络! ✓',
-    buyDirectDegateApp: '⚡ 在 DeGate App 极速购买',
-    buyDirectDegateSubtitle: '在 DeGate App 直接交易，零 KYC，非托管 Web3 钱包安全自持',
-    buyOnDegateSolana: '⚡ 在 DeGate App 购买 {ticker} (Solana • 费率 <$0.01 • 推荐)',
-    buyOnDegateEthereum: '⟠ 在 DeGate App 购买 {ticker} (Ethereum 主网)',
-    openDegateApp: '⚡ 打开 DeGate App ↗',
-    robinhoodTradeNote: 'Robinhood Chain L2 原生代币。若要在 DeGate 上交易，请选择 Solana 或 Ethereum 版本。',
-    degateBadge: '⚡ DeGate App',
+    buyOnDegateEth: '在 DeGate 购买 (Ethereum) ↗',
+    buyOnDegateSol: '在 DeGate 购买 (Solana) ↗',
+    buyOnRobinhood: '在 Robinhood 购买 ↗',
   },
   tools: {
     compoundCalcTitle: '复利计算器',
@@ -1085,13 +1065,9 @@ const fr: Translations = {
     linkCopied: 'Lien copié ! ✓',
     tokenAdded: 'Token ajouté ! ✓',
     networkAdded: 'Réseau ajouté ! ✓',
-    buyDirectDegateApp: '⚡ Achat Direct sur DeGate App',
-    buyDirectDegateSubtitle: 'Tradez directement sur DeGate App sans KYC et avec votre propre wallet Web3',
-    buyOnDegateSolana: '⚡ Acheter {ticker} sur DeGate App (Solana • Gaz <0,01 $ • Recommandé)',
-    buyOnDegateEthereum: '⟠ Acheter {ticker} sur DeGate App (Ethereum Mainnet)',
-    openDegateApp: '⚡ Ouvrir DeGate App ↗',
-    robinhoodTradeNote: 'Token natif Robinhood Chain L2. Pour trader sur DeGate, utilisez la version Solana ou Ethereum.',
-    degateBadge: '⚡ DeGate App',
+    buyOnDegateEth: 'Acheter sur DeGate (Ethereum) ↗',
+    buyOnDegateSol: 'Acheter sur DeGate (Solana) ↗',
+    buyOnRobinhood: 'Acheter sur Robinhood ↗',
   },
   tools: {
     compoundCalcTitle: 'Calculateur d\'intérêts composés',
