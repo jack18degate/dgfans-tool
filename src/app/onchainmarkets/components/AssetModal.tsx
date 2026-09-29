@@ -154,7 +154,7 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
   };
 
   const degateLink = (address: string, chain: string) =>
-    `https://app.degate.com/en/swap/USDC/${address}?chain=${chain}&utm_source=dgtools`;
+    `https://app.degate.com/en/swap/USDC/${address}?chain=${chain}&utm_source=dgfans`;
 
   const showLogo = asset.logo && !logoError;
 
@@ -175,6 +175,7 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
     (asset.platforms.robinhood ? 1 : 0);
 
   const rhPlatform = asset.platforms.robinhood;
+  const isRobinhoodOnly = rhPlatform && !asset.platforms.ondo && !asset.platforms.xstocks;
   const rhMultiplier = rhPlatform?.multiplier;
   const hasDividendGrowth = rhMultiplier && parseFloat(rhMultiplier) > 1.000001;
 
@@ -217,6 +218,11 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                   {platformCount} Chains
                 </span>
               )}
+              {(asset.platforms.xstocks || asset.platforms.ondo) && (
+                <span className="badge badge-degate-card">
+                  ⚡ DeGate App
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -234,6 +240,102 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
           {walletFeedback && (
             <span className="wallet-feedback-badge">{walletFeedback}</span>
           )}
+        </div>
+
+        {/* ⚡ HERO: ACQUISTO DIRETTO SU DEGATE APP */}
+        <div className="degate-primary-buy-box">
+          <div className="degate-primary-header">
+            <div className="degate-brand-title">
+              <span className="degate-badge-pulse">⚡</span>
+              <div>
+                <h3 className="degate-heading">
+                  {ocm.buyDirectDegateApp || 'Acquista Subito su DeGate App'}
+                </h3>
+                <p className="degate-subheading">
+                  {ocm.buyDirectDegateSubtitle || 'Scambia direttamente su DeGate App senza KYC e con custodia Web3'}
+                </p>
+              </div>
+            </div>
+            <span className="degate-app-badge">📱 Mobile &amp; Web App</span>
+          </div>
+
+          <div className="degate-primary-buttons">
+            {/* Solana Buy Button (Recommended: Fast & Low Gas) */}
+            {asset.platforms.xstocks && (
+              <a
+                href={degateLink(asset.platforms.xstocks.address, 'solana')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="degate-hero-btn degate-hero-sol"
+                id="degate-direct-buy-solana"
+              >
+                <div className="degate-hero-btn-left">
+                  <span className="degate-hero-icon">⚡</span>
+                  <div className="degate-hero-labels">
+                    <span className="degate-hero-title">
+                      {ocm.buyOnDegateSolana?.replace('{ticker}', asset.ticker) || `Acquista ${asset.ticker} su DeGate App (Solana)`}
+                    </span>
+                    <span className="degate-hero-subtitle">
+                      ◎ Solana • Gas &lt;$0.01 • Esecuzione Immediata (Consigliato)
+                    </span>
+                  </div>
+                </div>
+                <span className="degate-hero-arrow">↗</span>
+              </a>
+            )}
+
+            {/* Ethereum Buy Button */}
+            {asset.platforms.ondo && (
+              <a
+                href={degateLink(asset.platforms.ondo.address, 'ethereum')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="degate-hero-btn degate-hero-eth"
+                id="degate-direct-buy-ethereum"
+              >
+                <div className="degate-hero-btn-left">
+                  <span className="degate-hero-icon">⟠</span>
+                  <div className="degate-hero-labels">
+                    <span className="degate-hero-title">
+                      {ocm.buyOnDegateEthereum?.replace('{ticker}', asset.ticker) || `Acquista ${asset.ticker} su DeGate App (Ethereum)`}
+                    </span>
+                    <span className="degate-hero-subtitle">
+                      Ethereum Mainnet • Massima Liquidità Istituzionale
+                    </span>
+                  </div>
+                </div>
+                <span className="degate-hero-arrow">↗</span>
+              </a>
+            )}
+
+            {/* If Robinhood-only */}
+            {isRobinhoodOnly && (
+              <div className="degate-rh-only-box">
+                <p className="degate-rh-only-note">
+                  ℹ️ {ocm.robinhoodTradeNote || 'Token nativo Robinhood Chain L2. Apri DeGate App per esplorare o scambiare token equivalenti.'}
+                </p>
+                <a
+                  href="https://app.degate.com/?utm_source=dgfans"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="degate-hero-btn degate-hero-general"
+                >
+                  <div className="degate-hero-btn-left">
+                    <span className="degate-hero-icon">⚡</span>
+                    <div className="degate-hero-labels">
+                      <span className="degate-hero-title">
+                        {ocm.openDegateApp || 'Apri DeGate App ↗'}
+                      </span>
+                      <span className="degate-hero-subtitle">
+                        Order Book DEX &amp; Grid Trading Senza KYC
+                      </span>
+                    </div>
+                  </div>
+                  <span className="degate-hero-arrow">↗</span>
+                </a>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Anti-Scam Official Verification Notice */}
@@ -373,6 +475,35 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                   </button>
                 </div>
 
+                {/* Cross-Platform DeGate Hint if asset also exists on Solana or Ethereum */}
+                {(asset.platforms.xstocks || asset.platforms.ondo) && (
+                  <div className="platform-degate-cross-hint">
+                    <span className="cross-hint-title">⚡ Acquisto Diretto su DeGate App:</span>
+                    <div className="cross-hint-buttons">
+                      {asset.platforms.xstocks && (
+                        <a
+                          href={degateLink(asset.platforms.xstocks.address, 'solana')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-card-degate-chip btn-card-degate-sol"
+                        >
+                          ⚡ Versione Solana (Gas &lt;$0.01) ↗
+                        </a>
+                      )}
+                      {asset.platforms.ondo && (
+                        <a
+                          href={degateLink(asset.platforms.ondo.address, 'ethereum')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-card-degate-chip btn-card-degate-eth"
+                        >
+                          ⟠ Versione Ethereum Mainnet ↗
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div className="platform-card-footer">
                   <span>🟢 24/5 Market &amp; Overnight Trading</span>
                   <Link href="/onchainstocks" className="rh-guide-link">
@@ -414,6 +545,15 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                       className="btn-explorer"
                     >
                       {labelExplorer}
+                    </a>
+                    <a
+                      href={degateLink(asset.platforms.ondo.address, 'ethereum')}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-card-degate-buy btn-card-degate-eth"
+                      title="Acquista subito su DeGate App (Ethereum)"
+                    >
+                      ⚡ Compra su DeGate ↗
                     </a>
                   </div>
                 </div>
@@ -474,6 +614,15 @@ export default function AssetModal({ asset, onClose }: AssetModalProps) {
                       className="btn-explorer"
                     >
                       {labelExplorer}
+                    </a>
+                    <a
+                      href={degateLink(asset.platforms.xstocks.address, 'solana')}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-card-degate-buy btn-card-degate-sol"
+                      title="Acquista subito su DeGate App (Solana)"
+                    >
+                      ⚡ Compra su DeGate ↗
                     </a>
                   </div>
                 </div>

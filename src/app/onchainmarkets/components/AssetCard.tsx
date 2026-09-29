@@ -110,6 +110,11 @@ export default function AssetCard({ asset, onClick }: AssetCardProps) {
             xStocks
           </span>
         )}
+        {(asset.platforms.xstocks || asset.platforms.ondo) && (
+          <span className="badge badge-degate-card" title="Scambiabile su DeGate App">
+            ⚡ DeGate App
+          </span>
+        )}
         {formattedMultiplier && (
           <span className="badge badge-multiplier" title={`Auto-reinvested dividend multiplier: ${rhMultiplier}`}>
             📈 {formattedMultiplier}

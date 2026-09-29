@@ -1298,6 +1298,289 @@ html[data-theme="dark"] .rwa-explorer .modal-verification-banner {
   transform: translateY(-1px);
 }
 
+/* ─── Hero DeGate Primary Buy Section ─── */
+.rwa-explorer .degate-primary-buy-box {
+  background: linear-gradient(135deg, rgba(0, 214, 143, 0.08) 0%, rgba(36, 92, 255, 0.08) 100%);
+  border: 1.5px solid rgba(0, 214, 143, 0.35);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 214, 143, 0.1);
+}
+
+html[data-theme="dark"] .rwa-explorer .degate-primary-buy-box {
+  background: linear-gradient(135deg, rgba(0, 214, 143, 0.12) 0%, rgba(36, 92, 255, 0.1) 100%);
+  border-color: rgba(0, 214, 143, 0.4);
+  box-shadow: 0 4px 24px rgba(0, 214, 143, 0.12);
+}
+
+.rwa-explorer .degate-primary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rwa-explorer .degate-brand-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rwa-explorer .degate-badge-pulse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d68f, #059669);
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 0 12px rgba(0, 214, 143, 0.5);
+  flex-shrink: 0;
+}
+
+.rwa-explorer .degate-heading {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px 0;
+  letter-spacing: -0.2px;
+}
+
+.rwa-explorer .degate-subheading {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.rwa-explorer .degate-app-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.rwa-explorer .degate-primary-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rwa-explorer .degate-hero-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+  min-height: 52px;
+}
+
+.rwa-explorer .degate-hero-btn:hover {
+  transform: translateY(-2px);
+}
+
+.rwa-explorer .degate-hero-sol {
+  background: linear-gradient(135deg, #00d68f 0%, #059669 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 214, 143, 0.35);
+}
+
+.rwa-explorer .degate-hero-sol:hover {
+  box-shadow: 0 6px 22px rgba(0, 214, 143, 0.5);
+}
+
+.rwa-explorer .degate-hero-eth {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+}
+
+.rwa-explorer .degate-hero-eth:hover {
+  box-shadow: 0 6px 22px rgba(59, 130, 246, 0.5);
+}
+
+.rwa-explorer .degate-hero-general {
+  background: linear-gradient(135deg, #059669 0%, #2563eb 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+}
+
+.rwa-explorer .degate-hero-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rwa-explorer .degate-hero-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.rwa-explorer .degate-hero-labels {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.rwa-explorer .degate-hero-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.rwa-explorer .degate-hero-subtitle {
+  font-size: 0.72rem;
+  font-weight: 500;
+  opacity: 0.92;
+}
+
+.rwa-explorer .degate-hero-arrow {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.rwa-explorer .degate-rh-only-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rwa-explorer .degate-rh-only-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+  background: var(--bg-card);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+/* ─── Direct Buy Buttons inside Platform Cards ─── */
+.rwa-explorer .btn-card-degate-buy {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.rwa-explorer .btn-card-degate-sol {
+  background: linear-gradient(135deg, #00d68f, #059669);
+  color: #fff;
+  border: 1px solid rgba(0, 214, 143, 0.4);
+}
+
+.rwa-explorer .btn-card-degate-sol:hover {
+  box-shadow: 0 2px 10px rgba(0, 214, 143, 0.4);
+  transform: translateY(-1px);
+}
+
+.rwa-explorer .btn-card-degate-eth {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #fff;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.rwa-explorer .btn-card-degate-eth:hover {
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ─── Cross-Platform DeGate Switcher in Robinhood Card ─── */
+.rwa-explorer .platform-degate-cross-hint {
+  margin-top: 10px;
+  background: var(--bg-surface);
+  border: 1px dashed rgba(36, 92, 255, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rwa-explorer .cross-hint-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.rwa-explorer .cross-hint-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rwa-explorer .btn-card-degate-chip {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--transition);
+}
+
+.rwa-explorer .btn-card-degate-chip-sol {
+  background: rgba(0, 214, 143, 0.12);
+  color: var(--xstocks-color);
+  border: 1px solid rgba(0, 214, 143, 0.3);
+}
+
+.rwa-explorer .btn-card-degate-chip-sol:hover {
+  background: var(--xstocks-color);
+  color: #fff;
+}
+
+.rwa-explorer .btn-card-degate-chip-eth {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--ondo-color);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.rwa-explorer .btn-card-degate-chip-eth:hover {
+  background: var(--ondo-color);
+  color: #fff;
+}
+
+/* ─── Asset Card DeGate Badge ─── */
+.rwa-explorer .badge-degate-card {
+  background: linear-gradient(135deg, rgba(0, 214, 143, 0.15), rgba(59, 130, 246, 0.15));
+  color: #059669;
+  border: 1px solid rgba(0, 214, 143, 0.35);
+  font-weight: 700;
+}
+
+html[data-theme="dark"] .rwa-explorer .badge-degate-card {
+  color: #00d68f;
+  background: linear-gradient(135deg, rgba(0, 214, 143, 0.2), rgba(59, 130, 246, 0.2));
+  border-color: rgba(0, 214, 143, 0.45);
+}
+
 /* ─── Keyframes ─── */
 @keyframes rwaFadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes rwaSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -1408,7 +1691,9 @@ html[data-theme="dark"] .rwa-explorer .modal-verification-banner {
   }
   .rwa-explorer .platform-actions {
     width: 100%;
-    justify-content: flex-end;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
   }
   .rwa-explorer .btn-copy,
   .rwa-explorer .btn-explorer {
@@ -1416,6 +1701,13 @@ html[data-theme="dark"] .rwa-explorer .modal-verification-banner {
     justify-content: center;
     padding: 8px 10px;
     font-size: 0.78rem;
+  }
+  .rwa-explorer .btn-card-degate-buy {
+    flex: 2;
+    min-width: 130px;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
   .rwa-explorer .web3-wallet-actions {
     flex-direction: column;
@@ -1425,6 +1717,31 @@ html[data-theme="dark"] .rwa-explorer .modal-verification-banner {
     justify-content: center;
     padding: 8px 12px;
     font-size: 0.8rem;
+  }
+  .rwa-explorer .degate-primary-buy-box {
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .rwa-explorer .degate-heading {
+    font-size: 0.92rem;
+  }
+  .rwa-explorer .degate-hero-btn {
+    padding: 12px 14px;
+    min-height: 48px;
+  }
+  .rwa-explorer .degate-hero-title {
+    font-size: 0.84rem;
+  }
+  .rwa-explorer .degate-hero-subtitle {
+    font-size: 0.7rem;
+  }
+  .rwa-explorer .cross-hint-buttons {
+    flex-direction: column;
+  }
+  .rwa-explorer .btn-card-degate-chip {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
   }
   .rwa-explorer .buy-btn {
     padding: 14px 20px;
