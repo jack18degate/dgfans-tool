@@ -41,6 +41,22 @@ const nextConfig: NextConfig = {
         destination: '/turborange/index.html',
       },
       {
+        source: '/turborangev2',
+        destination: '/turborangev2/index.html',
+      },
+      {
+        source: '/turborangev2/',
+        destination: '/turborangev2/index.html',
+      },
+      {
+        source: '/turborangev2/it',
+        destination: '/turborangev2/it/index.html',
+      },
+      {
+        source: '/turborangev2/it/',
+        destination: '/turborangev2/it/index.html',
+      },
+      {
         source: '/assets/:path*',
         destination: '/turborange/assets/:path*',
       },
