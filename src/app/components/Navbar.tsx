@@ -18,8 +18,8 @@ export default function Navbar() {
   const NAV_ITEMS = [
     { href: '/tools', label: t.nav.turboRangeGuide || 'Turbo Range Guide', icon: Rocket, emoji: '🚀' },
     { href: '/onchainstocks', label: t.nav.onchainStocks || 'Azioni On-Chain', icon: Landmark, emoji: '🏛️' },
-    { href: '/compound', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
-    { href: '/turbo', label: 'Turbo Range Analysis', icon: Zap, emoji: '⚡' },
+    // { href: '/compound', label: t.nav.compoundInterest || 'Interest Calculator', icon: TrendingUp, emoji: '📈' },
+    // { href: '/turbo', label: 'Turbo Range Analysis', icon: Zap, emoji: '⚡' },
     { href: '/onchainmarkets', label: t.nav.onchainMarkets || 'On-Chain RWA Markets', icon: Globe, emoji: '🌐' },
   ];
 

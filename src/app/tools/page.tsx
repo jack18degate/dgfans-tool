@@ -107,52 +107,7 @@ export default function ToolsLandingPage() {
       {/* CTA Buttons */}
       {isLoaded && (
         <div className={styles.landingCta}>
-          <a href="/compound" className={styles.landingBtn}>
-            <div className={styles.landingBtnIconBox}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect width="16" height="20" x="4" y="2" rx="2"/>
-                <line x1="8" x2="16" y1="6" y2="6"/>
-                <line x1="16" x2="16" y1="14" y2="18"/>
-                <path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/>
-                <path d="M12 14h.01"/><path d="M8 14h.01"/>
-                <path d="M12 18h.01"/><path d="M8 18h.01"/>
-              </svg>
-            </div>
-            <span className={styles.landingBtnText}>
-              <span className={styles.landingBtnTitle}>
-                {t.tools.compoundCalcTitle}
-              </span>
-              <span className={styles.landingBtnDesc}>
-                {t.tools.compoundCalcDesc}
-              </span>
-            </span>
-            <span className={styles.landingBtnArrow}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
-              </svg>
-            </span>
-          </a>
-          <a
-            href="https://dgfans.io/turbo"
-            className={`${styles.landingBtn} ${styles.landingBtnSecondary}`}
-          >
-            <div className={`${styles.landingBtnIconBox} ${styles.landingBtnIconBoxGreen}`}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
-            <span className={styles.landingBtnText}>
-              <span className={styles.landingBtnTitle}>Turbo Range Analysis</span>
-              <span className={styles.landingBtnDesc}>
-                {t.tools.turboAnalysisDesc}
-              </span>
-            </span>
-            <span className={`${styles.landingBtnArrow} ${styles.landingBtnArrowGreen}`}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
-              </svg>
-            </span>
-          </a>
+          {/* Calcolatore Interesse e Turbo Range Analysis nascosti temporaneamente */}
           <a
             href="/onchainstocks"
             className={`${styles.landingBtn} ${styles.landingBtnStocks}`}
