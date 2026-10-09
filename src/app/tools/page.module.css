@@ -28,8 +28,8 @@
 .landingSpinner {
   width: 42px;
   height: 42px;
-  border: 3px solid rgba(36, 92, 255, 0.15);
-  border-top-color: var(--brand-primary, #245cff);
+  border: 3px solid rgba(37, 124, 81, 0.15);
+  border-top-color: var(--brand-primary, #257c51);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -80,21 +80,21 @@
   align-items: center;
   gap: 20px;
   background: var(--surface, #ffffff);
-  border: 1px solid var(--border, #d8dee8);
-  border-radius: 18px;
+  border: 1px solid var(--border, #dce5d8);
+  border-radius: 16px;
   padding: 22px 28px;
   text-decoration: none;
-  box-shadow: var(--shadow-card, 0 14px 40px rgba(32, 49, 81, 0.08));
+  box-shadow: var(--shadow-card, 0 10px 30px rgba(23, 62, 45, 0.05));
   transition: all 0.25s ease;
   cursor: pointer;
   color: inherit;
 }
 
 .landingBtn:hover {
-  border-color: var(--blue-border, #cbd7ff);
+  border-color: #cbdbbb;
   background: var(--surface, #ffffff);
   transform: translateY(-2px);
-  box-shadow: var(--shadow, 0 20px 55px rgba(31, 51, 91, 0.12));
+  box-shadow: 0 16px 40px rgba(23, 62, 45, 0.08);
   text-decoration: none;
 }
 
@@ -103,8 +103,8 @@
 }
 
 .landingBtnSecondary:hover {
-  border-color: rgba(18, 107, 77, 0.3);
-  box-shadow: 0 16px 45px rgba(18, 107, 77, 0.1);
+  border-color: #cbdbbb;
+  box-shadow: 0 16px 40px rgba(23, 62, 45, 0.08);
 }
 
 .landingBtnStocks {
@@ -112,8 +112,8 @@
 }
 
 .landingBtnStocks:hover {
-  border-color: rgba(115, 87, 255, 0.3);
-  box-shadow: 0 16px 45px rgba(115, 87, 255, 0.12);
+  border-color: #cbdbbb;
+  box-shadow: 0 16px 40px rgba(23, 62, 45, 0.08);
 }
 
 /* Icon box */
@@ -121,13 +121,13 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: var(--blue-soft, #eef3ff);
-  border: 1px solid var(--blue-border, #cbd7ff);
+  background: #eaf3dd;
+  border: 1px solid #cbdbbb;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--brand-primary, #245cff);
+  color: #257c51;
   transition: all 0.25s ease;
 }
 
@@ -136,15 +136,15 @@
 }
 
 .landingBtnIconBoxGreen {
-  background: #d9f7ea;
-  border-color: #cfe1d7;
-  color: #126b4d;
+  background: #eaf3dd;
+  border-color: #cbdbbb;
+  color: #257c51;
 }
 
 .landingBtnIconBoxViolet {
-  background: #f3f0ff;
-  border-color: #ddd6fe;
-  color: #7357ff;
+  background: #f0f5e9;
+  border-color: #dce5d8;
+  color: #257c51;
 }
 
 .landingBtnText {
@@ -157,20 +157,20 @@
 
 .landingBtnTitle {
   font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-primary, #101828);
+  font-weight: 750;
+  color: var(--text-primary, #173e2d);
   letter-spacing: -0.02em;
 }
 
 .landingBtnDesc {
   font-size: 0.88rem;
-  color: var(--text-secondary, #5f6b7a);
+  color: var(--text-secondary, #374151);
   line-height: 1.5;
 }
 
 .landingBtnArrow {
   margin-left: auto;
-  color: var(--brand-primary, #245cff);
+  color: var(--brand-primary, #257c51);
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
@@ -180,11 +180,11 @@
 }
 
 .landingBtnArrowGreen {
-  color: #126b4d;
+  color: #257c51;
 }
 
 .landingBtnArrowViolet {
-  color: #7357ff;
+  color: #257c51;
 }
 
 /* ── Responsive ── */

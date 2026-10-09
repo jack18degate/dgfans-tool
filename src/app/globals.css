@@ -8,105 +8,109 @@
    ═══════════════════════════════════════════════════════════ */
 
 :root {
-  /* OnChainStocks Core Tokens */
-  --ink: #101828;
-  --muted: #5f6b7a;
-  --line: #d8dee8;
-  --paper: #ffffff;
-  --wash: #f4f7fb;
-  --blue: #245cff;
-  --blue-2: #6d8cff;
-  --mint: #d9ff63;
-  --green: #126b4d;
-  --violet: #7357ff;
-  --orange: #ff9f43;
-  --shadow: 0 20px 55px rgba(31, 51, 91, 0.12);
-  --shadow-card: 0 14px 40px rgba(32, 49, 81, 0.08);
-  --radius: 22px;
+  /* DeGate Brand & Core Tokens (aligned with turborangev2 and app.degate.com) */
+  --ink: #173e2d;
+  --muted: #374151;
+  --line: #dce5d8;
+  --paper: #fffefb;
+  --pale: #f0f5e9;
+  --wash: #f7f9f4;
+  --green: #257c51;
+  --green-bright: #22ba7d;
+  --mint: #c7ed99;
+  --blue: #257c51;
+  --blue-2: #22ba7d;
+  --violet: #22ba7d;
+  --orange: #d97706;
+  --shadow: 0 14px 40px rgba(23, 62, 45, 0.08);
+  --shadow-card: 0 10px 30px rgba(23, 62, 45, 0.05);
+  --radius: 16px;
 
-  /* Theme variables (Default: Light Fintech) */
-  --background: #fbfcff;
-  --background-deep: #f5f7fb;
+  /* Theme variables (Default: Light DeGate Warm Paper) */
+  --background: #fffefb;
+  --background-deep: #f7f9f4;
   --surface: #ffffff;
-  --surface-glass: rgba(255, 255, 255, 0.9);
-  --surface-hover: #f4f7fb;
-  --border: #d8dee8;
-  --border-light: #e8edf5;
-  --text-primary: #101828;
-  --text-secondary: #5f6b7a;
-  --text-muted: #748094;
+  --surface-glass: rgba(255, 254, 251, 0.94);
+  --surface-hover: #f3f6ed;
+  --border: #dce5d8;
+  --border-light: #eaf0e6;
+  --text-primary: #173e2d;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
 
-  --brand-primary: #245cff;
-  --brand-secondary: #7357ff;
-  --brand-solana: #245cff;
-  --brand-solana-accent: #7357ff;
-  --brand-ethereum: #627EEA;
-  --brand-base: #0052FF;
-  --brand-mint: #d9ff63;
-  --brand-green: #126b4d;
+  --brand-primary: #257c51;
+  --brand-secondary: #22ba7d;
+  --brand-solana: #257c51;
+  --brand-solana-accent: #22ba7d;
+  --brand-ethereum: #257c51;
+  --brand-base: #257c51;
+  --brand-mint: #c7ed99;
+  --brand-green: #257c51;
 
   --score-noob: #ef4444;
   --score-mid: #f59e0b;
-  --score-pro: #10b981;
+  --score-pro: #22ba7d;
 
-  --neon-cyan: #245cff;
-  --neon-purple: #7357ff;
-  --neon-blue: #245cff;
-  --neon-gold: #ff9f43;
+  --neon-cyan: #22ba7d;
+  --neon-purple: #257c51;
+  --neon-blue: #257c51;
+  --neon-gold: #d97706;
 
-  --blue-soft: #eef3ff;
-  --blue-border: #cbd7ff;
+  --blue-soft: #eaf3dd;
+  --blue-border: #cbdbbb;
 
-  --glow-solana: 0 0 24px rgba(36, 92, 255, 0.18);
-  --glow-eth: 0 0 24px rgba(98, 126, 234, 0.18);
+  --glow-solana: 0 0 24px rgba(34, 186, 125, 0.2);
+  --glow-eth: 0 0 24px rgba(37, 124, 81, 0.2);
 
-  --title-gradient: linear-gradient(92deg, #245cff, #7357ff);
+  --title-gradient: linear-gradient(92deg, #173e2d, #257c51);
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 22px;
+  --radius-xl: 20px;
   --radius-full: 999px;
 
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
 
-/* ── Dark Mode Tokens (sleek slate & deep navy) ── */
+/* ── Dark Mode Tokens (DeGate Emerald Slate & Deep Pine) ── */
 html[data-theme="dark"] {
-  --ink: #f8fafc;
-  --muted: #94a3b8;
-  --line: #1e293b;
-  --paper: #111827;
-  --wash: #0b0f19;
-  --blue: #3b82f6;
-  --blue-2: #818cf8;
-  --mint: #d9ff63;
-  --green: #20b486;
-  --violet: #8b5cf6;
+  --ink: #f3f9e9;
+  --muted: #9bb3a6;
+  --line: #22513f;
+  --paper: #0f261d;
+  --pale: #14352a;
+  --wash: #0c1f17;
+  --mint: #c7ed99;
+  --green: #22ba7d;
+  --green-bright: #22ba7d;
+  --blue: #22ba7d;
+  --blue-2: #257c51;
+  --violet: #22ba7d;
   --orange: #fb923c;
   --shadow: 0 20px 55px rgba(0, 0, 0, 0.4);
   --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.35);
 
-  --background: #0b0f19;
-  --background-deep: #06080e;
-  --surface: #111827;
-  --surface-glass: rgba(17, 24, 39, 0.88);
-  --surface-hover: rgba(255, 255, 255, 0.05);
-  --border: #1e293b;
-  --border-light: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --background: #0c1f17;
+  --background-deep: #081610;
+  --surface: #102e24;
+  --surface-glass: rgba(16, 46, 36, 0.92);
+  --surface-hover: #163c2d;
+  --border: #22513f;
+  --border-light: #2c634e;
+  --text-primary: #f3f9e9;
+  --text-secondary: #9bb3a6;
+  --text-muted: #71887c;
 
-  --brand-primary: #3b82f6;
-  --brand-secondary: #818cf8;
-  --brand-solana: #3b82f6;
-  --brand-solana-accent: #818cf8;
+  --brand-primary: #22ba7d;
+  --brand-secondary: #257c51;
+  --brand-solana: #22ba7d;
+  --brand-solana-accent: #257c51;
 
-  --title-gradient: linear-gradient(92deg, #60a5fa, #a78bfa);
+  --title-gradient: linear-gradient(92deg, #f3f9e9, #22ba7d);
 
-  --blue-soft: rgba(59, 130, 246, 0.12);
-  --blue-border: rgba(59, 130, 246, 0.25);
+  --blue-soft: rgba(34, 186, 125, 0.14);
+  --blue-border: rgba(34, 186, 125, 0.28);
 }
 
 * {
@@ -124,8 +128,8 @@ html {
 body {
   background-color: var(--background);
   background:
-    radial-gradient(circle at 90% 2%, rgba(109, 140, 255, 0.18), transparent 28rem),
-    linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+    radial-gradient(circle at 90% 2%, rgba(199, 237, 153, 0.2), transparent 28rem),
+    linear-gradient(180deg, #fffefb 0%, #f7f9f4 100%);
   color: var(--text-primary);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -138,8 +142,8 @@ body {
 
 html[data-theme="dark"] body {
   background:
-    radial-gradient(circle at 90% 2%, rgba(59, 130, 246, 0.12), transparent 28rem),
-    linear-gradient(180deg, #0b0f19 0%, #06080e 100%);
+    radial-gradient(circle at 90% 2%, rgba(34, 186, 125, 0.12), transparent 28rem),
+    linear-gradient(180deg, #0c1f17 0%, #081610 100%);
 }
 
 /* ── Subtle Background Ambient Glow ── */
@@ -152,7 +156,7 @@ body::before {
   z-index: -1;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, rgba(115, 87, 255, 0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(199, 237, 153, 0.16), transparent 70%);
   top: -10%;
   left: -10%;
   pointer-events: none;
@@ -167,7 +171,7 @@ body::after {
   z-index: -1;
   width: 60vw;
   height: 60vw;
-  background: radial-gradient(circle, rgba(36, 92, 255, 0.12), transparent 70%);
+  background: radial-gradient(circle, rgba(34, 186, 125, 0.12), transparent 70%);
   bottom: -15%;
   right: -10%;
   pointer-events: none;
@@ -245,7 +249,7 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
 
 /* ── Selection ── */
 ::selection {
-  background: rgba(36, 92, 255, 0.2);
+  background: rgba(34, 186, 125, 0.22);
   color: var(--text-primary);
 }
 

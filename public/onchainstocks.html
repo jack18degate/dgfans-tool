@@ -7,19 +7,21 @@
   <title>Azioni on-chain — in self-custody</title>
   <style>
     :root {
-      --ink: #101828;
-      --muted: #5f6b7a;
-      --line: #d8dee8;
-      --paper: #ffffff;
-      --wash: #f4f7fb;
-      --blue: #245cff;
-      --blue-2: #6d8cff;
-      --mint: #d9ff63;
-      --green: #126b4d;
-      --violet: #7357ff;
-      --orange: #ff9f43;
-      --shadow: 0 20px 55px rgba(31, 51, 91, .12);
-      --radius: 22px;
+      --ink: #173e2d;
+      --muted: #374151;
+      --line: #dce5d8;
+      --paper: #fffefb;
+      --wash: #f0f5e9;
+      --pale: #f0f5e9;
+      --blue: #257c51;
+      --blue-2: #22ba7d;
+      --mint: #c7ed99;
+      --green: #257c51;
+      --green-bright: #22ba7d;
+      --violet: #22ba7d;
+      --orange: #d97706;
+      --shadow: 0 14px 40px rgba(23, 62, 45, .08);
+      --radius: 16px;
       --sidebar-width: 250px;
     }
 
@@ -29,10 +31,11 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(circle at 90% 2%, rgba(109, 140, 255, .18), transparent 28rem),
-        linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
-      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        radial-gradient(circle at 90% 2%, rgba(199, 237, 153, .22), transparent 28rem),
+        linear-gradient(180deg, #fffefb 0%, #f7f9f4 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
     a { color: inherit; }
@@ -61,8 +64,8 @@
     }
 
     html[data-theme="dark"] .dg-sidebar {
-      background: rgba(17, 24, 39, 0.92);
-      border-right-color: rgba(255, 255, 255, 0.08);
+      background: rgba(16, 46, 36, 0.94);
+      border-right-color: #22513f;
     }
 
     .dg-logo {
@@ -85,8 +88,8 @@
       width: 38px;
       height: 38px;
       border-radius: 11px;
-      background: linear-gradient(135deg, #1749e8, #7b60ff);
-      box-shadow: 0 10px 24px rgba(36, 92, 255, 0.25);
+      background: #257c51;
+      box-shadow: 0 8px 20px rgba(37, 124, 81, 0.22);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,11 +112,11 @@
     .dg-logo-sub {
       font-size: 0.68rem;
       font-weight: 800;
-      color: var(--blue);
-      background: #eef3ff;
+      color: var(--green);
+      background: #eaf3dd;
       padding: 1.5px 7px;
       border-radius: 999px;
-      border: 1px solid #cbd7ff;
+      border: 1px solid #cbdbbb;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       display: inline-block;
@@ -121,9 +124,9 @@
       margin-top: 2px;
     }
     html[data-theme="dark"] .dg-logo-sub {
-      background: rgba(36, 92, 255, 0.15);
-      border-color: rgba(147, 197, 253, 0.25);
-      color: #93c5fd;
+      background: #163c2d;
+      border-color: #22513f;
+      color: #22ba7d;
     }
 
     .dg-nav-links {
@@ -175,15 +178,15 @@
     }
 
     .dg-nav-item.active {
-      background: #eef3ff !important;
-      color: var(--blue) !important;
-      font-weight: 850 !important;
-      border-color: #cbd7ff !important;
+      background: #eaf3dd !important;
+      color: #173e2d !important;
+      font-weight: 750 !important;
+      border-color: #cbdbbb !important;
     }
     html[data-theme="dark"] .dg-nav-item.active {
-      background: rgba(36, 92, 255, 0.15) !important;
-      color: #93c5fd !important;
-      border-color: rgba(147, 197, 253, 0.25) !important;
+      background: #163c2d !important;
+      color: #f3f9e9 !important;
+      border-color: #22513f !important;
     }
 
     .dg-nav-item.active::before {
@@ -195,8 +198,8 @@
       width: 3.5px;
       height: 55%;
       border-radius: 0 4px 4px 0;
-      background: var(--blue);
-      box-shadow: 0 0 10px rgba(36, 92, 255, 0.4);
+      background: #22ba7d;
+      box-shadow: 0 0 10px rgba(34, 186, 125, 0.45);
     }
 
     .dg-sidebar-footer {
@@ -305,9 +308,9 @@
       color: var(--blue);
     }
     .dg-lang-item.active {
-      background: #eef3ff !important;
-      color: var(--blue) !important;
-      font-weight: 850 !important;
+      background: #eaf3dd !important;
+      color: #173e2d !important;
+      font-weight: 750 !important;
     }
     html[data-theme="dark"] .dg-lang-item.active {
       background: rgba(36, 92, 255, 0.15) !important;
@@ -324,21 +327,23 @@
       background: var(--ink);
       border: 1px solid transparent;
       color: #ffffff !important;
-      font-weight: 800;
+      font-weight: 750;
       font-size: 0.82rem;
       text-decoration: none;
-      box-shadow: 0 12px 30px rgba(16, 24, 40, 0.16);
+      box-shadow: 0 10px 24px rgba(23, 62, 45, 0.16);
       transition: all 0.18s ease;
     }
     .dg-cta-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 36px rgba(16, 24, 40, 0.24);
+      background: var(--green);
+      box-shadow: 0 14px 30px rgba(37, 124, 81, 0.24);
       color: #ffffff !important;
       text-decoration: none;
     }
     html[data-theme="dark"] .dg-cta-btn {
-      background: #245cff;
-      box-shadow: 0 12px 30px rgba(36, 92, 255, 0.25);
+      background: #22ba7d;
+      color: #0c1f17 !important;
+      box-shadow: 0 10px 24px rgba(34, 186, 125, 0.3);
     }
 
     .dg-footer-copy {
@@ -465,7 +470,7 @@
     .button-primary {
       color: #fff;
       background: var(--ink);
-      box-shadow: 0 12px 30px rgba(16, 24, 40, .16);
+      box-shadow: 0 10px 24px rgba(23, 62, 45, .16);
     }
     .button-secondary {
       color: var(--ink);
@@ -486,17 +491,17 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 20px;
-      padding: 7px 11px;
-      color: #264083;
-      border: 1px solid #cbd7ff;
+      padding: 6px 12px;
+      color: var(--green);
+      border: 1px solid #cbdbbb;
       border-radius: 999px;
-      background: #eef3ff;
-      font-size: 12px;
-      font-weight: 850;
+      background: #eaf3dd;
+      font-size: 11px;
+      font-weight: 750;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #20b486; box-shadow: 0 0 0 4px rgba(32,180,134,.13); }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #22ba7d; box-shadow: 0 0 0 3px rgba(34,186,125,.2); }
     h1 {
       max-width: 720px;
       margin: 0;
@@ -505,10 +510,11 @@
       letter-spacing: -.065em;
     }
     .gradient-text {
-      color: transparent;
-      background: linear-gradient(92deg, var(--blue), var(--violet));
-      -webkit-background-clip: text;
-      background-clip: text;
+      color: #22BA7D;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      -webkit-text-fill-color: initial;
     }
     .hero-copy {
       max-width: 690px;
@@ -1107,25 +1113,26 @@
        DARK THEME OVERRIDES (html[data-theme="dark"])
        ═══════════════════════════════════════════════════════════ */
     html[data-theme="dark"] {
-      --ink: #f1f5f9;
-      --muted: #94a3b8;
-      --line: rgba(255, 255, 255, 0.08);
-      --paper: #111827;
-      --wash: #172033;
-      --blue: #4f8fff;
-      --blue-2: #6d8cff;
-      --mint: #34d399;
-      --green: #34d399;
-      --violet: #a78bfa;
+      --ink: #f3f9e9;
+      --muted: #9bb3a6;
+      --line: #22513f;
+      --paper: #0f261d;
+      --wash: #0c1f17;
+      --blue: #22ba7d;
+      --blue-2: #257c51;
+      --mint: #c7ed99;
+      --green: #22ba7d;
+      --green-bright: #22ba7d;
+      --violet: #22ba7d;
       --orange: #fb923c;
-      --shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+      --shadow: 0 20px 55px rgba(0, 0, 0, 0.4);
     }
 
     html[data-theme="dark"] body {
-      color: #f1f5f9;
+      color: #f3f9e9;
       background:
-        radial-gradient(circle at 90% 2%, rgba(79, 143, 255, .12), transparent 28rem),
-        linear-gradient(180deg, #0a0e1a 0%, #0f172a 100%);
+        radial-gradient(circle at 90% 2%, rgba(34, 186, 125, .12), transparent 28rem),
+        linear-gradient(180deg, #0c1f17 0%, #081610 100%);
     }
 
     html[data-theme="dark"] .eyebrow {

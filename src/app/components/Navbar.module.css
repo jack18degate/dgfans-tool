@@ -41,8 +41,8 @@
   width: 38px;
   height: 38px;
   border-radius: 11px;
-  background: linear-gradient(135deg, #1749e8, #7b60ff);
-  box-shadow: 0 10px 24px rgba(36, 92, 255, 0.25);
+  background: #257c51;
+  box-shadow: 0 8px 20px rgba(37, 124, 81, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,7 +58,7 @@
 
 .logoTitle {
   font-size: 1.18rem;
-  font-weight: 850;
+  font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--text-primary);
 }
@@ -67,10 +67,10 @@
   font-size: 0.68rem;
   font-weight: 800;
   color: var(--brand-primary);
-  background: var(--blue-soft, #eef3ff);
+  background: var(--blue-soft, #eaf3dd);
   padding: 1.5px 7px;
   border-radius: 999px;
-  border: 1px solid var(--blue-border, #cbd7ff);
+  border: 1px solid var(--blue-border, #cbdbbb);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   display: inline-block;
@@ -103,7 +103,7 @@
   padding: 0.72rem 0.85rem;
   border-radius: 12px;
   color: var(--text-secondary);
-  font-weight: 700;
+  font-weight: 650;
   font-size: 0.88rem;
   text-decoration: none;
   transition: all 0.18s ease;
@@ -132,10 +132,10 @@
 
 /* ── Active State ── */
 .navItemActive {
-  background: var(--blue-soft, #eef3ff) !important;
-  color: var(--brand-primary, #245cff) !important;
-  font-weight: 800 !important;
-  border-color: var(--blue-border, #cbd7ff) !important;
+  background: var(--blue-soft, #eaf3dd) !important;
+  color: var(--text-primary, #173e2d) !important;
+  font-weight: 750 !important;
+  border-color: var(--blue-border, #cbdbbb) !important;
 }
 
 .navItemActive::before {
@@ -147,8 +147,8 @@
   width: 3.5px;
   height: 55%;
   border-radius: 0 4px 4px 0;
-  background: var(--brand-primary, #245cff);
-  box-shadow: 0 0 10px rgba(36, 92, 255, 0.4);
+  background: var(--brand-secondary, #22ba7d);
+  box-shadow: 0 0 10px rgba(34, 186, 125, 0.45);
 }
 
 .activeIndicator {
@@ -270,9 +270,9 @@
 }
 
 .langItemActive {
-  background: var(--blue-soft, #eef3ff) !important;
-  color: var(--brand-primary, #245cff) !important;
-  font-weight: 850 !important;
+  background: var(--blue-soft, #eaf3dd) !important;
+  color: var(--text-primary, #173e2d) !important;
+  font-weight: 750 !important;
 }
 
 /* ── CTA Button ── */
@@ -283,19 +283,20 @@
   gap: 0.5rem;
   padding: 0.72rem 1rem;
   border-radius: 12px;
-  background: var(--ink, #101828);
+  background: var(--ink, #173e2d);
   border: 1px solid transparent;
   color: #ffffff !important;
-  font-weight: 800;
+  font-weight: 750;
   font-size: 0.82rem;
   text-decoration: none;
-  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.16);
+  box-shadow: 0 10px 24px rgba(23, 62, 45, 0.16);
   transition: all 0.18s ease;
 }
 
 .ctaBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(16, 24, 40, 0.24);
+  background: var(--brand-primary, #257c51);
+  box-shadow: 0 14px 30px rgba(37, 124, 81, 0.24);
   color: #ffffff !important;
   text-decoration: none;
 }
@@ -393,3 +394,37 @@
     font-size: 1.25rem;
   }
 }
+
+/* ── Dark Mode Overrides ── */
+:global(html[data-theme="dark"]) .navItemActive {
+  background: #163c2d !important;
+  color: #f3f9e9 !important;
+  border-color: #22513f !important;
+}
+
+:global(html[data-theme="dark"]) .navItemActive::before {
+  background: #22ba7d;
+  box-shadow: 0 0 10px rgba(34, 186, 125, 0.6);
+}
+
+:global(html[data-theme="dark"]) .logoSub {
+  background: #163c2d;
+  color: #22ba7d;
+  border-color: #22513f;
+}
+
+:global(html[data-theme="dark"]) .langItemActive {
+  background: #163c2d !important;
+  color: #f3f9e9 !important;
+}
+
+:global(html[data-theme="dark"]) .ctaBtn {
+  background: #22ba7d;
+  color: #0c1f17 !important;
+}
+
+:global(html[data-theme="dark"]) .ctaBtn:hover {
+  background: #257c51;
+  color: #ffffff !important;
+}
+
